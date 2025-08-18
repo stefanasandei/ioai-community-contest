@@ -10,8 +10,8 @@ const HeroSection = () => {
   };
 
   return (
-    <section 
-      id="hero" 
+    <section
+      id="hero"
       className="hero-background min-h-screen flex items-center justify-center relative"
       style={{
         backgroundImage: `url(${heroBackground})`,
@@ -22,18 +22,18 @@ const HeroSection = () => {
     >
       {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-secondary/90 via-secondary/70 to-secondary/90" />
-      
+
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         <h1 className="hero-title mb-6 animate-fade-in">
           IOAI Community Contest
         </h1>
-        
+
         <p className="text-xl md:text-2xl text-background mb-4 font-medium animate-slide-up">
-          Monthly practice competitions for AI enthusiasts
+          Unofficial practice contest for IOAI
         </p>
-        
+
         <p className="text-lg md:text-xl text-background/90 mb-12 max-w-2xl mx-auto animate-slide-up">
-          Join IOAI alumni and AI enthusiasts in challenging monthly contests. 
+          Join IOAI alumni and AI enthusiasts in challenging monthly contests.
           Sharpen your skills, learn from the community, and prepare for the next level.
         </p>
 
@@ -46,10 +46,10 @@ const HeroSection = () => {
             Join Discord
             <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
-          
+
           <button
             onClick={() => scrollToSection('past-editions')}
-            className="btn-outline flex items-center gap-3 group"
+            className="btn-outline bg-white text-blue-500 flex items-center gap-3 group"
           >
             View Past Contests
             <div className="w-4 h-4 group-hover:translate-x-1 transition-transform">→</div>

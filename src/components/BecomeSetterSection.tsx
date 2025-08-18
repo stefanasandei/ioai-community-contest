@@ -73,7 +73,7 @@ const BecomeSetterSection = () => {
                 className="w-full h-96 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent" />
-              
+
               {/* Floating elements */}
               <div className="absolute top-6 right-6 w-12 h-12 bg-primary/20 rounded-xl backdrop-blur-sm flex items-center justify-center animate-float">
                 <Lightbulb className="w-6 h-6 text-primary" />
@@ -88,7 +88,7 @@ const BecomeSetterSection = () => {
           <div className="relative">
             {/* Timeline line */}
             <div className="timeline-line" />
-            
+
             <div className="space-y-12">
               {steps.map((step, index) => {
                 const IconComponent = step.icon;
@@ -99,7 +99,7 @@ const BecomeSetterSection = () => {
                         {step.number}
                       </div>
                     </div>
-                    
+
                     <div className="flex-1 pb-8">
                       <div className="feature-card">
                         <div className="flex items-start gap-4 mb-4">
@@ -124,37 +124,6 @@ const BecomeSetterSection = () => {
                 );
               })}
             </div>
-          </div>
-        </div>
-
-        {/* Testimonials */}
-        <div className="bg-muted/30 rounded-2xl p-8 md:p-12">
-          <h3 className="text-2xl font-bold text-center text-gradient mb-12">
-            What Our Problem Setters Say
-          </h3>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-background/60 backdrop-blur-sm rounded-xl p-6 border border-border/50">
-                <Quote className="w-8 h-8 text-primary/40 mb-4" />
-                <p className="text-muted-foreground mb-6 italic leading-relaxed">
-                  "{testimonial.quote}"
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                    <span className="text-primary font-semibold">
-                      {testimonial.author.split(' ').map(n => n[0]).join('')}
-                    </span>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-foreground">{testimonial.author}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {testimonial.role} • {testimonial.company}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>

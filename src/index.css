@@ -142,9 +142,10 @@
 }
 
 @layer components {
+
   /* Hero section styles */
   .hero-title {
-    @apply text-6xl md:text-7xl font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent;
+    @apply text-6xl md:text-7xl font-bold bg-gradient-to-r from-neutral-50 to-neutral-300 bg-clip-text text-transparent;
   }
 
   .hero-background {
@@ -237,18 +238,24 @@
 
 /* Custom animations */
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.8;
   }
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }

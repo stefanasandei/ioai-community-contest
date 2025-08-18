@@ -56,8 +56,8 @@ const RulesSection = () => {
           {rules.map((rule, index) => {
             const IconComponent = rule.icon;
             return (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="feature-card group hover:border-primary/50 transition-all duration-300"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >

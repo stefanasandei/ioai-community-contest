@@ -19,6 +19,9 @@ const Navigation = () => {
   }, []);
 
   const handleNavigation = (path: string, sectionId?: string) => {
+    window.location.href = path;
+    return;
+
     if (path === '/' && sectionId) {
       // If we're already on home and have a section, scroll to it
       if (location.pathname === '/') {
@@ -37,7 +40,7 @@ const Navigation = () => {
         }, 100);
       }
     } else {
-      navigate(path);
+
     }
   };
 
@@ -55,20 +58,19 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-md' 
-          : 'bg-background/20 backdrop-blur-sm'
-      }`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+        ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-md'
+        : 'bg-background/90 backdrop-blur-sm'
+        }`}>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <button 
+            <button
               onClick={() => handleNavigation('/', 'hero')}
               className="text-xl font-bold text-gradient hover:opacity-80 transition-opacity"
             >
               IOAI Contest
             </button>
-            
+
             <div className="hidden md:flex space-x-8">
               {navItems.map((item, index) => (
                 <button

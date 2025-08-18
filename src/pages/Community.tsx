@@ -9,7 +9,6 @@ const Community = () => {
       problem: "Neural Networks Fundamentals",
       student: "Alice Chen",
       score: 100,
-      language: "Python",
       downloadUrl: "#"
     },
     {
@@ -17,7 +16,6 @@ const Community = () => {
       problem: "CNN Architecture Design",
       student: "David Rodriguez",
       score: 95,
-      language: "PyTorch",
       downloadUrl: "#"
     },
     {
@@ -25,7 +23,6 @@ const Community = () => {
       problem: "Computer Vision Challenge",
       student: "Sarah Kim",
       score: 98,
-      language: "TensorFlow",
       downloadUrl: "#"
     },
     {
@@ -33,7 +30,6 @@ const Community = () => {
       problem: "Object Detection Pipeline",
       student: "Michael Zhang",
       score: 92,
-      language: "Python",
       downloadUrl: "#"
     },
     {
@@ -41,7 +37,6 @@ const Community = () => {
       problem: "NLP Text Classification",
       student: "Emily Johnson",
       score: 96,
-      language: "Python",
       downloadUrl: "#"
     },
     {
@@ -49,7 +44,6 @@ const Community = () => {
       problem: "Sentiment Analysis",
       student: "James Wilson",
       score: 89,
-      language: "BERT",
       downloadUrl: "#"
     }
   ];
@@ -57,7 +51,7 @@ const Community = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      <main className="pt-20">
+      <main className="pt-5">
         <div className="section-padding">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-16">
@@ -69,38 +63,13 @@ const Community = () => {
               </p>
             </div>
 
-            {/* Statistics Cards */}
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
-              <div className="feature-card text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Trophy className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground mb-2">156+</h3>
-                <p className="text-muted-foreground">Total Participants</p>
-              </div>
-              <div className="feature-card text-center">
-                <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Code className="w-6 h-6 text-accent" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground mb-2">24</h3>
-                <p className="text-muted-foreground">Total Problems</p>
-              </div>
-              <div className="feature-card text-center">
-                <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Calendar className="w-6 h-6 text-secondary" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground mb-2">6</h3>
-                <p className="text-muted-foreground">Monthly Contests</p>
-              </div>
-            </div>
-
             {/* Best Solutions Table */}
             <div className="bg-card rounded-2xl p-8 border border-border shadow-elegant">
               <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
                 <Trophy className="w-6 h-6 text-primary" />
                 Best Solutions Archive
               </h2>
-              
+
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -109,7 +78,6 @@ const Community = () => {
                       <th className="text-left py-4 px-2 text-muted-foreground font-medium">Problem</th>
                       <th className="text-left py-4 px-2 text-muted-foreground font-medium">Student</th>
                       <th className="text-left py-4 px-2 text-muted-foreground font-medium">Score</th>
-                      <th className="text-left py-4 px-2 text-muted-foreground font-medium">Language</th>
                       <th className="text-left py-4 px-2 text-muted-foreground font-medium">Solution</th>
                     </tr>
                   </thead>
@@ -125,15 +93,13 @@ const Community = () => {
                           </div>
                         </td>
                         <td className="py-4 px-2">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            solution.score >= 95 ? 'bg-success/10 text-success' :
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${solution.score >= 95 ? 'bg-success/10 text-success' :
                             solution.score >= 90 ? 'bg-accent/10 text-accent' :
-                            'bg-secondary/10 text-secondary'
-                          }`}>
+                              'bg-secondary/10 text-secondary'
+                            }`}>
                             {solution.score}%
                           </span>
                         </td>
-                        <td className="py-4 px-2 text-sm text-muted-foreground">{solution.language}</td>
                         <td className="py-4 px-2">
                           <button className="inline-flex items-center gap-2 text-primary hover:text-primary-glow transition-colors text-sm">
                             <Download className="w-4 h-4" />

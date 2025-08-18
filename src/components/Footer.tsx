@@ -29,29 +29,29 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { 
-      icon: ExternalLink, 
-      label: 'Discord', 
+    {
+      icon: ExternalLink,
+      label: 'Discord',
       href: 'https://discord.gg/ioai',
-      color: 'hover:text-primary' 
+      color: 'hover:text-primary'
     },
-    { 
-      icon: Twitter, 
-      label: 'Twitter', 
+    {
+      icon: Twitter,
+      label: 'Twitter',
       href: 'https://twitter.com/ioai_community',
-      color: 'hover:text-accent' 
+      color: 'hover:text-accent'
     },
-    { 
-      icon: Github, 
-      label: 'GitHub', 
+    {
+      icon: Github,
+      label: 'GitHub',
       href: 'https://github.com/ioai-community',
-      color: 'hover:text-secondary' 
+      color: 'hover:text-secondary'
     },
-    { 
-      icon: Mail, 
-      label: 'Email', 
+    {
+      icon: Mail,
+      label: 'Email',
       href: 'mailto:contest@ioai.community',
-      color: 'hover:text-primary' 
+      color: 'hover:text-primary'
     },
   ];
 
@@ -102,7 +102,7 @@ const Footer = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center gap-3 text-secondary-foreground/80 ${social.color} transition-all duration-300 group`}
+                    className={`flex items-center gap-3 text-secondary-foreground/80 transition-all duration-300 group`}
                   >
                     <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors group-hover:shadow-glow">
                       <IconComponent className="w-5 h-5" />
@@ -146,14 +146,14 @@ const Footer = () => {
         <div className="border-t border-primary/20 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-4">
-              <div className="text-2xl font-bold text-gradient">
-                IOAI Contest
+              <div className="text-2xl font-bold">
+                IOAI Community Contest
               </div>
               <div className="text-secondary-foreground/60">
-                Building the future of AI together
+                Unofficial practice contest for IOAI
               </div>
             </div>
-            
+
             <div className="text-secondary-foreground/60 text-sm">
               © 2024 IOAI Community Contest.{' '}
               <span className="hover:text-primary transition-colors cursor-pointer hover:underline">
