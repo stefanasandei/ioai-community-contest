@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, Menu, X } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -62,12 +63,13 @@ const Navigation = () => {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <button
-              onClick={() => handleNavigation('/', 'hero')}
+              onClick={() => { handleNavigation('/', 'hero'); setMobileMenuOpen(false); }}
               className="text-xl font-bold text-gradient hover:opacity-80 transition-opacity"
             >
               IOAI Contest
             </button>
 
+            {/* Desktop nav */}
             <div className="hidden md:flex space-x-8">
               {navItems.map((item, index) => (
                 <button
@@ -80,14 +82,45 @@ const Navigation = () => {
               ))}
             </div>
 
+            {/* Mobile hamburger */}
+            <button
+              className="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              aria-label="Open menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+
             <button
               onClick={() => handleNavigation('/community')}
-              className="btn-hero text-sm px-6 py-2"
+              className="btn-hero text-sm px-6 py-2 hidden md:inline-block"
             >
               Join Discord
             </button>
           </div>
         </div>
+        {/* Mobile menu dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-background/95 backdrop-blur-md border-b border-border shadow-md px-6 pb-4">
+            <div className="flex flex-col space-y-4">
+              {navItems.map((item, index) => (
+                <button
+                  key={index}
+                  onClick={() => { handleNavigation(item.path, item.sectionId); setMobileMenuOpen(false); }}
+                  className="nav-link text-left w-full"
+                >
+                  {item.label}
+                </button>
+              ))}
+              <button
+                onClick={() => { handleNavigation('/community'); setMobileMenuOpen(false); }}
+                className="btn-hero text-sm px-6 py-2 w-full"
+              >
+                Join Discord
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Back to Top Button */}
