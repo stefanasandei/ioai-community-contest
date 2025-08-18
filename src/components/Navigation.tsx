@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,10 +18,26 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (path: string, sectionId?: string) => {
+    if (path === '/' && sectionId) {
+      // If we're already on home and have a section, scroll to it
+      if (location.pathname === '/') {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // Navigate to home then scroll to section
+        navigate('/');
+        setTimeout(() => {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+    } else {
+      navigate(path);
     }
   };
 
@@ -27,32 +46,34 @@ const Navigation = () => {
   };
 
   const navItems = [
-    { label: 'Home', id: 'hero' },
-    { label: 'Mission', id: 'mission' },
-    { label: 'Rules', id: 'rules' },
-    { label: 'Past Editions', id: 'past-editions' },
-    { label: 'Become a Setter', id: 'become-setter' },
-    { label: 'Community', id: 'community' },
+    { label: 'Home', path: '/', sectionId: 'hero' },
+    { label: 'Rules', path: '/rules' },
+    { label: 'Past Editions', path: '/', sectionId: 'past-editions' },
+    { label: 'Become a Setter', path: '/become-setter' },
+    { label: 'Community', path: '/community' },
   ];
 
   return (
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-background/80 backdrop-blur-md border-b border-border' 
-          : 'bg-transparent'
+          ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-md' 
+          : 'bg-background/20 backdrop-blur-sm'
       }`}>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <div className="text-xl font-bold text-gradient">
+            <button 
+              onClick={() => handleNavigation('/', 'hero')}
+              className="text-xl font-bold text-gradient hover:opacity-80 transition-opacity"
+            >
               IOAI Contest
-            </div>
+            </button>
             
             <div className="hidden md:flex space-x-8">
-              {navItems.map((item) => (
+              {navItems.map((item, index) => (
                 <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  key={index}
+                  onClick={() => handleNavigation(item.path, item.sectionId)}
                   className="nav-link"
                 >
                   {item.label}
@@ -61,7 +82,7 @@ const Navigation = () => {
             </div>
 
             <button
-              onClick={() => scrollToSection('community')}
+              onClick={() => handleNavigation('/community')}
               className="btn-hero text-sm px-6 py-2"
             >
               Join Discord

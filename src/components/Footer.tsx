@@ -56,7 +56,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer id="community" className="bg-secondary text-secondary-foreground relative overflow-hidden">
+    <footer id="community" className="bg-secondary/95 text-secondary-foreground relative overflow-hidden">
       {/* Binary code pattern background */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div className="text-xs font-mono leading-none transform rotate-12 scale-150">
@@ -72,7 +72,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-6 text-primary-foreground">
+            <h3 className="text-xl font-bold mb-6 text-background">
               Quick Links
             </h3>
             <nav className="space-y-3">
@@ -80,7 +80,7 @@ const Footer = () => {
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className="block text-secondary-foreground/80 hover:text-primary-foreground transition-colors hover:translate-x-1 transform duration-200"
+                  className="block text-secondary-foreground/80 hover:text-background transition-colors hover:translate-x-1 transform duration-200"
                 >
                   {link.label}
                 </button>
@@ -90,7 +90,7 @@ const Footer = () => {
 
           {/* Contact & Social */}
           <div>
-            <h3 className="text-xl font-bold mb-6 text-primary-foreground">
+            <h3 className="text-xl font-bold mb-6 text-background">
               Connect With Us
             </h3>
             <div className="space-y-4">
@@ -116,7 +116,7 @@ const Footer = () => {
 
           {/* Newsletter Signup */}
           <div>
-            <h3 className="text-xl font-bold mb-6 text-primary-foreground">
+            <h3 className="text-xl font-bold mb-6 text-background">
               Stay Updated
             </h3>
             <p className="text-secondary-foreground/80 mb-6">
@@ -128,7 +128,7 @@ const Footer = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="w-full px-4 py-3 rounded-lg bg-background/10 border border-primary/20 text-primary-foreground placeholder-secondary-foreground/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+                className="w-full px-4 py-3 rounded-lg bg-background/10 border border-primary/20 text-background placeholder-secondary-foreground/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
                 required
               />
               <button

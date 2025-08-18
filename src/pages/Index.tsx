@@ -3,7 +3,6 @@ import HeroSection from '@/components/HeroSection';
 import MissionSection from '@/components/MissionSection';
 import RulesSection from '@/components/RulesSection';
 import PastEditionsSection from '@/components/PastEditionsSection';
-import BecomeSetterSection from '@/components/BecomeSetterSection';
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -12,10 +11,9 @@ const Index = () => {
       <Navigation />
       <main>
         <HeroSection />
-        <MissionSection />
         <RulesSection />
+        <MissionSection />
         <PastEditionsSection />
-        <BecomeSetterSection />
       </main>
       <Footer />
     </div>

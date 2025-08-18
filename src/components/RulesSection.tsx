@@ -81,14 +81,25 @@ const RulesSection = () => {
           })}
         </div>
 
-        <div className="text-center mt-12">
-          <button
-            onClick={() => window.open('/rules-detailed', '_blank')}
-            className="inline-flex items-center gap-2 text-primary hover:text-primary-glow font-medium transition-colors group"
-          >
-            Read Full Rules Documentation
-            <div className="w-0 h-0.5 bg-primary group-hover:w-4 transition-all duration-300" />
-          </button>
+        {/* Detailed Rules Text */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <div className="bg-card rounded-2xl p-8 border border-border shadow-elegant">
+            <h3 className="text-2xl font-bold text-foreground mb-6">Detailed Contest Guidelines</h3>
+            <div className="prose prose-gray max-w-none text-muted-foreground space-y-4">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </p>
+              <p>
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+              </p>
+              <p>
+                Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+              </p>
+              <p>
+                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

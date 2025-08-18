@@ -21,18 +21,18 @@ const HeroSection = () => {
       }}
     >
       {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-secondary/80 via-secondary/60 to-secondary/80" />
+      <div className="absolute inset-0 bg-gradient-to-b from-secondary/90 via-secondary/70 to-secondary/90" />
       
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         <h1 className="hero-title mb-6 animate-fade-in">
           IOAI Community Contest
         </h1>
         
-        <p className="text-xl md:text-2xl text-background/90 mb-4 font-medium animate-slide-up">
+        <p className="text-xl md:text-2xl text-background mb-4 font-medium animate-slide-up">
           Monthly practice competitions for AI enthusiasts
         </p>
         
-        <p className="text-lg md:text-xl text-background/80 mb-12 max-w-2xl mx-auto animate-slide-up">
+        <p className="text-lg md:text-xl text-background/90 mb-12 max-w-2xl mx-auto animate-slide-up">
           Join IOAI alumni and AI enthusiasts in challenging monthly contests. 
           Sharpen your skills, learn from the community, and prepare for the next level.
         </p>

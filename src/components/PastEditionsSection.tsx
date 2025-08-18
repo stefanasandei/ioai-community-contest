@@ -87,12 +87,12 @@ const PastEditionsSection = () => {
 
         {/* Filter Bar */}
         <div className="flex flex-wrap gap-4 justify-center mb-12">
-          <select className="px-4 py-2 rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary">
+          <select className="px-4 py-2 rounded-lg border border-border bg-card text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary shadow-sm">
             <option>All Years</option>
             <option>2024</option>
             <option>2023</option>
           </select>
-          <select className="px-4 py-2 rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary">
+          <select className="px-4 py-2 rounded-lg border border-border bg-card text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary shadow-sm">
             <option>All Difficulties</option>
             <option>Beginner</option>
             <option>Intermediate</option>
@@ -100,82 +100,49 @@ const PastEditionsSection = () => {
           </select>
         </div>
 
-        {/* Carousel */}
-        <div className="relative">
-          <div className="overflow-hidden rounded-2xl">
-            <div 
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
-              {pastContests.map((contest) => (
-                <div key={contest.id} className="w-full flex-shrink-0">
-                  <div className={`${contest.image} relative h-80 rounded-2xl p-8 flex flex-col justify-end cursor-pointer group overflow-hidden`}
-                       onClick={() => setSelectedContest(contest)}>
-                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-secondary/40 to-transparent" />
-                    
-                    <div className="relative z-10 text-background">
-                      <div className="flex items-center gap-4 mb-4">
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getDifficultyColor(contest.difficulty)}`}>
-                          {contest.difficulty}
-                        </span>
-                        <span className="text-sm opacity-80">
-                          {contest.participants} participants
-                        </span>
-                      </div>
-                      
-                      <h3 className="text-2xl md:text-3xl font-bold mb-2 group-hover:text-primary-glow transition-colors">
-                        {contest.month} {contest.year}
-                      </h3>
-                      
-                      <p className="text-xl mb-4 opacity-90">
-                        {contest.title}
-                      </p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Trophy className="w-4 h-4" />
-                          <span className="text-sm">Winner: {contest.winner}</span>
-                        </div>
-                        
-                        <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-glow flex items-center gap-2">
-                          <Eye className="w-4 h-4" />
-                          View Details
-                        </button>
-                      </div>
-                    </div>
+        {/* Contest Grid */}
+        <div className="grid md:grid-cols-2 gap-8">
+          {pastContests.map((contest) => (
+            <div key={contest.id} className="feature-card group hover:border-primary/50 cursor-pointer"
+                 onClick={() => setSelectedContest(contest)}>
+              <div className="flex items-start gap-4 mb-4">
+                <div className="flex-shrink-0">
+                  <div className={`w-16 h-16 ${contest.image} rounded-xl flex items-center justify-center`}>
+                    <Calendar className="w-8 h-8 text-background" />
                   </div>
                 </div>
-              ))}
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                      {contest.month} {contest.year}
+                    </h3>
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(contest.difficulty)}`}>
+                      {contest.difficulty}
+                    </span>
+                  </div>
+                  <p className="text-lg text-foreground mb-2">{contest.title}</p>
+                  <p className="text-sm text-muted-foreground mb-3">{contest.description}</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <div className="flex items-center gap-4">
+                  <span className="flex items-center gap-1">
+                    <Trophy className="w-4 h-4 text-primary" />
+                    {contest.winner}
+                  </span>
+                  <span>{contest.participants} participants</span>
+                  <span>{contest.problems} problems</span>
+                </div>
+                <div className="flex gap-2">
+                  <button className="opacity-0 group-hover:opacity-100 transition-opacity text-primary hover:text-primary-glow flex items-center gap-1 text-xs">
+                    <Eye className="w-3 h-3" />
+                    Details
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-
-          {/* Navigation Buttons */}
-          <button 
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-background transition-colors shadow-lg"
-          >
-            <ChevronLeft className="w-6 h-6 text-foreground" />
-          </button>
-          
-          <button 
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-background transition-colors shadow-lg"
-          >
-            <ChevronRight className="w-6 h-6 text-foreground" />
-          </button>
-
-          {/* Dots Indicator */}
-          <div className="flex justify-center gap-2 mt-6">
-            {pastContests.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentIndex ? 'bg-primary' : 'bg-border'
-                }`}
-              />
-            ))}
-          </div>
+          ))}
         </div>
       </div>
 
@@ -228,7 +195,7 @@ const PastEditionsSection = () => {
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-4">
               <button className="btn-hero flex items-center gap-2">
                 <Download className="w-4 h-4" />
                 Download Problems
@@ -236,6 +203,10 @@ const PastEditionsSection = () => {
               <button className="btn-outline flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 View Solutions
+              </button>
+              <button className="btn-outline flex items-center gap-2">
+                <Trophy className="w-4 h-4" />
+                Community Solutions
               </button>
             </div>
           </div>
