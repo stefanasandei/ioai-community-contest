@@ -78,7 +78,7 @@ const PastEditionsSection = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6 font-display">
-            Past Contest Editions
+            Past Contest Editions (mock design for now)
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Explore previous challenges and see how our community has grown
@@ -104,7 +104,7 @@ const PastEditionsSection = () => {
         <div className="grid md:grid-cols-2 gap-8">
           {pastContests.map((contest) => (
             <div key={contest.id} className="feature-card group hover:border-primary/50 cursor-pointer"
-                 onClick={() => setSelectedContest(contest)}>
+              onClick={() => setSelectedContest(contest)}>
               <div className="flex items-start gap-4 mb-4">
                 <div className="flex-shrink-0">
                   <div className={`w-16 h-16 ${contest.image} rounded-xl flex items-center justify-center`}>
@@ -124,7 +124,7 @@ const PastEditionsSection = () => {
                   <p className="text-sm text-muted-foreground mb-3">{contest.description}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <div className="flex items-center gap-4">
                   <span className="flex items-center gap-1">
@@ -159,7 +159,7 @@ const PastEditionsSection = () => {
                   {selectedContest.title}
                 </p>
               </div>
-              <button 
+              <button
                 onClick={() => setSelectedContest(null)}
                 className="w-8 h-8 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors"
               >

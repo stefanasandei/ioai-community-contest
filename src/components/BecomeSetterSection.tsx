@@ -1,128 +1,85 @@
-import { Lightbulb, FileText, Rocket, Quote } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import setterIllustration from '@/assets/setter-illustration.jpg';
 
 const BecomeSetterSection = () => {
-  const steps = [
-    {
-      number: 1,
-      title: "Submit Your Idea",
-      description: "Share your problem concept with detailed specifications and expected difficulty level.",
-      cta: "Start Proposal",
-      icon: Lightbulb,
-      color: "bg-primary"
-    },
-    {
-      number: 2,
-      title: "Collaborate & Refine",
-      description: "Work with our review committee to polish your problem and ensure quality standards.",
-      cta: "Read Guidelines",
-      icon: FileText,
-      color: "bg-accent"
-    },
-    {
-      number: 3,
-      title: "Launch & Engage",
-      description: "See your problem come to life as participants tackle your challenge during the contest.",
-      cta: "View Examples",
-      icon: Rocket,
-      color: "bg-secondary"
-    }
-  ];
-
-  const testimonials = [
-    {
-      quote: "Contributing problems to the IOAI contest was incredibly rewarding. Seeing participants engage with my challenge was amazing!",
-      author: "Dr. Emily Watson",
-      role: "AI Research Scientist",
-      company: "TechCorp"
-    },
-    {
-      quote: "The review process helped me create a much better problem than I initially imagined. The feedback was invaluable.",
-      author: "Alex Kumar",
-      role: "PhD Student",
-      company: "MIT AI Lab"
-    },
-    {
-      quote: "Being a problem setter connected me with incredible minds in the AI community. Highly recommend the experience!",
-      author: "Maria Santos",
-      role: "ML Engineer",
-      company: "DeepTech Industries"
-    }
-  ];
-
   return (
-    <section id="become-setter" className="section-padding">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+    <section id="become-setter">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6 font-display">
-            Become a Problem Setter
+            Submit a Task to the IOAI Community Contest
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Share your expertise and contribute to the growth of our AI community
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Share your creativity and help shape the next generation of AI challenges! Read the guidelines below and join our Discord to submit your task.
           </p>
         </div>
 
-        {/* Two-column layout */}
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
-          {/* Left side - Illustration */}
-          <div className="relative">
-            <div className="relative overflow-hidden rounded-2xl">
-              <img
-                src={setterIllustration}
-                alt="Person creating problems"
-                className="w-full h-96 object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent" />
+        <div className="flex flex-col md:flex-row gap-10 items-start mb-12">
+          {/* Guidelines */}
+          <div className="flex-1 bg-card p-8 rounded-2xl shadow-lg border border-border">
+            <h3 className="text-2xl font-semibold mb-4 text-foreground">Task Submission Guidelines</h3>
+            <ul className="list-disc pl-6 mb-4 text-muted-foreground space-y-2">
+              <li>Anyone can submit tasks via Discord tickets or other channels.</li>
+              <li>Tasks must be original, not reused from other competitions, and unseen by IOAI contestants.</li>
+              <li>Instructions must be clear with unambiguous evaluation criteria.</li>
+              <li>Appropriate for top high school students, balancing theory and practical application.</li>
+              <li>Should align with the IOAI 2025 Syllabus (subject to updates).</li>
+            </ul>
 
-              {/* Floating elements */}
-              <div className="absolute top-6 right-6 w-12 h-12 bg-primary/20 rounded-xl backdrop-blur-sm flex items-center justify-center animate-float">
-                <Lightbulb className="w-6 h-6 text-primary" />
-              </div>
-              <div className="absolute bottom-6 left-6 w-16 h-16 bg-accent/20 rounded-2xl backdrop-blur-sm flex items-center justify-center animate-float" style={{ animationDelay: '1s' }}>
-                <FileText className="w-8 h-8 text-accent" />
-              </div>
-            </div>
-          </div>
+            <h4 className="font-semibold mt-6 mb-2 text-foreground">Required Submission Materials</h4>
+            <ol className="list-decimal pl-6 mb-4 space-y-2">
+              <li>
+                <span className="font-medium">Task Description</span> (Jupyter Notebook or PDF preferred):
+                <ul className="list-disc pl-6 mt-1 space-y-1">
+                  <li>Problem statement</li>
+                  <li>Input/output format</li>
+                  <li>Scoring method and formula</li>
+                  <li>Allowed models/architectures restrictions</li>
+                </ul>
+              </li>
+              <li>
+                <span className="font-medium">Datasets</span>:
+                <ul className="list-disc pl-6 mt-1 space-y-1">
+                  <li>Training set for model development</li>
+                  <li>Validation set for testing</li>
+                  <li>Test set for final evaluation</li>
+                </ul>
+              </li>
+            </ol>
 
-          {/* Right side - Steps */}
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="timeline-line" />
+            <h4 className="font-semibold mt-6 mb-2 text-foreground">Optional but Highly Recommended</h4>
+            <ul className="list-disc pl-6 mb-4 space-y-2">
+              <li>Baseline solution (Python implementation)</li>
+              <li>Documentation: author details, resource limits, motivation, educational goals, expected difficulty</li>
+            </ul>
 
-            <div className="space-y-12">
-              {steps.map((step, index) => {
-                const IconComponent = step.icon;
-                return (
-                  <div key={index} className="relative flex gap-6">
-                    <div className="flex-shrink-0">
-                      <div className={`timeline-number ${step.color} text-white`}>
-                        {step.number}
-                      </div>
-                    </div>
+            <h4 className="font-semibold mt-6 mb-2 text-foreground">Task Selection Criteria</h4>
+            <ul className="list-disc pl-6 mb-4 space-y-2">
+              <li>Hammer resistance: not easily solved with off-the-shelf methods</li>
+              <li>Multiple insights and partial solutions rewarded</li>
+              <li>Educational value and originality</li>
+              <li>Fast iteration cycles (minimal training time)</li>
+            </ul>
 
-                    <div className="flex-1 pb-8">
-                      <div className="feature-card">
-                        <div className="flex items-start gap-4 mb-4">
-                          <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                            <IconComponent className="w-5 h-5 text-primary" />
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="text-xl font-semibold text-foreground mb-2">
-                              {step.title}
-                            </h3>
-                            <p className="text-muted-foreground mb-4">
-                              {step.description}
-                            </p>
-                            <button className="btn-outline text-sm px-6 py-2">
-                              {step.cta}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+            <h4 className="font-semibold mt-6 mb-2 text-foreground">Review Process</h4>
+            <ul className="list-disc pl-6 mb-4 space-y-2">
+              <li>Organizers review and select tasks for quality and diversity</li>
+              <li>Selected tasks may be refined in collaboration with authors</li>
+              <li>Tasks should be self-contained and focus on problem solving over computational power</li>
+              <li>Authors' and participants' best solutions will be released within 1 week after the contest</li>
+            </ul>
+
+            <div className="mt-8 flex flex-col items-center">
+              <a
+                href="https://discord.gg/ioai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-semibold rounded-lg shadow hover:bg-primary/90 transition mb-2"
+              >
+                <MessageCircle className="w-5 h-5" />
+                Join our Discord to Submit a Task
+              </a>
+              <span className="text-xs text-muted-foreground">Create a ticket with your task title, materials (Google Drive or GitHub links), and any timing preferences.</span>
             </div>
           </div>
         </div>

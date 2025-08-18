@@ -29,7 +29,7 @@ const HeroSection = () => {
         </h1>
 
         <p className="text-xl md:text-2xl text-background mb-4 font-medium animate-slide-up">
-          Unofficial practice contest for IOAI
+          Unofficial practice contest for IOAI; work in progress
         </p>
 
         <p className="text-lg md:text-xl text-background/90 mb-12 max-w-2xl mx-auto animate-slide-up">

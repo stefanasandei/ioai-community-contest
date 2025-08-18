@@ -19,9 +19,6 @@ const Navigation = () => {
   }, []);
 
   const handleNavigation = (path: string, sectionId?: string) => {
-    window.location.href = path;
-    return;
-
     if (path === '/' && sectionId) {
       // If we're already on home and have a section, scroll to it
       if (location.pathname === '/') {
@@ -40,7 +37,7 @@ const Navigation = () => {
         }, 100);
       }
     } else {
-
+      window.location.href = path;
     }
   };
 
@@ -49,7 +46,7 @@ const Navigation = () => {
   };
 
   const navItems = [
-    { label: 'Home', path: '/', sectionId: 'hero' },
+    { label: 'Home', path: '/' },
     { label: 'Rules', path: '/rules' },
     { label: 'Past Editions', path: '/', sectionId: 'past-editions' },
     { label: 'Become a Setter', path: '/become-setter' },

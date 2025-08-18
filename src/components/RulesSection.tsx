@@ -3,16 +3,16 @@ import { Clock, Users, Trophy, BookOpen, Code, Zap } from 'lucide-react';
 const RulesSection = () => {
   const rules = [
     {
-      icon: Clock,
-      title: "Monthly Schedule",
-      description: "Contests run on the first Saturday of each month, lasting 4 hours.",
+      icon: Users,
+      title: "Prepare for IOAI",
+      description: "Our contest should simulate in best ways the IOAI",
       color: "text-primary"
     },
     {
-      icon: Users,
-      title: "Open to All",
-      description: "IOAI alumni, students, and AI enthusiasts of all skill levels welcome.",
-      color: "text-accent"
+      icon: Clock,
+      title: "Monthly Schedule",
+      description: "To be decided.",
+      color: "text-primary"
     },
     {
       icon: Trophy,
@@ -23,26 +23,26 @@ const RulesSection = () => {
     {
       icon: BookOpen,
       title: "Problem Format",
-      description: "3-5 problems ranging from beginner to advanced difficulty levels.",
+      description: "3 problems, similar to IOAI",
       color: "text-primary"
     },
     {
       icon: Code,
-      title: "Submission Format",
-      description: "Solutions submitted as code with detailed explanations and documentation.",
+      title: "No ChatGPT or Internet",
+      description: "Try your best solving the tasks on your own!",
       color: "text-accent"
     },
     {
       icon: Zap,
       title: "Real-time Updates",
-      description: "Live leaderboard updates and instant feedback on submissions.",
+      description: "Live leaderboard updates and instant feedback on submissions, on Kaggle.",
       color: "text-secondary"
     }
   ];
 
   return (
-    <section id="rules" className="section-padding">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="rules">
+      <div className="max-w-7xl pt-10 mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6 font-display">
             Contest Rules
@@ -84,19 +84,25 @@ const RulesSection = () => {
         {/* Detailed Rules Text */}
         <div className="mt-16 max-w-4xl mx-auto">
           <div className="bg-card rounded-2xl p-8 border border-border shadow-elegant">
-            <h3 className="text-2xl font-bold text-foreground mb-6">Detailed Contest Guidelines</h3>
+            <h3 className="text-2xl font-bold text-foreground mb-6">Detailed Contest Guidelines (WORK IN PROGRESS)</h3>
             <div className="prose prose-gray max-w-none text-muted-foreground space-y-4">
+              <h4 className="text-xl font-semibold text-foreground">Rules</h4>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>
+                  Use of LLMs for writing code or getting task ideas is <strong>forbidden</strong> (because we can't control what LLM they use; like in the actual IOAI, they allow 4o-mini, which is dumb enough to not solve the whole task).
+                </li>
+                <li>
+                  Use of the internet is <strong>forbidden</strong> except for reading official library documentation and accessing the contest platform.
+                </li>
+                <li>
+                  Communicating with anyone during the contest is <strong>forbidden</strong>.
+                </li>
+                <li>
+                  Only ask questions regarding task statements using the official methods we provide (e.g., our Discord channel for clarifications).
+                </li>
+              </ul>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              </p>
-              <p>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
-              </p>
-              <p>
-                Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-              </p>
-              <p>
-                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.
+                <strong>Note:</strong> We can't enforce these rules, but following them ensures fair play and a more accurate simulation of the IOAI. It is in the best interest of all contestants to follow the rules.
               </p>
             </div>
           </div>
