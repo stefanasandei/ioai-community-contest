@@ -92,7 +92,7 @@ const Navigation = () => {
             </button>
 
             <button
-              onClick={() => handleNavigation('/community')}
+              onClick={() => handleNavigation('https://discord.gg/7GfxrqRreY')}
               className="btn-hero text-sm px-6 py-2 hidden md:inline-block"
             >
               Join Discord
@@ -113,7 +113,7 @@ const Navigation = () => {
                 </button>
               ))}
               <button
-                onClick={() => { handleNavigation('/community'); setMobileMenuOpen(false); }}
+                onClick={() => { handleNavigation('https://discord.gg/7GfxrqRreY'); setMobileMenuOpen(false); }}
                 className="btn-hero text-sm px-6 py-2 w-full"
               >
                 Join Discord

@@ -39,7 +39,7 @@ const HeroSection = () => {
 
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in">
           <button
-            onClick={() => window.open('https://discord.gg/ioai', '_blank')}
+            onClick={() => window.open('https://discord.gg/7GfxrqRreY', '_blank')}
             className="btn-hero flex items-center gap-3 group"
           >
             <Users className="w-5 h-5 group-hover:scale-110 transition-transform" />
