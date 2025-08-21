@@ -1,9 +1,12 @@
 import { ExternalLink, Github, Twitter, Mail, Users } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,19 +16,35 @@ const Footer = () => {
     setTimeout(() => setIsSubscribed(false), 3000);
   };
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (path: string, sectionId?: string) => {
+    if (path === '/' && sectionId) {
+      // If we're already on home and have a section, scroll to it
+      if (location.pathname === '/') {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // Navigate to home then scroll to section
+        navigate('/');
+        setTimeout(() => {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+    } else {
+      window.location.href = path;
     }
   };
 
   const quickLinks = [
-    { label: 'Home', id: 'hero' },
-    { label: 'Mission', id: 'mission' },
-    { label: 'Rules', id: 'rules' },
-    { label: 'Past Editions', id: 'past-editions' },
-    { label: 'Become a Setter', id: 'become-setter' },
+    { label: 'Home', path: '/' },
+    { label: 'Rules', path: '/rules' },
+    { label: 'Past Editions', path: '/', sectionId: 'past-editions' },
+    { label: 'Become a Setter', path: '/become-setter' },
+    { label: 'Community', path: '/community' },
   ];
 
   const socialLinks = [
@@ -56,10 +75,10 @@ const Footer = () => {
               Quick Links
             </h3>
             <nav className="space-y-3">
-              {quickLinks.map((link) => (
+              {quickLinks.map((link, index) => (
                 <button
-                  key={link.id}
-                  onClick={() => scrollToSection(link.id)}
+                  key={index}
+                  onClick={() => handleNavigation(link.path, link.sectionId)}
                   className="block text-aicc-white/80 hover:text-aicc-white transition-colors hover:translate-x-1 transform duration-200 hover:text-aicc-teal"
                 >
                   {link.label}
