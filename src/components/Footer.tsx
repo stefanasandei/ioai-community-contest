@@ -1,4 +1,4 @@
-import { ExternalLink, Github, Twitter, Mail } from 'lucide-react';
+import { ExternalLink, Github, Twitter, Mail, Users } from 'lucide-react';
 import { useState } from 'react';
 
 const Footer = () => {
@@ -32,27 +32,15 @@ const Footer = () => {
     {
       icon: ExternalLink,
       label: 'Discord',
-      href: 'https://discord.gg/ioai',
+      href: 'https://discord.gg/7GfxrqRreY',
       color: 'hover:text-primary'
-    },
-    {
-      icon: Twitter,
-      label: 'Twitter',
-      href: 'https://twitter.com/ioai_community',
-      color: 'hover:text-accent'
     },
     {
       icon: Github,
       label: 'GitHub',
-      href: 'https://github.com/ioai-community',
+      href: 'https://github.com/stefanasandei/ioai-community-contest',
       color: 'hover:text-secondary'
-    },
-    {
-      icon: Mail,
-      label: 'Email',
-      href: 'mailto:contest@ioai.community',
-      color: 'hover:text-primary'
-    },
+    }
   ];
 
   return (
@@ -120,25 +108,16 @@ const Footer = () => {
               Stay Updated
             </h3>
             <p className="text-secondary-foreground/80 mb-6">
-              Get notified about upcoming contests and community updates.
+              Join our Discord for updates.
             </p>
-            <form onSubmit={handleSubscribe} className="space-y-4">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full px-4 py-3 rounded-lg bg-background/10 border border-primary/20 text-background placeholder-secondary-foreground/60 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
-                required
-              />
-              <button
-                type="submit"
-                disabled={isSubscribed}
-                className="w-full btn-hero disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubscribed ? 'Subscribed!' : 'Subscribe'}
-              </button>
-            </form>
+            <button
+              onClick={() => window.open('https://discord.gg/7GfxrqRreY', '_blank')}
+              className="btn-hero flex items-center gap-3 group"
+            >
+              <Users className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              Join Discord
+              <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
         </div>
 

@@ -4,48 +4,13 @@ import { Trophy, Calendar, User, Code, Download } from 'lucide-react';
 
 const Community = () => {
   const bestSolutions = [
-    {
-      contest: "December 2024",
-      problem: "Neural Networks Fundamentals",
-      student: "Alice Chen",
-      score: 100,
-      downloadUrl: "#"
-    },
-    {
-      contest: "December 2024",
-      problem: "CNN Architecture Design",
-      student: "David Rodriguez",
-      score: 95,
-      downloadUrl: "#"
-    },
-    {
-      contest: "November 2024",
-      problem: "Computer Vision Challenge",
-      student: "Sarah Kim",
-      score: 98,
-      downloadUrl: "#"
-    },
-    {
-      contest: "November 2024",
-      problem: "Object Detection Pipeline",
-      student: "Michael Zhang",
-      score: 92,
-      downloadUrl: "#"
-    },
-    {
-      contest: "October 2024",
-      problem: "NLP Text Classification",
-      student: "Emily Johnson",
-      score: 96,
-      downloadUrl: "#"
-    },
-    {
-      contest: "October 2024",
-      problem: "Sentiment Analysis",
-      student: "James Wilson",
-      score: 89,
-      downloadUrl: "#"
-    }
+    // {
+    //   contest: "December 2024",
+    //   problem: "Neural Networks Fundamentals",
+    //   student: "Alice Chen",
+    //   score: 100,
+    //   downloadUrl: "#"
+    // },
   ];
 
   return (
@@ -67,7 +32,7 @@ const Community = () => {
             <div className="bg-card rounded-2xl p-8 border border-border shadow-elegant">
               <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
                 <Trophy className="w-6 h-6 text-primary" />
-                Best Solutions Archive
+                Best Solutions Archive - no contests yet!
               </h2>
 
               <div className="overflow-x-auto">

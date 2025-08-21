@@ -6,63 +6,19 @@ const PastEditionsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const pastContests = [
-    {
-      id: 1,
-      month: "December",
-      year: "2024",
-      title: "Neural Networks Fundamentals",
-      difficulty: "Intermediate",
-      participants: 156,
-      winner: "Alice Chen",
-      problems: 4,
-      image: "bg-gradient-to-br from-primary/20 to-accent/20",
-      description: "Focus on understanding neural network architectures and optimization techniques."
-    },
-    {
-      id: 2,
-      month: "November",
-      year: "2024",
-      title: "Computer Vision Challenge",
-      difficulty: "Advanced",
-      participants: 134,
-      winner: "David Rodriguez",
-      problems: 5,
-      image: "bg-gradient-to-br from-accent/20 to-secondary/20",
-      description: "Image classification and object detection problems using modern CV techniques."
-    },
-    {
-      id: 3,
-      month: "October",
-      year: "2024",
-      title: "NLP & Text Processing",
-      difficulty: "Beginner",
-      participants: 189,
-      winner: "Sarah Kim",
-      problems: 3,
-      image: "bg-gradient-to-br from-secondary/20 to-primary/20",
-      description: "Natural language processing fundamentals and text analysis challenges."
-    },
-    {
-      id: 4,
-      month: "September",
-      year: "2024",
-      title: "Reinforcement Learning",
-      difficulty: "Advanced",
-      participants: 112,
-      winner: "Michael Zhang",
-      problems: 4,
-      image: "bg-gradient-to-br from-primary/30 to-accent/30",
-      description: "Game theory and RL algorithms applied to strategic decision making."
-    }
+    // {
+    //   id: 1,
+    //   month: "December",
+    //   year: "2024",
+    //   title: "Neural Networks Fundamentals",
+    //   difficulty: "Intermediate",
+    //   participants: 156,
+    //   winner: "Alice Chen",
+    //   problems: 4,
+    //   image: "bg-gradient-to-br from-primary/20 to-accent/20",
+    //   description: "Focus on understanding neural network architectures and optimization techniques."
+    // },
   ];
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % pastContests.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + pastContests.length) % pastContests.length);
-  };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -78,26 +34,15 @@ const PastEditionsSection = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6 font-display">
-            Past Contest Editions (mock design for now)
+            Past Contest Editions
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Explore previous challenges and see how our community has grown
           </p>
         </div>
 
-        {/* Filter Bar */}
         <div className="flex flex-wrap gap-4 justify-center mb-12">
-          <select className="px-4 py-2 rounded-lg border border-border bg-card text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary shadow-sm">
-            <option>All Years</option>
-            <option>2024</option>
-            <option>2023</option>
-          </select>
-          <select className="px-4 py-2 rounded-lg border border-border bg-card text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary shadow-sm">
-            <option>All Difficulties</option>
-            <option>Beginner</option>
-            <option>Intermediate</option>
-            <option>Advanced</option>
-          </select>
+          <p>No contests yet! </p>
         </div>
 
         {/* Contest Grid */}
