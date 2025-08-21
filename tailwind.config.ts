@@ -19,6 +19,17 @@ export default {
 		},
 		extend: {
 			colors: {
+				// AICC Brand Colors
+				'aicc-dark': '#0A001A',
+				'aicc-orange': '#FF6600',
+				'aicc-purple': '#8C00FF',
+				'aicc-white': '#FFFFFF',
+				'aicc-violet': '#4A008C',
+				'aicc-red': '#FF3300',
+				'aicc-teal': '#00CCFF',
+				'aicc-purple-light': '#B366FF',
+				'aicc-pink': '#FF99CC',
+
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -76,6 +87,11 @@ export default {
 			fontFamily: {
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
 				'display': ['Poppins', 'Inter', 'sans-serif'],
+			},
+			backgroundImage: {
+				'gradient-primary': 'linear-gradient(135deg, #8C00FF 0%, #FF6600 100%)',
+				'gradient-sparkle': 'linear-gradient(45deg, #B366FF 0%, #FF99CC 100%)',
+				'gradient-radial': 'radial-gradient(circle, #8C00FF 0%, #0A001A 70%)',
 			},
 			keyframes: {
 				'accordion-down': {

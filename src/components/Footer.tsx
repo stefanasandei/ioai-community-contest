@@ -44,23 +44,15 @@ const Footer = () => {
   ];
 
   return (
-    <footer id="community" className="bg-secondary/95 text-secondary-foreground relative overflow-hidden">
-      {/* Binary code pattern background */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="text-xs font-mono leading-none transform rotate-12 scale-150">
-          {Array.from({ length: 20 }, (_, i) => (
-            <div key={i} className="whitespace-nowrap">
-              {'01010101 11001010 00110011 10101010 '.repeat(20)}
-            </div>
-          ))}
-        </div>
-      </div>
+    <footer id="community" className="bg-aicc-dark text-aicc-white relative overflow-hidden">
+      {/* Gradient overlay background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-aicc-purple/10 via-transparent to-aicc-orange/10 pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-6 text-background">
+            <h3 className="text-xl font-bold mb-6 bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent">
               Quick Links
             </h3>
             <nav className="space-y-3">
@@ -68,7 +60,7 @@ const Footer = () => {
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className="block text-secondary-foreground/80 hover:text-background transition-colors hover:translate-x-1 transform duration-200"
+                  className="block text-aicc-white/80 hover:text-aicc-white transition-colors hover:translate-x-1 transform duration-200 hover:text-aicc-teal"
                 >
                   {link.label}
                 </button>
@@ -78,7 +70,7 @@ const Footer = () => {
 
           {/* Contact & Social */}
           <div>
-            <h3 className="text-xl font-bold mb-6 text-background">
+            <h3 className="text-xl font-bold mb-6 bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent">
               Connect With Us
             </h3>
             <div className="space-y-4">
@@ -90,9 +82,9 @@ const Footer = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center gap-3 text-secondary-foreground/80 transition-all duration-300 group`}
+                    className="flex items-center gap-3 text-aicc-white/80 hover:text-aicc-white transition-all duration-300 group hover:text-aicc-teal"
                   >
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors group-hover:shadow-glow">
+                    <div className="w-10 h-10 bg-aicc-violet/20 rounded-lg flex items-center justify-center group-hover:bg-aicc-purple/30 transition-colors group-hover:shadow-lg group-hover:shadow-aicc-purple/20">
                       <IconComponent className="w-5 h-5" />
                     </div>
                     {social.label}
@@ -104,15 +96,15 @@ const Footer = () => {
 
           {/* Newsletter Signup */}
           <div>
-            <h3 className="text-xl font-bold mb-6 text-background">
+            <h3 className="text-xl font-bold mb-6 bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent">
               Stay Updated
             </h3>
-            <p className="text-secondary-foreground/80 mb-6">
+            <p className="text-aicc-white/80 mb-6">
               Join our Discord for updates.
             </p>
             <button
               onClick={() => window.open('https://discord.gg/7GfxrqRreY', '_blank')}
-              className="btn-hero flex items-center gap-3 group"
+              className="bg-gradient-to-r from-aicc-purple to-aicc-orange text-aicc-white hover:from-aicc-purple-light hover:to-aicc-red transition-all duration-300 font-semibold px-8 py-4 rounded-lg flex items-center gap-3 group shadow-lg hover:shadow-xl hover:scale-105"
             >
               <Users className="w-5 h-5 group-hover:scale-110 transition-transform" />
               Join Discord
@@ -122,20 +114,20 @@ const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-primary/20 pt-8">
+        <div className="border-t border-aicc-violet/30 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-4">
-              <div className="text-2xl font-bold">
-                IOAI Community Contest
+              <div className="text-2xl font-bold bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent">
+                AI Community Contest
               </div>
-              <div className="text-secondary-foreground/60">
+              <div className="text-aicc-white/60">
                 Unofficial practice contest for IOAI
               </div>
             </div>
 
-            <div className="text-secondary-foreground/60 text-sm">
-              © 2024 IOAI Community Contest.{' '}
-              <span className="hover:text-primary transition-colors cursor-pointer hover:underline">
+            <div className="text-aicc-white/60 text-sm">
+              © 2024 AI Community Contest.{' '}
+              <span className="hover:text-aicc-teal transition-colors cursor-pointer hover:underline">
                 Made with ❤️ for the AI community
               </span>
             </div>

@@ -2,38 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-/* IOAI Community Contest Design System - Blue-themed modern design */
+/* AICC Design System - Modern Purple/Orange Gradient Design */
 
 @layer base {
   :root {
-    /* Core brand colors */
-    --background: 0 0% 98%;
-    --foreground: 210 15% 20%;
+    /* Core brand colors - More balanced for readability */
+    --background: 260 50% 8%;
+    /* Lighter dark background for better contrast */
+    --foreground: 0 0% 100%;
+    /* #FFFFFF */
 
-    /* Card system */
-    --card: 0 0% 100%;
-    --card-foreground: 210 15% 20%;
+    /* Card system - More visible cards */
+    --card: 260 40% 12%;
+    /* Better contrast cards */
+    --card-foreground: 0 0% 100%;
 
     /* Popover system */
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 15% 20%;
+    --popover: 260 40% 12%;
+    --popover-foreground: 0 0% 100%;
 
-    /* Primary brand - Electric Blue */
-    --primary: 217 91% 50%;
+    /* Primary brand - Electric Purple */
+    --primary: 270 100% 60%;
+    /* Slightly brighter for better visibility */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 217 91% 60%;
+    --primary-glow: 270 100% 70%;
 
-    /* Secondary - Navy */
-    --secondary: 217 100% 12%;
+    /* Secondary - Deep Orange */
+    --secondary: 20 100% 60%;
+    /* Slightly brighter */
     --secondary-foreground: 0 0% 100%;
 
-    /* Muted colors */
-    --muted: 210 20% 96%;
-    --muted-foreground: 210 15% 46%;
+    /* Muted colors - Better contrast */
+    --muted: 260 30% 18%;
+    --muted-foreground: 0 0% 80%;
 
-    /* Accent - Sky Blue */
-    --accent: 207 89% 72%;
-    --accent-foreground: 217 100% 12%;
+    /* Accent - Bright Teal */
+    --accent: 190 100% 60%;
+    /* Slightly brighter */
+    --accent-foreground: 260 50% 8%;
 
     /* Status colors */
     --destructive: 0 84% 60%;
@@ -41,24 +47,24 @@
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
 
-    /* UI elements */
-    --border: 210 20% 90%;
-    --input: 210 20% 90%;
-    --ring: 217 91% 50%;
+    /* UI elements - Better borders */
+    --border: 260 30% 25%;
+    --input: 260 40% 15%;
+    --ring: 270 100% 60%;
 
     /* Design tokens */
     --radius: 0.75rem;
 
     /* Custom gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(217 100% 12%), hsl(217 91% 50%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 20% 98%));
-    --gradient-accent: linear-gradient(135deg, hsl(217 91% 50%), hsl(207 89% 72%));
+    --gradient-hero: linear-gradient(135deg, hsl(270 100% 50%), hsl(20 100% 50%));
+    --gradient-card: linear-gradient(145deg, hsl(260 100% 5%), hsl(260 100% 8%));
+    --gradient-accent: linear-gradient(135deg, hsl(270 100% 50%), hsl(190 100% 50%));
 
     /* Shadows */
-    --shadow-soft: 0 4px 6px -1px hsl(217 91% 50% / 0.1);
-    --shadow-medium: 0 10px 15px -3px hsl(217 91% 50% / 0.1);
-    --shadow-large: 0 25px 50px -12px hsl(217 91% 50% / 0.25);
-    --shadow-glow: 0 0 40px hsl(217 91% 60% / 0.3);
+    --shadow-soft: 0 4px 6px -1px hsl(270 100% 50% / 0.1);
+    --shadow-medium: 0 10px 15px -3px hsl(270 100% 50% / 0.1);
+    --shadow-large: 0 25px 50px -12px hsl(270 100% 50% / 0.25);
+    --shadow-glow: 0 0 40px hsl(270 100% 60% / 0.3);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -145,11 +151,15 @@
 
   /* Hero section styles */
   .hero-title {
-    @apply text-6xl md:text-7xl font-bold bg-gradient-to-r from-neutral-50 to-neutral-300 bg-clip-text text-transparent;
+    @apply text-6xl md:text-7xl font-bold;
+    background: linear-gradient(135deg, #8C00FF 0%, #FF6600 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .hero-background {
-    background: var(--gradient-hero);
+    background: linear-gradient(135deg, #0A001A 0%, #4A008C 50%, #8C00FF 100%);
     position: relative;
     overflow: hidden;
   }
@@ -161,7 +171,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: radial-gradient(circle at 50% 50%, hsl(217 91% 50% / 0.1) 0%, transparent 70%);
+    background-image: radial-gradient(circle at 50% 50%, rgba(140, 0, 255, 0.15) 0%, transparent 70%);
     animation: pulse 4s ease-in-out infinite;
   }
 

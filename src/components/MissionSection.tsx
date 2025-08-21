@@ -3,7 +3,7 @@ import missionIllustration from '@/assets/mission-illustration.jpg';
 const MissionSection = () => {
   return (
     <section id="mission" className="bg-muted/30">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl py-14 mx-auto px-6">
         <div className="relative">
           {/* Background illustration */}
           <div className="absolute inset-0 opacity-20">
@@ -20,11 +20,11 @@ const MissionSection = () => {
             <div className="max-w-3xl mx-auto text-center">
               <div className="w-1 h-16 bg-primary mx-auto mb-8 rounded-full" />
 
-              <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-8 font-display">
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 font-display bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent">
                 Our Mission
               </h2>
 
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
+              <p className="text-lg md:text-xl text-slate-700 leading-relaxed mb-8">
                 The IOAI Community Contest bridges the gap between learning and mastery.
                 We create a supportive environment where AI enthusiasts can practice, learn,
                 and grow together through carefully crafted monthly challenges.

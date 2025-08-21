@@ -57,16 +57,16 @@ const Navigation = () => {
   return (
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-md'
-        : 'bg-background/90 backdrop-blur-sm'
+        ? 'bg-aicc-dark/95 backdrop-blur-md border-b border-aicc-violet/30 shadow-lg shadow-aicc-purple/20'
+        : 'bg-aicc-dark/90 backdrop-blur-sm'
         }`}>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <button
               onClick={() => { handleNavigation('/', 'hero'); setMobileMenuOpen(false); }}
-              className="text-xl font-bold text-gradient hover:opacity-80 transition-opacity"
+              className="text-xl font-bold bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent hover:from-aicc-purple-light hover:to-aicc-red transition-all duration-300"
             >
-              IOAI Contest
+              AI Contest
             </button>
 
             {/* Desktop nav */}
@@ -75,25 +75,26 @@ const Navigation = () => {
                 <button
                   key={index}
                   onClick={() => handleNavigation(item.path, item.sectionId)}
-                  className="nav-link"
+                  className="relative text-aicc-white/80 hover:text-aicc-white transition-colors duration-300 font-medium"
                 >
                   {item.label}
+                  <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-aicc-purple to-aicc-orange transition-all duration-300 group-hover:w-full transform -translate-x-1/2" />
                 </button>
               ))}
             </div>
 
             {/* Mobile hamburger */}
             <button
-              className="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+              className="md:hidden p-2 rounded-lg bg-aicc-violet/20 hover:bg-aicc-violet/30 focus:outline-none focus:ring-2 focus:ring-aicc-purple transition-colors"
               onClick={() => setMobileMenuOpen((open) => !open)}
               aria-label="Open menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-aicc-white" /> : <Menu className="w-6 h-6 text-aicc-white" />}
             </button>
 
             <button
               onClick={() => handleNavigation('https://discord.gg/7GfxrqRreY')}
-              className="btn-hero text-sm px-6 py-2 hidden md:inline-block"
+              className="bg-gradient-to-r from-aicc-purple to-aicc-orange text-aicc-white hover:from-aicc-purple-light hover:to-aicc-red transition-all duration-300 font-semibold text-sm px-6 py-2 hidden md:inline-block rounded-lg shadow-lg hover:shadow-xl hover:scale-105"
             >
               Join Discord
             </button>
@@ -101,20 +102,20 @@ const Navigation = () => {
         </div>
         {/* Mobile menu dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-background/95 backdrop-blur-md border-b border-border shadow-md px-6 pb-4">
+          <div className="md:hidden bg-aicc-dark/95 backdrop-blur-md border-b border-aicc-violet/30 shadow-lg px-6 pb-4">
             <div className="flex flex-col space-y-4">
               {navItems.map((item, index) => (
                 <button
                   key={index}
                   onClick={() => { handleNavigation(item.path, item.sectionId); setMobileMenuOpen(false); }}
-                  className="nav-link text-left w-full"
+                  className="text-aicc-white/80 hover:text-aicc-white transition-colors duration-300 font-medium text-left w-full py-2"
                 >
                   {item.label}
                 </button>
               ))}
               <button
                 onClick={() => { handleNavigation('https://discord.gg/7GfxrqRreY'); setMobileMenuOpen(false); }}
-                className="btn-hero text-sm px-6 py-2 w-full"
+                className="bg-gradient-to-r from-aicc-purple to-aicc-orange text-aicc-white hover:from-aicc-purple-light hover:to-aicc-red transition-all duration-300 font-semibold text-sm px-6 py-2 w-full rounded-lg shadow-lg hover:shadow-xl hover:scale-105 mt-2"
               >
                 Join Discord
               </button>
@@ -127,7 +128,7 @@ const Navigation = () => {
       {showBackToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-40 w-12 h-12 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-glow transition-all duration-300 hover:scale-110 animate-pulse"
+          className="fixed bottom-8 right-8 z-40 w-12 h-12 bg-gradient-to-r from-aicc-purple to-aicc-orange text-aicc-white rounded-full shadow-lg hover:shadow-xl hover:shadow-aicc-purple/30 transition-all duration-300 hover:scale-110 animate-pulse hover:from-aicc-purple-light hover:to-aicc-red"
           aria-label="Back to top"
         >
           <ArrowUp className="w-5 h-5 mx-auto" />
