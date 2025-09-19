@@ -66,7 +66,7 @@ const Navigation = () => {
               onClick={() => { handleNavigation('/', 'hero'); setMobileMenuOpen(false); }}
               className="text-xl font-bold bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent hover:from-aicc-purple-light hover:to-aicc-red transition-all duration-300"
             >
-              AI Contest
+              AICC
             </button>
 
             {/* Desktop nav */}

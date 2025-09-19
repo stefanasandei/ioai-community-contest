@@ -152,14 +152,15 @@
   /* Hero section styles */
   .hero-title {
     @apply text-6xl md:text-7xl font-bold;
-    background: linear-gradient(135deg, #8C00FF 0%, #FF6600 100%);
+    background: linear-gradient(135deg, #8c00ff 0%, #FF6600 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    /* filter: drop-shadow(0 0 6px rgba(140, 0, 255, 0.5)) drop-shadow(0 0 12px rgba(255, 102, 0, 0.4)); */
   }
 
   .hero-background {
-    background: linear-gradient(135deg, #0A001A 0%, #4A008C 50%, #8C00FF 100%);
+    background: linear-gradient(135deg, #0A001A 0%, #4b008caf 50%, #8c00ff2d 100%);
     position: relative;
     overflow: hidden;
   }

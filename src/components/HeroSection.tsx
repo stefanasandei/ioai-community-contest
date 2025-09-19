@@ -19,7 +19,7 @@ const HeroSection = () => {
         </h1>
 
         <p className="text-xl md:text-2xl text-aicc-white mb-4 font-medium animate-slide-up">
-          Unofficial practice contest for IOAI; work in progress
+          Unofficial practice contest for IOAI
         </p>
 
         <p className="text-lg md:text-xl text-aicc-white/90 mb-12 max-w-2xl mx-auto animate-slide-up">
@@ -47,14 +47,14 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Floating particles effect with AICC colors */}
+      {/* Floating particles effect with AICC colors
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-aicc-purple/40 rounded-full animate-float" style={{ animationDelay: '0s' }} />
         <div className="absolute top-1/2 right-1/4 w-3 h-3 bg-aicc-orange/50 rounded-full animate-float" style={{ animationDelay: '1s' }} />
         <div className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-aicc-teal/60 rounded-full animate-float" style={{ animationDelay: '2s' }} />
         <div className="absolute top-1/3 right-1/3 w-2 h-2 bg-aicc-pink/30 rounded-full animate-float" style={{ animationDelay: '1.5s' }} />
         <div className="absolute bottom-1/4 right-1/2 w-1.5 h-1.5 bg-aicc-violet/50 rounded-full animate-float" style={{ animationDelay: '0.5s' }} />
-      </div>
+      </div> */}
     </section>
   );
 };

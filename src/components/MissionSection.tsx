@@ -24,7 +24,7 @@ const MissionSection = () => {
                 Our Mission
               </h2>
 
-              <p className="text-lg md:text-xl text-slate-700 leading-relaxed mb-8">
+              <p className="text-lg md:text-xl leading-relaxed mb-8">
                 The IOAI Community Contest bridges the gap between learning and mastery.
                 We create a supportive environment where AI enthusiasts can practice, learn,
                 and grow together through carefully crafted monthly challenges.
