@@ -132,7 +132,7 @@ const Community = () => {
                 <p className="text-muted-foreground mb-6">
                   Connect with fellow AI enthusiasts, discuss solutions, and stay updated on upcoming contests.
                 </p>
-                <a href=" https://discord.gg/7GfxrqRreY" target='_blank' className="btn-hero">
+                <a href=" https://discord.gg/7GfxrqRreY" target='_blank' className="btn-gradient inline-block px-8 py-3 rounded-md">
                   Join Discord Server
                 </a>
               </div>

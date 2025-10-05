@@ -20,11 +20,11 @@ const MissionSection = () => {
             <div className="max-w-3xl mx-auto text-center">
               <div className="w-1 h-16 bg-primary mx-auto mb-8 rounded-full" />
 
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 font-display bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl font-semibold mb-8 font-display text-gradient">
                 Our Mission
               </h2>
 
-              <p className="text-lg md:text-xl leading-relaxed mb-8">
+              <p className="text-lg md:text-xl leading-relaxed mb-8 font-light text-gray-800 dark:text-gray-200">
                 The IOAI Community Contest bridges the gap between learning and mastery.
                 We create a supportive environment where AI enthusiasts can practice, learn,
                 and grow together through carefully crafted monthly challenges.
@@ -35,8 +35,8 @@ const MissionSection = () => {
                   <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <div className="w-8 h-8 bg-primary rounded-lg animate-pulse" />
                   </div>
-                  <h3 className="font-semibold text-foreground mb-2">Practice</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Practice</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 font-light">
                     Regular challenges to keep your skills sharp
                   </p>
                 </div>
@@ -45,8 +45,8 @@ const MissionSection = () => {
                   <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <div className="w-8 h-8 bg-accent rounded-lg animate-pulse" style={{ animationDelay: '0.5s' }} />
                   </div>
-                  <h3 className="font-semibold text-foreground mb-2">Learn</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Learn</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 font-light">
                     Discover new techniques and approaches
                   </p>
                 </div>
@@ -55,8 +55,8 @@ const MissionSection = () => {
                   <div className="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <div className="w-8 h-8 bg-secondary rounded-lg animate-pulse" style={{ animationDelay: '1s' }} />
                   </div>
-                  <h3 className="font-semibold text-foreground mb-2">Connect</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Connect</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 font-light">
                     Build relationships with fellow AI enthusiasts
                   </p>
                 </div>
