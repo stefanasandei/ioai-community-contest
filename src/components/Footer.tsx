@@ -1,20 +1,9 @@
-import { ExternalLink, Github, Twitter, Mail, Users } from 'lucide-react';
-import { useState } from 'react';
+import { ExternalLink, Github } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle newsletter subscription
-    setIsSubscribed(true);
-    setEmail('');
-    setTimeout(() => setIsSubscribed(false), 3000);
-  };
 
   const handleNavigation = (path: string, sectionId?: string) => {
     if (path === '/' && sectionId) {
@@ -63,15 +52,13 @@ const Footer = () => {
   ];
 
   return (
-    <footer id="community" className="bg-aicc-dark text-aicc-white relative overflow-hidden">
-      {/* Gradient overlay background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-aicc-purple/10 via-transparent to-aicc-orange/10 pointer-events-none" />
+    <footer id="community" className="bg-background text-foreground border-t border-border">
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-3 gap-12 mb-12">
+        <div className="grid md:grid-cols-2 gap-12 mb-12">
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-6 bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent">
+            <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
               Quick Links
             </h3>
             <nav className="space-y-3">
@@ -79,7 +66,7 @@ const Footer = () => {
                 <button
                   key={index}
                   onClick={() => handleNavigation(link.path, link.sectionId)}
-                  className="block text-aicc-white/80 hover:text-aicc-white transition-colors hover:translate-x-1 transform duration-200 hover:text-aicc-teal"
+                  className="block text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors hover:translate-x-1 transform duration-200 font-light"
                 >
                   {link.label}
                 </button>
@@ -89,7 +76,7 @@ const Footer = () => {
 
           {/* Contact & Social */}
           <div>
-            <h3 className="text-xl font-bold mb-6 bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent">
+            <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
               Connect With Us
             </h3>
             <div className="space-y-4">
@@ -101,56 +88,22 @@ const Footer = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-aicc-white/80 hover:text-aicc-white transition-all duration-300 group hover:text-aicc-teal"
+                    className={`flex items-center gap-3 text-gray-600 dark:text-gray-400 transition-colors ${social.color} font-light`}
                   >
-                    <div className="w-10 h-10 bg-aicc-violet/20 rounded-lg flex items-center justify-center group-hover:bg-aicc-purple/30 transition-colors group-hover:shadow-lg group-hover:shadow-aicc-purple/20">
-                      <IconComponent className="w-5 h-5" />
-                    </div>
-                    {social.label}
+                    <IconComponent className="w-5 h-5" />
+                    <span>{social.label}</span>
                   </a>
                 );
               })}
             </div>
           </div>
 
-          {/* Newsletter Signup */}
-          <div>
-            <h3 className="text-xl font-bold mb-6 bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent">
-              Stay Updated
-            </h3>
-            <p className="text-aicc-white/80 mb-6">
-              Join our Discord for updates.
-            </p>
-            <button
-              onClick={() => window.open('https://discord.gg/7GfxrqRreY', '_blank')}
-              className="bg-gradient-to-r from-aicc-purple to-aicc-orange text-aicc-white hover:from-aicc-purple-light hover:to-aicc-red transition-all duration-300 font-semibold px-8 py-4 rounded-lg flex items-center gap-3 group shadow-lg hover:shadow-xl hover:scale-105"
-            >
-              <Users className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              Join Discord
-              <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
+
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-aicc-violet/30 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-4">
-              <div className="text-2xl font-bold bg-gradient-to-r from-aicc-purple to-aicc-orange bg-clip-text text-transparent">
-                AI Community Contest
-              </div>
-              <div className="text-aicc-white/60">
-                Unofficial practice contest for IOAI
-              </div>
-            </div>
-
-            <div className="text-aicc-white/60 text-sm">
-              © 2024 AI Community Contest.{' '}
-              <span className="hover:text-aicc-teal transition-colors cursor-pointer hover:underline">
-                Made with ❤️ for the AI community
-              </span>
-            </div>
-          </div>
+        {/* Copyright */}
+        <div className="border-t border-border/50 pt-8 text-center text-gray-500 dark:text-gray-500">
+          <p className="font-light">&copy; {new Date().getFullYear()} IOAI Community Contest. All rights reserved.</p>
         </div>
       </div>
     </footer>

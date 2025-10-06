@@ -15,7 +15,7 @@ const PastEditionsSection = () => {
     //   participants: 156,
     //   winner: "Alice Chen",
     //   problems: 4,
-    //   image: "bg-gradient-to-br from-primary/20 to-accent/20",
+    //   image: "",
     //   description: "Focus on understanding neural network architectures and optimization techniques."
     // },
   ];
@@ -33,16 +33,16 @@ const PastEditionsSection = () => {
     <section id="past-editions" className="section-padding bg-muted/20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6 font-display">
+          <h2 className="text-4xl md:text-5xl font-semibold text-gradient mb-6 font-display">
             Past Contest Editions
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto font-light">
             Explore previous challenges and see how our community has grown
           </p>
         </div>
 
         <div className="flex flex-wrap gap-4 justify-center mb-12">
-          <p>No contests yet! </p>
+          <p className="text-gray-800 dark:text-gray-200">No contests yet! </p>
         </div>
 
         {/* Contest Grid */}
@@ -58,19 +58,19 @@ const PastEditionsSection = () => {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
                       {contest.month} {contest.year}
                     </h3>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(contest.difficulty)}`}>
                       {contest.difficulty}
                     </span>
                   </div>
-                  <p className="text-lg text-foreground mb-2">{contest.title}</p>
-                  <p className="text-sm text-muted-foreground mb-3">{contest.description}</p>
+                  <p className="text-lg text-gray-800 dark:text-gray-200 mb-2">{contest.title}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{contest.description}</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-4">
                   <span className="flex items-center gap-1">
                     <Trophy className="w-4 h-4 text-primary" />
@@ -97,62 +97,36 @@ const PastEditionsSection = () => {
           <div className="bg-card rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-border">
             <div className="flex justify-between items-start mb-6">
               <div>
-                <h3 className="text-2xl font-bold text-gradient mb-2">
+                <h3 className="text-2xl font-semibold text-gradient mb-2">
                   {selectedContest.month} {selectedContest.year}
                 </h3>
-                <p className="text-xl text-muted-foreground">
-                  {selectedContest.title}
-                </p>
+                <p className="text-lg text-gray-600 dark:text-gray-400">{selectedContest.title}</p>
               </div>
-              <button
-                onClick={() => setSelectedContest(null)}
-                className="w-8 h-8 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors"
-              >
-                <X className="w-4 h-4" />
+              <button onClick={() => setSelectedContest(null)} className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                <X className="w-6 h-6" />
               </button>
             </div>
 
-            <p className="text-muted-foreground mb-6">
-              {selectedContest.description}
-            </p>
+            <div className="space-y-6 text-gray-800 dark:text-gray-200">
+              <p>{selectedContest.description}</p>
 
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="bg-muted/50 rounded-lg p-4">
-                <div className="text-sm text-muted-foreground mb-1">Difficulty</div>
-                <div className={`inline-block px-2 py-1 rounded text-xs font-medium ${getDifficultyColor(selectedContest.difficulty)}`}>
-                  {selectedContest.difficulty}
-                </div>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="font-semibold">Difficulty</div><div>{selectedContest.difficulty}</div>
+                <div className="font-semibold">Participants</div><div>{selectedContest.participants}</div>
+                <div className="font-semibold">Winner</div><div>{selectedContest.winner}</div>
+                <div className="font-semibold">Problems</div><div>{selectedContest.problems}</div>
               </div>
-              <div className="bg-muted/50 rounded-lg p-4">
-                <div className="text-sm text-muted-foreground mb-1">Participants</div>
-                <div className="font-semibold">{selectedContest.participants}</div>
-              </div>
-              <div className="bg-muted/50 rounded-lg p-4">
-                <div className="text-sm text-muted-foreground mb-1">Problems</div>
-                <div className="font-semibold">{selectedContest.problems}</div>
-              </div>
-              <div className="bg-muted/50 rounded-lg p-4">
-                <div className="text-sm text-muted-foreground mb-1">Winner</div>
-                <div className="font-semibold flex items-center gap-1">
-                  <Trophy className="w-4 h-4 text-primary" />
-                  {selectedContest.winner}
-                </div>
-              </div>
-            </div>
 
-            <div className="flex flex-wrap gap-4">
-              <button className="btn-hero flex items-center gap-2">
-                <Download className="w-4 h-4" />
-                Download Problems
-              </button>
-              <button className="btn-outline flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                View Solutions
-              </button>
-              <button className="btn-outline flex items-center gap-2">
-                <Trophy className="w-4 h-4" />
-                Community Solutions
-              </button>
+              <div className="flex gap-4 pt-4 border-t border-border">
+                <button className="btn-secondary w-full flex items-center justify-center gap-2">
+                  <Download className="w-4 h-4" />
+                  Download Problems
+                </button>
+                <button className="btn-secondary w-full flex items-center justify-center gap-2">
+                  <Trophy className="w-4 h-4" />
+                  View Leaderboard
+                </button>
+              </div>
             </div>
           </div>
         </div>
