@@ -68,7 +68,7 @@ const Navigation = () => {
                 onClick={() => { handleNavigation('/', 'hero'); setMobileMenuOpen(false); }}
                 className="text-xl font-bold text-primary transition-colors"
               >
-                <img src="/src/assets/AICCCC.png" alt="AICC Logo" className="h-10" />
+                <img src="/assets/AICCCC.png" alt="AICC Logo" className="h-10" />
               </button>
 
               {/* Desktop nav */}
