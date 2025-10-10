@@ -62,4 +62,34 @@ Score = 0.011
       `,
         fileName: "deceptive-points.zip",
     },
+    {
+        contest: "October 2025",
+        problem: "Latent Model Classification",
+        student: "Bartosz Kasyna",
+        score: 0.929,
+        downloadUrl: "#",
+        writeup: `no text provided; solution link soon
+      `,
+        fileName: "deceptive-points.zip",
+    },
+    {
+        contest: "October 2025",
+        problem: "Latent Model Classification",
+        student: "Michał",
+        score: 0.975,
+        downloadUrl: "#",
+        writeup: `training final linear head; solution link soon
+      `,
+        fileName: "deceptive-points.zip",
+    },
+    {
+        contest: "October 2025",
+        problem: "Deceptive Points",
+        student: "Michał",
+        score: 0.064,
+        downloadUrl: "#",
+        writeup: `training model using training data filtered by topk; solution link soon
+      `,
+        fileName: "deceptive-points.zip",
+    },
 ];

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Calendar, Trophy, Download, Eye, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { BestSolutions } from '@/pages/Community';
 
 const PastEditionsSection = () => {
   const [selectedContest, setSelectedContest] = useState<any>(null);
@@ -42,7 +43,7 @@ const PastEditionsSection = () => {
         </div>
 
         <div className="flex flex-wrap gap-4 justify-center mb-12">
-          <p className="text-gray-800 dark:text-gray-200">No contests yet! </p>
+          <BestSolutions />
         </div>
 
         {/* Contest Grid */}
