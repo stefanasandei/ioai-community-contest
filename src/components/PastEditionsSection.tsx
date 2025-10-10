@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Trophy, Download, Eye, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { Calendar, Trophy, Download, X } from 'lucide-react';
 import { BestSolutions } from '@/pages/Community';
 
 const PastEditionsSection = () => {
@@ -7,28 +7,37 @@ const PastEditionsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const pastContests = [
-    // {
-    //   id: 1,
-    //   month: "December",
-    //   year: "2024",
-    //   title: "Neural Networks Fundamentals",
-    //   difficulty: "Intermediate",
-    //   participants: 156,
-    //   winner: "Alice Chen",
-    //   problems: 4,
-    //   image: "",
-    //   description: "Focus on understanding neural network architectures and optimization techniques."
-    // },
+    {
+      id: 1,
+      month: "October",
+      year: "2025",
+      title: "Round 0",
+      // difficulty: "Intermediate",
+      // participants: 156,
+      winner: "Nikoloz Gegenava",
+      problems: 3,
+      tasks: [
+        {
+          name: 'Deceptive Points',
+          type: 'ML',
+          kaggle: 'https://www.kaggle.com/competitions/deceptive-points-aicc-round-0',
+          solution: 'https://github.com/stefanasandei/roai-solved/blob/main/international-contests/aicc/round-0/deceptive_points.ipynb'
+        },
+        {
+          name: 'Find Brain Tumors',
+          type: 'CV',
+          kaggle: 'https://www.kaggle.com/competitions/aicc-round-0-brain-tumor',
+          solution: 'https://github.com/stefanasandei/roai-solved/blob/main/international-contests/aicc/round-0/brain_tumors_byol.ipynb'
+        },
+        {
+          name: 'Latent Model Classification',
+          type: 'ML',
+          kaggle: 'https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/',
+          solution: 'https://github.com/stefanasandei/roai-solved/blob/main/international-contests/aicc/round-0/latent-model-classification.ipynb'
+        },
+      ]
+    },
   ];
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Beginner': return 'text-success bg-success/10';
-      case 'Intermediate': return 'text-accent bg-accent/10';
-      case 'Advanced': return 'text-destructive bg-destructive/10';
-      default: return 'text-muted-foreground bg-muted/10';
-    }
-  };
 
   return (
     <section id="past-editions" className="section-padding bg-muted/20">
@@ -42,53 +51,52 @@ const PastEditionsSection = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4 justify-center mb-12">
-          <BestSolutions />
-        </div>
-
-        {/* Contest Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {pastContests.map((contest) => (
-            <div key={contest.id} className="feature-card group hover:border-primary/50 cursor-pointer"
-              onClick={() => setSelectedContest(contest)}>
-              <div className="flex items-start gap-4 mb-4">
-                <div className="flex-shrink-0">
-                  <div className={`w-16 h-16 ${contest.image} rounded-xl flex items-center justify-center`}>
-                    <Calendar className="w-8 h-8 text-background" />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
-                      {contest.month} {contest.year}
-                    </h3>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(contest.difficulty)}`}>
-                      {contest.difficulty}
-                    </span>
-                  </div>
-                  <p className="text-lg text-gray-800 dark:text-gray-200 mb-2">{contest.title}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{contest.description}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
-                <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1">
-                    <Trophy className="w-4 h-4 text-primary" />
-                    {contest.winner}
-                  </span>
-                  <span>{contest.participants} participants</span>
-                  <span>{contest.problems} problems</span>
-                </div>
-                <div className="flex gap-2">
-                  <button className="opacity-0 group-hover:opacity-100 transition-opacity text-primary hover:text-primary-glow flex items-center gap-1 text-xs">
-                    <Eye className="w-3 h-3" />
-                    Details
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+        {/* Contest Table */}
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-card rounded-lg border border-border">
+            <thead>
+              <tr className="text-left text-sm text-gray-600 dark:text-gray-400">
+                <th className="px-6 py-3">Contest</th>
+                <th className="px-6 py-3">Task Name</th>
+                <th className="px-6 py-3">Type</th>
+                <th className="px-6 py-3">Kaggle</th>
+                <th className="px-6 py-3">Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pastContests.flatMap((contest) =>
+                contest.tasks.map((task, idx) => (
+                  <tr key={`${contest.id}-${idx}`} className="border-t text-gray-600 dark:text-gray-400 border-border hover:bg-muted/10 transition-colors">
+                    <td className="px-6 py-4 align-top">
+                      <div className="font-semibold">{contest.month} {contest.year}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">{contest.title}</div>
+                    </td>
+                    <td className="px-6 py-4 align-top text-gray-600 dark:text-gray-400">{task.name}</td>
+                    <td className="px-6 py-4 align-top text-gray-600 dark:text-gray-400">{task.type}</td>
+                    <td className="px-6 py-4 align-top">
+                      {task.kaggle ? (
+                        <a href={task.kaggle} target="_blank" rel="noreferrer" className="text-primary hover:underline">Kaggle</a>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 align-top">
+                      {task.solution ? (
+                        <a href={task.solution} target="_blank" rel="noreferrer" className="text-primary hover:underline">Solution</a>
+                      ) : (
+                        <button
+                          onClick={() => {/* placeholder to fill later */ }}
+                          className="text-sm text-muted-foreground hover:text-primary"
+                        >
+                          Add
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
 
