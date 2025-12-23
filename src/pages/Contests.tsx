@@ -6,7 +6,7 @@ import ContestCard from '@/components/ContestCard';
 import contestsData from '@/data/contests.json';
 
 // Extended contest data with all contests from latest to first
-const allContests = contestsData.contests;
+const allContests = contestsData.contests.sort((a, b) => b.id - a.id);
 
 const Contests = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -36,7 +36,7 @@ const Contests = () => {
 
             {/* Header - with top padding to account for fixed navbar */}
             <div className="bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10 pt-[72px]">
-                <div className="max-w-7xl mx-auto px-4 py-10">
+                <div className="max-w-7xl mx-auto px-4 pt-10 pb-6">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">
                         <span className="text-gray-900 dark:text-white">Past Contest</span>{' '}
                         <span className="text-gradient">Editions</span>
@@ -72,7 +72,7 @@ const Contests = () => {
             </div>
 
             {/* Results Count */}
-            <div className="max-w-7xl mx-auto px-6 py-6">
+            <div className="max-w-7xl mx-auto px-6 pt-4">
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                     Showing {filteredContests.length} contest{filteredContests.length !== 1 ? 's' : ''}
                     {searchQuery && ` for "${searchQuery}"`}

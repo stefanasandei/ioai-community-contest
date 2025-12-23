@@ -10,19 +10,22 @@
                     "name": "Deceptive Points",
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0",
-                    "solution": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0"
+                    "solution": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0",
+                    "author": "Gior"
                 },
                 {
                     "name": "Find Brain Tumors",
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
-                    "solution": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor"
+                    "solution": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
+                    "author": "Asandei Stefan-Alexandru"
                 },
                 {
                     "name": "Latent Model Classification",
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
-                    "solution": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/"
+                    "solution": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
+                    "author": "Gior"
                 }
             ]
         },
@@ -36,19 +39,22 @@
                     "name": "The Defected Nuts",
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/the-defected-nuts-aicc-round-1-2",
-                    "solution": "#todo"
+                    "solution": "#todo",
+                    "author": "Cowile"
                 },
                 {
                     "name": "Autocorrect",
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/autocorrect-aicc-round-1-2",
-                    "solution": "#todo"
+                    "solution": "#todo",
+                    "author": "Walnit"
                 },
                 {
                     "name": "Is that audio?",
-                    "type": "NLP",
+                    "type": "Audio",
                     "kaggle": "https://www.kaggle.com/competitions/is-that-audio-aicc-round-1-2",
-                    "solution": "#todo"
+                    "solution": "#todo",
+                    "author": "Gior"
                 }
             ]
         },
@@ -63,19 +69,22 @@
                     "name": "Essay Gap",
                     "type": "NLP",
                     "kaggle": "#todo",
-                    "solution": "#todo"
+                    "solution": "#todo",
+                    "author": "Asandei Stefan-Alexandru"
                 },
                 {
                     "name": "Demixing Audio",
-                    "type": "NLP",
+                    "type": "Audio",
                     "kaggle": "#todo",
-                    "solution": "#todo"
+                    "solution": "#todo",
+                    "author": "Gior"
                 },
                 {
                     "name": "Face Matching",
                     "type": "CV",
                     "kaggle": "#todo",
-                    "solution": "#todo"
+                    "solution": "#todo",
+                    "author": "Asandei Stefan-Alexandru"
                 }
             ]
         }
