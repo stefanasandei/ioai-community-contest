@@ -37,13 +37,14 @@ const HeroSection = () => {
             <ExternalLink className="w-4 h-4" />
           </button>
 
-          <button
-            onClick={() => scrollToSection('past-editions')}
-            className="bg-background text-primary font-normal px-8 py-4 rounded-md flex items-center gap-3 border border-primary hover:bg-primary hover:text-primary-foreground transition-colors"
-          >
-            View Past Contests
-            <div className="w-4 h-4">→</div>
-          </button>
+          <a href="/contests">
+            <button
+              className="bg-background text-primary font-normal px-8 py-4 rounded-md flex items-center gap-3 border border-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+            >
+              View Past Contests
+              {/* <div className="w-4 h-4">→</div> */}
+            </button>
+          </a>
         </div>
       </div>
     </section>

@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import BecomeSetter from "./pages/BecomeSetter";
 import Rules from "./pages/Rules";
 import Community from "./pages/Community";
+import Contests from "./pages/Contests";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/become-setter" element={<BecomeSetter />} />
           <Route path="/rules" element={<Rules />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/contests" element={<Contests />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -33,11 +33,11 @@ body {
 }
 
 /* Spacing utilities */
-.space-y-section > * + * {
+.space-y-section>*+* {
   margin-top: var(--space-24);
 }
 
-.space-y-content > * + * {
+.space-y-content>*+* {
   margin-top: var(--space-8);
 }
 
@@ -84,7 +84,7 @@ body {
 
     /* Design tokens */
     --radius: 0.25rem;
-    
+
     /* Spacing system */
     --space-1: 0.25rem;
     --space-2: 0.5rem;
@@ -104,7 +104,7 @@ body {
     /* Transitions */
     --transition-smooth: all 0.3s ease;
     --transition-fast: all 0.15s ease;
-    
+
     /* Container widths */
     --container-max: 1200px;
     --container-narrow: 960px;
@@ -129,7 +129,7 @@ body {
     --aicc-purple-light: #B366FF;
     --aicc-pink: #FF99CC;
 
-    /* New Gradient Styles */
+    /* Lighter Gradient Styles */
     --gradient-button: linear-gradient(135deg, var(--aicc-purple) 0%, var(--aicc-orange) 100%);
     --gradient-button-hover: linear-gradient(135deg, var(--aicc-purple-light) 0%, var(--aicc-red) 100%);
   }
@@ -191,8 +191,14 @@ body {
 }
 
 @layer components {
+
   /* Clean typography system */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-bold text-foreground;
   }
 
@@ -261,9 +267,9 @@ body {
     @apply w-full;
   }
 
-  /* Card styles */
+  /* Card styles - no bigger on hover */
   .feature-card {
-    @apply bg-card border border-border rounded-lg p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    @apply bg-card border border-border rounded-lg p-6 transition-all duration-300;
     background: var(--gradient-card);
     box-shadow: var(--shadow-soft);
   }
@@ -274,13 +280,12 @@ body {
 
   /* Button variants */
   .btn-hero {
-    @apply bg-primary text-primary-foreground hover:bg-primary-glow transition-all duration-300 font-semibold px-8 py-4 rounded-lg;
+    @apply bg-primary text-primary-foreground transition-all duration-300 font-semibold px-8 py-4 rounded-lg;
     box-shadow: var(--shadow-soft);
   }
 
   .btn-hero:hover {
     box-shadow: var(--shadow-glow);
-    transform: translateY(-2px);
   }
 
   .btn-outline {
@@ -289,7 +294,6 @@ body {
 
   .btn-outline:hover {
     box-shadow: var(--shadow-glow);
-    transform: translateY(-2px);
   }
 
   /* Gradient button for Discord CTA */
@@ -383,7 +387,8 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    height: 80px; /* Adjust as needed */
+    height: 80px;
+    /* Adjust as needed */
     pointer-events: none;
     overflow: hidden;
   }
@@ -392,8 +397,10 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: -40px; /* Position the glow below the container */
-    width: 150%; /* Make it wider than the navbar */
+    bottom: -40px;
+    /* Position the glow below the container */
+    width: 150%;
+    /* Make it wider than the navbar */
     height: 80px;
     background: linear-gradient(90deg, #A259FF 0%, #FF6ABF 50%, #FFB86B 100%);
     filter: blur(45px);
@@ -441,4 +448,36 @@ body {
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Slide up animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
 }

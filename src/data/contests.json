@@ -1,0 +1,83 @@
+{
+    "contests": [
+        {
+            "id": 1,
+            "month": "October",
+            "year": "2025",
+            "title": "Round 0",
+            "tasks": [
+                {
+                    "name": "Deceptive Points",
+                    "type": "ML",
+                    "kaggle": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0",
+                    "solution": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0"
+                },
+                {
+                    "name": "Find Brain Tumors",
+                    "type": "CV",
+                    "kaggle": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
+                    "solution": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor"
+                },
+                {
+                    "name": "Latent Model Classification",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
+                    "solution": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "month": "November",
+            "year": "2025",
+            "title": "Round 1",
+            "tasks": [
+                {
+                    "name": "The Defected Nuts",
+                    "type": "CV",
+                    "kaggle": "https://www.kaggle.com/competitions/the-defected-nuts-aicc-round-1-2",
+                    "solution": "#todo"
+                },
+                {
+                    "name": "Autocorrect",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/autocorrect-aicc-round-1-2",
+                    "solution": "#todo"
+                },
+                {
+                    "name": "Is that audio?",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/is-that-audio-aicc-round-1-2",
+                    "solution": "#todo"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "month": "December",
+            "year": "2025",
+            "title": "Round 2",
+            "disabled": true,
+            "tasks": [
+                {
+                    "name": "Essay Gap",
+                    "type": "NLP",
+                    "kaggle": "#todo",
+                    "solution": "#todo"
+                },
+                {
+                    "name": "Demixing Audio",
+                    "type": "NLP",
+                    "kaggle": "#todo",
+                    "solution": "#todo"
+                },
+                {
+                    "name": "Face Matching",
+                    "type": "CV",
+                    "kaggle": "#todo",
+                    "solution": "#todo"
+                }
+            ]
+        }
+    ]
+}
