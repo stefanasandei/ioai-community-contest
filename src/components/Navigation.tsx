@@ -25,6 +25,11 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Scroll to top on navigation
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   const handleNavigation = (path: string, sectionId?: string) => {
     if (path === '/' && sectionId) {
       if (location.pathname === '/') {
