@@ -22,7 +22,7 @@
                 },
                 {
                     "name": "Latent Model Classification",
-                    "type": "NLP",
+                    "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/latent-model-classification.ipynb",
                     "author": "Gior"
