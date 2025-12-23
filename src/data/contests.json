@@ -10,21 +10,21 @@
                     "name": "Deceptive Points",
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0",
-                    "solution": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/deceptive-points.ipynb",
                     "author": "Gior"
                 },
                 {
                     "name": "Find Brain Tumors",
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
-                    "solution": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/brain-tumors.ipynb",
                     "author": "Asandei Stefan-Alexandru"
                 },
                 {
                     "name": "Latent Model Classification",
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
-                    "solution": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/latent-model-classification.ipynb",
                     "author": "Gior"
                 }
             ]
@@ -40,13 +40,13 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/the-defected-nuts-aicc-round-1-2",
                     "solution": "#todo",
-                    "author": "Cowile"
+                    "author": "Antony Ingorokva"
                 },
                 {
                     "name": "Autocorrect",
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/autocorrect-aicc-round-1-2",
-                    "solution": "#todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/autocorrect.ipynb",
                     "author": "Walnit"
                 },
                 {

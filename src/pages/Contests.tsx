@@ -42,7 +42,7 @@ const Contests = () => {
                         <span className="text-gradient">Editions</span>
                     </h1>
                     <p className="text-lg text-gray-600 dark:text-gray-300 font-light">
-                        Explore all past contests and tasks. Search by contest name, task name, or winner.
+                        Explore all past contests and tasks. Search by contest name, month, or task name.
                     </p>
                 </div>
             </div>
@@ -54,7 +54,7 @@ const Contests = () => {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
-                            placeholder="Search contests, tasks, winners..."
+                            placeholder="Search by contest name, month, or task name."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-aicc-purple/50 focus:border-aicc-purple/50 transition-all"
