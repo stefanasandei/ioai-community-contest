@@ -31,7 +31,7 @@ const Footer = () => {
   const quickLinks = [
     { label: 'Home', path: '/' },
     { label: 'Rules', path: '/rules' },
-    { label: 'Past Editions', path: '/', sectionId: 'past-editions' },
+    { label: 'Past Editions', path: '/contests', },
     { label: 'Become a Setter', path: '/become-setter' },
     { label: 'Community', path: '/community' },
   ];
@@ -47,22 +47,22 @@ const Footer = () => {
     {
       icon: Github,
       label: 'GitHub',
-      href: 'https://github.com/stefanasandei/ioai-community-contest',
+      href: 'https://github.com/AI-Community-Contest',
     },
     {
       icon: ExternalLink,
       label: 'Discord',
       href: 'https://discord.gg/7GfxrqRreY',
     },
-    {
-      icon: Twitter,
-      label: 'Twitter',
-      href: '#',
-    },
+    // {
+    //   icon: Twitter,
+    //   label: 'Twitter',
+    //   href: '#',
+    // },
     {
       icon: Mail,
       label: 'Email',
-      href: 'mailto:hello@ioaicc.com',
+      href: 'mailto:asandei.stefanel@gmail.com',
     },
   ];
 
@@ -79,7 +79,7 @@ const Footer = () => {
               <img src="/assets/AICCCC.png" alt="AICC Logo" className="h-8" />
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-              Building a community of AI enthusiasts through monthly challenges and competitions.
+              Building a community of AI enthusiasts through monthly competitions.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social, index) => {
@@ -167,9 +167,9 @@ const Footer = () => {
         <div className="pt-8 border-t border-gray-200 dark:border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-500 dark:text-gray-500">
-              &copy; {new Date().getFullYear()} IOAI Community Contest. All rights reserved.
+              &copy; {new Date().getFullYear()} AI Community Contest. All rights reserved.
             </p>
-            <div className="flex gap-6">
+            {/* <div className="flex gap-6">
               <a href="#" className="text-sm text-gray-500 dark:text-gray-500 hover:text-aicc-purple transition-colors">
                 Privacy Policy
               </a>
@@ -179,7 +179,7 @@ const Footer = () => {
               <a href="#" className="text-sm text-gray-500 dark:text-gray-500 hover:text-aicc-purple transition-colors">
                 Code of Conduct
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
