@@ -7,10 +7,11 @@ import BecomeSetterSection from '@/components/BecomeSetterSection';
 import Footer from '@/components/Footer';
 import ContestCard from '@/components/ContestCard';
 import { Calendar, ChevronRight } from 'lucide-react';
-import contestsData from '@/data/contests.json';
+import { contests } from '@/data/contests.json';
 
-// Get the latest contest (first one in the array)
-const latestContest = contestsData.contests[0];
+const filteredContests = contests.sort((a, b) => a.id - b.id).filter((a) => !a.disabled)
+const latestContest = filteredContests[filteredContests.length - 1];
+console.log(latestContest)
 
 const Index = () => {
   const navigate = useNavigate();
