@@ -53,7 +53,7 @@
                     "name": "Is that audio?",
                     "type": "Audio",
                     "kaggle": "https://www.kaggle.com/competitions/is-that-audio-aicc-round-1-2",
-                    "solution": "#todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/is-that-audio.ipynb",
                     "author": "Gior"
                 }
             ]
