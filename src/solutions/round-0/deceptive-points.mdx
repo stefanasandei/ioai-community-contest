@@ -1,11 +1,164 @@
-Hello world
+## Problem Overview
 
-## Approach
+The Deceptive Points task presents a regression problem where a math teacher's dataset has been intentionally corrupted by students. The training data contains both legitimate entries (reflecting the true linear relationship between study effort and exam scores) and corrupted entries (designed to obscure this relationship). The goal is to build a model that generalizes to the teacher-only test set by identifying and down-weighting the corrupted data points.
 
-```py
-print(1)
+## Key Data Insights
+
+Two critical observations drive the solution approach:
+
+**1. Gaussian Feature Distributions**  
+All four features (`feature1` through `feature4`) follow approximately Gaussian distributions. This suggests the data can be effectively modeled using probabilistic methods that assume underlying normal distributions.
+
+**2. X-Shaped Pattern in PCA Space**  
+When projecting all features onto the first principal component (PC1) and plotting against the target variable, the data forms a distinct X-shaped pattern. This reveals two crossing trends:
+- One diagonal represents the teacher's true data (linear relationship from bottom-left to top-right)
+- The opposing diagonal represents student corruption (top-left to bottom-right)
+
+This visual evidence confirms the data consists of two distinct populations that must be separated.
+
+## Solution Approaches
+
+### Solution A: RANSAC Regressor
+
+The Random Sample Consensus (RANSAC) algorithm provides a robust approach by iteratively fitting models to random subsets and identifying inliers that agree with the fitted trend.
+
+```python
+from sklearn.linear_model import RANSACRegressor, LinearRegression
+
+model = RANSACRegressor(
+    estimator=LinearRegression(),
+    random_state=42
+)
+model.fit(X_train, y_train)
 ```
+
+RANSAC operates by:
+- Randomly sampling minimal subsets of data
+- Fitting a base estimator (Linear Regression) to each subset
+- Counting inliers within a residual threshold
+- Selecting the model with maximum inliers after iterations
+
+This approach effectively separates the teacher's trend line from the corrupted diagonal, achieving reasonable performance by treating corruption as outliers.
+
+### Solution B: Enhanced RANSAC with HuberRegressor
+
+An improved variant replaces LinearRegression with HuberRegressor (more robust to outliers) and adds hyperparameter optimization:
+
+```python
+from sklearn.linear_model import HuberRegressor
+from sklearn.model_selection import GridSearchCV
+
+huber = HuberRegressor()
+ransac = RANSACRegressor(
+    estimator=huber,
+    min_samples=X_train.shape[1] + 1,
+    random_state=42
+)
+
+param_grid = {
+    'residual_threshold': [1.0, 2.5, 5.0, 7.5],
+    'estimator__epsilon': [1.1, 1.35, 1.5, 1.75]
+}
+
+grid_search = GridSearchCV(
+    estimator=ransac,
+    param_grid=param_grid,
+    scoring='neg_mean_squared_error',
+    cv=5,
+    n_jobs=-1
+)
+```
+
+### Solution C: Gaussian Mixture Model (Best Performing)
+
+The highest-performing approach leverages the Gaussian nature of features through soft clustering, achieving a public score of **0.011 MSE**.
+
+#### Step 1: Feature Scaling
+Scale all features to prevent dominance by any single feature dimension:
+
+```python
+from sklearn.preprocessing import StandardScaler
+
+features = ["feature1", "feature2", "feature3", "feature4"]
+full_train_data = train_df[features + ["target"]].values
+
+scaler = StandardScaler()
+scaled_train_data = scaler.fit_transform(full_train_data)
+```
+
+#### Step 2: GMM Clustering
+Fit a 2-component Gaussian Mixture Model to capture the two underlying data distributions:
+
+```python
+from sklearn.mixture import GaussianMixture
+
+gmm = GaussianMixture(
+    n_components=2,
+    random_state=42,
+    covariance_type='full',
+    n_init=100,
+    max_iter=200,
+    tol=1e-4
+)
+gmm.fit(scaled_train_data)
+
+cluster_probabilities = gmm.predict_proba(scaled_train_data)
+```
+
+#### Step 3: Identify Teacher Cluster
+Calculate weighted correlation between features and target for each cluster to identify the teacher's data:
+
+```python
+teacher_id = -1
+max_corr = -1
+
+for i in range(2):
+    weights = cluster_probabilities[:, i]
+    X_mean_effort = X_train.mean(axis=1)
+    
+    # Weighted correlation calculation
+    weighted_mean_x = np.average(X_mean_effort, weights=weights)
+    weighted_mean_y = np.average(y_train, weights=weights)
+    weighted_cov = np.average((X_mean_effort - weighted_mean_x) * 
+                               (y_train - weighted_mean_y), weights=weights)
+    weighted_std_x = np.sqrt(np.average((X_mean_effort - weighted_mean_x)**2, weights=weights))
+    weighted_std_y = np.sqrt(np.average((y_train - weighted_mean_y)**2, weights=weights))
+    
+    correlation = weighted_cov / (weighted_std_x * weighted_std_y)
+    
+    if correlation > max_corr:
+        max_corr = correlation
+        teacher_id = i
+```
+
+The cluster with higher correlation represents the teacher's true linear relationship.
+
+#### Step 4: Weighted Model Training
+Train a robust regressor using cluster probabilities as sample weights:
+
+```python
+from sklearn.linear_model import HuberRegressor
+
+sample_weights = cluster_probabilities[:, teacher_id]
+model = HuberRegressor()
+model.fit(X_train, y_train, sample_weight=sample_weights)
+
+y_pred = model.predict(X_test)
+```
+
+## Why GMM Outperforms RANSAC
+
+GMM provides several advantages:
+- **Soft assignments**: Probabilistic cluster membership allows nuanced weighting instead of binary inlier/outlier classification
+- **Gaussian assumption**: Directly leverages the observed feature distributions
+- **Weighted correlation**: Objectively identifies the teacher cluster based on linear dependence strength
+
+While RANSAC performs hard thresholding, GMM's probabilistic framework better captures the overlapping nature of the corruption, leading to superior generalization on teacher-only test data.
+
+## Final Submission
+
+The final submission uses the GMM-weighted HuberRegressor predictions. This approach systematically addresses the core challenge: distinguishing legitimate data from adversarial corruption through principled statistical modeling.
 
 ---
 
-This task was authored by Gior as part of the AI Community Contest Round 0
+This task was authored by Gior for AICC Round 0. Solution and explanation written by Nikoloz Gegenava.

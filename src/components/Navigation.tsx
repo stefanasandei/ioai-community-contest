@@ -69,9 +69,9 @@ const Navigation = () => {
     <>
       <div className="fixed top-0 left-0 right-0 z-50">
         {/* Navbar glow */}
-        <div className={`absolute inset-x-0 top-0 h-32 transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0'}`}>
+        {/* <div className={`absolute inset-x-0 top-0 h-32 transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0'}`}>
           <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[150%] h-20 bg-gradient-to-r from-aicc-purple/10 via-aicc-orange/10 to-aicc-teal/10 blur-2xl" />
-        </div>
+        </div> */}
 
         {/* Navbar - always white background */}
         <nav className="relative bg-white dark:bg-[#0a0a0f] border-b border-gray-200/50 dark:border-white/10 shadow-sm">

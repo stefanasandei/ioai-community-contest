@@ -1,34 +1,35 @@
 {
     "contests": [
         {
-            "id": 1,
-            "month": "October",
+            "id": 3,
+            "month": "December",
             "year": "2025",
-            "title": "Round 0",
+            "title": "Round 2",
+            "disabled": true,
             "tasks": [
                 {
-                    "name": "Deceptive Points",
-                    "type": "ML",
-                    "kaggle": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0",
-                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/deceptive-points.ipynb",
-                    "blog": "/solutions/round-0/deceptive-points",
+                    "name": "Essay Gap",
+                    "type": "NLP",
+                    "kaggle": "#todo",
+                    "solution": "#todo",
+                    "author": "Asandei Stefan-Alexandru",
+                    "blog": "/solutions/round-2/essay-gap"
+                },
+                {
+                    "name": "Demixing Audio",
+                    "type": "Audio",
+                    "kaggle": "#todo",
+                    "solution": "#todo",
+                    "blog": "#todo",
                     "author": "Gior"
                 },
                 {
-                    "name": "Find Brain Tumors",
+                    "name": "Face Matching",
                     "type": "CV",
-                    "kaggle": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
-                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/brain-tumors.ipynb",
-                    "blog": "/solutions/round-0/find-brain-tumors",
+                    "kaggle": "#todo",
+                    "solution": "#todo",
+                    "blog": "/solutions/round-2/face-matching",
                     "author": "Asandei Stefan-Alexandru"
-                },
-                {
-                    "name": "Latent Model Classification",
-                    "type": "ML",
-                    "kaggle": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
-                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/latent-model-classification.ipynb",
-                    "blog": "/solutions/round-0/latent-model-classification",
-                    "author": "Gior"
                 }
             ]
         },
@@ -65,35 +66,34 @@
             ]
         },
         {
-            "id": 3,
-            "month": "December",
+            "id": 1,
+            "month": "October",
             "year": "2025",
-            "title": "Round 2",
-            "disabled": true,
+            "title": "Round 0",
             "tasks": [
                 {
-                    "name": "Essay Gap",
-                    "type": "NLP",
-                    "kaggle": "#todo",
-                    "solution": "#todo",
-                    "blog": "#todo",
-                    "author": "Asandei Stefan-Alexandru"
-                },
-                {
-                    "name": "Demixing Audio",
-                    "type": "Audio",
-                    "kaggle": "#todo",
-                    "solution": "#todo",
-                    "blog": "#todo",
+                    "name": "Deceptive Points",
+                    "type": "ML",
+                    "kaggle": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/deceptive-points.ipynb",
+                    "blog": "/solutions/round-0/deceptive-points",
                     "author": "Gior"
                 },
                 {
-                    "name": "Face Matching",
+                    "name": "Find Brain Tumors",
                     "type": "CV",
-                    "kaggle": "#todo",
-                    "solution": "#todo",
-                    "blog": "#todo",
+                    "kaggle": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/brain-tumors.ipynb",
+                    "blog": "/solutions/round-0/find-brain-tumors",
                     "author": "Asandei Stefan-Alexandru"
+                },
+                {
+                    "name": "Latent Model Classification",
+                    "type": "ML",
+                    "kaggle": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/latent-model-classification.ipynb",
+                    "blog": "/solutions/round-0/latent-model-classification",
+                    "author": "Gior"
                 }
             ]
         }

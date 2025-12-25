@@ -123,9 +123,9 @@ const Solution = () => {
                 </div>
             </div>
 
-            <div className="max-w-6xl mx-auto px-6 py-8">
+            <div className="max-w-6xl mx-auto px-6 pb-8">
                 {MDXContent ? (
-                    <article className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-a:text-purple-600 dark:prose-a:text-purple-400 prose-a:no-underline hover:prose-a:underline">
+                    <article className="prose text-justify prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-a:text-purple-600 dark:prose-a:text-purple-400 prose-a:no-underline hover:prose-a:underline">
                         <div className="syntax-highlighter-wrapper">
                             <MDXProvider>
                                 <MDXContent />
@@ -135,10 +135,10 @@ const Solution = () => {
                 ) : (
                     <div className="text-center py-12">
                         <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                            Solution explanation not available
+                            Solution explanation not available, but
                         </h3>
                         <p className="text-gray-600 dark:text-gray-400 mb-6">
-                            View the code on GitHub
+                            We have the solution notebook on GitHub
                         </p>
                         <a
                             href={task.solution}

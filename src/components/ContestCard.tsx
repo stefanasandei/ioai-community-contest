@@ -137,8 +137,8 @@ const ContestCard = ({
                                         <a
                                             // href={task.solution}
                                             href={task.blog}
-                                            target="_blank"
-                                            rel="noreferrer"
+                                            // target="_blank"
+                                            // rel="noreferrer"
                                             className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2"
                                         >
                                             Solution
