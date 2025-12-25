@@ -5,6 +5,8 @@
 @plugin "@tailwindcss/typography";
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import './styles/prism.css';
 
 /* AICC Design System - Clean Minimalist Design */
 
@@ -418,6 +420,29 @@ body {
 
   .shadow-glow {
     box-shadow: var(--shadow-glow);
+  }
+
+  /* Syntax highlighter integration */
+  .syntax-highlighter-wrapper pre[class*="language-"] {
+    @apply my-6;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .syntax-highlighter-wrapper pre[class*="language-"]::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .syntax-highlighter-wrapper pre[class*="language-"]::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  .syntax-highlighter-wrapper pre[class*="language-"]::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  }
+
+  .syntax-highlighter-wrapper pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
   }
 }
 

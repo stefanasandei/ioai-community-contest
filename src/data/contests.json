@@ -11,6 +11,7 @@
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/deceptive-points.ipynb",
+                    "blog": "/solutions/round-0/deceptive-points",
                     "author": "Gior"
                 },
                 {
@@ -18,6 +19,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/brain-tumors.ipynb",
+                    "blog": "/solutions/round-0/find-brain-tumors",
                     "author": "Asandei Stefan-Alexandru"
                 },
                 {
@@ -25,6 +27,7 @@
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/latent-model-classification.ipynb",
+                    "blog": "/solutions/round-0/latent-model-classification",
                     "author": "Gior"
                 }
             ]
@@ -40,6 +43,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/the-defected-nuts-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/defected-nuts.ipynb",
+                    "blog": "/solutions/round-1/the-defected-nuts",
                     "author": "Antony Ingorokva"
                 },
                 {
@@ -47,6 +51,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/autocorrect-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/autocorrect.ipynb",
+                    "blog": "/solutions/round-1/autocorrect",
                     "author": "Walnit"
                 },
                 {
@@ -54,6 +59,7 @@
                     "type": "Audio",
                     "kaggle": "https://www.kaggle.com/competitions/is-that-audio-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/is-that-audio.ipynb",
+                    "blog": "/solutions/round-1/is-that-audio",
                     "author": "Gior"
                 }
             ]
@@ -70,6 +76,7 @@
                     "type": "NLP",
                     "kaggle": "#todo",
                     "solution": "#todo",
+                    "blog": "#todo",
                     "author": "Asandei Stefan-Alexandru"
                 },
                 {
@@ -77,6 +84,7 @@
                     "type": "Audio",
                     "kaggle": "#todo",
                     "solution": "#todo",
+                    "blog": "#todo",
                     "author": "Gior"
                 },
                 {
@@ -84,6 +92,7 @@
                     "type": "CV",
                     "kaggle": "#todo",
                     "solution": "#todo",
+                    "blog": "#todo",
                     "author": "Asandei Stefan-Alexandru"
                 }
             ]

@@ -6,6 +6,7 @@ interface Task {
     author?: string;
     kaggle: string;
     solution: string;
+    blog: string;
 }
 
 interface ContestCardProps {
@@ -102,9 +103,7 @@ const ContestCard = ({
 
                                         <div className="flex-1 min-w-0">
                                             <a
-                                                href={task.kaggle}
-                                                target="_blank"
-                                                rel="noreferrer"
+                                                href={task.blog}
                                                 className="group/link inline-flex items-center gap-1.5 font-semibold text-gray-900 dark:text-white hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                                             >
                                                 <span className="truncate">{task.name}</span>
@@ -136,7 +135,8 @@ const ContestCard = ({
                                             <ExternalLink className="w-3.5 h-3.5" />
                                         </a>
                                         <a
-                                            href={task.solution}
+                                            // href={task.solution}
+                                            href={task.blog}
                                             target="_blank"
                                             rel="noreferrer"
                                             className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2"
