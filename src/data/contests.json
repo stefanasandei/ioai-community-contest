@@ -5,12 +5,11 @@
             "month": "December",
             "year": "2025",
             "title": "Round 2",
-            "disabled": true,
             "tasks": [
                 {
                     "name": "Essay Gap",
                     "type": "NLP",
-                    "kaggle": "#todo",
+                    "kaggle": "https://www.kaggle.com/competitions/essay-gap-aicc-round-2",
                     "solution": "#todo",
                     "author": "Asandei Stefan-Alexandru",
                     "blog": "/solutions/round-2/essay-gap"
@@ -18,15 +17,15 @@
                 {
                     "name": "Demixing Audio",
                     "type": "Audio",
-                    "kaggle": "#todo",
+                    "kaggle": "https://www.kaggle.com/competitions/audio-demixing-aicc-round-2",
                     "solution": "#todo",
-                    "blog": "#todo",
+                    "blog": "/solutions/round-2/demixing-audio",
                     "author": "Gior"
                 },
                 {
                     "name": "Face Matching",
                     "type": "CV",
-                    "kaggle": "#todo",
+                    "kaggle": "https://www.kaggle.com/competitions/face-matching-aicc-round-2",
                     "solution": "#todo",
                     "blog": "/solutions/round-2/face-matching",
                     "author": "Asandei Stefan-Alexandru"
