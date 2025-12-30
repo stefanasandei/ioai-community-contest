@@ -10,7 +10,7 @@
                     "name": "Essay Gap",
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/essay-gap-aicc-round-2",
-                    "solution": "#todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/essay-gap.ipynb",
                     "author": "Asandei Stefan-Alexandru",
                     "blog": "/solutions/round-2/essay-gap"
                 },
@@ -18,7 +18,7 @@
                     "name": "Demixing Audio",
                     "type": "Audio",
                     "kaggle": "https://www.kaggle.com/competitions/audio-demixing-aicc-round-2",
-                    "solution": "#todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/audio-demixing.ipynb",
                     "blog": "/solutions/round-2/demixing-audio",
                     "author": "Gior"
                 },
@@ -26,7 +26,7 @@
                     "name": "Face Matching",
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/face-matching-aicc-round-2",
-                    "solution": "#todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/face-matching.ipynb",
                     "blog": "/solutions/round-2/face-matching",
                     "author": "Asandei Stefan-Alexandru"
                 }
