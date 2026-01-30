@@ -1,6 +1,41 @@
 {
     "contests": [
         {
+            "id": 4,
+            "month": "January",
+            "year": "2026",
+            "title": "Round 3",
+            "tasks": [
+                {
+                    "name": "Drawn apart",
+                    "type": "CV",
+                    "kaggle": "todo",
+                    "solution": "todo",
+                    "author": "Walnit",
+                    "blog": "/solutions/round-3/drawn-apart",
+                    "practiceStatus": "hard"
+                },
+                {
+                    "name": "Sound of Nature",
+                    "type": "Audio",
+                    "kaggle": "todo",
+                    "solution": "todo",
+                    "blog": "/solutions/round-3/sound-of-nature",
+                    "author": "Asandei Stefan-Alexandru",
+                    "practiceStatus": "easy"
+                },
+                {
+                    "name": "Morty's Time Paradox",
+                    "type": "ML",
+                    "kaggle": "todo",
+                    "solution": "todo",
+                    "blog": "/solutions/round-3/morty-time-paradox",
+                    "author": "Antony Ingorokva",
+                    "practiceStatus": "medium"
+                }
+            ]
+        },
+        {
             "id": 3,
             "month": "December",
             "year": "2025",
@@ -12,7 +47,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/essay-gap-aicc-round-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/essay-gap.ipynb",
                     "author": "Asandei Stefan-Alexandru",
-                    "blog": "/solutions/round-2/essay-gap"
+                    "blog": "/solutions/round-2/essay-gap",
+                    "practiceStatus": "easy"
                 },
                 {
                     "name": "Demixing Audio",
@@ -20,7 +56,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/audio-demixing-aicc-round-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/audio-demixing.ipynb",
                     "blog": "/solutions/round-2/demixing-audio",
-                    "author": "Gior"
+                    "author": "Gior",
+                    "practiceStatus": "medium"
                 },
                 {
                     "name": "Face Matching",
@@ -28,7 +65,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/face-matching-aicc-round-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/face-matching.ipynb",
                     "blog": "/solutions/round-2/face-matching",
-                    "author": "Asandei Stefan-Alexandru"
+                    "author": "Asandei Stefan-Alexandru",
+                    "practiceStatus": "easy"
                 }
             ]
         },
@@ -44,7 +82,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/the-defected-nuts-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/defected-nuts.ipynb",
                     "blog": "/solutions/round-1/the-defected-nuts",
-                    "author": "Antony Ingorokva"
+                    "author": "Antony Ingorokva",
+                    "practiceStatus": "hard"
                 },
                 {
                     "name": "Autocorrect",
@@ -52,7 +91,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/autocorrect-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/autocorrect.ipynb",
                     "blog": "/solutions/round-1/autocorrect",
-                    "author": "Walnit"
+                    "author": "Walnit",
+                    "practiceStatus": "medium"
                 },
                 {
                     "name": "Is that audio?",
@@ -60,7 +100,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/is-that-audio-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/is-that-audio.ipynb",
                     "blog": "/solutions/round-1/is-that-audio",
-                    "author": "Gior"
+                    "author": "Gior",
+                    "practiceStatus": "legacy"
                 }
             ]
         },
@@ -76,7 +117,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/deceptive-points.ipynb",
                     "blog": "/solutions/round-0/deceptive-points",
-                    "author": "Gior"
+                    "author": "Gior",
+                    "practiceStatus": "easy"
                 },
                 {
                     "name": "Find Brain Tumors",
@@ -84,7 +126,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/brain-tumors.ipynb",
                     "blog": "/solutions/round-0/find-brain-tumors",
-                    "author": "Asandei Stefan-Alexandru"
+                    "author": "Asandei Stefan-Alexandru",
+                    "practiceStatus": "medium"
                 },
                 {
                     "name": "Latent Model Classification",
@@ -92,7 +135,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/latent-model-classification.ipynb",
                     "blog": "/solutions/round-0/latent-model-classification",
-                    "author": "Gior"
+                    "author": "Gior",
+                    "practiceStatus": "medium"
                 }
             ]
         }

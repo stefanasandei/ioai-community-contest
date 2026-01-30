@@ -37,7 +37,7 @@ const Footer = () => {
   ];
 
   const resources = [
-    { label: 'IOAI Official', href: 'https://ioai.org' },
+    { label: 'IOAI Official', href: 'https://ioai-official.org/' },
     { label: 'Kaggle', href: 'https://www.kaggle.com' },
     // { label: 'Documentation', href: '#' },
     // { label: 'API Reference', href: '#' },

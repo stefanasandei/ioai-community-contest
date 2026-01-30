@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { ExternalLink, Github, Calendar, User } from 'lucide-react';
+import { ExternalLink, Github, Calendar, User, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import Navigation from '@/components/Navigation';
@@ -35,6 +35,13 @@ const Solution = () => {
             }
         }
         return null;
+    };
+
+    const getPracticeStatusBadge = (status?: 'recommended' | 'legacy') => {
+        if (status === 'legacy') {
+            return { icon: AlertCircle, label: 'Legacy', variant: 'legacy' as const };
+        }
+        return { icon: CheckCircle2, label: 'Recommended', variant: 'recommended' as const };
     };
 
     const result = findTask();
@@ -109,6 +116,15 @@ const Solution = () => {
                         <span className="px-2.5 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium">
                             {task.type}
                         </span>
+                        {task.practiceStatus && (() => {
+                            const { icon: Icon, label } = getPracticeStatusBadge(task.practiceStatus as 'recommended' | 'legacy' | undefined);
+                            return (
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded font-medium ${task.practiceStatus === 'legacy' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'}`}>
+                                    <Icon className="w-4 h-4" />
+                                    {label}
+                                </span>
+                            );
+                        })()}
                         <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
                             <Calendar className="w-4 h-4" />
                             {contest.month} {contest.year}

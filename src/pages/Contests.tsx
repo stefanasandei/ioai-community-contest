@@ -1,12 +1,31 @@
 import { useState, useMemo } from 'react';
-import { Search, Calendar, Trophy, ExternalLink, ChevronRight } from 'lucide-react';
+import { Search, Calendar, Trophy, ExternalLink, ChevronRight, AlertCircle } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ContestCard from '@/components/ContestCard';
 import contestsData from '@/data/contests.json';
 
+interface Task {
+    name: string;
+    type: string;
+    author?: string;
+    kaggle: string;
+    solution: string;
+    blog: string;
+    practiceStatus?: 'recommended' | 'legacy';
+}
+
+interface Contest {
+    id: number;
+    month: string;
+    year: string;
+    title: string;
+    winner?: string;
+    tasks: Task[];
+}
+
 // Extended contest data with all contests from latest to first
-const allContests = contestsData.contests.sort((a, b) => b.id - a.id);
+const allContests = (contestsData.contests as Contest[]).sort((a, b) => b.id - a.id);
 
 const Contests = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -15,7 +34,7 @@ const Contests = () => {
         const query = searchQuery.toLowerCase().trim();
 
         return allContests.filter(contest => {
-            if (contest.disabled) return false;
+            if ((contest as unknown as { disabled?: boolean }).disabled) return false;
 
             const contestMatch =
                 contest.title.toLowerCase().includes(query) ||
@@ -29,6 +48,18 @@ const Contests = () => {
             return contestMatch || taskMatch;
         });
     }, [searchQuery]);
+
+    const hasLegacyTasks = useMemo(() => {
+        return filteredContests.some((contest: Contest) =>
+            contest.tasks.some(task => task.practiceStatus === 'legacy')
+        );
+    }, [filteredContests]);
+
+    const showPracticeLegend = useMemo(() => {
+        return filteredContests.some((contest: Contest) =>
+            contest.tasks.some(task => task.practiceStatus !== undefined)
+        );
+    }, [filteredContests]);
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f]">
@@ -82,18 +113,35 @@ const Contests = () => {
             {/* Contest Grid - 2 columns on desktop, 1 on mobile */}
             <div className="max-w-7xl mx-auto px-6 pb-24">
                 {filteredContests.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {filteredContests.map(contest => (
-                            <ContestCard
-                                key={contest.id}
-                                month={contest.month}
-                                year={contest.year}
-                                title={contest.title}
-                                winner={contest.winner}
-                                tasks={contest.tasks}
-                            />
-                        ))}
-                    </div>
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {filteredContests.map(contest => (
+                                <ContestCard
+                                    key={contest.id}
+                                    month={contest.month}
+                                    year={contest.year}
+                                    title={contest.title}
+                                    winner={contest.winner}
+                                    tasks={contest.tasks as Task[]}
+                                />
+                            ))}
+                        </div>
+                        {showPracticeLegend && (
+                            <div className="mt-10 mb-6 px-5 pt-5 pb-1 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
+                                <div className="flex items-start gap-3">
+                                    <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                                    <div>
+                                        <p className="text-sm font-semibold text-amber-800 dark:text-amber-200 mb-1">
+                                            Practice Recommendations
+                                        </p>
+                                        <p className="text-sm text-amber-700 dark:text-amber-300">
+                                            Legacy tasks are not recommended for practice as they may contain issues or outdated approaches.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </>
                 ) : (
                     <div className="text-center py-16">
                         <Search className="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
