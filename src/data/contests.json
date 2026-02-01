@@ -9,8 +9,8 @@
                 {
                     "name": "Drawn apart",
                     "type": "CV",
-                    "kaggle": "todo",
-                    "solution": "todo",
+                    "kaggle": "https://www.kaggle.com/competitions/drawn-apart-aicc-round-3/overview",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-3/drawn-apart.ipynb",
                     "author": "Walnit",
                     "blog": "/solutions/round-3/drawn-apart",
                     "practiceStatus": "hard"
@@ -18,8 +18,8 @@
                 {
                     "name": "Sound of Nature",
                     "type": "Audio",
-                    "kaggle": "todo",
-                    "solution": "todo",
+                    "kaggle": "https://www.kaggle.com/competitions/sound-of-nature-aicc-round-3/overview",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-3/sound-of-nature.ipynb",
                     "blog": "/solutions/round-3/sound-of-nature",
                     "author": "Asandei Stefan-Alexandru",
                     "practiceStatus": "easy"
@@ -27,8 +27,8 @@
                 {
                     "name": "Morty's Time Paradox",
                     "type": "ML",
-                    "kaggle": "todo",
-                    "solution": "todo",
+                    "kaggle": "https://www.kaggle.com/competitions/mortys-time-paradox-aicc-round-3/overview",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-3/morty-time-paradox.ipynb",
                     "blog": "/solutions/round-3/morty-time-paradox",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "medium"
