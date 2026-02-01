@@ -31,7 +31,7 @@ const Footer = () => {
   const quickLinks = [
     { label: 'Home', path: '/' },
     { label: 'Rules', path: '/rules' },
-    { label: 'Past Editions', path: '/contests', },
+    { label: 'Past Editions', path: '/contests' },
     { label: 'Become a Setter', path: '/become-setter' },
     { label: 'Community', path: '/community' },
   ];
@@ -79,7 +79,7 @@ const Footer = () => {
               <img src="/assets/AICCCC.png" alt="AICC Logo" className="h-8" />
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-              Building a community of AI enthusiasts through monthly competitions.
+              AICC (AI Community Contest) - Monthly IOAI practice rounds and competitive AI challenges. Community-organized, not affiliated with official IOAI.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social, index) => {
@@ -109,7 +109,7 @@ const Footer = () => {
               {quickLinks.map((link, index) => (
                 <button
                   key={index}
-                  onClick={() => handleNavigation(link.path, link.sectionId)}
+                  onClick={() => handleNavigation(link.path)}
                   className="block text-sm text-gray-600 dark:text-gray-400 hover:text-aicc-purple dark:hover:text-aicc-purple-light transition-colors hover:translate-x-1 transform duration-200"
                 >
                   {link.label}

@@ -42,7 +42,7 @@ const HeroSection = () => {
 
         <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-4 font-medium">
           Codeforces rounds, but for IOAI
-          <span className="text-gray-500 dark:text-gray-500 text-base ml-2">(not affiliated)</span>
+          <span className="text-gray-500 dark:text-gray-500 text-base ml-2">(community-organized, not affiliated with official IOAI)</span>
         </p>
 
         <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
