@@ -182,7 +182,7 @@ const ContestCard = ({ month, year, title, winner, tasks, roundId }: ContestCard
                                             className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2"
                                         >
                                             <Github className="w-4 h-4" />
-                                            Solution Notebook
+                                            <span>Solution <span className="hidden md:inline">Notebook</span></span>
                                         </a>
                                     )}
                                 </div>
