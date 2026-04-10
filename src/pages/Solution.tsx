@@ -66,7 +66,7 @@ const Solution = () => {
         return (
             <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f]">
                 <Navigation />
-                <div className="pt-[72px] max-w-4xl mx-auto px-6 pt-64 pb-64 text-center">
+                <div className="max-w-4xl mx-auto px-6 pt-64 pb-64 text-center">
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
                         Solution Not Found
                     </h1>

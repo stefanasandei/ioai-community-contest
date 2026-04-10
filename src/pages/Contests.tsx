@@ -62,7 +62,7 @@ const Contests = () => {
     }, [filteredContests]);
 
     return (
-        <div className="min-h-screen py-16 bg-gray-50 dark:bg-[#0a0a0f]">
+        <div className="min-h-screen py-14 bg-gray-50 dark:bg-[#0a0a0f]">
             <Navigation />
 
             <div className="bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10 pt-4">
@@ -79,14 +79,14 @@ const Contests = () => {
 
             <div className="sticky top-[72px] z-30 bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10 shadow-sm pt-0">
                 <div className="max-w-7xl mx-auto px-2 md:px-6 py-4">
-                    <div className="relative">
+                    <div className="relative ">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
                             placeholder="Search by contest name, month, or task name."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-12 pr-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-aicc-purple/50 focus:border-aicc-purple/50 transition-all"
+                            className="w-full rounded-lg pl-12 pr-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-aicc-purple/50 focus:border-aicc-purple/50 transition-all"
                         />
                         {searchQuery && (
                             <button
@@ -100,7 +100,6 @@ const Contests = () => {
                 </div>
             </div>
 
-            {/* Results Count */}
             <div className="max-w-7xl mx-auto px-2 md:px-6 pt-4">
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                     Showing {filteredContests.length} contest{filteredContests.length !== 1 ? 's' : ''}
@@ -108,7 +107,6 @@ const Contests = () => {
                 </p>
             </div>
 
-            {/* Contest Grid - 2 columns on desktop, 1 on mobile */}
             <div className="max-w-7xl mx-auto px-2 md:px-6 pb-24">
                 {filteredContests.length > 0 ? (
                     <>

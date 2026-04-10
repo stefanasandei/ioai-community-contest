@@ -99,7 +99,6 @@ const PastEditionsSection = () => {
 
   return (
     <section id="past-editions" className="relative py-24 bg-gray-50 dark:bg-[#0a0a0f] overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-full h-full max-w-7xl mx-auto">
           <div className="absolute top-20 left-20 w-72 h-72 bg-aicc-teal/5 rounded-full blur-3xl" />
@@ -108,7 +107,6 @@ const PastEditionsSection = () => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Header */}
         <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-aicc-teal/10 border border-aicc-teal/20 mb-6">
             <Calendar className="w-4 h-4 text-aicc-teal" />

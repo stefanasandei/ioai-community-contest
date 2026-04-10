@@ -60,7 +60,7 @@ const HeroSection = () => {
         <img
           src="/assets/aicc_long_black.png"
           alt="AICC Logo"
-          className="opacity-100 h-20 inline-flex mb-5"
+          className="opacity-100 max-h-24 inline-flex mb-5"
           
         />
 
