@@ -109,6 +109,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/essay-gap-aicc-round-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/essay-gap.ipynb",
                     "author": "Asandei Stefan-Alexandru",
+                    "blog": "/solutions/round-2/essay-gap",
                     "practiceStatus": "easy"
                 },
                 {
@@ -124,6 +125,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/face-matching-aicc-round-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/face-matching.ipynb",
+                    "blog": "/solutions/round-2/face-matching",
                     "author": "Asandei Stefan-Alexandru",
                     "practiceStatus": "easy"
                 }
