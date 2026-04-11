@@ -80,7 +80,7 @@ const Team = () => {
             <span className="text-gradient">Team</span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 font-light">
-            We are {uniqueMembers} members. The dedicated individuals who make this contest possible.
+            Our team is composed of {uniqueMembers} people. The dedicated individuals who make this contest possible.
           </p>
         </div>
       </div>
