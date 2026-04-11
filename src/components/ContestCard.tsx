@@ -77,7 +77,7 @@ const getTaskSlug = (name: string) =>
 
 const ContestCard = ({ month, year, title, winner, tasks, roundId }: ContestCardProps) => {
     return (
-        <div className="group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl transition-all duration-300">
+        <div className="group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm transition-all duration-300">
             <div className="p-6 pb-0 border-b border-gray-100 dark:border-gray-800">
                 <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">

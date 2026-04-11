@@ -33,11 +33,11 @@ const BecomeSetterSection = () => {
   }, []);
 
   const guidelines = [
-    { icon: Users, color: 'from-purple-500 to-violet-500', text: 'Anyone can submit tasks via Discord tickets or other channels' },
-    { icon: Sparkles, color: 'from-orange-500 to-amber-500', text: 'Tasks must be original, not reused from other competitions' },
-    { icon: CheckCircle2, color: 'from-teal-500 to-cyan-500', text: 'Instructions must be clear with unambiguous evaluation criteria' },
-    { icon: Target, color: 'from-pink-500 to-rose-500', text: 'Appropriate for top high school students' },
-    { icon: Lightbulb, color: 'from-indigo-500 to-violet-500', text: 'Should align with the IOAI Syllabus' },
+    { icon: Users, color: 'bg-violet-500', text: 'Anyone can submit tasks via Discord tickets or other channels' },
+    { icon: Sparkles, color: 'bg-orange-500', text: 'Tasks must be original, not reused from other competitions' },
+    { icon: CheckCircle2, color: 'bg-teal-500', text: 'Instructions must be clear with unambiguous evaluation criteria' },
+    { icon: Target, color: 'bg-pink-500', text: 'Appropriate for top high school students' },
+    { icon: Lightbulb, color: 'bg-indigo-500', text: 'Should align with the IOAI Syllabus' },
   ];
 
   const materials = [
@@ -51,10 +51,10 @@ const BecomeSetterSection = () => {
   ];
 
   const criteria = [
-    { icon: Target, color: 'from-purple-500 to-violet-500', text: 'not easily solved with off-the-shelf methods' },
-    { icon: CheckCircle2, color: 'from-orange-500 to-amber-500', text: 'multiple insights and partial solutions rewarded' },
-    { icon: Lightbulb, color: 'from-teal-500 to-cyan-500', text: 'educational value and originality' },
-    { icon: Target, color: 'from-pink-500 to-rose-500', text: 'fast iteration cycles (minimal training time)' },
+    { icon: Target, color: 'bg-violet-500', text: 'not easily solved with off-the-shelf methods' },
+    { icon: CheckCircle2, color: 'bg-orange-500', text: 'multiple insights and partial solutions rewarded' },
+    { icon: Lightbulb, color: 'bg-teal-500', text: 'educational value and originality' },
+    { icon: Target, color: 'bg-pink-500', text: 'fast iteration cycles (minimal training time)' },
   ];
 
   const process = [
@@ -66,13 +66,6 @@ const BecomeSetterSection = () => {
 
   return (
     <section id="become-setter" className="relative py-24 bg-white dark:bg-[#0a0a0f] overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-full max-w-7xl mx-auto">
-          <div className="absolute top-40 left-0 w-72 h-72 bg-aicc-purple/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-40 right-0 w-96 h-96 bg-aicc-orange/10 rounded-full blur-3xl" />
-        </div>
-      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Header */}
@@ -80,7 +73,7 @@ const BecomeSetterSection = () => {
 
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="text-gray-900 dark:text-white">Submit a Task to </span>
-            <span className="text-gradient">AICC</span>
+            <span className="text-gradient">AI</span>CC
           </h2>
 
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
@@ -96,7 +89,7 @@ const BecomeSetterSection = () => {
               <AccordionItem value="guidelines" className="rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 px-5">
                 <AccordionTrigger className="hover:no-underline py-5">
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-violet-500 text-white font-semibold text-sm">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-violet-500 text-white font-semibold text-md">
                       1
                     </div>
                     <span className="text-lg font-semibold text-gray-900 dark:text-white">Task Submission Guidelines</span>
@@ -106,7 +99,7 @@ const BecomeSetterSection = () => {
                   <div className="pl-14 space-y-4">
                     {guidelines.map((item, index) => (
                       <div key={index} className="flex items-center gap-3">
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br ${item.color} flex-shrink-0`}>
+                        <div className={`flex items-center justify-center w-8 h-8 rounded-lg ${item.color} flex-shrink-0`}>
                           <item.icon className="w-4 h-4 text-white" />
                         </div>
                         <span className="text-gray-600 dark:text-gray-300 font-light">{item.text}</span>
@@ -120,7 +113,7 @@ const BecomeSetterSection = () => {
               <AccordionItem value="materials" className="rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 px-5">
                 <AccordionTrigger className="hover:no-underline py-5">
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 text-white font-semibold text-sm">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-orange-500 text-white font-semibold text-md">
                       2
                     </div>
                     <span className="text-lg font-semibold text-gray-900 dark:text-white">Required Submission Materials</span>
@@ -165,7 +158,7 @@ const BecomeSetterSection = () => {
               <AccordionItem value="criteria" className="rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 px-5">
                 <AccordionTrigger className="hover:no-underline py-5">
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-500 text-white font-semibold text-sm">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-aicc-red text-white font-semibold text-md">
                       3
                     </div>
                     <span className="text-lg font-semibold text-gray-900 dark:text-white">Task Selection Criteria</span>
@@ -175,7 +168,7 @@ const BecomeSetterSection = () => {
                   <div className="pl-14 space-y-4">
                     {criteria.map((item, index) => (
                       <div key={index} className="flex items-center gap-3">
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br ${item.color} flex-shrink-0`}>
+                        <div className={`flex items-center justify-center w-8 h-8 rounded-lg ${item.color} flex-shrink-0`}>
                           <item.icon className="w-4 h-4 text-white" />
                         </div>
                         <span className="text-gray-600 dark:text-gray-300 font-light">{item.text}</span>
@@ -191,7 +184,7 @@ const BecomeSetterSection = () => {
               <AccordionItem value="process" className="rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 px-5">
                 <AccordionTrigger className="hover:no-underline py-5">
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-pink-500 to-rose-500 text-white font-semibold text-sm">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-pink-500 text-white font-semibold text-md">
                       4
                     </div>
                     <span className="text-lg font-semibold text-gray-900 dark:text-white">Review Process</span>
@@ -217,13 +210,13 @@ const BecomeSetterSection = () => {
               {/* CTA Card */}
               <div className="rounded-lg border border-aicc-violet/20 shadow-sm p-6 h-full flex flex-col">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-aicc-purple to-aicc-orange">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-aicc-purple">
                     <MessageCircle className="w-5 h-5 text-white" />
                   </div>
                   <h3 className="text-lg px-1 font-semibold text-gray-900 dark:text-white">Ready to Submit?</h3>
                 </div>
 
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 font-light">
+                <p className="text-md text-gray-600 dark:text-gray-400 mb-4 font-light">
                   Join our Discord server and create a thread (on #task-suggestions) with your task details.
                 </p>
 
@@ -238,7 +231,7 @@ const BecomeSetterSection = () => {
                   <ExternalLink className="w-4 h-4" />
                 </a>
 
-                <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400 font-light flex-1">
+                <div className="space-y-2 text-md text-gray-600 dark:text-gray-400 font-light flex-1">
                   <div className="flex items-center gap-2">
                     <ArrowRight className="w-4 h-4 text-aicc-purple flex-shrink-0" />
                     <span>Create a thread with your task</span>

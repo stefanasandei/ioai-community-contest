@@ -415,7 +415,7 @@ body {
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(135deg, var(--aicc-purple) 0%, var(--aicc-orange) 100%);
+    background: linear-gradient(135deg, var(--aicc-purple) 0%, var(--aicc-orange) 60%, var(--aicc-orange) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

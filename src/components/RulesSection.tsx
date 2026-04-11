@@ -6,7 +6,7 @@ const RulesSection = () => {
       id: 'rules',
       icon: BookOpen,
       title: 'Contest Rules',
-      color: 'from-purple-500 to-violet-500',
+      color: 'bg-purple-500',
       items: [
         'Use of LLMs for writing code or getting task ideas is strictly forbidden',
         'Use of the internet is forbidden except for reading official library documentation',
@@ -18,7 +18,7 @@ const RulesSection = () => {
       id: 'fairness',
       icon: Shield,
       title: 'Fair Play Policy',
-      color: 'from-orange-500 to-amber-500',
+      color: 'bg-orange-500',
       items: [
         'We cannot enforce these rules, but fair play ensures accurate IOAI simulation',
         'Following rules is in the best interest of all contestants',
@@ -30,7 +30,7 @@ const RulesSection = () => {
       id: 'conduct',
       icon: Users,
       title: 'Code of Conduct',
-      color: 'from-teal-500 to-cyan-500',
+      color: 'bg-aicc-red',
       items: [
         'Respect fellow participants and organizers at all times',
         'No sharing of solutions during active contests',
@@ -75,7 +75,7 @@ const RulesSection = () => {
             >
               <div className="px-6 py-6">
                 <div className="flex items-center gap-4 mb-5">
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br ${category.color}`}>
+                  <div className={`flex items-center justify-center w-10 h-10 rounded-lg ${category.color}`}>
                     <category.icon className="w-5 h-5 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{category.title}</h3>
