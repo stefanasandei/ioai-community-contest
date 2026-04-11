@@ -61,6 +61,7 @@ const Navigation = () => {
     { label: 'Home', path: '/' },
     { label: 'Rules', path: '/rules' },
     { label: 'Contests', path: '/contests' },
+    { label: 'Team', path: '/team' },
     { label: 'Become a Setter', path: '/become-setter' },
     //{ label: 'Community', path: '/community' },
   ];

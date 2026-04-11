@@ -9,6 +9,7 @@ import Rules from "./pages/Rules";
 import Community from "./pages/Community";
 import Contests from "./pages/Contests";
 import Solution from "./pages/Solution";
+import Team from "./pages/Team";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/rules" element={<Rules />} />
           <Route path="/contests" element={<Contests />} />
           <Route path="/solutions/:round/:taskSlug" element={<Solution />} />
+          <Route path="/team" element={<Team />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
 
