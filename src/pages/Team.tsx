@@ -113,7 +113,7 @@ const Team = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {problemReview.map((member, index) => (
-              <TeamCard key={index} member={member} color="red" />
+              <TeamCard key={index} member={member} color="orange" />
             ))}
           </div>
         </div>
@@ -129,7 +129,7 @@ const Team = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {logistics.map((member, index) => (
-              <TeamCard key={index} member={member} color="orange" />
+              <TeamCard key={index} member={member} color="red" />
             ))}
           </div>
         </div>
