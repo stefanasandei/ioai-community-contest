@@ -12,7 +12,6 @@ const HeroSection = () => {
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.10),transparent_38%),radial-gradient(circle_at_80%_20%,rgba(249,115,22,0.08),transparent_30%),radial-gradient(circle_at_50%_100%,rgba(239,68,68,0.06),transparent_36%)]" />
 
         <div
@@ -28,9 +27,9 @@ const HeroSection = () => {
           }}
         />
 
-        <div className="absolute -top-28 -left-28 h-[28rem] w-[28rem] rounded-full bg-aicc-purple/20 blur-3xl animate-blob-slow" />
-        <div className="absolute top-1/3 -right-28 h-[24rem] w-[24rem] rounded-full bg-aicc-orange/18 blur-3xl animate-blob-slower" />
-        <div className="absolute bottom-[-10rem] left-1/2 h-[20rem] w-[20rem] -translate-x-1/2 rounded-full bg-aicc-red/10 blur-3xl animate-blob-slow" />
+        <div className="absolute -top-10 -left-10 md:-top-28 md:-left-28 h-32 md:h-[28rem] w-32 md:w-[28rem] rounded-full bg-aicc-purple/20 blur-3xl animate-blob-slow" />
+        <div className="absolute top-1/3 -right-10 md:-right-28 h-28 md:h-[24rem] w-28 md:w-[24rem] rounded-full bg-aicc-orange/18 blur-3xl animate-blob-slower" />
+        <div className="absolute bottom-[-4rem] md:bottom-[-10rem] left-1/2 h-24 md:h-[20rem] w-24 md:w-[20rem] -translate-x-1/2 rounded-full bg-aicc-red/10 blur-3xl animate-blob-slow" />
       </div>
 
       <div
@@ -61,7 +60,7 @@ const HeroSection = () => {
           src="/assets/aicc_long_black.png"
           alt="AICC Logo"
           className="opacity-100 max-h-24 inline-flex mb-5"
-          
+
         />
 
         <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-4 font-medium">
