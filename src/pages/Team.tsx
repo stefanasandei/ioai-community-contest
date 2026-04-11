@@ -105,7 +105,7 @@ const Team = () => {
         {/* Problem Review Section */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center justify-center w-10 h-10 rounded-none bg-aicc-red">
+            <div className="flex items-center justify-center w-10 h-10 rounded-none bg-orange-600">
               <Eye className="w-5 h-5 text-white" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Problem Review</h2>
@@ -121,7 +121,7 @@ const Team = () => {
         {/* Logistics Section */}
         <div>
           <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center justify-center w-10 h-10 rounded-none bg-orange-600">
+            <div className="flex items-center justify-center w-10 h-10 rounded-none bg-aicc-red">
               <Wrench className="w-5 h-5 text-white" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Logistics</h2>
