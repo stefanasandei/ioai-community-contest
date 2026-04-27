@@ -1,6 +1,38 @@
 {
     "contests": [
         {
+            "id": 7,
+            "month": "April",
+            "year": "2026",
+            "title": "Round 6",
+            "tasks": [
+                {
+                    "name": "Classifier Classifier",
+                    "type": "CV",
+                    "kaggle": "https://www.kaggle.com/competitions/classifier-classifier-aicc-round-6",
+                    "solution": "todo",
+                    "author": "Luvidi Alghari",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Massive Problem",
+                    "type": "ML",
+                    "kaggle": "https://www.kaggle.com/competitions/massive-problem-aicc-round-6",
+                    "solution": "todo",
+                    "author": "Wang Jiayu",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Nuclei Reconstruction",
+                    "type": "CV",
+                    "kaggle": "https://www.kaggle.com/competitions/nuclei-reconstruction-aicc-round-6",
+                    "solution": "todo",
+                    "author": "Asandei Stefan-Alexandru",
+                    "practiceStatus": "medium"
+                }
+            ]
+        },
+        {
             "id": 6,
             "month": "March",
             "year": "2026",
