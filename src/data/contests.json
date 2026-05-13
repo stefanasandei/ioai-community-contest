@@ -10,7 +10,7 @@
                     "name": "Classifier Classifier",
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/classifier-classifier-aicc-round-6",
-                    "solution": "todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-6/classifier-classifier.ipynb",
                     "author": "Luvidi Alghari",
                     "practiceStatus": "medium"
                 },
@@ -18,7 +18,7 @@
                     "name": "Massive Problem",
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/massive-problem-aicc-round-6",
-                    "solution": "todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-6/massive-problem.ipynb",
                     "author": "Wang Jiayu",
                     "practiceStatus": "medium"
                 },
@@ -26,7 +26,7 @@
                     "name": "Nuclei Reconstruction",
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/nuclei-reconstruction-aicc-round-6",
-                    "solution": "todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-6/nuclei-reconstruction.ipynb",
                     "author": "Asandei Stefan-Alexandru",
                     "practiceStatus": "medium"
                 }
@@ -212,7 +212,7 @@
                     "name": "Find Brain Tumors",
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
-                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/find-brain-tumors.ipynb",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/brain-tumors.ipynb",
                     "blog": "/solutions/round-0/find-brain-tumors",
                     "author": "Asandei Stefan-Alexandru",
                     "practiceStatus": "medium"
