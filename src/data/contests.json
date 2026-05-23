@@ -1,6 +1,38 @@
 {
     "contests": [
         {
+            "id": 8,
+            "month": "May",
+            "year": "2026",
+            "title": "Round 7",
+            "tasks": [
+                {
+                    "name": "Polarity",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/polarity-aicc-round-7",
+                    "solution": "todo",
+                    "author": "Antony Ingorokva",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Oriented Ship",
+                    "type": "CV",
+                    "kaggle": "https://www.kaggle.com/competitions/oriented-ship-aicc-round-7",
+                    "solution": "todo",
+                    "author": "Nikoloz Gegenava",
+                    "practiceStatus": "hard"
+                },
+                {
+                    "name": "Scientific Facts",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/scientific-facts-aicc-round-7",
+                    "solution": "todo",
+                    "author": "Stefan Asandei",
+                    "practiceStatus": "medium"
+                }
+            ]
+        },
+        {
             "id": 7,
             "month": "April",
             "year": "2026",
@@ -27,7 +59,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/nuclei-reconstruction-aicc-round-6",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-6/nuclei-reconstruction.ipynb",
-                    "author": "Asandei Stefan-Alexandru",
+                    "author": "Stefan Asandei",
                     "practiceStatus": "medium"
                 }
             ]
@@ -43,7 +75,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/watermark-removal-aicc-round-5",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-5/watermark-removal.ipynb",
-                    "author": "Asandei Stefan-Alexandru",
+                    "author": "Stefan Asandei",
                     "practiceStatus": "easy"
                 },
                 {
@@ -116,7 +148,7 @@
                     "type": "Audio",
                     "kaggle": "https://www.kaggle.com/competitions/sound-of-nature-aicc-round-3/overview",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-3/sound-of-nature.ipynb",
-                    "author": "Asandei Stefan-Alexandru",
+                    "author": "Stefan Asandei",
                     "practiceStatus": "easy"
                 },
                 {
@@ -140,7 +172,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/essay-gap-aicc-round-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/essay-gap.ipynb",
-                    "author": "Asandei Stefan-Alexandru",
+                    "author": "Stefan Asandei",
                     "practiceStatus": "easy"
                 },
                 {
@@ -156,7 +188,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/face-matching-aicc-round-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/face-matching.ipynb",
-                    "author": "Asandei Stefan-Alexandru",
+                    "author": "Stefan Asandei",
                     "practiceStatus": "easy"
                 }
             ]
@@ -172,6 +204,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/the-defected-nuts-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/defected-nuts.ipynb",
+                    "blog": "/solutions/round-1/the-defected-nuts",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "hard"
                 },
@@ -214,7 +247,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/brain-tumors.ipynb",
                     "blog": "/solutions/round-0/find-brain-tumors",
-                    "author": "Asandei Stefan-Alexandru",
+                    "author": "Stefan Asandei",
                     "practiceStatus": "medium"
                 },
                 {

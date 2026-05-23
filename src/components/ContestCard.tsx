@@ -11,6 +11,7 @@ import {
     AlertTriangle,
     Flame,
     BookOpen,
+    Clock,
     Github,
 } from "lucide-react";
 
@@ -174,6 +175,11 @@ const ContestCard = ({ month, year, title, winner, tasks, roundId }: ContestCard
                                             <BookOpen className="w-4 h-4" />
                                             View Editorial
                                         </a>
+                                    ) : task.solution === "todo" ? (
+                                        <span className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800 flex items-center justify-center gap-2 cursor-not-allowed">
+                                            <Clock className="w-4 h-4" />
+                                            <span>Solution Coming Soon</span>
+                                        </span>
                                     ) : (
                                         <a
                                             href={task.solution}

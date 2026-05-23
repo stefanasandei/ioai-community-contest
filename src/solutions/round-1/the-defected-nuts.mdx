@@ -1,0 +1,196 @@
+## Problem Overview
+
+The Defected Nuts task is an **unsupervised pixel-level anomaly detection** problem. Given 431 defect-free hazelnut images (1024×1024 RGB), the goal is to produce an anomaly score map for each of 70 test images, highlighting defective regions such as cracks, cuts, holes, and print contamination. The constraint is strict: only a standard ImageNet-pretrained ResNet18 may be used — no other pretrained models or external datasets are allowed.
+
+This is not a segmentation problem in the traditional sense. There are no pixel-level ground truth masks during training. The model must learn what *normal* looks like and, at test time, flag anything that deviates.
+
+## The Core Challenge: Unsupervised Anomaly Detection
+
+In supervised segmentation, we have pairs of input images and their corresponding ground truth masks. Here, we have neither defects nor masks in training — only clean, good-quality hazelnuts.
+
+The key question is: how can a model detect defects it has never seen, using only examples of what is *not* a defect?
+
+This framing defines the solution approach. We must build a **representation of normality** from the training set, then measure how far each test image patch deviates from that representation. Patches that are "far" from normal are flagged as anomalous.
+
+## Why Transfer Learning from ImageNet?
+
+Using a ResNet18 pretrained on ImageNet for hazelnut defect detection might seem counterintuitive — ImageNet contains everyday objects, not hazelnut microscopy. However, this is precisely why it works:
+
+- **Low-level features transfer universally**: The first few layers of a CNN learn edges, textures, corners, and color blobs. These are dataset-agnostic. Whether the image contains a dog, a car, or a hazelnut, early-layer responses to oriented edges and textured surfaces remain informative.
+- **Anomalies manifest as texture/structure changes**: A crack on a hazelnut shell appears as an abrupt edge where none should exist. A hole creates a smooth, dark region in an otherwise textured surface. These deviations are precisely the kinds of low-level visual patterns that early-to-mid layers of ImageNet networks are tuned to detect.
+- **No fine-tuning needed**: Because we are not classifying — we are simply measuring distances in feature space — the pretrained features serve as a fixed, high-dimensional descriptor of each local patch. We do not need to adapt them to the domain; we only need to characterize what the *typical* feature looks like for normal hazelnuts.
+
+## Feature Extraction: Choosing the Right Representation
+
+The solution extracts features from **layer2** of ResNet18. This is a critical design choice:
+
+<pre>
+Layer      Output Spatial Size    Channels
+───────────────────────────────────────────
+conv1      512 × 512               64
+layer1     256 × 256               64
+layer2     128 × 128              128
+<b>layer2     64 × 64                256</b>
+layer3     32 × 32                512
+layer4     16 × 16                512
+</pre>
+
+Why layer2 specifically?
+
+- **Spatial resolution vs. receptive field trade-off**: Layer1 features (64 channels at 256×256) have high spatial resolution but each feature vector captures only a very local receptive field — too local to distinguish structural defects from natural surface variation. Layer3 features (512 channels at 32×32) have richer semantics but the spatial resolution is too coarse to localize small defects like hairline cracks.
+- **Layer2 strikes a balance**: With 256-d feature vectors at 64×64 spatial resolution, each feature vector corresponds to a 16×16 pixel patch in the input (1,024 feature locations per image). This resolution is sufficient to localize defects as small as ~0.23% of the image, while each descriptor encodes enough spatial context to be discriminative.
+
+The feature extractor is constructed by taking all ResNet18 layers up to (but excluding) layer3:
+
+```python
+feature_extractor = torch.nn.Sequential(
+    *list(resnet.children())[:-3]
+)
+```
+
+This yields a 256-channel, 64×64 feature map for each input image.
+
+## Building the Normal Feature Distribution
+
+Once we can describe every 16×16 patch of a hazelnut image with a 256-dimensional feature vector, we need to characterize what constitutes "normal" feature behavior.
+
+### The Feature Bank
+
+We process all 431 training images through the feature extractor, producing a collection of feature vectors:
+
+$$F = \{f^{k}_{i,j} \mid k = 1, \dots, 431; \; i = 1, \dots, 64; \; j = 1, \dots, 64\}$$
+
+where $f^{k}_{i,j} \in \mathbb{R}^{256}$ is the feature vector at spatial location $(i, j)$ in training image $k$.
+
+### Modeling Normality as the Mean
+
+The simplest yet effective model is to compute the mean feature vector across all training images at each spatial location. However, the solution takes an even simpler approach: computing a **single global mean** across all spatial locations and all training images:
+
+$$\mu = \frac{1}{431 \times 64 \times 64} \sum_{k,i,j} f^{k}_{i,j}$$
+
+This works because hazelnuts are roughly centered and occupy most of the frame. The background is consistent (dark/neutral), and the nut surface itself has relatively uniform texture under normal conditions. By averaging across all positions, we create a **centroid of normality** — the "average" hazelnut patch descriptor.
+
+An alternative would be to compute per-location means (accounting for the fact that the hazelnut edge looks different from its center), but in practice the global mean captures sufficient signal because:
+- Most spatial locations correspond to hazelnut surface (not background)
+- Defects are rare and spatially sparse, so their contribution to the mean is negligible
+- The background regions are consistent enough that they do not produce false positives after smoothing
+
+## Computing Anomaly Scores with L2 Distance
+
+At test time, we extract features from each test image, producing a 256-d descriptor at each of the 64×64 locations. The anomaly score for location $(i, j)$ is the **Euclidean (L2) distance** between that test feature and the global mean:
+
+$$s_{i,j} = \| f^{\text{test}}_{i,j} - \mu \|_2$$
+
+Why L2 distance?
+
+- **Simplicity**: It has no hyperparameters and is computationally efficient.
+- **Geometric intuition**: In a high-dimensional feature space, normal patches cluster around the centroid of normality. Anomalous patches — those with unusual edge patterns, unexpected colors, or broken textures — fall far from this cluster. The L2 distance directly measures this deviation.
+- **No need for covariance**: While Mahalanobis distance would account for feature correlations, the 431 training examples provide only ~2 samples per feature dimension (431 / 256 ≈ 1.7), making covariance estimation unreliable. L2 distance implicitly assumes isotropic feature variance, which is a reasonable approximation given limited data.
+
+A higher score means the patch is more "unusual" relative to the normal training set, making it a candidate defect.
+
+## Post-Processing: From Coarse Scores to Pixel-Level Maps
+
+The raw anomaly score map is 64×64 — far too coarse for pixel-level defect localization. Three post-processing steps transform it into a smooth, 1024×1024 anomaly map:
+
+### 1. Bilinear Upsampling
+
+We upsample the 64×64 score map to 1024×1024 using bilinear interpolation:
+
+```python
+anomaly_score = F.interpolate(
+    anomaly_score, size=(1024, 1024),
+    mode="bilinear", align_corners=False
+)
+```
+
+Bilinear interpolation is preferred over nearest-neighbor because defects are continuous regions — a crack that begins at one 16×16 patch and extends into its neighbor should produce a smoothly varying score across the boundary, not a blocky, hard-edged prediction.
+
+### 2. Gaussian Smoothing
+
+After upsampling, we apply a Gaussian filter with $\sigma = 1.5$:
+
+```python
+anomaly_score = gaussian_filter(anomaly_score, sigma=1.5)
+```
+
+This serves two purposes:
+- **Reduces high-frequency noise**: Individual feature locations may produce spurious high scores due to normal surface variation (e.g., a speck of dust or a lighting artifact). Smoothing suppresses these isolated false positives.
+- **Unifies contiguous defect regions**: Defects like cracks and cuts span multiple pixels. Smoothing ensures that nearby high-scoring pixels reinforce each other, producing a cohesive anomaly region rather than scattered hot pixels.
+
+The choice of $\sigma = 1.5$ is mild enough not to blur away small defects (like hairline cracks, which can be as small as ~0.23% of the image) while still providing meaningful noise reduction.
+
+### 3. Global Min-Max Normalization
+
+Finally, scores are normalized across all test images to the [0, 255] range:
+
+```python
+global_min = anomaly_maps.min()
+global_max = anomaly_maps.max()
+anomaly_maps = (anomaly_maps - global_min) / (global_max - global_min + 1e-6)
+anomaly_maps = (anomaly_maps * 255).astype(np.uint8)
+```
+
+This is a global (not per-image) normalization. The rationale is that the AUPRO metric evaluates thresholding across all test images jointly. By normalizing globally, we preserve relative score magnitudes across images — if one image has a subtle defect while another has a severe one, their relative severity is maintained.
+
+## AUPRO: The Scoring Metric
+
+Understanding the evaluation metric is essential for making design decisions. AUPRO (Area Under the Per-Region Overlap curve) evaluates anomaly maps differently from standard pixel-level metrics like IoU or Dice:
+
+For a given threshold $\tau$, each connected defect region $R_k$ in the ground truth is evaluated independently:
+
+$$\text{PRO}(\tau) = \frac{1}{K} \sum_{k=1}^{K} \frac{\text{TP}_k(\tau)}{\text{Area}(R_k)}$$
+
+where $\text{TP}_k(\tau)$ is the number of true positive pixels in region $k$ at threshold $\tau$, and $K$ is the total number of defect regions across all test images.
+
+The final score is the area under the PRO curve up to a false positive rate (FPR) of 0.3:
+
+$$\text{AUPRO} = \int_{0}^{0.3} \text{PRO}(\tau) \, d\text{FPR}$$
+
+Key implications:
+- **Every region matters equally**: A small crack contributes as much to the score as a large contaminated area. Missing one tiny defect region severely impacts the score.
+- **Per-region evaluation prevents bias**: Standard pixel-level metrics can be dominated by large defect regions. PRO(evaluation ensures that detecting all defects, regardless of size, is equally important.
+- **FPR cap at 0.3**: The metric only considers thresholds up to a 30% false positive rate. This encourages conservative predictions — predicting everything as anomalous would yield perfect recall but at FPR=1.0, which contributes nothing to the score.
+
+This metric explains several design choices:
+- Global smoothing helps ensure that even small defect regions produce a contiguous high-score region (preventing them from being missed at any threshold).
+- The per-region focus means that a single missed defect disproportionately hurts, so it is better to slightly over-predict (at the cost of some FPR) than to miss a defect entirely.
+
+## Discussion: Why This Approach Works
+
+The solution's elegance lies in its simplicity. There is no complex training loop, no iterative optimization, no data augmentation. The three-step pipeline — feature extraction, mean subtraction, and post-processing — achieves a Leaderboard B score of 0.7492 AUPRO.
+
+Why does such a simple approach work so well?
+
+1. **Feature space separation**: ImageNet-pretrained features, even without fine-tuning, naturally separate anomalous patches from normal ones in Euclidean space. This is because the features encode texture, edge density, and color distribution — precisely the attributes that distinguish defects from normal surface.
+
+2. **The mean is surprisingly robust**: Despite averaging over all spatial locations, the global mean feature vector is dominated by normal hazelnut surface texture. Defects affect at most ~0.23–28% of pixels in test images, and the training set contains zero defects, so the centroid cleanly represents normality.
+
+3. **Multi-scale feature encoding**: ResNet18's layer2 features have a receptive field of approximately 35×35 pixels in the input (after successive convolutions and pooling). This means each feature vector encodes a neighborhood larger than a single 16×16 patch, allowing the model to detect defects that alter the local texture pattern even if the exact defect pixel is not perfectly aligned with the feature grid.
+
+## Potential Improvements
+
+While the baseline is strong, several directions could yield further gains:
+
+- **Per-location mean**: Instead of a global mean, compute a separate mean for each of the 64×64 spatial positions. This accounts for the fact that the hazelnut edge, the background, and the nut center have different normal appearances.
+- **Multi-scale features**: Concatenate features from multiple ResNet layers (e.g., layer1 and layer2) to capture both fine texture and mid-level structure.
+- **Soft histogram or KDE modeling**: Instead of L2 distance to the mean, model the full feature distribution with a kernel density estimate or a small Gaussian mixture model. This can capture multi-modal feature distributions (e.g., the nut surface may have several distinct normal textures).
+- **Test-time augmentation**: Average anomaly scores across multiple augmented views (flips, rotations) of each test image to reduce variance.
+- **Learnable thresholding**: Optimize the global normalization strategy by learning the quantile clipping points on a validation split.
+
+## Final Submission
+
+The final submission follows the Kaggle competition format, encoding each 1024×1024 uint8 anomaly map as Base85-encoded bytes:
+
+```python
+submission = pd.DataFrame(columns=["data"])
+for i, anomaly_map in enumerate(anomaly_maps):
+    submission.loc[i] = base64.b85encode(anomaly_map.tobytes()).decode("ascii")
+submission = submission.reset_index()
+submission.columns = ["id", "data"]
+submission.to_csv("submission.csv", index=False)
+```
+
+---
+
+This task was authored by Antony Ingorokva for AICC Round 1. Solution and explanation written by Asandei Stefan-Alexandru.

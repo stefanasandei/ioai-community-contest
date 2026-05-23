@@ -93,7 +93,7 @@ const HeroSection = () => {
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-aicc-red bg-clip-text">
-              400+
+              450+
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               Discord Members
