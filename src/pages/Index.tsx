@@ -7,9 +7,11 @@ import ContestCard from '@/components/ContestCard';
 import { ChevronRight } from 'lucide-react';
 import { contests } from '@/data/contests.json';
 
-const filteredContests = contests.sort((a, b) => a.id - b.id).filter((a) => !a.disabled)
-const latestContest = filteredContests[filteredContests.length - 1];
-console.log(latestContest)
+const latestContest = contests
+  .slice()
+  .sort((a, b) => a.id - b.id)
+  .filter((a) => !a.disabled)
+  .at(-1);
 
 const Index = () => {
   const navigate = useNavigate();
@@ -37,14 +39,15 @@ const Index = () => {
               </h2>
             </div>
 
-            <ContestCard
-              month={latestContest.month}
-              year={latestContest.year}
-              title={latestContest.title}
-              winner={latestContest.winner}
-              tasks={latestContest.tasks}
-              roundId={latestContest.id}
-            />
+            {latestContest && (
+              <ContestCard
+                month={latestContest.month}
+                year={latestContest.year}
+                title={latestContest.title}
+                tasks={latestContest.tasks}
+                roundId={latestContest.id}
+              />
+            )}
 
             {/* See All Link */}
             <div className="text-center mt-8">

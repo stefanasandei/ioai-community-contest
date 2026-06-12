@@ -5,6 +5,7 @@ interface Task {
   name: string;
   type: string;
   kaggle?: string;
+  nitroJudge?: string;
   solution?: string;
 }
 
@@ -72,7 +73,7 @@ const PastEditionsSection = () => {
   ];
 
   const getTaskIcon = (type: string) => {
-    switch (type.toUpperCase()) {
+    switch (type.split(" & ")[0].toUpperCase()) {
       case 'ML':
         return Brain;
       case 'CV':
@@ -85,7 +86,7 @@ const PastEditionsSection = () => {
   };
 
   const getTaskColor = (type: string) => {
-    switch (type.toUpperCase()) {
+    switch (type.split(" & ")[0].toUpperCase()) {
       case 'ML':
         return 'text-aicc-purple';
       case 'CV':
@@ -177,18 +178,22 @@ const PastEditionsSection = () => {
                           </div>
                           <div>
                             <h5 className="font-medium text-gray-900 dark:text-white">{task.name}</h5>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">{task.type}</p>
+                            <div className="flex gap-1">
+                              {task.type.split(" & ").map((t, i) => (
+                                <p key={i} className="text-xs text-gray-500 dark:text-gray-400">{t}</p>
+                              ))}
+                            </div>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          {task.kaggle && (
+                          {(task.nitroJudge || task.kaggle) && (
                             <a
-                              href={task.kaggle}
+                              href={task.nitroJudge ?? task.kaggle!}
                               target="_blank"
                               rel="noreferrer"
                               className="px-3 py-1.5 rounded-lg text-sm font-medium bg-aicc-purple/10 text-aicc-purple hover:bg-aicc-purple/20 transition-colors flex items-center gap-1.5"
                             >
-                              Kaggle
+                              {task.nitroJudge ? "Nitro Judge" : "Kaggle"}
                               <ExternalLink className="w-3 h-3" />
                             </a>
                           )}

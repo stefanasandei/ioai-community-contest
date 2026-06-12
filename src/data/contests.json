@@ -1,6 +1,38 @@
 {
     "contests": [
         {
+            "id": 9,
+            "month": "June",
+            "year": "2026",
+            "title": "Round 8",
+            "tasks": [
+                {
+                    "name": "Dice Counting",
+                    "type": "CV",
+                    "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/1/view",
+                    "solution": "todo",
+                    "author": "Antony Ingorokva",
+                    "practiceStatus": "hard"
+                },
+                {
+                    "name": "Pixel Quest",
+                    "type": "RL",
+                    "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/2/view",
+                    "solution": "todo",
+                    "author": "Stefan Asandei",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Archivist's Cards",
+                    "type": "NLP & CV",
+                    "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/3/view",
+                    "solution": "todo",
+                    "author": "Antony Ingorokva",
+                    "practiceStatus": "medium"
+                }
+            ]
+        },
+        {
             "id": 8,
             "month": "May",
             "year": "2026",

@@ -1,12 +1,20 @@
 import { useParams } from 'react-router-dom';
-import { ExternalLink, Github, Calendar, User, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, Github, Calendar, User, CheckCircle2, AlertTriangle, Flame, XCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import contestsData from '@/data/contests.json';
+import type { PracticeStatus } from '@/data/types';
 import 'katex/dist/katex.min.css';
 import '@/styles/prism.css';
+
+const PRACTICE_STATUS_CONFIG: Record<PracticeStatus, { icon: typeof CheckCircle2; label: string; className: string }> = {
+    easy: { icon: CheckCircle2, label: 'Easy', className: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' },
+    medium: { icon: AlertTriangle, label: 'Medium', className: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' },
+    hard: { icon: Flame, label: 'Hard', className: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' },
+    legacy: { icon: XCircle, label: 'Legacy', className: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400' },
+};
 
 const Solution = () => {
     const { round, taskSlug } = useParams<{
@@ -36,13 +44,6 @@ const Solution = () => {
             }
         }
         return null;
-    };
-
-    const getPracticeStatusBadge = (status?: 'recommended' | 'legacy') => {
-        if (status === 'legacy') {
-            return { icon: AlertCircle, label: 'Legacy', variant: 'legacy' as const };
-        }
-        return { icon: CheckCircle2, label: 'Recommended', variant: 'recommended' as const };
     };
 
     const result = findTask();
@@ -93,12 +94,12 @@ const Solution = () => {
                         </h1>
                         <div className="flex flex-wrap gap-3">
                             <a
-                                href={task.kaggle}
+                                href={task.nitroJudge ?? task.kaggle!}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors"
                             >
-                                Kaggle
+                                {task.nitroJudge ? "Nitro Judge" : "Kaggle"}
                                 <ExternalLink className="w-4 h-4" />
                             </a>
                             <a
@@ -115,12 +116,16 @@ const Solution = () => {
 
                     <div className="flex flex-wrap items-center gap-4 text-sm">
                         <span className="px-2.5 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium">
-                            {task.type}
+                            {task.type.split(" & ").map((t, i) => (
+                                <span key={i} className="px-2.5 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium">
+                                    {t}
+                                </span>
+                            ))}
                         </span>
                         {task.practiceStatus && (() => {
-                            const { icon: Icon, label } = getPracticeStatusBadge(task.practiceStatus as 'recommended' | 'legacy' | undefined);
+                            const { icon: Icon, label, className } = PRACTICE_STATUS_CONFIG[task.practiceStatus];
                             return (
-                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded font-medium ${task.practiceStatus === 'legacy' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'}`}>
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded font-medium ${className}`}>
                                     <Icon className="w-4 h-4" />
                                     {label}
                                 </span>
