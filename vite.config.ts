@@ -17,12 +17,14 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     mdx({
+      remarkPlugins: [
+        remarkMath
+      ],
       rehypePlugins: [
         rehypeSlug,
         [rehypeAutolinkHeadings, { behavior: 'wrap' }],
-        rehypePrism,
-        remarkMath,
-        rehypeKatex
+        rehypeKatex,
+        rehypePrism
       ]
     }),
     react(),

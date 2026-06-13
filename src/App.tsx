@@ -8,6 +8,7 @@ import BecomeSetter from "./pages/BecomeSetter";
 import Rules from "./pages/Rules";
 import Community from "./pages/Community";
 import Contests from "./pages/Contests";
+import Tasks from "./pages/Tasks";
 import Solution from "./pages/Solution";
 import Team from "./pages/Team";
 import NotFound from "./pages/NotFound";
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/become-setter" element={<BecomeSetter />} />
           <Route path="/rules" element={<Rules />} />
           <Route path="/contests" element={<Contests />} />
+          <Route path="/tasks" element={<Tasks />} />
           <Route path="/solutions/:round/:taskSlug" element={<Solution />} />
           <Route path="/team" element={<Team />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

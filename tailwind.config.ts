@@ -87,6 +87,7 @@ export default {
 			fontFamily: {
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
 				'display': ['Poppins', 'Inter', 'sans-serif'],
+				'mono': ['Fira Code', 'monospace'],
 			},
 			backgroundImage: {
 				'gradient-primary': 'linear-gradient(135deg, #8C00FF 0%, #FF6600 100%)',

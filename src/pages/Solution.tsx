@@ -4,8 +4,11 @@ import { useState, useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import { mdxComponents } from '@/components/solutions';
 import contestsData from '@/data/contests.json';
-import type { PracticeStatus } from '@/data/types';
+import type { PracticeStatus, ContestsData, Task } from '@/data/types';
+
+const DATA = contestsData as ContestsData;
 import 'katex/dist/katex.min.css';
 import '@/styles/prism.css';
 
@@ -25,24 +28,31 @@ const Solution = () => {
         null
     );
 
+    const getSlug = (name: string) =>
+        name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').trim();
+
     const findTask = () => {
         if (!round || !taskSlug) return null;
         const roundNumber = parseInt(round.replace('round-', ''));
+        const isStandaloneRound = round === 'standalone';
 
-        for (const contest of contestsData.contests) {
-            const task = contest.tasks.find((t) => {
-                const slug = t.name
-                    .toLowerCase()
-                    .replace(/[^\w\s-]/g, '')
-                    .replace(/\s+/g, '-')
-                    .trim();
-                return slug === taskSlug;
-            });
+        if (isStandaloneRound) {
+            const task = (DATA.standaloneTasks ?? []).find(
+                (t) => getSlug(t.name) === taskSlug
+            );
+            if (task) {
+                return { task, contest: null };
+            }
+            return null;
+        }
 
+        for (const contest of DATA.contests) {
+            const task = contest.tasks.find((t) => getSlug(t.name) === taskSlug);
             if (task && contest.id === roundNumber + 1) {
                 return { task, contest };
             }
         }
+
         return null;
     };
 
@@ -81,6 +91,12 @@ const Solution = () => {
     }
 
     const { task, contest } = result;
+    const competitionHref = task.source ?? task.nitroJudge ?? task.kaggle!;
+    const competitionLabel = task.source
+        ? "Kilonova"
+        : task.nitroJudge
+            ? "Nitro Judge"
+            : "Kaggle";
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f]">
@@ -94,34 +110,34 @@ const Solution = () => {
                         </h1>
                         <div className="flex flex-wrap gap-3">
                             <a
-                                href={task.nitroJudge ?? task.kaggle!}
+                                href={competitionHref}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors"
                             >
-                                {task.nitroJudge ? "Nitro Judge" : "Kaggle"}
+                                {competitionLabel}
                                 <ExternalLink className="w-4 h-4" />
                             </a>
-                            <a
-                                href={task.solution}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                            >
-                                <Github className="w-4 h-4" />
-                                Solution
-                            </a>
+                            {task.solution !== "todo" && (
+                                <a
+                                    href={task.solution}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                >
+                                    <Github className="w-4 h-4" />
+                                    Solution
+                                </a>
+                            )}
                         </div>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-4 text-sm">
-                        <span className="px-2.5 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium">
-                            {task.type.split(" & ").map((t, i) => (
-                                <span key={i} className="px-2.5 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium">
-                                    {t}
-                                </span>
-                            ))}
-                        </span>
+                        {task.type.split(" & ").map((t, i) => (
+                            <span key={i} className="px-2.5 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium">
+                                {t}
+                            </span>
+                        ))}
                         {task.practiceStatus && (() => {
                             const { icon: Icon, label, className } = PRACTICE_STATUS_CONFIG[task.practiceStatus];
                             return (
@@ -131,10 +147,12 @@ const Solution = () => {
                                 </span>
                             );
                         })()}
-                        <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
-                            <Calendar className="w-4 h-4" />
-                            {contest.month} {contest.year}
-                        </span>
+                        {contest && (
+                            <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+                                <Calendar className="w-4 h-4" />
+                                {contest.month} {contest.year}
+                            </span>
+                        )}
                         {task.author && (
                             <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
                                 <User className="w-4 h-4" />
@@ -149,8 +167,8 @@ const Solution = () => {
                 {MDXContent ? (
                     <article className="prose text-justify prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-a:font-semibold dark:prose-a:text-purple-400 prose-a:no-underline hover:prose-a:underline">
                         <div className="syntax-highlighter-wrapper">
-                            <MDXProvider>
-                                <MDXContent />
+                            <MDXProvider components={mdxComponents}>
+                                <MDXContent components={mdxComponents} />
                             </MDXProvider>
                         </div>
                     </article>
@@ -169,7 +187,7 @@ const Solution = () => {
                             className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                         >
                             <Github className="w-4 h-4" />
-                            View Solution
+                            View notebook
                         </a>
                     </div>
                 )}

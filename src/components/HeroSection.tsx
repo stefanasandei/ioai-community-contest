@@ -1,9 +1,15 @@
 import { ExternalLink, Trophy, Users } from "lucide-react";
-import { contests } from "../data/contests.json";
+import data from "../data/contests.json";
+import type { ContestsData } from "@/data/types";
 
-const filteredContests = contests.sort((a, b) => a.id - b.id).filter((a) =>
+const DATA = data as ContestsData;
+const filteredContests = DATA.contests.sort((a, b) => a.id - b.id).filter((a) =>
   !a.disabled
 );
+const totalTasks = filteredContests.reduce(
+  (acc, c) => acc + c.tasks.length,
+  0
+) + (DATA.standaloneTasks?.length ?? 0);
 
 const HeroSection = () => {
   return (
@@ -85,7 +91,7 @@ const HeroSection = () => {
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-aicc-orange bg-clip-text">
-              {filteredContests.length * 3}
+              {totalTasks}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               Tasks

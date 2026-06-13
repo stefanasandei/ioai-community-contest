@@ -6,6 +6,7 @@ export interface Task {
     author?: string;
     kaggle?: string;
     nitroJudge?: string;
+    source?: string;
     solution: string;
     blog?: string;
     practiceStatus: PracticeStatus;
@@ -19,4 +20,9 @@ export interface Contest {
     winner?: string;
     tasks: Task[];
     disabled?: boolean;
+}
+
+export interface ContestsData {
+    contests: Contest[];
+    standaloneTasks: Task[];
 }

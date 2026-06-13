@@ -60,6 +60,7 @@ const Navigation = () => {
   const navItems: NavItem[] = [
     { label: 'Home', path: '/' },
     { label: 'Rules', path: '/rules' },
+    { label: 'Tasks', path: '/tasks' },
     { label: 'Contests', path: '/contests' },
     { label: 'Team', path: '/team' },
     { label: 'Become a Setter', path: '/become-setter' },

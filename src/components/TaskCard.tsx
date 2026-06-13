@@ -19,7 +19,7 @@ import type { Task, PracticeStatus } from "@/data/types";
 
 interface TaskCardProps {
     task: Task;
-    roundId: number;
+    roundId?: number;
 }
 
 const TASK_CONFIG = {
@@ -85,10 +85,12 @@ const TaskCard = ({ task, roundId }: TaskCardProps) => {
     const statusConfig = PRACTICE_STATUS_CONFIG[task.practiceStatus];
     const StatusIcon = statusConfig?.icon;
 
-    const competitionLabel = task.nitroJudge
-        ? "View on Nitro Judge"
-        : "View on Kaggle";
-    const competitionHref = task.nitroJudge ?? task.kaggle!;
+    const competitionLabel = task.source
+        ? "Solve on Kilonova"
+        : task.nitroJudge
+            ? "View on Nitro Judge"
+            : "View on Kaggle";
+    const competitionHref = task.source ?? task.nitroJudge ?? task.kaggle!;
 
     return (
         <div
@@ -153,12 +155,12 @@ const TaskCard = ({ task, roundId }: TaskCardProps) => {
                         href={competitionHref}
                         target="_blank"
                         rel="noreferrer"
-                            className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-purple-600 bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
+                        className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-purple-600 bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
                     >
                         {competitionLabel}
                         <ExternalLink className="w-3.5 h-3.5" />
                     </a>
-                    {task.blog ? (
+                    {task.blog && roundId !== undefined ? (
                         <a
                             href={`/solutions/round-${roundId - 1}/${getTaskSlug(task.name)}`}
                             target="_blank"
@@ -166,7 +168,7 @@ const TaskCard = ({ task, roundId }: TaskCardProps) => {
                             className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 border border-indigo-300 dark:border-indigo-700 hover:bg-indigo-200 dark:hover:bg-indigo-900/60 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
                         >
                             <BookOpen className="w-4 h-4" />
-                            View editorial
+                            View solution
                         </a>
                     ) : task.solution === "todo" ? (
                         <span className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-700 flex items-center justify-center gap-2 cursor-not-allowed">
@@ -181,7 +183,7 @@ const TaskCard = ({ task, roundId }: TaskCardProps) => {
                             className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2"
                         >
                             <Github className="w-4 h-4" />
-                            View solution
+                            View notebook
                         </a>
                     )}
                 </div>

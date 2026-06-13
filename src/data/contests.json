@@ -1,4 +1,14 @@
 {
+    "standaloneTasks": [
+        {
+            "name": "Hotel Reservations",
+            "type": "ML",
+            "author": "Stefan Asandei",
+            "source": "https://kilonova.ro/problems/4403",
+            "solution": "todo",
+            "practiceStatus": "easy"
+        }
+    ],
     "contests": [
         {
             "id": 9,
