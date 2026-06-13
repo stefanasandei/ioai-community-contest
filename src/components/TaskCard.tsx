@@ -20,6 +20,8 @@ import type { Task, PracticeStatus } from "@/data/types";
 interface TaskCardProps {
     task: Task;
     roundId?: number;
+    mode?: 'tasks' | 'reference';
+    iconType?: string;
 }
 
 const TASK_CONFIG = {
@@ -80,17 +82,25 @@ const getTypePillClass = (type: string) =>
 const getTaskSlug = (name: string) =>
     name.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").trim();
 
-const TaskCard = ({ task, roundId }: TaskCardProps) => {
-    const { icon: TaskIcon, gradient } = getTaskConfig(task.type);
+const TaskCard = ({ task, roundId, mode = 'tasks', iconType }: TaskCardProps) => {
+    const { icon: TaskIcon, gradient } = getTaskConfig(iconType ?? task.type);
     const statusConfig = PRACTICE_STATUS_CONFIG[task.practiceStatus];
     const StatusIcon = statusConfig?.icon;
+
+    const isReference = mode === 'reference';
+    const competitionHref = task.source ?? task.nitroJudge ?? task.kaggle;
+    const hasCompetition = !!competitionHref;
+    const hasSolution =
+        (task.blog && roundId !== undefined) ||
+        (task.solution && task.solution !== "todo");
+    const showActions =
+        isReference || hasCompetition || hasSolution || task.solution === "todo";
 
     const competitionLabel = task.source
         ? "Solve on Kilonova"
         : task.nitroJudge
             ? "View on Nitro Judge"
             : "View on Kaggle";
-    const competitionHref = task.source ?? task.nitroJudge ?? task.kaggle!;
 
     return (
         <div
@@ -124,7 +134,7 @@ const TaskCard = ({ task, roundId }: TaskCardProps) => {
                                 </span>
                             )}
                         </div>
-                        <div className="flex items-center gap-1.5 mt-2.5 min-w-0 overflow-hidden">
+                        <div className="flex items-center gap-1.5 mt-2.5 min-w-0 overflow-hidden flex-wrap">
                             {task.type.split(" & ").map((t, i) => (
                                 <span
                                     key={i}
@@ -138,7 +148,7 @@ const TaskCard = ({ task, roundId }: TaskCardProps) => {
                             ))}
                             {task.author && (
                                 <span className="text-xs text-gray-600 dark:text-gray-400 truncate min-w-0">
-                                    by{" "}
+                                    {isReference ? 'from ' : 'by '}
                                     <span className="font-semibold text-gray-900 dark:text-gray-100">
                                         {task.author}
                                     </span>
@@ -149,45 +159,54 @@ const TaskCard = ({ task, roundId }: TaskCardProps) => {
                 </div>
             </div>
 
-            <div className="px-5 pb-5 pt-4 border-t border-gray-200 dark:border-white/10">
-                <div className="flex gap-2">
-                    <a
-                        href={competitionHref}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-purple-600 bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
-                    >
-                        {competitionLabel}
-                        <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                    {task.blog && roundId !== undefined ? (
-                        <a
-                            href={`/solutions/round-${roundId - 1}/${getTaskSlug(task.name)}`}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 border border-indigo-300 dark:border-indigo-700 hover:bg-indigo-200 dark:hover:bg-indigo-900/60 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
-                        >
-                            <BookOpen className="w-4 h-4" />
-                            View solution
-                        </a>
-                    ) : task.solution === "todo" ? (
-                        <span className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-700 flex items-center justify-center gap-2 cursor-not-allowed">
-                            <Clock className="w-4 h-4" />
-                            Solution coming soon
-                        </span>
-                    ) : (
-                        <a
-                            href={task.solution}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2"
-                        >
-                            <Github className="w-4 h-4" />
-                            View notebook
-                        </a>
-                    )}
+            {showActions && (
+                <div className="px-5 pb-5 pt-4 border-t border-gray-200 dark:border-white/10">
+                    <div className="flex gap-2">
+                        {hasCompetition ? (
+                            <a
+                                href={competitionHref}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-purple-600 bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
+                            >
+                                {competitionLabel}
+                                <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                        ) : (
+                            <span className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-700 flex items-center justify-center gap-2">
+                                <ExternalLink className="w-3.5 h-3.5 opacity-60" />
+                                {task.author ?? 'Source unavailable'}
+                            </span>
+                        )}
+                        {task.blog && roundId !== undefined ? (
+                            <a
+                                href={`/solutions/round-${roundId - 1}/${getTaskSlug(task.name)}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 border border-indigo-300 dark:border-indigo-700 hover:bg-indigo-200 dark:hover:bg-indigo-900/60 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
+                            >
+                                <BookOpen className="w-4 h-4" />
+                                View solution
+                            </a>
+                        ) : task.solution === "todo" ? (
+                            <span className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-700 flex items-center justify-center gap-2 cursor-not-allowed">
+                                <Clock className="w-4 h-4" />
+                                Solution coming soon
+                            </span>
+                        ) : task.solution ? (
+                            <a
+                                href={task.solution}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2"
+                            >
+                                <Github className="w-4 h-4" />
+                                View notebook
+                            </a>
+                        ) : null}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
