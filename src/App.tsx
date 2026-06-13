@@ -11,6 +11,8 @@ import Contests from "./pages/Contests";
 import Tasks from "./pages/Tasks";
 import Solution from "./pages/Solution";
 import Team from "./pages/Team";
+import Resources from "./pages/Resources";
+import Roadmap from "./pages/Roadmap";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +31,8 @@ const App = () => (
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/solutions/:round/:taskSlug" element={<Solution />} />
           <Route path="/team" element={<Team />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/roadmap" element={<Roadmap />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
 

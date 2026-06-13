@@ -30,8 +30,11 @@ const Footer = () => {
 
   const quickLinks = [
     { label: "Home", path: "/" },
-    { label: "Rules", path: "/rules" },
-    { label: "Past Editions", path: "/contests" },
+    { label: "Contests", path: "/contests" },
+    { label: "Tasks", path: "/tasks" },
+    { label: "Team", path: "/team" },
+    { label: "Resources", path: "/resources" },
+    { label: "Roadmap", path: "/roadmap" },
     { label: "Become a Setter", path: "/become-setter" },
     //{ label: "Community", path: "/community" },
   ];
@@ -39,8 +42,8 @@ const Footer = () => {
   const resources = [
     { label: "IOAI Official", href: "https://ioai-official.org/" },
     { label: "Kaggle", href: "https://www.kaggle.com" },
-    // { label: 'Documentation', href: '#' },
-    // { label: 'API Reference', href: '#' },
+    { label: "Hugging Face", href: "https://huggingface.co" },
+    { label: "All resources", href: "/resources" },
   ];
 
   const socialLinks = [

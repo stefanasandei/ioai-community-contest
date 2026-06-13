@@ -351,7 +351,7 @@ const Tasks = () => {
                 </div>
             </div>
 
-            <div className="sticky top-[72px] z-30 bg-white/90 dark:bg-[#0a0a0f]/90 backdrop-blur-md border-b border-gray-200 dark:border-white/10">
+            <div className="sticky top-16 z-30 bg-white/90 dark:bg-[#0a0a0f]/90 backdrop-blur-md border-b border-gray-200 dark:border-white/10">
                 <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
                     <div className="flex gap-2 items-center">
                         <div className="relative flex-1 min-w-0">
