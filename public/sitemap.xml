@@ -21,8 +21,8 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://aicc-official.org/community</loc>
+    <loc>https://aicc-official.org/team</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
 </urlset>
