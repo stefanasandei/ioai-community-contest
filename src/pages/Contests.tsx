@@ -431,15 +431,13 @@ const Contests = () => {
         <div className="min-h-screen pt-14 bg-gray-50 dark:bg-[#0a0a0f]">
             <Navigation />
 
-            <div className="bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10">
-                <div className="max-w-7xl mx-auto px-4 md:px-6 pt-8 pb-7">
-                    <h1 className="text-4xl md:text-5xl font-extrabold">
-                        <span className="text-gray-900 dark:text-white">
-                            Past Contest
-                        </span>{" "}
+            <div className="bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10 pt-4">
+                <div className="max-w-7xl mx-auto px-4 pt-4 pb-4">
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
+                        <span className="text-gray-900 dark:text-white">Past Contest </span>
                         <span className="text-gradient">Editions</span>
                     </h1>
-                    <p className="text-base text-gray-500 dark:text-gray-400 mt-2 font-light">
+                    <p className="text-lg text-gray-600 dark:text-gray-300 font-light">
                         Browse and practice tasks from past rounds.
                     </p>
                 </div>
