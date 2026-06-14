@@ -1,3 +1,8 @@
+export interface LearnItem {
+  topic: string;
+  seq?: number;
+}
+
 export type PracticeStatus = "easy" | "medium" | "hard" | "legacy";
 
 export interface Task {

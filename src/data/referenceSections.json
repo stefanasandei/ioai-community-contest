@@ -1,0 +1,761 @@
+[
+  {
+    "id": "tabular-ml",
+    "title": "Tabular Machine Learning",
+    "shortTitle": "Tabular ML",
+    "description": "Get familiar with classical machine learning models and tabular dataset processing. Start with dataset exploration, progress to feature engineering, continue with modelling, then deeper EDA, and end with brief theory tasks.",
+    "accent": "blue",
+    "type": "ML",
+    "tasks": [
+      {
+        "id": "ojia-2025-smart-cargo",
+        "task": "smart cargo",
+        "competition": "OJIA 2025",
+        "learn": [
+          {
+            "topic": "Basic Linear Regression"
+          }
+        ]
+      },
+      {
+        "id": "bcs-easter-round-2025-cybersecurity-ai",
+        "task": "cybersecurity ai",
+        "competition": "BCS Easter Round 2025",
+        "learn": [
+          {
+            "topic": "Data Cleaning"
+          }
+        ]
+      },
+      {
+        "id": "local-stage-simulation-2026-transport",
+        "task": "transport",
+        "competition": "Local Stage Simulation 2026",
+        "learn": [
+          {
+            "topic": "Clustering",
+            "seq": 1
+          }
+        ]
+      },
+      {
+        "id": "ioai-day-2-2025-antique",
+        "task": "antique",
+        "competition": "IOAI Day 2 2025",
+        "learn": [
+          {
+            "topic": "Clustering",
+            "seq": 2
+          },
+          {
+            "topic": "Data Exploration"
+          }
+        ]
+      },
+      {
+        "id": "simulare-ojia-1-2025-credit-score",
+        "task": "credit score",
+        "competition": "Simulare OJIA 1 2025",
+        "learn": [
+          {
+            "topic": "Feature Engineering",
+            "seq": 1
+          }
+        ]
+      },
+      {
+        "id": "simulare-ojia-2-2025-status-pacient",
+        "task": "status pacient",
+        "competition": "Simulare OJIA 2 2025",
+        "learn": [
+          {
+            "topic": "Feature Engineering",
+            "seq": 2
+          }
+        ]
+      },
+      {
+        "id": "local-stage-simulation-2026-paintings",
+        "task": "paintings",
+        "competition": "Local Stage Simulation 2026",
+        "learn": [
+          {
+            "topic": "Data Cleaning"
+          },
+          {
+            "topic": "Feature Engineering",
+            "seq": 3
+          }
+        ]
+      },
+      {
+        "id": "unirea-college-round-2026-bac-under-scrutiny",
+        "task": "bac under scrutiny",
+        "competition": "\"Unirea\" College Round 2026",
+        "learn": [
+          {
+            "topic": "Feature Engineering for Time Series"
+          }
+        ]
+      },
+      {
+        "id": "simulare-ojia-2-2025-pret-casa",
+        "task": "pret casa",
+        "competition": "Simulare OJIA 2 2025",
+        "learn": [
+          {
+            "topic": "Models",
+            "seq": 1
+          },
+          {
+            "topic": "Feature Engineering Recap"
+          }
+        ]
+      },
+      {
+        "id": "local-stage-simulation-2026-parkinson",
+        "task": "parkinson",
+        "competition": "Local Stage Simulation 2026",
+        "learn": [
+          {
+            "topic": "Models",
+            "seq": 2
+          }
+        ]
+      },
+      {
+        "id": "bcs-easter-round-2025-brain-anomaly-detection",
+        "task": "brain anomaly detection",
+        "competition": "BCS Easter Round 2025",
+        "learn": [
+          {
+            "topic": "Models",
+            "seq": 3
+          }
+        ]
+      },
+      {
+        "id": "onia-winter-warmup-2025-rabbit-exhibition",
+        "task": "rabbit exhibition",
+        "competition": "ONIA Winter Warmup 2025",
+        "learn": [
+          {
+            "topic": "Models",
+            "seq": 4
+          },
+          {
+            "topic": "Data Cleaning"
+          }
+        ]
+      },
+      {
+        "id": "ioai-mock-2025-chem-simulation",
+        "task": "chem simulation",
+        "competition": "IOAI Mock 2025",
+        "learn": [
+          {
+            "topic": "Normalization"
+          },
+          {
+            "topic": "Outliers"
+          },
+          {
+            "topic": "Feature Engineering"
+          },
+          {
+            "topic": "Models",
+            "seq": 5
+          }
+        ]
+      },
+      {
+        "id": "georgia-round-1-2026-memory-trace",
+        "task": "memory trace",
+        "competition": "Georgia Round 1 2026",
+        "learn": [
+          {
+            "topic": "Model Theory",
+            "seq": 1
+          }
+        ]
+      },
+      {
+        "id": "georgia-round-1-2026-planet-x",
+        "task": "planet x",
+        "competition": "Georgia Round 1 2026",
+        "learn": [
+          {
+            "topic": "Model Theory",
+            "seq": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "nlp",
+    "title": "Natural Language Processing",
+    "shortTitle": "NLP",
+    "description": "From beginner texts in tabular datasets to deep learning generative models. For language processing, you can use NLTK.",
+    "accent": "teal",
+    "type": "NLP",
+    "tasks": [
+      {
+        "id": "nitro-nlp-2025-mickey-si-donald",
+        "task": "mickey si donald",
+        "competition": "Nitro NLP 2025",
+        "learn": [
+          {
+            "topic": "TF-IDF"
+          },
+          {
+            "topic": "Models",
+            "seq": 1
+          }
+        ]
+      },
+      {
+        "id": "bcs-intermediate-1-2025-are-you-a-robot",
+        "task": "are you a robot",
+        "competition": "BCS Intermediate 1 2025",
+        "learn": [
+          {
+            "topic": "Language Processing"
+          },
+          {
+            "topic": "TF-IDF"
+          }
+        ]
+      },
+      {
+        "id": "onia-2025-om-vs-ai",
+        "task": "om vs ai",
+        "competition": "ONIA 2025",
+        "learn": [
+          {
+            "topic": "Text Cleaning",
+            "seq": 1
+          },
+          {
+            "topic": "TF-IDF"
+          },
+          {
+            "topic": "Models",
+            "seq": 2
+          }
+        ]
+      },
+      {
+        "id": "roai-2025-toxic",
+        "task": "toxic",
+        "competition": "ROAI 2025",
+        "learn": [
+          {
+            "topic": "Text Cleaning",
+            "seq": 2
+          },
+          {
+            "topic": "TF-IDF"
+          },
+          {
+            "topic": "Models",
+            "seq": 3
+          }
+        ]
+      },
+      {
+        "id": "mlcompete-verses-author",
+        "task": "verses author",
+        "competition": "MLCompete",
+        "learn": [
+          {
+            "topic": "NLP Feature Engineering"
+          },
+          {
+            "topic": "Text Cleaning",
+            "seq": 3
+          }
+        ]
+      },
+      {
+        "id": "algolymp-winter-round-save-the-christmas",
+        "task": "Save the Christmas",
+        "competition": "Algolymp Winter Round",
+        "learn": [
+          {
+            "topic": "Named Entity Recognition"
+          }
+        ]
+      },
+      {
+        "id": "decebaltech-2026-bazarul-lui-riki",
+        "task": "Bazarul lui Riki",
+        "competition": "DecebalTech 2026",
+        "learn": [
+          {
+            "topic": "Latent Semantic Analysis"
+          }
+        ]
+      },
+      {
+        "id": "roai-2025-skeletons",
+        "task": "skeletons",
+        "competition": "ROAI 2025",
+        "learn": [
+          {
+            "topic": "Recurrent Neural Networks"
+          },
+          {
+            "topic": "Sequence Data"
+          }
+        ]
+      },
+      {
+        "id": "poland-phase-2-2025-source-extraction",
+        "task": "source extraction",
+        "competition": "Poland Phase 2 2025",
+        "learn": [
+          {
+            "topic": "Embeddings",
+            "seq": 1
+          }
+        ]
+      },
+      {
+        "id": "mlcompete-residency-exam",
+        "task": "Residency Exam",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/43",
+        "competition": "MLCompete",
+        "learn": [
+          {
+            "topic": "Embeddings"
+          }
+        ]
+      },
+      {
+        "id": "neoai-2025-broken-bert",
+        "task": "broken bert",
+        "competition": "NEOAI 2025",
+        "learn": [
+          {
+            "topic": "Embeddings",
+            "seq": 3
+          }
+        ]
+      },
+      {
+        "id": "roai-2025-toxic-again",
+        "task": "toxic (again)",
+        "competition": "ROAI 2025",
+        "learn": [
+          {
+            "topic": "Model Fine-Tuning",
+            "seq": 1
+          },
+          {
+            "topic": "BERT"
+          }
+        ]
+      },
+      {
+        "id": "mlcompete-text-correction",
+        "task": "Text correction",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/46",
+        "competition": "MLCompete",
+        "learn": [
+          {
+            "topic": "Model Fine-Tuning",
+            "seq": 2
+          },
+          {
+            "topic": "T5"
+          }
+        ]
+      },
+      {
+        "id": "aicc-round-2-essay-gap",
+        "task": "essay gap",
+        "competition": "AICC Round 2",
+        "learn": [
+          {
+            "topic": "Model Fine-Tuning",
+            "seq": 3
+          },
+          {
+            "topic": "BERT"
+          }
+        ]
+      },
+      {
+        "id": "mlcompete-residency-exam-again-for-full-score",
+        "task": "Residency Exam (again for full score)",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/43",
+        "competition": "MLCompete",
+        "learn": [
+          {
+            "topic": "LLM Inference"
+          }
+        ]
+      },
+      {
+        "id": "neoai-2025-evading-ai-text-detection",
+        "task": "evading ai text detection",
+        "competition": "NEOAI 2025",
+        "learn": [
+          {
+            "topic": "LLM Steering"
+          },
+          {
+            "topic": "Sparse Autoencoders"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cv",
+    "title": "Computer Vision",
+    "shortTitle": "CV",
+    "description": "For image processing tasks, we highly recommend solving them using only OpenCV.",
+    "accent": "orange",
+    "type": "CV",
+    "tasks": [
+      {
+        "id": "mlcompete-real-art-vs-ai-generated-art",
+        "task": "Real Art vs. AI-Generated Art",
+        "competition": "MLCompete",
+        "learn": [
+          {
+            "topic": "CNN Classification"
+          }
+        ]
+      },
+      {
+        "id": "mlcompete-saving-christmas",
+        "task": "Saving Christmas",
+        "competition": "MLCompete",
+        "learn": [
+          {
+            "topic": "Pretrained CNN Regression"
+          }
+        ]
+      },
+      {
+        "id": "roai-2025-hotspot",
+        "task": "hotspot",
+        "competition": "ROAI 2025",
+        "learn": [
+          {
+            "topic": "Image Preprocessing",
+            "seq": 1
+          }
+        ]
+      },
+      {
+        "id": "onia-2025-notatie-bizantina",
+        "task": "notatie bizantina",
+        "competition": "ONIA 2025",
+        "learn": [
+          {
+            "topic": "Image Processing",
+            "seq": 2
+          }
+        ]
+      },
+      {
+        "id": "decebal-tech-2025-sami",
+        "task": "sami",
+        "competition": "Decebal Tech 2025",
+        "learn": [
+          {
+            "topic": "Image Processing",
+            "seq": 3
+          }
+        ]
+      },
+      {
+        "id": "algolymp-preojia-11-12-2026-lunar-craters",
+        "task": "lunar craters",
+        "competition": "Algolymp PreOJIA 11-12 2026",
+        "learn": [
+          {
+            "topic": "Image Processing",
+            "seq": 4
+          }
+        ]
+      },
+      {
+        "id": "poland-phase-2-2025-non-normal-dist",
+        "task": "non-normal dist",
+        "competition": "Poland Phase 2 2025",
+        "learn": [
+          {
+            "topic": "Encoder-Decoder Architecture"
+          }
+        ]
+      },
+      {
+        "id": "onia-winter-warmup-2025-glitch-hunter",
+        "task": "glitch hunter",
+        "competition": "ONIA Winter Warmup 2025",
+        "learn": [
+          {
+            "topic": "Binary Segmentation (UNet)",
+            "seq": 1
+          }
+        ]
+      },
+      {
+        "id": "ioai-at-home-2025-weather",
+        "task": "weather",
+        "competition": "IOAI At-Home 2025",
+        "learn": [
+          {
+            "topic": "UNet",
+            "seq": 2
+          },
+          {
+            "topic": "Advanced Modules"
+          },
+          {
+            "topic": "Test-Time Augmentation"
+          }
+        ]
+      },
+      {
+        "id": "ioai-at-home-2025-radar",
+        "task": "radar",
+        "competition": "IOAI At-Home 2025",
+        "learn": [
+          {
+            "topic": "Encoder-Decoder"
+          },
+          {
+            "topic": "Focal Loss"
+          }
+        ]
+      },
+      {
+        "id": "spooky-round-2025-haunt-me",
+        "task": "haunt me",
+        "competition": "Spooky Round 2025",
+        "learn": [
+          {
+            "topic": "Object Detection",
+            "seq": 1
+          },
+          {
+            "topic": "Faster R-CNN"
+          }
+        ]
+      },
+      {
+        "id": "nitro-nlp-2025-find-the-ducks",
+        "task": "find the ducks",
+        "competition": "Nitro NLP 2025",
+        "learn": [
+          {
+            "topic": "Object Detection",
+            "seq": 2
+          },
+          {
+            "topic": "YOLO"
+          }
+        ]
+      },
+      {
+        "id": "aicc-round-2-face-matching",
+        "task": "face matching",
+        "competition": "AICC Round 2",
+        "learn": [
+          {
+            "topic": "CLIP",
+            "seq": 1
+          },
+          {
+            "topic": "Embeddings Retrieval"
+          }
+        ]
+      },
+      {
+        "id": "onia-winter-warmup-2025-magic-of-words",
+        "task": "magic of words",
+        "competition": "ONIA Winter Warmup 2025",
+        "learn": [
+          {
+            "topic": "CLIP",
+            "seq": 2
+          },
+          {
+            "topic": "Fine-Tuning"
+          }
+        ]
+      },
+      {
+        "id": "neoai-2025-cuties-segmentation",
+        "task": "cuties segmentation",
+        "competition": "NEOAI 2025",
+        "learn": [
+          {
+            "topic": "CLIP",
+            "seq": 3
+          },
+          {
+            "topic": "CLIPSeg"
+          }
+        ]
+      },
+      {
+        "id": "ioai-day-2-2025-restroom",
+        "task": "restroom",
+        "competition": "IOAI Day 2 2025",
+        "learn": [
+          {
+            "topic": "CLIP",
+            "seq": 4
+          },
+          {
+            "topic": "CLIPReID"
+          }
+        ]
+      },
+      {
+        "id": "ioai-day-2-2025-pixel",
+        "task": "pixel",
+        "competition": "IOAI Day 2 2025",
+        "learn": [
+          {
+            "topic": "CLIP",
+            "seq": 5
+          },
+          {
+            "topic": "MaskCLIP"
+          }
+        ]
+      },
+      {
+        "id": "neoai-2025-hogspell-challenge",
+        "task": "hogspell challenge",
+        "competition": "NEOAI 2025",
+        "learn": [
+          {
+            "topic": "Stable Diffusion Fine-Tuning"
+          }
+        ]
+      },
+      {
+        "id": "mlcompete-thousand-rooms",
+        "task": "thousand rooms",
+        "competition": "MLCompete",
+        "learn": [
+          {
+            "topic": "VQA"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "audio",
+    "title": "Audio",
+    "shortTitle": "Audio",
+    "description": "",
+    "accent": "pink",
+    "type": "AUDIO",
+    "tasks": [
+      {
+        "id": "aicc-round-3-soud-of-nature",
+        "task": "soud of nature",
+        "competition": "AICC Round 3",
+        "learn": [
+          {
+            "topic": "Mel-Spectrogram Classification"
+          }
+        ]
+      },
+      {
+        "id": "spooky-round-2025-creepy-pizza",
+        "task": "creepy pizza",
+        "competition": "Spooky Round 2025",
+        "learn": [
+          {
+            "topic": "LSTM for Sound Classification"
+          }
+        ]
+      },
+      {
+        "id": "aicc-round-2-demixing-audio",
+        "task": "demixing audio",
+        "competition": "AICC Round 2",
+        "learn": [
+          {
+            "topic": "UNet for Sounds"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "deep-learning",
+    "title": "Deep Learning",
+    "shortTitle": "DL",
+    "description": "",
+    "accent": "purple",
+    "type": "ML",
+    "tasks": [
+      {
+        "id": "neoai-2025-underfitting-cv",
+        "task": "underfitting cv",
+        "competition": "NEOAI 2025",
+        "learn": [
+          {
+            "topic": "Hyperparameter Tuning"
+          },
+          {
+            "topic": "KL Divergence Loss"
+          }
+        ]
+      },
+      {
+        "id": "aicc-round-0-find-brain-tumors",
+        "task": "find brain tumors",
+        "competition": "AICC Round 0",
+        "learn": [
+          {
+            "topic": "Self-Supervised Learning"
+          }
+        ]
+      },
+      {
+        "id": "ioai-mock-2025-grid-collage",
+        "task": "grid collage",
+        "competition": "IOAI Mock 2025",
+        "learn": [
+          {
+            "topic": "Pseudo-Labeling"
+          }
+        ]
+      },
+      {
+        "id": "aicc-round-1-the-defected-nuts",
+        "task": "the defected nuts",
+        "competition": "AICC Round 1",
+        "learn": [
+          {
+            "topic": "Anomaly Detection"
+          }
+        ]
+      },
+      {
+        "id": "ceoai-practice-1-star-observatory",
+        "task": "star observatory",
+        "competition": "CEOAI Practice 1",
+        "learn": [
+          {
+            "topic": "Knowledge Distillation"
+          }
+        ]
+      }
+    ]
+  }
+]

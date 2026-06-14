@@ -6,6 +6,9 @@ import {
     AudioWaveform,
     CaseSensitive,
     Bot,
+    Table,
+    Volume2,
+    MessageSquare,
     CheckCircle2,
     XCircle,
     AlertTriangle,
@@ -15,23 +18,27 @@ import {
     Github,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { Task, PracticeStatus } from "@/data/types";
+import type { LucideIcon } from "lucide-react";
+import type { Task, PracticeStatus, LearnItem } from "@/data/types";
 
 interface TaskCardProps {
     task: Task;
     roundId?: number;
     mode?: 'tasks' | 'reference';
     iconType?: string;
+    learnItems?: LearnItem[];
 }
 
-const TASK_CONFIG = {
-    ML: { icon: Brain, gradient: "from-blue-500 to-blue-600" },
+const TASK_CONFIG: Record<string, { icon: LucideIcon; gradient: string }> = {
+    ML: { icon: Table, gradient: "from-blue-500 to-blue-600" },
     CV: { icon: Eye, gradient: "from-orange-500 to-orange-600" },
     NLP: { icon: CaseSensitive, gradient: "from-teal-500 to-teal-600" },
     RL: { icon: Bot, gradient: "from-cyan-500 to-cyan-600" },
     AUDIO: { icon: AudioWaveform, gradient: "from-pink-500 to-pink-600" },
+    'tabular-ml': { icon: Table, gradient: "from-blue-500 to-blue-600" },
+    'deep-learning': { icon: Brain, gradient: "from-purple-500 to-purple-600" },
     DEFAULT: { icon: Code, gradient: "from-yellow-500 to-yellow-600" },
-} as const;
+};
 
 const PRACTICE_STATUS_CONFIG: Record<
     PracticeStatus,
@@ -71,9 +78,10 @@ const TYPE_PILL_CLASS: Record<string, string> = {
     AUDIO: "bg-pink-100 text-pink-800 border-pink-300 dark:bg-pink-900/50 dark:text-pink-200 dark:border-pink-700",
 };
 
-const getTaskConfig = (type: string) =>
-    TASK_CONFIG[type.split(" & ")[0].toUpperCase() as keyof typeof TASK_CONFIG] ??
-    TASK_CONFIG.DEFAULT;
+const getTaskConfig = (type: string) => {
+    const base = type.split(" & ")[0];
+    return TASK_CONFIG[base] ?? TASK_CONFIG[base.toUpperCase()] ?? TASK_CONFIG.DEFAULT;
+};
 
 const getTypePillClass = (type: string) =>
     TYPE_PILL_CLASS[type.toUpperCase()] ??
@@ -82,7 +90,7 @@ const getTypePillClass = (type: string) =>
 const getTaskSlug = (name: string) =>
     name.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").trim();
 
-const TaskCard = ({ task, roundId, mode = 'tasks', iconType }: TaskCardProps) => {
+const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems }: TaskCardProps) => {
     const { icon: TaskIcon, gradient } = getTaskConfig(iconType ?? task.type);
     const statusConfig = PRACTICE_STATUS_CONFIG[task.practiceStatus];
     const StatusIcon = statusConfig?.icon;
@@ -135,15 +143,18 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType }: TaskCardProps) =>
                             )}
                         </div>
                         <div className="flex items-center gap-1.5 mt-2.5 min-w-0 overflow-hidden flex-wrap">
-                            {task.type.split(" & ").map((t, i) => (
+                            {(learnItems ?? task.type.split(" & ").map(t => ({ topic: t }))).map((item, i) => (
                                 <span
                                     key={i}
                                     className={cn(
                                         "inline-flex items-center px-1.5 py-0.5 rounded text-xs font-semibold border shrink-0",
-                                        getTypePillClass(t)
+                                        getTypePillClass(item.topic)
                                     )}
                                 >
-                                    {t}
+                                    {item.topic}
+                                    {item.seq != null && (
+                                        <span className="ml-0.5 opacity-50">#{item.seq}</span>
+                                    )}
                                 </span>
                             ))}
                             {task.author && (

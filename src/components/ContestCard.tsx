@@ -6,6 +6,7 @@ import {
     AudioWaveform,
     CaseSensitive,
     Bot,
+    Table,
     CheckCircle2,
     XCircle,
     AlertTriangle,
@@ -27,7 +28,7 @@ interface ContestCardProps {
 }
 
 const TASK_CONFIG = {
-    ML: { icon: Brain, gradient: "from-blue-500 to-blue-600" },
+    ML: { icon: Table, gradient: "from-blue-500 to-blue-600" },
     CV: { icon: Eye, gradient: "from-orange-500 to-orange-600" },
     NLP: { icon: CaseSensitive, gradient: "from-teal-500 to-teal-600" },
     RL: { icon: Bot, gradient: "from-cyan-500 to-cyan-600" },

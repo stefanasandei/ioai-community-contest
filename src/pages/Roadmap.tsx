@@ -19,7 +19,7 @@ import {
   totalTaskCount,
   type SectionAccent,
 } from '@/data/referenceTasks';
-import type { PracticeStatus } from '@/data/types';
+import type { PracticeStatus, LearnItem } from '@/data/types';
 
 type Difficulty = 'easy' | 'medium' | 'hard';
 
@@ -72,6 +72,20 @@ const sectionIcons: Record<string, LucideIcon> = {
   'deep-learning': Brain,
 };
 
+type TopicGroup = { topic: string; count: number };
+
+const getTopicGroups = (tasks: readonly { learn: readonly LearnItem[] }[]): TopicGroup[] => {
+  const counts = new Map<string, number>();
+  for (const task of tasks) {
+    for (const item of task.learn) {
+      counts.set(item.topic, (counts.get(item.topic) ?? 0) + 1);
+    }
+  }
+  return Array.from(counts.entries())
+    .map(([topic, count]) => ({ topic, count }))
+    .sort((a, b) => b.count - a.count || a.topic.localeCompare(b.topic));
+};
+
 const getDifficulty = (index: number, total: number): Difficulty => {
   if (total <= 1) return 'easy';
   const ratio = index / (total - 1);
@@ -98,12 +112,12 @@ const Roadmap = () => {
     return referenceSections.map((section) => {
       const selectedTopic = selectedTopics[section.id] ?? null;
       const tasks = section.tasks.filter((task) => {
-        if (selectedTopic && !task.learn.includes(selectedTopic)) return false;
+        if (selectedTopic && !task.learn.some((i) => i.topic === selectedTopic)) return false;
         if (!q) return true;
         const matchesTask = task.task.toLowerCase().includes(q);
         const matchesCompetition = task.competition.toLowerCase().includes(q);
         const matchesLearn = task.learn.some((t) =>
-          t.toLowerCase().includes(q),
+          t.topic.toLowerCase().includes(q),
         );
         return matchesTask || matchesCompetition || matchesLearn;
       });
@@ -126,7 +140,7 @@ const Roadmap = () => {
             <span className="text-gray-900 dark:text-white">Reference </span>
             <span className="text-gradient">Tasks</span>
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 font-light max-w-3xl mb-6">
+          <p className="text-lg text-gray-600 dark:text-gray-300 font-light mb-6">
             A learning roadmap for competitive AI.{' '}
             <span className="font-medium text-gray-900 dark:text-white">
               {totalTaskCount} tasks
@@ -135,7 +149,7 @@ const Roadmap = () => {
             it as a path to learn the topics that show up most often.
           </p>
 
-          <div className="relative max-w-xl">
+          <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             <input
               type="text"
@@ -176,7 +190,7 @@ const Roadmap = () => {
                   className="shrink-0 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-aicc-purple hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
                 >
                   <Icon className="w-4 h-4" />
-                  <span>{section.shortTitle}</span>
+                  <span className="whitespace-nowrap">{section.title}</span>
                   <span
                     className={`text-[11px] font-semibold px-1.5 py-0.5 rounded ${styles.chip}`}
                   >
@@ -194,9 +208,7 @@ const Roadmap = () => {
           {referenceSections.map((section) => {
             const Icon = sectionIcons[section.id];
             const styles = accentStyles[section.accent];
-            const topTopics = Array.from(
-              new Set(section.tasks.flatMap((t) => t.learn)),
-            ).slice(0, 4);
+            const topTopics = getTopicGroups(section.tasks).slice(0, 4);
             return (
               <a
                 key={section.id}
@@ -223,12 +235,13 @@ const Roadmap = () => {
                   />
                 </div>
                 <div className="flex flex-wrap gap-1.5">
-                  {topTopics.map((topic) => (
+                  {topTopics.map((g) => (
                     <span
-                      key={topic}
+                      key={g.topic}
                       className="inline-flex items-center px-2 py-0.5 text-[11px] font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded"
                     >
-                      {topic}
+                      {g.topic}
+                      <span className="ml-1 text-[10px] tabular-nums opacity-50">{g.count}</span>
                     </span>
                   ))}
                 </div>
@@ -243,9 +256,7 @@ const Roadmap = () => {
           const Icon = sectionIcons[section.id];
           const styles = accentStyles[section.accent];
           const selectedTopic = selectedTopics[section.id] ?? null;
-          const allTopics = Array.from(
-            new Set(section.tasks.flatMap((t) => t.learn)),
-          );
+          const topicGroups = getTopicGroups(section.tasks);
 
           return (
             <section
@@ -280,30 +291,27 @@ const Roadmap = () => {
                 </p>
               )}
 
-              {allTopics.length > 0 && (
+              {topicGroups.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-6">
-                  {allTopics.map((topic) => {
-                    const count = section.tasks.filter((t) =>
-                      t.learn.includes(topic),
-                    ).length;
-                    const isSelected = selectedTopic === topic;
+                  {topicGroups.map((g) => {
+                    const isSelected = selectedTopic === g.topic;
                     return (
                       <button
-                        key={topic}
-                        onClick={() => handleTopicClick(section.id, topic)}
+                        key={g.topic}
+                        onClick={() => handleTopicClick(section.id, g.topic)}
                         className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium border rounded-full transition-colors ${
                           isSelected
                             ? 'bg-aicc-purple text-white border-aicc-purple'
                             : 'bg-white dark:bg-white/5 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-white/10 hover:border-aicc-purple/50 hover:text-aicc-purple'
                         }`}
                       >
-                        {topic}
+                        {g.topic}
                         <span
                           className={`text-[10px] tabular-nums ${
                             isSelected ? 'text-white/80' : 'text-gray-400'
                           }`}
                         >
-                          {count}
+                          {g.count}
                         </span>
                       </button>
                     );
@@ -329,7 +337,8 @@ const Roadmap = () => {
                         key={task.id}
                         task={referenceToTask(task, section, difficulty)}
                         mode="reference"
-                        iconType={section.type}
+                        iconType={section.id}
+                        learnItems={task.learn}
                       />
                     );
                   })}
