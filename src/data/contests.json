@@ -147,6 +147,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/alchemy-aicc-round-4",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-4/alchemy.ipynb",
+                    "blog": "/solutions/round-4/alchemy",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "medium"
                 },
@@ -184,10 +185,11 @@
                     "practiceStatus": "easy"
                 },
                 {
-                    "name": "Morty Time Paradox",
+                    "name": "Morty's Time Paradox",
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/mortys-time-paradox-aicc-round-3/overview",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-3/morty-time-paradox.ipynb",
+                    "blog": "/solutions/round-3/mortys-time-paradox",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "medium"
                 }

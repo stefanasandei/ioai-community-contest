@@ -1,0 +1,52 @@
+## Problem Overview
+
+Morty's Time Paradox is a multiclass classification task, where participants must decode the logic of 8 alien watches to identify the correct timeline out of 5 possible candidates. Each row in the training set provides 8 cyclical features and exactly 5 candidate timelines, only one of which is the true label, 0. The goal is to learn hidden pattern of the watches and predict single correct timeline.
+
+## Cyclical features
+
+In the task statement, we are told that 8 alien watch features `x0...x7` are cyclical. Meaning of cyclical is that the values wrap around. After reaching maximum value, they start over from zero. 
+
+Good examples of cyclical feature is:
+
+- Clock hands: 11:59 and 12:01 are 2 minutes apart in reality, but numerically they differ by 118.
+- Compass direction: A heading of 359° and a heading of 1° are almost identical, but numerically different.
+
+Crucial property of cyclical features are period. Period i the length of one full cycle before the value wraps back to zero. For a clock, period is 12 hours, for compass direction its 360°.
+
+In case of this task, we have 8 different watches, which all have different periods. Thus, we have to find their periods so we are able to normalize them.
+
+To find periods, lets first plot distribution of all 8 features.
+
+![Feature Distributions](/assets/watch_features.png)
+
+As we see, values are spread between some minimum and maximum, and that range is exactly one full period. Thus we can find period by rounding subtraction of max and min:
+
+$$T_i = \text{round}\left(\max(x_i) - \min(x_i)\right)$$
+
+## Trigonometric Encoding
+
+After normalizing the value of the watches by period, we need to enforce periodicity in our values. Normalization alone only rescales the line. To capture circular structure of features, we need to encode each normalized feature as trigonometric functions. In this case, we can normalize by sine and cosine. 
+
+### Why sine and cosine?
+
+Sine and cosine are naturally periodic, completing one full cycle over `2π` and repeat forever. When we map each value through both functions, we project it onto the unit circle as a 2D coordinate (cos, sin). Every point on this circle has unique position and euclidean distance between them reflects true circular pattern. Both sine and cosine are needed because using only one would make different angles map to the same value, while together they uniquely determine a position on the circle.
+
+$$x_{\sin} = \sin\left(\frac{2\pi \cdot x}{T}\right), \quad x_{\cos} = \cos\left(\frac{2\pi \cdot x}{T}\right)$$
+
+After encoding features using sine and cosine function, we get 16 features.
+
+## Clustering Methods
+
+Lets visualize both training and test features after cyclical encoding using TSNE:
+
+![TSNE Visualization](/assets/tsne_encoded.png)
+
+As we can see, data forms 5 well seperated clusters of circular structure.
+
+Given the structure, Spectral Clustering is best way to cluster the data.
+
+![Spectral Clustering](/assets/spectral.png)
+
+## Final Remarks & Other Interesting Ideas
+
+For period estimation, the minmax approach works reliably here because the data spans one full cycle cleanly. For more complex or noisy settings, autocorrelation and FFT are better alternatives. However, author kept the minmax approach to not overcomplicate the solution. 
