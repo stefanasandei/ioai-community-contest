@@ -1,0 +1,93 @@
+## Problem Overview
+
+Sticky Note Blindness is an adversarial robustness task, where participants must defend CLIP (ViT-B/16) against a typographic attack. The dataset provides pre-attacked images, L2-normalized text embeddings for ~800 candidate classes, and the fraction of each image covered by the sticky note. The goal is to recover the true object class for every attacked image
+
+## What is a Typographic Attack?
+
+Typographic Attack is a type of adversarial attacks, where a sticky note bearing a misleading text is attached to the object. It works extremelly well on vision-language models, because many of them rely on learned associations between visual and text-like characteristics. 
+
+![Typographic Attack](/assets/typographic_attack.png)
+
+Let's take example of CLIP. CLIP embeds image with it's vision encoder, candidate class names with text encoder, and to classify the image, selects the class whose text embedding is closest to the image embedding using cosine similarity:
+
+$
+\hat{y} = \arg\max_{k} \; e_{\text{img}} \cdot e_{\text{text}, k}
+$
+
+This works well on clean images. The problem is that CLIP was trained on huge amounts of image-caption pairs scraped from the internet, where visible text in an image (logos, signs) is often good predictor of the caption. As a side effect, CLIP learned to behave as an OCR system, pulling image embeddings that contain visible text toward the corresponding text embeddings.
+
+## What might fix the typographic attacks?
+
+Intuitively, there are two main solutions which will work against typographic attacks:
+
+- where we have to destroy text characteristics in an image
+- where we make CLIP aware of the text characteristics
+
+Thus, two main solutions emerge
+
+### Flipping image
+
+To destroy text characteristics in pre-attacked image, we can flip image using horizontal mirror flip. Text is strongly directional, it can't be read from other directions than left-to-right. Thus, mirrored text will be less aligned with corresponding text embedding, fixing the problem.
+
+```python
+images_flip = [img.transpose(Image.FLIP_LEFT_RIGHT) for img in images]
+
+emb_orig = encode(images)
+emb_flip = encode(images_flip)
+
+s_orig = score(emb_orig)
+s_flip = score(emb_flip)
+```
+
+Using this method only, we can achieve ~87%
+
+### MirrorCLIP
+
+Flipping alone throws original embeddings, even though it contained rich visual infomation about the image. We can use original embedding effectively, to make our CLIP aware of the text characteristics
+For this, the key idea is to compare the sign of each dimension across the original and flipped embeddings:
+
+$\mathrm{agreement}_d = e_{\mathrm{orig}, d} \cdot e_{\mathrm{flip}, d}$
+
+- if $\mathrm{agreement}_d > 0$, the sign of dimension $d$ didn't change after flipping, so the dimension is treated as **visual** one, containing no textual information.
+- $\mathrm{agreement}_d < 0$, the sign of dimension $d$ changed, thus the feature is dependant on textual characteristics.
+
+For visual dimensions, both views agree, so we reinforce the signal by summing them. For textual dimensions, the original view is assumed to be corrupted by the sticky note, so we discard it and keep only the flipped value, since it's already the less text-influenced of the two.
+
+```python
+def mirrorclip(emb_orig, emb_flip):
+    # dims where orig and flip agree -> visual (keep both)
+    # dims where they disagree -> textual (keep only the flip)
+
+    visual = (emb_orig * emb_flip) > 0
+    out = torch.where(visual, emb_orig + emb_flip, emb_flip)
+    return F.normalize(out, dim=-1)
+
+emb_clean = mirrorclip(emb_orig, emb_flip)
+preds_mirrorclip = score(emb_clean).argmax(1).tolist()
+```
+
+We can inspect the agreement mask directly to see how much of the embedding space is actually affected by the sticky notes:
+
+```python
+agreement = emb_orig * emb_flip
+n_textual = (agreement < 0).float().sum(dim=1)
+n_visual = (agreement > 0).float().sum(dim=1)
+```
+
+On average, roughly 106 out of 512 dimensions disagree in sign, meaning about 20% of CLIP's embedding space is being hijacked by the sticky note text on a typical attacked image.
+
+For further exploration, you can read original MirrorCLIP paper: [Wang et al. (2024)](https://openreview.net/pdf?id=FYm8coxdiR)
+
+## Typographic Attacks in IOAI Tasks
+
+One of the "hacky" solutions proposed for International AI Olympiad 2025 Task 6 was using typographic attacks. In this task, we had to return a single rectangular mask per image, selecting only up to 6.25% of the pixels, so that the masked image would be classified the same as the original image by our pretrained CLIP.
+
+Idea of "hacky" solution was to first run original image through CLIP to obtain correct label, then use the retained pixels to write the class name onto the image.
+
+![IOAI Typographic Attack](/assets/ioai_6.png)
+
+This solution worked perfectly well, which was the reason why authors limited submissions to a **single rectangular mask**.
+
+## Final Remarks
+
+The two solutions above exploit main weakness of the attack: Object survives the flip, while text doesn't.

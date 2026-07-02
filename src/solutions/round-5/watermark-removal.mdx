@@ -1,0 +1,145 @@
+## Problem Overview
+
+Watermark Removal is image restoration tasks, where participants must recover clean bird images from synthetically watermarked ones. Training provides 2,000 clean/watermarked pairs, where watermarks are mostly semantic text labels or diagonal cross lines. The goal is to reconstruct the clean version of 200 held-out watermarked test images, scored by MSE over pixel values normalized to [0, 1].
+
+![Watermark Removal](/assets/watermark_removal.png)
+
+## Image Restoration Methods
+
+Various method exists for watermark removal in images. Very naive approach is to use direct regression (watermarked image in, clean image out, trained with plain per-pixel MSE), however, this method tends to output blurry reconstructions (averaging neighboring regions of watermark). There exists Inpainting and GAN-based approaches, however diffusion-based models tend to be State-of-the-art in this task.
+
+Diffusion models normally turn random noise into an image step-by-step (Further details about diffusion will be discussed later in this editorial). But for watermark removal, we don't want random realistic image, we want that exact original bird image hidden under the watermark. So we "condition" our model to generate clean image by giving it watermarked one, so it knows what needs to be recovered.
+
+Classically, diffusion learns to generate image using conditioning on text, however in this approach we are conditioning diffusion on images. [Image to Image Diffusion Models](https://arxiv.org/abs/2111.05826)
+
+## Diffusion Model Family
+
+**Diffusion is a generative process, where a model learns create data by gradually removing noise from random signal step-by-step.**
+
+### DDPM (Denoising Diffusion Probabilistic Models)
+
+DDPM defines a forward process, which gradually destroys an image by adding small amounts of Gaussian noise over many steps $(t=1 \dots T)$, until it becomes pure noise. 
+
+After noising step, network is trained to predict the noise $\epsilon$ which was added at each step, and the reverse process removes it gradually to walk back from noise to real image.
+
+![DDPM](/assets/ddpm.png)
+
+Problem DDPM has is that during reverse process, fresh random noise is re-injected after each step, thus sampling is slow and stochastic. Read more about [DDPM](https://arxiv.org/abs/2006.11239)
+
+### DDIM (Denoising Diffusion Implicit Models)
+
+DDIM uses the same trained model as DDPM, but changes only the sampling process. Instead of adding random noise at every step like DDPM, DDIM removes the randomness (sets the noise term to zero), making the reverse process deterministic and faster while still producing high-quality images.
+
+$x_{t-1} = \sqrt{\bar{\alpha}_{t-1}}\, \hat{x}_0 \;+\; \sqrt{1 - \bar{\alpha}_{t-1}}\,\epsilon_\theta(x_t, t)$
+
+This speeds generation process significantly compared to DDPM. Read more about [DDIM](https://arxiv.org/abs/2010.02502)
+
+## Rectified Flow
+
+In our reference solution, we use Rectified Flow, which is much faster than both DDPM and DDIM, while keeping high quality during generation
+
+Both DDPM and DDIM share one same exploit: They discretize sampling steps. This is very costly, since each step requires computation.
+
+Rectified Flow changes this by defining straight line path between noise $z_0$ and original image $z_1$
+
+![Diffusion VS Rectified Flow](/assets/diffusion_rec.jpg)
+
+Learned straight path:
+
+$z_t = (1 - t)\, z_0 + t\, z_1, \quad t \in [0, 1]$
+
+Because the interpolation path is linear, the true velocity along the trajectory is constant and equal to $z_1-z_0$. Thus network has to only learn this velocity field v_\theta(z_t, t), that matches $z_1-z_0$ for all $t$:
+
+$\mathcal{L} = \mathbb{E}_{t, z_0, z_1} \left[ \left\| v_\theta(z_t, t) - (z_1 - z_0) \right\|^2 \right]$
+
+```python
+t = torch.rand(wm.shape[0], device=DEVICE)
+t_expand = t[:, None, None, None]
+
+x0 = torch.randn_like(clean)
+x1 = clean
+
+xt = (1 - t_expand) * x0 + t_expand * x1
+target = x1 - x0  # Velocity
+
+pred = model(xt, t, wm)
+loss = nn.MSELoss()(pred, target)
+```
+
+At sampling time, generation is just euler integration of this velocity field starting from noise.
+
+```python
+@torch.no_grad()
+def sample(self, model, cond, steps=50):
+    x = torch.randn_like(cond).to(DEVICE)
+    dt = 1.0 / steps
+    for i in range(steps):
+        t = torch.ones(cond.shape[0], device=DEVICE) * (i / steps)
+        v = model(x, t, cond)
+        x = x + v * dt
+    return x
+```
+
+### Short summary
+
+- **DDPM** learns to reverse a curved, stochastic noising trajectory one step a time.
+- **DDIM** reuses same network but removes injected randomness, allowing steps to be skipped, at the cost of following approximation of that same curved trajectory
+- **Rectified Flow** instead trains the network directly on trajectories that are straight lines, so a good approximation of the path needs significantly fewer steps to trace accurately.
+
+## Denoiser during Diffusion / RecFlow
+
+The denoiser is small 2D UNet, conditioned two ways: the watermarked image is concatenated onto the noisy input as extra channels, and the current timestep tt
+t is embedded with sinusoidal positional encoding and injected additively into every residual block.
+
+![Diffusion](/assets/diffusion.png)
+
+```python
+class ResBlock(nn.Module):
+    def __init__(self, in_ch, out_ch, t_dim):
+        super().__init__()
+        self.norm1 = nn.GroupNorm(8, in_ch)
+        self.conv1 = nn.Conv2d(in_ch, out_ch, 3, padding=1)
+        self.t_mlp = nn.Linear(t_dim, out_ch)
+        self.norm2 = nn.GroupNorm(8, out_ch)
+        self.conv2 = nn.Conv2d(out_ch, out_ch, 3, padding=1)
+        self.shortcut = nn.Conv2d(in_ch, out_ch, 1) if in_ch != out_ch else nn.Identity()
+        self.relu = nn.SiLU()
+
+    def forward(self, x, t):
+        h = self.relu(self.norm1(x))
+        h = self.conv1(h)
+        h += self.t_mlp(t)[:, :, None, None]      # inject time embedding
+        h = self.relu(self.norm2(h))
+        return self.conv2(h) + self.shortcut(x)
+```
+
+Rectified Flow forward pass:
+
+```python
+def forward(self, x, t, cond):
+    t_emb = self.t_embed(self.pos_encoding(t, 256))
+    x = torch.cat([x, cond], dim=1)     # 3 noisy channels + 3 conditioning channels
+    x1 = self.init_conv(x)
+    x2 = self.down1(self.pool(x1), t_emb)
+    x3 = self.down2(self.pool(x2), t_emb)
+    x3 = self.mid(x3, t_emb)
+    x_up = F.interpolate(x3, scale_factor=2, mode="bilinear")
+    u1 = self.up1(torch.cat([x_up, x2], dim=1), t_emb)
+    u1_up = F.interpolate(u1, scale_factor=2, mode="bilinear")
+    u2 = self.up2(torch.cat([u1_up, x1], dim=1), t_emb)
+    return self.out(u2)
+```
+
+Structurally this follows same idea as any UNet encoder-decoder style architectures, adding two cherrys on top:
+
+- the conditioning image concatenated at the input
+- time embedding threaded through every block so the network always knows where along the noise-to-data path it currently is.
+
+## Final Remarks
+
+There exists many methods in image restoration task, but diffusion models stay SOTA for now. Diffusion model family consists of DDPM and DDIM, which both discretize steps along curved trajectory. Rectified Flow learns straight, line path which can be followed with learned velocity field, thus making it faster than previous methods.
+
+
+
+
+

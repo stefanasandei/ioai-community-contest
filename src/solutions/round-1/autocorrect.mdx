@@ -1,0 +1,120 @@
+## Problem Overview
+
+Autocorrect is character level text correction task, where participants must build a model that maps mispelled text to corrected text. 
+
+## Clarifying Constrains
+
+Performance is measured with Character Error Rate (CER):
+
+$
+\mathrm{CER} = \frac{S + D + I}{N}
+$
+
+where $S$ is substitution rate, $D$ is deletion rate, I is insertion rate and N is number of characters in ground truth.
+
+Example:
+
+- Ground Truth: `hello`
+- Prediction: `hxllo!`
+
+$
+\mathrm{CER} = \frac{1 + 0 + 1}{5} = 0.4
+$
+
+Model must run CPU-only, correcting all 2,643 test samples within a 250-second time limit.
+
+## Postscript by Ian
+
+Author hinted during problem statement that errors made in strings is somewhat predictable. Let's do some EDA to see what data tells us:
+
+- Corrections are almost always local. Fixing "teh" into "the" or "josfkes" into "jostles" only requires looking at the handful of characters immediately around the error
+- The corrected text has the same number of characters as the misspelled text. This task's typos behave like local substitutions rather than insertions or deletions, so every corrected character lines up with a misspelled character.
+
+Running ``.describe()`` on both columns confirms it: the character-length distributions of `text` and `misspell` are identical.
+
+This is clue that its not a translation problem, whether its character-level sequence labeling problem. Theres no need for seq2seq encoder-decoder architectures. Encoder-only that outputs corrected character per input character in a single forward pass is more than enough.
+
+## Character Level Tokenization
+
+Since the task is local and length-preserving, we tokenize by individual characters rather than subwords or whole words:
+
+```python
+from tokenizers import Tokenizer, models, pre_tokenizers, processors
+
+tokenizer = Tokenizer(models.WordLevel(unk_token="<UNK>"))
+tokenizer.pre_tokenizer = pre_tokenizers.Split("", "isolated")
+tokenizer.enable_padding(pad_token="<PAD>")
+```
+
+## Chunking Long Sequences
+
+Roughly a quarter of training examples exceed 768 character truncation length, so we have to cut sequences into overlapping windows during training:
+
+```python
+input_encodings = tokenizer(
+    examples['misspell'],
+    padding='max_length', truncation=True,
+    max_length=256, stride=128,
+    return_overflowing_tokens=True, return_tensors='pt'
+)
+```
+
+At validation and test time, sequences are tokenized at their full length instead. Chunking is purely a training-time trick.
+
+## Bidirectional GRU
+
+With CPU only and 250 seconds runtime, transformer is a poor fit here. We have to use older SOTA architectures, which led the field before 2017. A bidirectional GRU, sized carefully will do the work.
+
+Three hyperparameters matter:
+
+- Embedding dimension: only shapes the input token representation. Since individual characters carry very little meaning on their own, this doesn't need to be large.
+- Hidden dimension: where most computation happens. Parameter count grows quadratically with this, so it can't be scaled up carelessly.
+- Number of layers: grows the receptive field and depth linearly in parameters, but each layer runs sequentially and isn't parallelizable, directly costing inference time.
+
+![Bidirectional GRU](/assets/bigru.png)
+
+```python
+class BiGRUAutocorrect(nn.Module):
+    def __init__(self, vocab_size, embed_size, hidden_size, num_layers, dropout):
+        super().__init__()
+        self.embedding = nn.Embedding(vocab_size, embed_size)
+        self.gru = nn.GRU(embed_size, hidden_size, num_layers=num_layers,
+                           batch_first=True, dropout=dropout, bidirectional=True)
+        self.fc = nn.Linear(hidden_size * 2, vocab_size)
+
+    def forward(self, x, lens=None, hidden=None):
+        x = self.embedding(x)
+        if lens is None:
+            out, hidden = self.gru(x, hidden)
+        else:
+            packed = nn.utils.rnn.pack_padded_sequence(x, lens.cpu(), batch_first=True, enforce_sorted=False)
+            packed_outputs, hidden = self.gru(packed, hidden)
+            out, _ = nn.utils.rnn.pad_packed_sequence(packed_outputs, batch_first=True)
+        out = self.fc(out)
+        return out, hidden
+```
+
+The reference solution settles on embedding=128, hidden=256, layers=2.
+
+### Efficiency Tip: When Not to Use ``pack_padded_sequence``
+
+`pack_padded_sequence` avoids unnecessary computation on padding tokens in variable-length batches, but it has overhead and can roughly double per-batch runtime. It is useful when sequence lengths vary a lot and padding would dominate computation. 
+
+During chunked training, most sequences already fit close to the 256-character window, so padding is minimal and packing is not worth the cost. At test time, sequences are padded to 4096 characters, where padding becomes significant, so using `pack_padded_sequence` becomes beneficial.
+
+
+## Training
+
+Training happens in two passes:
+
+- Autoencoding warm-up (3 epochs): the model is trained to reproduce its input on the clean text (labels used as both input and target). 
+- Correction fine-tuning: the model is then trained normally, mapping ``misspell`` → ``text``, at a reduced learning rate, so it generalizes past the 256-character training window toward the full-length sequences it will see at test time.
+
+### Useful trick to check whether model fits in the runtime budget
+
+Run untrained model on a few batches of the final evaluation loop with random weights and watch ``tqdm`` time before spending any time training at all.
+
+## Final Remarks
+
+Always do your EDA. In this task, author hinted it, but during real competition it would be hidden, and participants need to uncover it.
+In this task, errors were local and sequences were large at some time. We used local errors to our advantage to use small model to fit into constrains and chunked the text to avoid naive truncation.
