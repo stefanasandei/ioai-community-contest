@@ -1,0 +1,71 @@
+## Problem Overview
+
+Audio Demixing is a source separation task, where participants must reconstruct two original environmental sound recordings that were combined into a single mixed waveform. Each input is a mono waveform of 16,000 samples, our goal is to output two 16,000-sample signals, that reconstruct the two original sources.
+
+**The order of the outputs does not matter: the metric is a permutation-invariant Mean Squared Error.**
+
+## Audio Source Seperation
+
+Given a mixture of overlapping sounds, recover the individual streams that make it up. Unlike denoising, where a single clean target is buried under noise, source separation must produce two independent full-length signals whose sum reconstructs the observed mixture.
+
+Core difficulty of this task is that model doesn't know which recording should land in `sig_1` and which one in `sig_2`. This difficulty shaped the metric to be scored on and we have to choose loss function which will specifically be designed for this metric.
+
+## Wave-U-Net
+
+Instead of converting audio to spectogram, we can work directly on the waveform using 1D UNet. The encoder repeatedly convolves and downsamples the waveform, while decoder mirrors this in reverse, upsampling back to the original 16,000-sample resolution. Skip connections concatenate each encoder step with its matching decoder step, so rich temporal detail lost during downsampling can be recovered when reconstructing the waveform.
+
+```python
+class ConvBlock(nn.Module):
+    def __init__(self, in_c, out_c, kernel=3, stride=1, padding=1):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv1d(in_c, out_c, kernel, stride, padding),
+            nn.BatchNorm1d(out_c),
+            nn.LeakyReLU(0.2)
+        )
+    def forward(self, x):
+        return self.conv(x)
+```
+
+![Wave UNet](/assets/wave_unet.png)
+
+We want to output two source waveforms, thus the final layer ```nn.Conv1d(16, 2, kernel_size=1)``` outputs 2 channels at once.
+
+## Permutation Invariant Training (PIT)
+
+Since we don't know which output corresponds to which target, we cant just compute MSE between them.
+
+The fix is very simple: compute the loss under both possible assignments and only backpropagate the smaller one:
+
+$
+\mathcal{L} = \min \Big(
+\mathrm{MSE}(p_1, s_1) + \mathrm{MSE}(p_2, s_2),\;
+\mathrm{MSE}(p_1, s_2) + \mathrm{MSE}(p_2, s_1)
+\Big)
+$
+
+If you notice, this is the same as the evaluation metric, the model is trained directly on the objective it is trained on. This pattern emerges in many ML problems, where you have to look at the evaluation function to choose the loss function.
+
+## Augmentations on waveforms
+
+Two augmentations are applied to mixture and both targets together:
+
+- Random Gain: rescales loudness. Since a mixture is a linear sum of its sources, scaling everything by the same factor keeps the mixture relationship intact.
+- Phase Inversion: flips the polarity of the entire waveform, preventing model from latching onto absolute sign as a feature.
+
+```python
+def augment(self, mixed, s1, s2):
+    gain = random.uniform(0.8, 1.2)
+    mixed, s1, s2 = mixed * gain, s1 * gain, s2 * gain
+    if random.random() > 0.5:
+        mixed, s1, s2 = -mixed, -s1, -s2
+    return mixed, s1, s2
+```
+
+## Recommendation
+
+**Always look at the evaluation metric!**
+
+## Final Remarks
+
+Because the metric itself is permutation-invariant, the biggest design decision in this task was choosing correct loss function, which was evaluation score directly.

@@ -107,6 +107,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/watermark-removal-aicc-round-5",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-5/watermark-removal.ipynb",
+                    "blog": "/solutions/round-5/watermark-removal",
                     "author": "Stefan Asandei",
                     "practiceStatus": "easy"
                 },
@@ -139,6 +140,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/sticky-note-blindness-aicc-round-4",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-4/sticky-note-blindness.ipynb",
+                    "blog": "/solutions/round-4/sticky-note-blindness",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "easy"
                 },
@@ -206,6 +208,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/essay-gap-aicc-round-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/essay-gap.ipynb",
+                    "blog": "/solutions/round-2/essay-gap",
                     "author": "Stefan Asandei",
                     "practiceStatus": "easy"
                 },
@@ -214,6 +217,7 @@
                     "type": "Audio",
                     "kaggle": "https://www.kaggle.com/competitions/audio-demixing-aicc-round-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/audio-demixing.ipynb",
+                    "blog": "/solutions/round-2/audio-demixing",
                     "author": "Gior",
                     "practiceStatus": "medium"
                 },
@@ -247,6 +251,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/autocorrect-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/autocorrect.ipynb",
+                    "blog": "/solutions/round-1/autocorrect",
                     "author": "Walnit",
                     "practiceStatus": "medium"
                 },

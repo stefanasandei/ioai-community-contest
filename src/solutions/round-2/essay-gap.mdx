@@ -1,0 +1,48 @@
+## Problem Overview
+
+Essay Gap is a multiple-choice text coherence task, where participants must decide which of four candidate sentences correctly fills a missing gap in the middle of an essay. Each row in training set provides the text `before` the gap, the text `after` the gap and four candidate sentences.
+
+## Multiple-Choice Text Coherence
+
+Interestingly enough, in this task we are asked to choose one of the four options. That means that useful signal lies in the option and its neighboring `before` and `after` sequences. Thus, our model has to jointly compare `before`, `after`, and each of the four options, and then rank resulting four combinations against each other. 
+
+$P(y = i \mid \text{before}, \text{after}, \text{opt}_0, \dots, \text{opt}_3) = \frac{e^{s_i}}{\sum_{j=0}^{3} e^{s_j}}$
+
+Ranking four combinations against each other only works if model has access to the both sides of the gap when it forms its representation of each option. Thus encoder-only models are more preferred than decoders.
+
+Decoders are trained to predict next token in sequence, and trained with causal attention: every token can only attend to the tokens before it. When feeding decoder the string `before + option + after`, its representation of option is fully built on `before`. Its intuitive that `after` is required too for choosing correct option.
+
+## AutoModelForMultipleChoice
+
+Specifically in transformers library, there exists model called AutoModelForMultipleChoice, which is designed for exactly this task. We pair a shared context with each candidate, model produces one scalar logit per candidate directly.
+
+```python
+from transformers import AutoModelForMultipleChoice, AutoTokenizer
+
+model_name = "bert-base-uncased"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForMultipleChoice.from_pretrained(model_name).to(device)
+
+def encode_sample(before, after, options, tokenizer, max_len=512):
+    contexts = [f"{before} {after}"] * 4         # shared context, repeated per choice
+    enc = tokenizer(contexts, options, max_length=max_len,
+                     padding="max_length", truncation=True, return_tensors="pt")
+    return {k: v.unsqueeze(0) for k, v in enc.items()}   # (1, 4, seq_len)
+
+outputs = model(**batch)                # logits shape: (batch, 4) directly
+loss = F.cross_entropy(outputs.logits, labels)
+preds = outputs.logits.argmax(dim=1)
+```
+
+## Training
+
+We then train it manually on labels using CrossEntropy loss.
+
+### Why is it preferred over Linear(n, 4)?
+
+Options 1-3 never share any similarities, thus they can't provide any meaningful, class-specific gradient signal to the model, so three quarters of the head's capacity is essentially dead weight.
+
+## Final Remarks
+
+The gap between the baseline and the multiple-choice head is really an architecture-vs-formula mismatch: the moment you match the model's output shape to the softmax-over-4-options formula from the Problem Overview, training gets easier and cleaner for free.
+
