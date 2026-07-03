@@ -1,0 +1,94 @@
+## Problem Overview
+
+Sound of Nature is an audio classification task, featuring 5 second audio clips drawn from real-world environmental recordings. Participants are tasked to predict the correct sound class for each clip from a set of 9 categories **(cat, chirping_birds, cow, dog, hen, pig, rain, sheep, and water_drops)**.
+
+Audio files are standardized to 5-second, mono channel, 44.1kHz WAV files. The evaluation metric is the macro-averaged F1 score, meaning all 9 classes contribute equally to the final score regardless of how frequently they appear in the dataset.
+
+## Introduction to Audio
+
+Audio is a continuous-time signal that represents variations in air pressure over time, which humans perceive as sound. In digital systems, audio is recorded by sampling this signal at a fixed rate (e.g., 44.1 kHz), converting it into a sequence of numerical values that can be processed by machine learning models.
+
+Unlike images, which are spatial data, audio is temporal data, meaning its structure depends significantly on time and sequence. A short 5 second clip can contain multiple overlapping sound events, background noise, and more, making audio classification challenging problem.
+
+### Raw Audio
+
+A raw audio signal is typically stored as a 1D array:
+
+![Audio](/assets/audio.png)
+
+- Amplitude vs Time: Each value represents sound wave amplitude at a specific time step.
+- Sampling Rate: Defines how many samples per second are recorded (e.g., 44,100 Hz = 44,100 samples/sec).
+
+### Channels in Audio
+
+In audio, channels describe how many separate streams of sound are recorded or played back at the same time.
+
+- Mono (1 Channel): Good example of mono audio is voice recordings, phone calls;
+- Stereo (2 Channel): Headphones, VR;
+- Multi-Channel: Speakers in Car, TV (Sometimes);
+
+![Channels](/assets/channels_audio.png)
+
+One way to combine multiple channels into a single channel is to take the average of all channels at each time step.
+
+### Common Audio Representations
+
+To make audio easier for models to understand, it is often transformed into more informative representations:
+
+#### Spectrograms
+
+A spectrogram represents sound as an image where the x-axis is time, the y-axis is frequency, and the brightness (or color intensity) represents magnitude (energy). It is computed using the Short-Time Fourier Transform (STFT), which splits a long audio signal into short overlapping windows and applies the Fourier Transform to each one. This is necessary because audio changes over time; a standard FFT would only give a single global frequency spectrum for the entire signal, losing when those frequencies occur. Find out more about [STFT](https://en.wikipedia.org/wiki/Short-time_Fourier_transform).
+
+![Mel Spectrogram](/assets/mel.png)
+
+#### Mel Spectrograms
+
+A mel spectrogram is a spectrogram where frequencies are compressed to match how humans hear sound. Our ears are more sensitive to differences in low frequencies than very high ones. To fix this mismatch, the frequency axis is passed through a mel scale filter bank, which groups many high-frequency components into wider bins while keeping low-frequency components more detailed, making the representation align better with human perception.
+
+![Mel Filterbanks](/assets/mel_fbanks.png)
+
+In the solution, torchaudio.transforms.MelSpectrogram is used to convert the resampled 16kHz audio into a 64-band Mel-spectrogram, followed by a logarithmic transformation:
+
+```python
+mel = torch.log(self.mel_transform(wav) + 1e-9)
+```
+
+Logarithimic transform is crucial, since acoustic energy has a massive dynamic range. Without this, quiet sounds like chirping birds would be completely numerically overshadowed by louder ones.
+
+Since we represented audio as a temporal signal, we can work on it just like we work on images.
+
+## Data Augmentation on Audio
+
+Audio data is notoriously prone to overfitting, especially with a small dataset of only 800 training samples.
+
+Two augmentations are used in reference solution, which are very effective for audio:
+
+- Waveform Augmentation: Before generating the spectrogram, random Gaussian noise is injected directly into the waveform with a 30% probability.
+- SpecAugment **(Very effective!)**: Applied directly to the Mel-spectrogram, this technique masks out entire blocks of time and blocks of frequencies.
+
+## Vision CNNs applied to Audio
+
+Because the Mel-spectrogram effectively turns audio into an image, we can leverage 2D CNNs originally designed for vision. The solution utilizes pretrained ResNet18.
+
+However, there is shape mismatch, since resnet18 expects 3 channels (R,G,B) during images, while we have 1 channel (magnitude) in audio. We have to replace first convolutional layer with 1 → 64 in resnet:
+
+```python
+self.model.conv1 = nn.Conv2d(
+    1, 64, kernel_size=7, stride=2, padding=3, bias=False
+)
+```
+
+Also we swap final linear layer, to match our 9 classes like task asks us to.
+
+## Training & Evaluation
+
+The model is trained using the AdamW optimizer with weight decay to further prevent overfit. CrossEntropy is used as loss function. Because the metric is Macro F1, the training loop utilizes a ```MulticlassF1Score``` metric object from torchmetrics to constantly monitor validation performance.
+
+## Final Remarks
+
+This blog was introduction to audio and explores how vision models can be adapted and leveraged for audio tasks. Models are prone to overfitting on audio, thus using effective augmentations such as SpecAugment and Waveform Augmentation is recommended.
+
+
+
+
+
