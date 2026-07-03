@@ -1,0 +1,54 @@
+## Problem Overview
+
+Face Matching is an image retrieval and clustering task, where participants are tasked to group photos of celebrities from a dataset of 100 holiday-themed portraits, featuring 15 distinct VIP guests. Given exactly one reference for each of the 15 individuals, the objective is to sift through the dataset and identify all other images that feature the same celebrity.
+
+## Constrains
+
+Face-specific pretrained models (FaceNet, VGGFace, DeepFace, ArcFace) and specialized face recognition libraries (like dlib or face_recognition) are strictly prohibited.
+
+Furthermore, memory is capped at 16GB VRAM, manual labeling is completely forbidden, and the total execution time for the entire notebook must stay under 30 minutes.
+
+
+## Image Representations
+
+Since specialized face recognition architectures are banned, we must rely on general-purpose vision models. 
+
+CLIP is trained on hundreds of millions image-text pairs using contrastive learning objective. During training, the model learns to place matching image and text embeddings close together while pushing unrelated pairs apart. Although CLIP is not explicitly trained for face recognition, it encounters countless images of celebrities and public figures during pretraining. Image captions frequently contain celebrity names, causing the model to generalize and associate visual characteristics with specific identities.
+
+As a result, embedding space of CLIP naturally encodes facial attributes, which have direct influence on representation vision encoder outputs. 
+
+There is one interesting paper, which proves CLIP's strong zero-shot face recognition abilities [Bhat et al. 2023](https://arxiv.org/pdf/2301.07315)
+
+There is another paper, in which authors study and propose methods to mitigate identity leakage in CLIP-style embeddings [CVPR 2026](https://openaccess.thecvf.com/content/CVPR2026/papers/George_From_Measurement_to_Mitigation_Quantifying_and_Reducing_Identity_Leakage_in_CVPR_2026_paper.pdf)
+
+## Feature Extraction & Similarity Search
+
+```python
+with torch.no_grad():
+    inputs = processor(images=face_pil, return_tensors="pt").to(device)
+    feature = model.get_image_features(**inputs)
+    features[img_id] = feature.cpu().numpy()
+```
+
+Once we have embeddings for all images, the problem reduces to a similarity search in a high-dimensional latent space. For each reference image, we compute the cosine similarity between its embedding and the embeddings of all other images:
+
+$
+\text{Cosine Similarity} = \frac{A \cdot B}{|A| |B|}
+$
+
+![Cosine Similarity for Celebrities](/assets/face_sim.png)
+
+### Thresholding VS Top-K
+
+To output the final matches, we must establish a decision boundary. The task notes that "Each celebrity has at least 5 photos". The reference solution uses casual heuristic: computes similarities, sorts them, excludes the reference image itself, and unconditionally takes the top 5 matches **(F1=0.83)**.
+
+Another approach to find all images (not only top-5) is to use dynamic thresholding methods, which would include every possible match of celebrity. One of the examples of such thresholding is statistical one, where we can calculate the mean $\mu$ and standard deviation $\sigma$, and choose a statistical threshold such as $\mu + n \cdot \sigma$.
+
+
+## Preprocessing and Face Detection Methods
+
+While specialized libraries are banned, OpenCV is explicitly allowed. The baseline code simply converts the image color space, but a robust competitive approach would involve using OpenCV's Haar Cascades (e.g., haarcascade_frontalface_default.xml) to detect and crop the face out of the image before passing it to CLIP.  However, since additional downloads are constrained within OpenCV, Haar Cascades is not available in this competition.
+
+## Final Remarks
+
+Face Matching is task which shows you zero-shot abilities of general purpose vision-model CLIP. You can use it in various tasks and sometimes beat one-shot/multi-shot approaches.
