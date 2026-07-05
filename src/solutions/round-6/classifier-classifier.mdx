@@ -1,0 +1,50 @@
+## Problem Overview
+
+Classifier Classifier presents detective-type ML problem. A studio trained 250 different small CNNs. Each CNN is a binary classifier trained to output a positive logit if it sees an image of its specific target class, and a negative logit otherwise. Theer are 10 classes in total.
+
+You are given ewights and architecture seeds for all 250 models. 50 of them are labeled with their assigned target class, however remaining 200 are unlabeled.
+
+Participants are tasked to look inside the weights of theese 200 unlabeled CNN s and predict which of the 10 classesthey were originally trained to recognize. **You have absolutely no access to the original training images.**
+
+## Model Inversion & Activation Maximization
+
+Since we have trained models, but no data, we have to generate the data from the models themselves. This technique is called Activation Maximization or Model Inversion.
+
+Idea is very simple: start with image of pure random noise, pass through the model and calculate the loss against a highly positive target logi. Instead of updating models weights, we backpropagate gradients w.r.t to the input image pixels and update the image.
+
+If we optimzie the pixels to maximize te model's output, the random noise will eventually transform to the visual pattern that the model is looking for. We call this generated image a "probe".
+
+## Ensembling gradients
+
+A massive problem arises if we do this naively on a single model. Single CNN is prone to adversarial examples. Gradient ascent on one model's logit will find an input that exploits its specific dead neurons and quirky filter patterns, resulting in an image thatlooks like garbage but triggers positive response in that specific model. It will have no semantic meaning and will not trigger any other models trained on same class.
+
+Thus, we have to use ensebling. We optimize one probe image against all five labeled moedls for a given class:
+
+```python
+def probe_loss(imgs):
+    logits = query(train_models, imgs) 
+    return F.binary_cross_entropy_with_logits(
+        logits, target_oh, pos_weight=pos_weight, reduction='sum'
+    )
+```
+
+The only direction in pixel space that satisfies all five independent networks
+simultaneously is the actual structural class feature.
+
+### Adversarial Artefacts
+
+Even with ensembling, gradient ascent directly on raw pixels tends to push pixel
+values to extreme boundaries (e.g., +1000 or -1000), far outside the [0, 1]
+range the models saw during training. If we just clamp the values, the gradients
+get stuck.
+
+Two mathematical tricks can be used to bring probes back to the proper domain:
+
+- Sigmoid Repaametrization: Instead of optimizing the image pixels, weoptimize an unconstrained latent tensor $z$ and pass it through a $\sigma(x)$ function to get the image. This suggests that image pixels always stay strictly within $[0,1]$ boundary.
+- Low-Frequency Initialization: Neural networks favor low frequnecy. If we initialize z as 28x28 noise, the gradients settle into high frequency adversarial static. We can initialize noise as a 7x7 noise tensor and bilinearly upsampl it to 28x28. Early gradients flow over a smooth landscape, forcing optimizer to find "organic" visual features.
+
+## Final Remarks
+
+Once we use the 50 labeled models to synthesize 10 perfect probes, inference is trivial. For each of the 200 unlabeled models, we feed it all 10 probe images. Highest logit output probe will dictate the class model was trained on.
+
+Classifier Classifier is one of the best AICC problems ever made. Shot out to **Luvidi Alghari** for proposal of this interesting task idea, and **Antony Ingorokva** for further development.

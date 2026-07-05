@@ -1,0 +1,79 @@
+## Problem Overview
+
+Lost Interpreter is a sequence modeling and regression task where the goal is to reconstruct the behavior of a missing assembly-like interpreter. The language consists of sequential instructions, control flows (jumps) and operates on a single output variable.
+
+Example:
+
+- A program is a sequence of instructions separated by ;.
+- Each instruction has the form with $n$ being a natural number: `OPCODE OPERAND1 OPERAND2 ... OPERANDN`
+- The language uses a single variable, which is the output, and all instructions can operate on it.
+- Some instructions may alter the execution order (control flow), such as jumping to another instruction instead of continuing sequentially.
+
+Example of language: ```OP1 5 -3 ; OP3 3 ; OP3 0 1 2 3 ; OP4 2```
+
+The task is to determine the final value of the output variable after executing full program according to the interpreter rules. You **can not use** any pretrained models, such as LLMs to just predict output based on past rules.
+
+## Dataset & Tokenization
+
+Since this is a custom, unknown language, standard subword tokenizers (BPE, WordPiece, ...) are not valid choice. Syntax is strictly formatted as OPCODE operands seperated by semicolons.
+
+Most effective tokenization strategy is a simple word splitting. By replacing semicolons with spaces and splitting by whitespace, we extract the exact discret opcodes and operands. We can then build a custom vocabulary mapping each unique token to an integer ID.
+
+```python
+def tokenize(program: str):
+    program = program.replace(";", " ; ")
+    return program.split()
+```
+
+## Sequence Moedlling
+
+To predict the output of a progarm, model must understand sequentiality of instruction execution. Common intuition guides us to use transformers, but training one from scratch is highly unstable and prone to overfitting.
+
+Thus, Bidirectional GRU is an excellent choice.
+
+### BiGRU (Bidirectional Gated Recurrent Unit)
+
+GRU is a type of recurrent neural network designed to process sequences while avoiding memory loss problem of basic RNNs.
+
+At each step, a GRU keeps a hidden state (memory) and decides:
+
+- What information to keep from the past (Update gate)
+- What new information to add from current input  by forgetting past temporarily (Reset gate)
+
+![GRU](/assets/gru.png)
+
+BiGRU is bidirectional variant of GRU, which looks sequence from both directions by running two GRUs.
+
+BiGRU is used rather than a standard GRU because the final value of a variable might depend on a jump instruction located later in the text. Looking at the sequence from both directions provides a richer contextual embedding for each instruction.
+
+## Architectural details
+
+Because programs vary in length, we pad them to the length of the longest program in the batch. However, passing padded tokens through an RNN wastes compte and dilutes the hidden state. Thus, we use `pack_padded_sequence`, which allows PyTorch to dynamically skip padded elements during the forward pass.
+
+After GRU processes sequence, we are left with a sequence of hidden states. To distill this variable length sequence into a single fixed-size vector for regression, we use pooling:
+
+```python
+mask = (x != 0).unsqueeze(-1)
+mean_pool = out_masked.sum(dim=1) / denom
+max_pool = out.masked_fill(~mask, -1e9).max(dim=1).values
+feat = torch.cat([mean_pool, max_pool], dim=1)
+```
+
+- Mean Pooling captures general aggregation of the program
+- Max Pooling acts as a feature detector, capturing presence of specific instruction
+
+These pooled features are concatenated and passed through a MLP with LayerNorm and Dropout to yield final single continous prediction.
+
+### Additional Training details
+
+Predicting unbounded continuous values (like a variable that could be arbitrarily large) is difficult for neural networks. To stabilize training, the target values are Z-score normalized (subtracting the mean and dividing by std) before being fed into the loss function. The predictions are then de-normalized before evaluation.
+
+Additionally, instead of trainng directly with MAE (L1 Loss), model is optimized using Huber Loss, which prevents exploading gradients by replacing linear penalty of MAE with quadratic-to-linear transition.
+
+$\mathcal{L}_\delta(x, y) = \begin{cases} \frac{1}{2}(x - y)^2 & \text{if } |x - y| \le \delta \\ \delta \left(|x - y| - \frac{1}{2}\delta \right) & \text{otherwise} \end{cases}$
+
+## Final Remarks
+
+In this editorial, we demonstrated usage of BiGRU, which is highly effective for sequential tasks. You can find more about [BiGRU](https://pub.aimind.so/what-is-the-difference-between-a-gru-and-a-bigru-fbde0fbe2950)
+
+There is [another task](https://aicc-official.org/solutions/round-1/autocorrect) in AICC, which demonstrates usage of BiGRU.
