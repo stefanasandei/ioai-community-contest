@@ -10,9 +10,9 @@ Participants are tasked to look inside the weights of theese 200 unlabeled CNN s
 
 Since we have trained models, but no data, we have to generate the data from the models themselves. This technique is called Activation Maximization or Model Inversion.
 
-Idea is very simple: start with image of pure random noise, pass through the model and calculate the loss against a highly positive target logi. Instead of updating models weights, we backpropagate gradients w.r.t to the input image pixels and update the image.
+Idea is very simple: start with image of pure random noise, pass through the model and calculate the loss against a highly positive target logit. Instead of updating models weights, we backpropagate gradients w.r.t to the input image pixels and update the image.
 
-If we optimzie the pixels to maximize te model's output, the random noise will eventually transform to the visual pattern that the model is looking for. We call this generated image a "probe".
+If we optimize the pixels to maximize te model's output, the random noise will eventually transform to the visual pattern that the model is looking for. We call this generated image a "probe".
 
 ## Ensembling gradients
 
@@ -38,10 +38,16 @@ values to extreme boundaries (e.g., +1000 or -1000), far outside the [0, 1]
 range the models saw during training. If we just clamp the values, the gradients
 get stuck.
 
+![Probes](/assets/probes.png)
+
 Two mathematical tricks can be used to bring probes back to the proper domain:
 
 - Sigmoid Repaametrization: Instead of optimizing the image pixels, weoptimize an unconstrained latent tensor $z$ and pass it through a $\sigma(x)$ function to get the image. This suggests that image pixels always stay strictly within $[0,1]$ boundary.
 - Low-Frequency Initialization: Neural networks favor low frequnecy. If we initialize z as 28x28 noise, the gradients settle into high frequency adversarial static. We can initialize noise as a 7x7 noise tensor and bilinearly upsampl it to 28x28. Early gradients flow over a smooth landscape, forcing optimizer to find "organic" visual features.
+
+![Sigmoid Constrained Probes](/assets/sigmoid_probes.png)
+
+After this trick, probes converge to class-specific textures rather than complete images because global average pooling removes spatial information.
 
 ## Final Remarks
 
