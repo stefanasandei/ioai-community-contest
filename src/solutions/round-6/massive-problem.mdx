@@ -1,0 +1,76 @@
+## Problem Overview
+
+Massive Problem places you in the shoes of a healthcare AI Engineer, tasked with classifying cell types based on the expression levels of 1434 genes. You heard me right!
+
+Dataset contains expression data from multiple patients, and your goal is to predict one of 12 cell types for the unseen set.
+
+Task prompt explicitly warns that the dataset is extremly large, memory management is required, and there are no architectural restrictions apart from standard "Don't use LLM" rule.
+
+## Genomic Data & Batch Effects
+
+In the world of computational biology, data is almost never clean. While researchers extract cells and sequence their RNA, every parameter which affects experimentation (time of day, specific machine used, temperature, specific patient) introduces massive variation in the numbers. This is know as a Batch Effect.
+
+If you run a UMAP on he raw gene expression data, you will immediately notice that the data clusters not by cell type, but by the patient/batch it came from.
+
+![Batch vs Label](/assets/batch_vs_label.png)
+
+If you train naive model on this data, it will learn to memorize patient specific noise rather than biological features of the cell.
+
+## Variational Autoencoder (VAE)
+
+VAE is a type of neural network used for learning compressed representations of data in a way that its probabilistic.
+
+Instead of mappign an input directly to a single encoded latent (like standard AE), VAE learns a distribution ($\mu$ and $\sigma$) over the latent space. It then samples from this distribution to generate new data.
+
+![VAE](vae.png)
+
+The reparameterization trick is used so we can backpropagate through sampling. Instead of directly sampling:
+
+$z \sim \mathcal{N}(\mu, \sigma^2)$
+
+We rewrite it as:
+
+$z = \mu + \sigma \cdot \epsilon, \quad \epsilon \sim \mathcal{N}(0,1)$
+
+This separates randomness ($epsilon$) from learnable parameters ($\miu$,$\sigma$), allowing gradients to flow through the network during training.
+
+## Approach 1: scANVI
+
+scVI (Single-cell Variational Inference) and its semi-supervised counterpart scANVI are deep generative models specifically designed for batch correction.
+
+scANVI models the distribution of gene counts using a Variational Autoencoder. By explicitly passing the `batch_key` into the model, scANVI learns to disentangle the biological cell type signal from the technical batch noise in its latent space. When you visualize latents produced by scANVI, the batch effects disappear, the clusters map correctly to the 12 cell types. 
+
+![scANVI](scanvi.png)
+
+This scores roughly 0.39 on the leaderboard. More about [scANVI](https://link.springer.com/article/10.15252/msb.20209620)
+
+## Approach 2: Standard Approach
+
+What if you don't have a background in computational biology? You can still solve this using classical ML principles.
+
+First, standardizing the validation scheme is critical. You must not use random K-Fold cross-validation. Because the test set is a distinct unseen batch, your validation set must also be a distinct held-out batch (e.g., isolating Patient 1 entirely for validation).
+
+Next, looking at the data, gene expression values are heavily right-skewed. Taking the log(x + 1) transform standardizes the distribution, pulling massive outliers closer to the mean and making it easier for tree-based models to split the data.
+
+```python
+log_train_df_genes = np.log(train_df.iloc[:, :1434] + 1)
+```
+
+Running a GB models like CatBoost on GPU directly on this log-transformed data yields a strong score, simply because CatBoost is incredibly robust to noise.
+
+## Handling Batch Effects Manually (ComBat)
+
+To push the score higher without VAEs, we can implement a manual batch correction technique inspired by ComBat. Read more about [ComBat](https://link.springer.com/article/10.1186/s12859-023-05578-5)
+
+The idea is simple: Calculate overall mean of the entire dataset (including unlabelled test set). For each individual batch, calculate its own mean. Shift the data of that batch by substracting its batch-specific mean and adding overall one.
+
+```python
+batch_mean = batch.mean(axis=0)
+corrected_batch = (batch - batch_mean) + overall_mean
+```
+
+Feeding this mean shifted data back to CatBoost results to a 0.428.
+
+## Final Remarks
+
+Field Specialized tools are best for computational biology, however, understanding ML deeply will guide us toward solutions which might be much more effective than field-specialized ones. This blog explores Batch Effect and its fix methods.

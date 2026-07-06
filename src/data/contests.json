@@ -75,6 +75,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/classifier-classifier-aicc-round-6",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-6/classifier-classifier.ipynb",
+                    "blog": "/solutions/round-6/classifier-classifier",
                     "author": "Luvidi Alghari",
                     "practiceStatus": "medium"
                 },
@@ -83,6 +84,7 @@
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/massive-problem-aicc-round-6",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-6/massive-problem.ipynb",
+                    "blog": "/solutions/round-6/massive-problem",
                     "author": "Wang Jiayu",
                     "practiceStatus": "medium"
                 },
@@ -116,6 +118,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-5/lost-interpreter.ipynb",
+                    "blog": "/solutions/round-5/lost-interpreter",
                     "author": "Gior",
                     "practiceStatus": "easy"
                 },
