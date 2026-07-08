@@ -27,6 +27,7 @@ interface TaskCardProps {
     mode?: 'tasks' | 'reference';
     iconType?: string;
     learnItems?: LearnItem[];
+    order?: number;
 }
 
 const TASK_CONFIG: Record<string, { icon: LucideIcon; gradient: string }> = {
@@ -90,7 +91,7 @@ const getTypePillClass = (type: string) =>
 const getTaskSlug = (name: string) =>
     name.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").trim();
 
-const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems }: TaskCardProps) => {
+const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order }: TaskCardProps) => {
     const { icon: TaskIcon, gradient } = getTaskConfig(iconType ?? task.type);
     const statusConfig = PRACTICE_STATUS_CONFIG[task.practiceStatus];
     const StatusIcon = statusConfig?.icon;
@@ -127,9 +128,16 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems }: TaskC
 
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2 min-w-0">
-                            <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight truncate min-w-0">
-                                {task.name}
-                            </h3>
+                            <div className="flex items-center gap-2 min-w-0 flex-1">
+                                {isReference && order !== undefined && (
+                                    <span className="shrink-0 inline-flex items-center justify-center min-w-[1.75rem] h-6 px-2 rounded-md text-sm font-mono font-bold tabular-nums text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/10">
+                                        {String(order).padStart(2, '0')}
+                                    </span>
+                                )}
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight truncate min-w-0">
+                                    {task.name}
+                                </h3>
+                            </div>
                             {statusConfig && (
                                 <span
                                     className={cn(

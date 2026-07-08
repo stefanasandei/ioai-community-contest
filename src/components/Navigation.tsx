@@ -43,24 +43,25 @@ interface PillRect {
 const primaryNavItems: NavItem[] = [
   { label: 'Home', path: '/', icon: Home },
   { label: 'Contests', path: '/contests', icon: Trophy },
-  { label: 'Tasks', path: '/tasks', icon: ListChecks },
+  // { label: 'Tasks', path: '/tasks', icon: ListChecks },
   { label: 'Roadmap', path: '/roadmap', icon: Map },
   { label: 'Resources', path: '/resources', icon: BookOpen },
-];
-
-const moreNavItems: DropdownItem[] = [
   {
     label: 'Team',
     path: '/team',
     icon: Users,
-    description: 'Meet the people behind AICC',
+    // description: 'Meet the people behind AICC',
   },
   {
     label: 'Become a Setter',
     path: '/become-setter',
     icon: UserPlus,
-    description: 'Help create future contests',
+    // description: 'Help create future contests',
   },
+];
+
+const moreNavItems: DropdownItem[] = [
+
 ];
 
 const MORE_INDEX = primaryNavItems.length;
@@ -220,11 +221,10 @@ const Navigation = () => {
     <>
       <div className="fixed top-0 left-0 right-0 z-50">
         <nav
-          className={`relative bg-white dark:bg-[#0a0a0f] border-b transition-colors duration-300 ${
-            isScrolled
-              ? 'border-gray-200 dark:border-white/10 shadow-sm'
-              : 'border-transparent'
-          }`}
+          className={`relative bg-white dark:bg-[#0a0a0f] border-b transition-colors duration-300 ${isScrolled
+            ? 'border-gray-200 dark:border-white/10 shadow-sm'
+            : 'border-transparent'
+            }`}
         >
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex justify-between items-center h-16">
@@ -248,22 +248,20 @@ const Navigation = () => {
                   {hoverPill && (
                     <span
                       aria-hidden
-                      className={`absolute rounded-lg pointer-events-none bg-aicc-purple/10 dark:bg-aicc-purple/20 ${
-                        pillsAnimated
-                          ? 'transition-all duration-200 ease-out'
-                          : ''
-                      }`}
+                      className={`absolute rounded-lg pointer-events-none bg-aicc-purple/10 dark:bg-aicc-purple/20 ${pillsAnimated
+                        ? 'transition-all duration-200 ease-out'
+                        : ''
+                        }`}
                       style={pillStyle(hoverPill)}
                     />
                   )}
                   {activePill && (
                     <span
                       aria-hidden
-                      className={`absolute rounded-lg pointer-events-none bg-aicc-purple ${
-                        pillsAnimated
-                          ? 'transition-all duration-300 ease-out'
-                          : ''
-                      }`}
+                      className={`absolute rounded-lg pointer-events-none bg-aicc-purple ${pillsAnimated
+                        ? 'transition-all duration-300 ease-out'
+                        : ''
+                        }`}
                       style={pillStyle(activePill)}
                     />
                   )}
@@ -280,11 +278,10 @@ const Navigation = () => {
                         onClick={() => handleNavigation(item.path, item.sectionId)}
                         onMouseEnter={() => setHoverIndex(i)}
                         onMouseLeave={() => setHoverIndex(null)}
-                        className={`relative z-10 flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
-                          active
-                            ? 'text-white'
-                            : 'text-gray-700 dark:text-gray-300 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
-                        }`}
+                        className={`relative z-10 flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
+                          ? 'text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
+                          }`}
                       >
                         <Icon className="w-4 h-4" />
                         <span>{item.label}</span>
@@ -292,7 +289,7 @@ const Navigation = () => {
                     );
                   })}
 
-                  <div ref={moreRef} className="relative ml-1">
+                  {/* <div ref={moreRef} className="relative ml-1">
                     <button
                       ref={(el) => {
                         itemRefs.current[MORE_INDEX] = el;
@@ -300,20 +297,18 @@ const Navigation = () => {
                       onClick={() => setMoreOpen((open) => !open)}
                       onMouseEnter={() => setHoverIndex(MORE_INDEX)}
                       onMouseLeave={() => setHoverIndex(null)}
-                      className={`relative z-10 flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
-                        activeIndex === MORE_INDEX
+                      className={`relative z-10 flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${activeIndex === MORE_INDEX
                           ? 'text-white'
                           : 'text-gray-700 dark:text-gray-300 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
-                      }`}
+                        }`}
                       aria-expanded={moreOpen}
                       aria-haspopup="true"
                     >
                       <Sparkles className="w-4 h-4" />
                       <span>More</span>
                       <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          moreOpen ? 'rotate-180' : ''
-                        }`}
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${moreOpen ? 'rotate-180' : ''
+                          }`}
                       />
                     </button>
 
@@ -333,29 +328,26 @@ const Navigation = () => {
                                   handleNavigation(item.path);
                                   setMoreOpen(false);
                                 }}
-                                className={`group w-full flex items-start gap-3 p-3 rounded-lg text-left transition-colors ${
-                                  active
+                                className={`group w-full flex items-start gap-3 p-3 rounded-lg text-left transition-colors ${active
                                     ? 'bg-aicc-purple/5 dark:bg-aicc-purple/10'
                                     : 'hover:bg-gray-50 dark:hover:bg-white/5'
-                                }`}
+                                  }`}
                                 role="menuitem"
                               >
                                 <div
-                                  className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
-                                    active
+                                  className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${active
                                       ? 'bg-aicc-purple text-white'
                                       : 'bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 group-hover:bg-aicc-purple/10 group-hover:text-aicc-purple'
-                                  }`}
+                                    }`}
                                 >
                                   <Icon className="w-4 h-4" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <div
-                                    className={`text-sm font-semibold ${
-                                      active
+                                    className={`text-sm font-semibold ${active
                                         ? 'text-aicc-purple dark:text-aicc-purple-light'
                                         : 'text-gray-900 dark:text-white'
-                                    }`}
+                                      }`}
                                   >
                                     {item.label}
                                   </div>
@@ -398,7 +390,7 @@ const Navigation = () => {
                         </div>
                       </div>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -442,11 +434,10 @@ const Navigation = () => {
       </div>
 
       <div
-        className={`fixed inset-0 z-40 bg-white/95 dark:bg-[#0a0a0f]/95 backdrop-blur-xl transition-opacity duration-300 md:hidden ${
-          mobileMenuOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-40 bg-white/95 dark:bg-[#0a0a0f]/95 backdrop-blur-xl transition-opacity duration-300 md:hidden ${mobileMenuOpen
+          ? 'opacity-100 pointer-events-auto'
+          : 'opacity-0 pointer-events-none'
+          }`}
         aria-hidden={!mobileMenuOpen}
       >
         <div className="h-full overflow-y-auto pt-20 pb-8 px-6">
@@ -464,28 +455,25 @@ const Navigation = () => {
                     handleNavigation(item.path);
                     setMobileMenuOpen(false);
                   }}
-                  className={`group w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
-                    active
-                      ? 'bg-aicc-purple/5 dark:bg-aicc-purple/10'
-                      : 'hover:bg-gray-50 dark:hover:bg-white/5'
-                  }`}
+                  className={`group w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${active
+                    ? 'bg-aicc-purple/5 dark:bg-aicc-purple/10'
+                    : 'hover:bg-gray-50 dark:hover:bg-white/5'
+                    }`}
                 >
                   <div
-                    className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
-                      active
-                        ? 'bg-aicc-purple text-white'
-                        : 'bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 group-hover:bg-aicc-purple/10 group-hover:text-aicc-purple'
-                    }`}
+                    className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${active
+                      ? 'bg-aicc-purple text-white'
+                      : 'bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 group-hover:bg-aicc-purple/10 group-hover:text-aicc-purple'
+                      }`}
                   >
                     <Icon className="w-5 h-5" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div
-                      className={`text-base font-semibold ${
-                        active
-                          ? 'text-aicc-purple dark:text-aicc-purple-light'
-                          : 'text-gray-900 dark:text-white'
-                      }`}
+                      className={`text-base font-semibold ${active
+                        ? 'text-aicc-purple dark:text-aicc-purple-light'
+                        : 'text-gray-900 dark:text-white'
+                        }`}
                     >
                       {item.label}
                     </div>
@@ -507,28 +495,25 @@ const Navigation = () => {
                     handleNavigation(item.path);
                     setMobileMenuOpen(false);
                   }}
-                  className={`group w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
-                    active
-                      ? 'bg-aicc-purple/5 dark:bg-aicc-purple/10'
-                      : 'hover:bg-gray-50 dark:hover:bg-white/5'
-                  }`}
+                  className={`group w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${active
+                    ? 'bg-aicc-purple/5 dark:bg-aicc-purple/10'
+                    : 'hover:bg-gray-50 dark:hover:bg-white/5'
+                    }`}
                 >
                   <div
-                    className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
-                      active
-                        ? 'bg-aicc-purple text-white'
-                        : 'bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 group-hover:bg-aicc-purple/10 group-hover:text-aicc-purple'
-                    }`}
+                    className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${active
+                      ? 'bg-aicc-purple text-white'
+                      : 'bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 group-hover:bg-aicc-purple/10 group-hover:text-aicc-purple'
+                      }`}
                   >
                     <Icon className="w-5 h-5" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div
-                      className={`text-base font-semibold ${
-                        active
-                          ? 'text-aicc-purple dark:text-aicc-purple-light'
-                          : 'text-gray-900 dark:text-white'
-                      }`}
+                      className={`text-base font-semibold ${active
+                        ? 'text-aicc-purple dark:text-aicc-purple-light'
+                        : 'text-gray-900 dark:text-white'
+                        }`}
                     >
                       {item.label}
                     </div>
