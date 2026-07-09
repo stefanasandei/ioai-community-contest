@@ -1,0 +1,17 @@
+# Audio Classification
+
+Audio classification assigns a label to an audio clip. Applications include speech emotion recognition, music genre classification, and environmental sound detection.
+
+## Approaches
+
+- **Hand-crafted features + classical ML:** MFCCs with random forests or SVMs.
+- **Spectrogram + CNN:** treat audio as images.
+- **Pre-trained audio transformers:** Wav2Vec 2.0, AST, BEATs.
+
+## Data augmentation
+
+- Time stretching and pitch shifting
+- Adding background noise
+- SpecAugment: masking time and frequency bands
+
+Start with a CNN on mel-spectrograms, then upgrade to transformers if you have enough data.

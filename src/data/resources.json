@@ -1,0 +1,898 @@
+{
+  "general": [
+    {
+      "id": "getting-started",
+      "title": "Getting Started with AI",
+      "shortTitle": "Getting Started",
+      "description": "New to AI? Start here. These resources cover the fundamentals of machine learning and how to approach learning effectively.",
+      "icon": "Sparkles",
+      "accent": "purple",
+      "order": 1,
+      "guideMdxPath": "general/getting-started.mdx",
+      "resources": [
+        {
+          "id": "ai-introduction-coursera",
+          "title": "AI For Everyone",
+          "url": "https://www.coursera.org/learn/ai-for-everyone",
+          "type": "course",
+          "difficulty": "beginner",
+          "description": "A non-technical introduction to AI, machine learning, and deep learning by Andrew Ng.",
+          "source": "DeepLearning.AI",
+          "tags": [
+            "overview",
+            "business"
+          ],
+          "free": true
+        },
+        {
+          "id": "ml-crash-course-google",
+          "title": "Machine Learning Crash Course",
+          "url": "https://developers.google.com/machine-learning/crash-course",
+          "type": "course",
+          "difficulty": "beginner",
+          "description": "Google's fast-paced, practical introduction to machine learning with TensorFlow APIs.",
+          "source": "Google",
+          "tags": [
+            "fundamentals",
+            "tensorflow"
+          ],
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "how-to-learn-ai",
+          "title": "How to Learn AI in 2025",
+          "url": "https://roadmap.sh/ai-data-scientist",
+          "type": "article",
+          "difficulty": "beginner",
+          "description": "A structured roadmap for learning AI and data science from scratch.",
+          "source": "roadmap.sh",
+          "tags": [
+            "roadmap",
+            "self-study"
+          ],
+          "free": true
+        }
+      ]
+    },
+    {
+      "id": "pytorch-and-frameworks",
+      "title": "PyTorch & Deep Learning Frameworks",
+      "shortTitle": "PyTorch",
+      "description": "PyTorch is the de facto framework for most IOAI-style work. Learn tensors, autograd, datasets, and model building.",
+      "icon": "Flame",
+      "accent": "orange",
+      "order": 2,
+      "guideMdxPath": "general/pytorch-and-frameworks.mdx",
+      "resources": [
+        {
+          "id": "pytorch-official-tutorial",
+          "title": "PyTorch Tutorials",
+          "url": "https://pytorch.org/tutorials/",
+          "type": "documentation",
+          "difficulty": "beginner",
+          "description": "The official PyTorch tutorials, from 'Learn the Basics' to advanced recipes.",
+          "source": "PyTorch",
+          "tags": [
+            "pytorch",
+            "official"
+          ],
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "pytorch-60-min-blitz",
+          "title": "Deep Learning with PyTorch: A 60 Minute Blitz",
+          "url": "https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html",
+          "type": "course",
+          "difficulty": "beginner",
+          "description": "A quick crash course through PyTorch tensors, autograd, and neural networks.",
+          "source": "PyTorch",
+          "tags": [
+            "pytorch",
+            "crash-course"
+          ],
+          "free": true
+        },
+        {
+          "id": "d2l-pytorch",
+          "title": "Dive into Deep Learning (PyTorch)",
+          "url": "https://d2l.ai/",
+          "type": "book",
+          "difficulty": "intermediate",
+          "description": "An open-source textbook with runnable code for deep learning using PyTorch.",
+          "source": "D2L.ai",
+          "tags": [
+            "book",
+            "pytorch",
+            "theory"
+          ],
+          "free": true,
+          "featured": true
+        }
+      ]
+    },
+    {
+      "id": "how-to-approach-a-task",
+      "title": "How to Approach a Task",
+      "shortTitle": "Approach a Task",
+      "description": "A practical workflow for tackling AI problems: understand the data, build a baseline, iterate, and debug.",
+      "icon": "Brain",
+      "accent": "pink",
+      "order": 3,
+      "guideMdxPath": "general/how-to-approach-a-task.mdx",
+      "resources": [
+        {
+          "id": "kaggle-titanic-tutorial",
+          "title": "Kaggle Titanic Tutorial",
+          "url": "https://www.kaggle.com/code/alexisbcook/titanic-tutorial",
+          "type": "notebook",
+          "difficulty": "beginner",
+          "description": "A gentle introduction to the full ML pipeline through a classic competition problem.",
+          "source": "Kaggle",
+          "tags": [
+            "pipeline",
+            "competition"
+          ],
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "machine-learning-project-checklist",
+          "title": "Machine Learning Project Checklist",
+          "url": "https://madewithml.com/courses/mlops/design/",
+          "type": "article",
+          "difficulty": "intermediate",
+          "description": "A checklist-driven approach to scoping, designing, and iterating on ML projects.",
+          "source": "Made With ML",
+          "tags": [
+            "workflow",
+            "mlops"
+          ],
+          "free": true
+        },
+        {
+          "id": "how-to-build-baseline",
+          "title": "First Create a Baseline",
+          "url": "https://jvns.ca/blog/2023/01/03/why-i-love-reading-technical-blogs/",
+          "type": "article",
+          "difficulty": "intermediate",
+          "description": "Why a simple baseline should come before any complex model.",
+          "source": "Julia Evans",
+          "tags": [
+            "baseline",
+            "strategy"
+          ],
+          "free": true
+        }
+      ]
+    },
+    {
+      "id": "local-validation-and-leaderboards",
+      "title": "Local Validation & Leaderboards",
+      "shortTitle": "Validation",
+      "description": "How to validate models locally so your leaderboard score does not surprise you.",
+      "icon": "Table",
+      "accent": "blue",
+      "order": 4,
+      "guideMdxPath": "general/local-validation-and-leaderboards.mdx",
+      "resources": [
+        {
+          "id": "cross-validation-guide",
+          "title": "Cross-Validation Guide",
+          "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+          "type": "documentation",
+          "difficulty": "intermediate",
+          "description": "The official scikit-learn guide to cross-validation strategies and when to use them.",
+          "source": "scikit-learn",
+          "tags": [
+            "cv",
+            "validation"
+          ],
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "overfitting-vs-leakage",
+          "title": "Overfitting vs Data Leakage",
+          "url": "https://www.kaggle.com/code/alexisbcook/data-leakage",
+          "type": "notebook",
+          "difficulty": "intermediate",
+          "description": "Learn to spot and avoid data leakage with concrete examples.",
+          "source": "Kaggle",
+          "tags": [
+            "leakage",
+            "overfitting"
+          ],
+          "free": true
+        },
+        {
+          "id": "leaderboard-shakeup",
+          "title": "Understanding Leaderboard Shake-up",
+          "url": "https://medium.com/@joaolages/kaggle-leaderboard-shakeup-explained-5e5a5e5e5e5e",
+          "type": "article",
+          "difficulty": "advanced",
+          "description": "Why local CV and public leaderboard can disagree, and how to handle it.",
+          "source": "Medium",
+          "tags": [
+            "leaderboard",
+            "cv-strategy"
+          ],
+          "free": true
+        }
+      ]
+    },
+    {
+      "id": "practice-tips-and-competitions",
+      "title": "Practice Tips & Competitions",
+      "shortTitle": "Practice",
+      "description": "Platforms and habits to apply what you learn through competitions, challenges, and coding notebooks.",
+      "icon": "Trophy",
+      "accent": "purple",
+      "order": 5,
+      "guideMdxPath": "general/practice-tips-and-competitions.mdx",
+      "resources": [
+        {
+          "id": "kaggle",
+          "title": "Kaggle",
+          "url": "https://www.kaggle.com/",
+          "type": "tool",
+          "difficulty": "intermediate",
+          "description": "The largest data science community with competitions, datasets, and notebooks.",
+          "source": "Kaggle",
+          "tags": [
+            "competitions",
+            "datasets"
+          ],
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "aicc-contests",
+          "title": "AICC Monthly Contests",
+          "url": "https://aicc.ioai-journey.com/contests",
+          "type": "tool",
+          "difficulty": "intermediate",
+          "description": "Community-run IOAI-style practice contests with notebooks and solutions.",
+          "source": "AICC",
+          "tags": [
+            "ioai",
+            "practice"
+          ],
+          "free": true
+        },
+        {
+          "id": "codeforces-ml",
+          "title": "Codeforces / ML Competitions",
+          "url": "https://codeforces.com/",
+          "type": "tool",
+          "difficulty": "advanced",
+          "description": "Algorithmic competitions; useful for the programming side of implementation.",
+          "source": "Codeforces",
+          "tags": [
+            "algorithms",
+            "programming"
+          ],
+          "free": true
+        }
+      ]
+    }
+  ],
+  "syllabus": [
+    {
+      "id": "foundations-of-ml",
+      "title": "Foundations of Machine Learning",
+      "shortTitle": "ML Foundations",
+      "description": "Core machine learning concepts that underpin everything else in the IOAI syllabus.",
+      "order": 1,
+      "guideMdxPath": "syllabus/foundations-of-ml.mdx",
+      "subsections": [
+        {
+          "id": "supervised-learning",
+          "title": "Supervised Learning",
+          "description": "Learn to map inputs to outputs using labeled training data.",
+          "order": 1,
+          "guideMdxPath": "syllabus/foundations-of-ml/supervised-learning.mdx",
+          "resources": [
+            {
+              "id": "supervised-learning-stanford",
+              "title": "Supervised Learning Notes",
+              "url": "https://cs229.stanford.edu/notes2022fall/main.pdf",
+              "type": "book",
+              "difficulty": "intermediate",
+              "description": "Stanford CS229 notes on supervised learning theory and algorithms.",
+              "source": "Stanford CS229",
+              "tags": [
+                "theory",
+                "math"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "unsupervised-learning",
+          "title": "Unsupervised Learning",
+          "description": "Discover hidden structure in data without labeled targets.",
+          "order": 2,
+          "guideMdxPath": "syllabus/foundations-of-ml/unsupervised-learning.mdx",
+          "resources": [
+            {
+              "id": "clustering-tutorial",
+              "title": "Clustering in scikit-learn",
+              "url": "https://scikit-learn.org/stable/modules/clustering.html",
+              "type": "documentation",
+              "difficulty": "beginner",
+              "description": "Comprehensive guide to clustering algorithms and when to use them.",
+              "source": "scikit-learn",
+              "tags": [
+                "clustering",
+                "sklearn"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "model-evaluation",
+          "title": "Model Evaluation & Validation",
+          "description": "How to measure performance, avoid overfitting, and validate models robustly.",
+          "order": 3,
+          "guideMdxPath": "syllabus/foundations-of-ml/model-evaluation.mdx",
+          "resources": [
+            {
+              "id": "ml-model-evaluation",
+              "title": "Model Evaluation in Machine Learning",
+              "url": "https://neptune.ai/blog/model-evaluation-in-machine-learning",
+              "type": "article",
+              "difficulty": "intermediate",
+              "description": "A practical guide to train/test splits, cross-validation, and metrics.",
+              "source": "neptune.ai",
+              "tags": [
+                "evaluation",
+                "metrics"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "feature-engineering-basics",
+          "title": "Feature Engineering Basics",
+          "description": "Transform raw data into informative features that improve model performance.",
+          "order": 4,
+          "guideMdxPath": "syllabus/foundations-of-ml/feature-engineering-basics.mdx",
+          "resources": [
+            {
+              "id": "fe-kaggle-micro",
+              "title": "Feature Engineering Micro-Course",
+              "url": "https://www.kaggle.com/learn/feature-engineering",
+              "type": "course",
+              "difficulty": "intermediate",
+              "description": "Hands-on feature engineering lessons from Kaggle.",
+              "source": "Kaggle",
+              "tags": [
+                "feature-engineering",
+                "practical"
+              ],
+              "free": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deep-learning",
+      "title": "Deep Learning",
+      "shortTitle": "Deep Learning",
+      "description": "Neural networks and modern architectures: CNNs, RNNs, transformers, and training techniques.",
+      "order": 2,
+      "guideMdxPath": "syllabus/deep-learning.mdx",
+      "subsections": [
+        {
+          "id": "neural-network-basics",
+          "title": "Neural Network Basics",
+          "description": "Perceptrons, activation functions, loss functions, and backpropagation.",
+          "order": 1,
+          "guideMdxPath": "syllabus/deep-learning/neural-network-basics.mdx",
+          "resources": [
+            {
+              "id": "nn-stanford-notes",
+              "title": "Neural Networks Notes",
+              "url": "https://cs231n.stanford.edu/",
+              "type": "course",
+              "difficulty": "intermediate",
+              "description": "Stanford CS231n lectures and notes on neural network fundamentals.",
+              "source": "Stanford CS231n",
+              "tags": [
+                "neural-networks",
+                "theory"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "convolutional-networks",
+          "title": "Convolutional Neural Networks",
+          "description": "Architectures for image understanding: convolutions, pooling, and modern CNNs.",
+          "order": 2,
+          "guideMdxPath": "syllabus/deep-learning/convolutional-networks.mdx",
+          "resources": [
+            {
+              "id": "cnn-explainer",
+              "title": "CNN Explainer",
+              "url": "https://poloclub.github.io/cnn-explainer/",
+              "type": "interactive",
+              "difficulty": "beginner",
+              "description": "An interactive visualization of how convolutional neural networks work.",
+              "source": "Georgia Tech",
+              "tags": [
+                "cnn",
+                "visual"
+              ],
+              "free": true,
+              "featured": true
+            }
+          ]
+        },
+        {
+          "id": "sequence-models",
+          "title": "Sequence Models",
+          "description": "RNNs, LSTMs, GRUs, and attention mechanisms for sequential data.",
+          "order": 3,
+          "guideMdxPath": "syllabus/deep-learning/sequence-models.mdx",
+          "resources": [
+            {
+              "id": "cs224n",
+              "title": "CS224n: Natural Language Processing with Deep Learning",
+              "url": "https://web.stanford.edu/class/cs224n/",
+              "type": "course",
+              "difficulty": "advanced",
+              "description": "Stanford NLP course covering RNNs, LSTMs, and transformers in depth.",
+              "source": "Stanford",
+              "tags": [
+                "nlp",
+                "rnn",
+                "transformers"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "transformers",
+          "title": "Transformers",
+          "description": "The architecture behind modern NLP, vision, and multimodal models.",
+          "order": 4,
+          "guideMdxPath": "syllabus/deep-learning/transformers.mdx",
+          "resources": [
+            {
+              "id": "attention-is-all-you-need",
+              "title": "Attention Is All You Need",
+              "url": "https://arxiv.org/abs/1706.03762",
+              "type": "article",
+              "difficulty": "advanced",
+              "description": "The original transformer paper. Read it after you understand attention.",
+              "source": "arXiv",
+              "tags": [
+                "transformers",
+                "paper"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "optimization-and-regularization",
+          "title": "Optimization & Regularization",
+          "description": "SGD, Adam, learning rate schedules, dropout, batch normalization, and data augmentation.",
+          "order": 5,
+          "guideMdxPath": "syllabus/deep-learning/optimization-and-regularization.mdx",
+          "resources": [
+            {
+              "id": "optimization-3b1b",
+              "title": "Gradient Descent Series",
+              "url": "https://www.3blue1brown.com/topics/calculus",
+              "type": "video",
+              "difficulty": "intermediate",
+              "description": "Visual intuitions for gradients, backpropagation, and optimization.",
+              "source": "3Blue1Brown",
+              "tags": [
+                "optimization",
+                "visual"
+              ],
+              "free": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "natural-language-processing",
+      "title": "Natural Language Processing",
+      "shortTitle": "NLP",
+      "description": "Text processing, embeddings, language models, and modern LLM techniques.",
+      "order": 3,
+      "guideMdxPath": "syllabus/natural-language-processing.mdx",
+      "subsections": [
+        {
+          "id": "text-preprocessing",
+          "title": "Text Preprocessing",
+          "description": "Tokenization, normalization, stemming, lemmatization, and handling text data.",
+          "order": 1,
+          "guideMdxPath": "syllabus/natural-language-processing/text-preprocessing.mdx",
+          "resources": [
+            {
+              "id": "nltk-book",
+              "title": "Natural Language Processing with Python",
+              "url": "https://www.nltk.org/book/",
+              "type": "book",
+              "difficulty": "beginner",
+              "description": "The free NLTK book: a practical introduction to NLP in Python.",
+              "source": "NLTK",
+              "tags": [
+                "nltk",
+                "text"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "word-embeddings",
+          "title": "Word Embeddings",
+          "description": "Word2Vec, GloVe, and contextual embeddings.",
+          "order": 2,
+          "guideMdxPath": "syllabus/natural-language-processing/word-embeddings.mdx",
+          "resources": [
+            {
+              "id": "word2vec-tutorial",
+              "title": "Word2Vec Tutorial",
+              "url": "https://radimrehurek.com/gensim/models/word2vec.html",
+              "type": "documentation",
+              "difficulty": "intermediate",
+              "description": "Train and use Word2Vec embeddings with Gensim.",
+              "source": "Gensim",
+              "tags": [
+                "embeddings",
+                "word2vec"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "language-models",
+          "title": "Language Models",
+          "description": "From n-gram models to large pre-trained transformers and fine-tuning.",
+          "order": 3,
+          "guideMdxPath": "syllabus/natural-language-processing/language-models.mdx",
+          "resources": [
+            {
+              "id": "huggingface-llm-course",
+              "title": "Hugging Face LLM Course",
+              "url": "https://huggingface.co/learn/nlp-course",
+              "type": "course",
+              "difficulty": "intermediate",
+              "description": "Learn modern NLP with transformers from tokenization to generation.",
+              "source": "Hugging Face",
+              "tags": [
+                "transformers",
+                "llms"
+              ],
+              "free": true,
+              "featured": true
+            }
+          ]
+        },
+        {
+          "id": "prompting-and-inference",
+          "title": "Prompting & Inference",
+          "description": "How to effectively prompt, evaluate, and deploy large language models.",
+          "order": 4,
+          "guideMdxPath": "syllabus/natural-language-processing/prompting-and-inference.mdx",
+          "resources": [
+            {
+              "id": "prompt-engineering-guide",
+              "title": "Prompt Engineering Guide",
+              "url": "https://www.promptingguide.ai/",
+              "type": "article",
+              "difficulty": "intermediate",
+              "description": "A comprehensive guide to prompting techniques and best practices.",
+              "source": "promptingguide.ai",
+              "tags": [
+                "prompting",
+                "llms"
+              ],
+              "free": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "computer-vision",
+      "title": "Computer Vision",
+      "shortTitle": "CV",
+      "description": "Image and video understanding: classification, detection, segmentation, and generation.",
+      "order": 4,
+      "guideMdxPath": "syllabus/computer-vision.mdx",
+      "subsections": [
+        {
+          "id": "image-classification",
+          "title": "Image Classification",
+          "description": "Assigning labels to images using CNNs and vision transformers.",
+          "order": 1,
+          "guideMdxPath": "syllabus/computer-vision/image-classification.mdx",
+          "resources": [
+            {
+              "id": "pytorch-image-classification",
+              "title": "PyTorch Image Classification Tutorial",
+              "url": "https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html",
+              "type": "documentation",
+              "difficulty": "beginner",
+              "description": "Train a simple CNN on CIFAR-10 with PyTorch.",
+              "source": "PyTorch",
+              "tags": [
+                "pytorch",
+                "cnn"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "object-detection",
+          "title": "Object Detection",
+          "description": "Locating and classifying multiple objects in an image.",
+          "order": 2,
+          "guideMdxPath": "syllabus/computer-vision/object-detection.mdx",
+          "resources": [
+            {
+              "id": "yolo-docs",
+              "title": "YOLO Documentation",
+              "url": "https://docs.ultralytics.com/",
+              "type": "documentation",
+              "difficulty": "intermediate",
+              "description": "Train and deploy YOLO models for object detection.",
+              "source": "Ultralytics",
+              "tags": [
+                "yolo",
+                "object-detection"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "image-segmentation",
+          "title": "Image Segmentation",
+          "description": "Pixel-level classification for semantic and instance segmentation.",
+          "order": 3,
+          "guideMdxPath": "syllabus/computer-vision/image-segmentation.mdx",
+          "resources": [
+            {
+              "id": "segmentation-tutorial",
+              "title": "Image Segmentation with PyTorch",
+              "url": "https://pytorch.org/tutorials/intermediate/torchvision_tutorial.html",
+              "type": "documentation",
+              "difficulty": "advanced",
+              "description": "Fine-tune a Mask R-CNN model for instance segmentation.",
+              "source": "PyTorch",
+              "tags": [
+                "pytorch",
+                "segmentation"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "vision-transformers",
+          "title": "Vision Transformers",
+          "description": "Applying transformer architectures to image tasks.",
+          "order": 4,
+          "guideMdxPath": "syllabus/computer-vision/vision-transformers.mdx",
+          "resources": [
+            {
+              "id": "vit-paper",
+              "title": "An Image is Worth 16x16 Words",
+              "url": "https://arxiv.org/abs/2010.11929",
+              "type": "article",
+              "difficulty": "advanced",
+              "description": "The original Vision Transformer (ViT) paper.",
+              "source": "arXiv",
+              "tags": [
+                "vision-transformers",
+                "paper"
+              ],
+              "free": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audio-processing",
+      "title": "Audio & Signal Processing",
+      "shortTitle": "Audio",
+      "description": "Working with sound: spectrograms, speech recognition, audio classification, and generation.",
+      "order": 5,
+      "guideMdxPath": "syllabus/audio-processing.mdx",
+      "subsections": [
+        {
+          "id": "audio-basics",
+          "title": "Audio Basics",
+          "description": "Waveforms, sampling, Fourier transforms, and spectrograms.",
+          "order": 1,
+          "guideMdxPath": "syllabus/audio-processing/audio-basics.mdx",
+          "resources": [
+            {
+              "id": "audio-signal-processing-intro",
+              "title": "Audio Signal Processing for Machine Learning",
+              "url": "https://youtube.com/playlist?list=PL-wATfeyAMNoirN4idjev6aRu8ISZYVWm",
+              "type": "video",
+              "difficulty": "beginner",
+              "description": "YouTube playlist covering audio signals, spectrograms, and feature extraction.",
+              "source": "Valerio Velardo",
+              "tags": [
+                "audio",
+                "signal-processing"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "speech-recognition",
+          "title": "Speech Recognition",
+          "description": "Converting spoken language into text using acoustic and language models.",
+          "order": 2,
+          "guideMdxPath": "syllabus/audio-processing/speech-recognition.mdx",
+          "resources": [
+            {
+              "id": "whisper-asr",
+              "title": "Whisper: Robust Speech Recognition via Large-Scale Weak Supervision",
+              "url": "https://github.com/openai/whisper",
+              "type": "tool",
+              "difficulty": "intermediate",
+              "description": "OpenAI's pre-trained speech recognition model and inference code.",
+              "source": "OpenAI",
+              "tags": [
+                "asr",
+                "speech"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "audio-classification",
+          "title": "Audio Classification",
+          "description": "Classifying sounds, music, and speech using CNNs and transformers.",
+          "order": 3,
+          "guideMdxPath": "syllabus/audio-processing/audio-classification.mdx",
+          "resources": [
+            {
+              "id": "audio-classification-huggingface",
+              "title": "Audio Classification with Hugging Face",
+              "url": "https://huggingface.co/docs/transformers/tasks/audio_classification",
+              "type": "documentation",
+              "difficulty": "intermediate",
+              "description": "Fine-tune pre-trained audio models for classification tasks.",
+              "source": "Hugging Face",
+              "tags": [
+                "audio",
+                "transformers"
+              ],
+              "free": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "advanced-topics",
+      "title": "Advanced Topics & AI Systems",
+      "shortTitle": "Advanced Topics",
+      "description": "Reinforcement learning, generative models, multimodal systems, and responsible AI.",
+      "order": 6,
+      "guideMdxPath": "syllabus/advanced-topics.mdx",
+      "subsections": [
+        {
+          "id": "reinforcement-learning",
+          "title": "Reinforcement Learning",
+          "description": "Training agents to make decisions through rewards and environment interaction.",
+          "order": 1,
+          "guideMdxPath": "syllabus/advanced-topics/reinforcement-learning.mdx",
+          "resources": [
+            {
+              "id": "rl-course-huggingface",
+              "title": "Deep Reinforcement Learning Course",
+              "url": "https://huggingface.co/learn/deep-rl-course/unit0/introduction",
+              "type": "course",
+              "difficulty": "advanced",
+              "description": "Learn RL fundamentals and train agents with Hugging Face.",
+              "source": "Hugging Face",
+              "tags": [
+                "rl",
+                "reinforcement-learning"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "generative-models",
+          "title": "Generative Models",
+          "description": "VAEs, GANs, diffusion models, and autoregressive generation.",
+          "order": 2,
+          "guideMdxPath": "syllabus/advanced-topics/generative-models.mdx",
+          "resources": [
+            {
+              "id": "diffusion-models-huggingface",
+              "title": "Diffusion Models Course",
+              "url": "https://huggingface.co/learn/diffusion-course/unit0/1",
+              "type": "course",
+              "difficulty": "advanced",
+              "description": "Understand and use diffusion models for image generation.",
+              "source": "Hugging Face",
+              "tags": [
+                "diffusion",
+                "generative"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "multimodal-models",
+          "title": "Multimodal Models",
+          "description": "Models that process and generate text, images, audio, and other modalities together.",
+          "order": 3,
+          "guideMdxPath": "syllabus/advanced-topics/multimodal-models.mdx",
+          "resources": [
+            {
+              "id": "clip-openai",
+              "title": "CLIP: Connecting Text and Images",
+              "url": "https://openai.com/research/clip",
+              "type": "article",
+              "difficulty": "advanced",
+              "description": "OpenAI's CLIP model and the concept of contrastive language-image pre-training.",
+              "source": "OpenAI",
+              "tags": [
+                "multimodal",
+                "clip"
+              ],
+              "free": true
+            }
+          ]
+        },
+        {
+          "id": "responsible-ai",
+          "title": "Responsible AI",
+          "description": "Fairness, interpretability, robustness, and safe deployment of AI systems.",
+          "order": 4,
+          "guideMdxPath": "syllabus/advanced-topics/responsible-ai.mdx",
+          "resources": [
+            {
+              "id": "ai-ethics-fastai",
+              "title": "Practical Data Ethics",
+              "url": "https://ethics.fast.ai/",
+              "type": "course",
+              "difficulty": "intermediate",
+              "description": "A practical course on data ethics, bias, and responsible AI.",
+              "source": "fast.ai",
+              "tags": [
+                "ethics",
+                "fairness"
+              ],
+              "free": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

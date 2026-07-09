@@ -1,0 +1,22 @@
+# Local Validation & Leaderboards
+
+Your local validation score is your compass. If it does not correlate with the leaderboard, you are flying blind.
+
+## Why validation matters
+
+The public leaderboard is based on only a subset of test data. Overfitting it is easy and dangerous. A good local validation setup tells you whether your model is actually improving.
+
+## Key techniques
+
+- **Stratified k-fold:** preserve class proportions in every fold.
+- **Time-based splits:** use past data to predict future data when time is involved.
+- **Group splits:** keep related samples together to avoid leakage.
+- **Cross-validation ensembling:** train multiple models and average predictions.
+
+## Leaderboard strategy
+
+- Trust your CV more than small leaderboard movements.
+- Watch for shake-up between public and private leaderboards.
+- Don't chase a single public submission with excessive tuning.
+
+> Consistent local validation is the closest thing to a crystal ball in competitions.

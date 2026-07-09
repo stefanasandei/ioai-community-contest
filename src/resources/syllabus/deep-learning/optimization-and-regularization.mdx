@@ -1,0 +1,20 @@
+# Optimization & Regularization
+
+Training a neural network is an optimization problem. Regularization helps the model generalize beyond the training set.
+
+## Optimization
+
+- **SGD with momentum:** classic, well-understood optimizer.
+- **Adam / AdamW:** adaptive optimizers common in practice.
+- **Learning rate schedules:** step decay, cosine annealing, warm restarts.
+
+## Regularization
+
+- **Dropout:** randomly zeroing neurons during training.
+- **Weight decay / L2 regularization.**
+- **Batch normalization:** stabilizing training and acting as regularization.
+- **Data augmentation:** expanding the effective training set.
+
+## Practical advice
+
+Start with AdamW and a simple learning rate schedule. Add regularization when you see overfitting on your validation set.

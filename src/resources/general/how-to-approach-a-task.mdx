@@ -1,0 +1,21 @@
+# How to Approach a Task
+
+Jumping straight into a complex model is one of the most common mistakes in AI competitions. A disciplined workflow will save you time and improve your results.
+
+## Recommended workflow
+
+1. **Read the task carefully.** Understand the input, output, metric, and constraints before touching code.
+2. **Explore the data.** Look at distributions, missing values, class balance, and sample inputs.
+3. **Build a baseline first.** A simple model gives you a score to beat and reveals data issues.
+4. **Iterate in small steps.** Change one thing at a time and measure the impact.
+5. **Validate properly.** A reliable local validation strategy is more important than a single public leaderboard score.
+
+## Baseline checklist
+
+- Load the data and verify shapes
+- Create a minimal feature set
+- Train a simple model (logistic regression, small MLP, pre-trained backbone)
+- Submit or evaluate to establish a baseline
+- Only then add complexity
+
+> If you can't beat a simple baseline, a bigger model won't help.

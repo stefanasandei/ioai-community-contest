@@ -1,0 +1,18 @@
+# Model Evaluation & Validation
+
+A model is only as good as your ability to measure it correctly. Poor validation leads to overconfident submissions and leaderboard surprises.
+
+## Essential techniques
+
+- **Train/validation/test splits:** keep a truly held-out test set.
+- **Cross-validation:** especially k-fold for small datasets.
+- **Stratification:** preserve class proportions across splits.
+- **Metrics:** accuracy, precision, recall, F1, AUC-ROC, MAE, RMSE, log loss.
+
+## Common mistakes
+
+- Using the test set for model selection
+- Ignoring class imbalance
+- Leaking information from validation into training
+
+> Always align your validation strategy with the competition's evaluation protocol.

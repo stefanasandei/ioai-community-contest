@@ -1,0 +1,21 @@
+# Image Classification
+
+Image classification assigns a single label to an image. It is the canonical computer vision task and the best starting point for learning CV.
+
+## Standard pipeline
+
+1. Load and normalize images.
+2. Apply data augmentation.
+3. Use a pre-trained CNN as a backbone.
+4. Fine-tune the classifier head.
+5. Evaluate with accuracy, precision, recall, or AUC.
+
+## Transfer learning
+
+Pre-trained models on ImageNet provide excellent features for most downstream tasks. Fine-tune the final layers first, then optionally unfreeze deeper layers.
+
+## Datasets to practice on
+
+- CIFAR-10 / CIFAR-100
+- MNIST / Fashion-MNIST
+- Custom datasets from Kaggle

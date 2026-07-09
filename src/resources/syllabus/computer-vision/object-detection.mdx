@@ -1,0 +1,17 @@
+# Object Detection
+
+Object detection locates and classifies multiple objects in an image, outputting bounding boxes and labels.
+
+## Approaches
+
+- **Two-stage detectors:** R-CNN family, slower but often more accurate.
+- **One-stage detectors:** YOLO, SSD, faster but sometimes less precise.
+
+## Metrics
+
+- **IoU:** overlap between predicted and ground-truth boxes.
+- **mAP:** mean average precision across classes and IoU thresholds.
+
+## Tools
+
+For IOAI-style work, YOLO via Ultralytics is often the fastest path to a working detector. Understand the output format and loss before tuning hyperparameters.

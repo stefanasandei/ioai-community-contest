@@ -1,0 +1,17 @@
+# Image Segmentation
+
+Segmentation classifies every pixel in an image. It comes in two main flavors: semantic segmentation and instance segmentation.
+
+## Types
+
+- **Semantic segmentation:** each pixel gets a class label.
+- **Instance segmentation:** each object instance gets a distinct mask.
+- **Panoptic segmentation:** combines both.
+
+## Architectures
+
+U-Net is the classic architecture for segmentation, especially in domains with limited data. Mask R-CNN extends Faster R-CNN for instance segmentation.
+
+## Practical tip
+
+Segmentation labels are expensive. Start with strong augmentations and pre-trained backbones to make the most of limited data.

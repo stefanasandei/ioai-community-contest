@@ -1,0 +1,17 @@
+# Speech Recognition
+
+Automatic Speech Recognition (ASR) converts spoken audio into text. Modern systems are almost entirely neural.
+
+## Pipeline
+
+1. Preprocess audio into features.
+2. Encode acoustic information with CNNs, RNNs, or transformers.
+3. Map acoustic features to text with CTC, attention, or transducer loss.
+
+## Pre-trained models
+
+Whisper is an excellent starting point for many ASR tasks. Fine-tune it on your target domain for best results.
+
+## Evaluation
+
+Word Error Rate (WER) is the standard metric. Compare predictions and references carefully to understand error patterns.

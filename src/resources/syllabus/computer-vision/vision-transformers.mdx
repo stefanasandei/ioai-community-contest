@@ -1,0 +1,18 @@
+# Vision Transformers
+
+Vision Transformers (ViTs) apply the transformer architecture to image patches instead of text tokens.
+
+## Key ideas
+
+- Split an image into fixed-size patches.
+- Linearly embed each patch.
+- Add positional embeddings.
+- Process with a standard transformer encoder.
+
+## When to use them
+
+ViTs often require more data and compute than CNNs but can achieve state-of-the-art results at scale. For smaller datasets, CNNs or hybrid models may be more practical.
+
+## Tools
+
+Hugging Face `transformers` provides pre-trained ViT, DeiT, and BEiT models ready for fine-tuning.
