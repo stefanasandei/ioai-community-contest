@@ -203,54 +203,6 @@ const Roadmap = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 pt-10 pb-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {referenceSections.map((section) => {
-            const Icon = sectionIcons[section.id];
-            const styles = accentStyles[section.accent];
-            const topTopics = getTopicGroups(section.tasks).slice(0, 4);
-            return (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                className="group block bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-5 transition-all duration-200 hover:border-aicc-purple/50 dark:hover:border-aicc-purple/50 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-aicc-purple/5"
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <div
-                    className={`shrink-0 w-10 h-10 ${styles.bg} flex items-center justify-center`}
-                  >
-                    <Icon className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-aicc-purple dark:group-hover:text-aicc-purple-light transition-colors">
-                      {section.title}
-                    </h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      {section.tasks.length} tasks
-                    </p>
-                  </div>
-                  <Compass
-                    className="w-4 h-4 text-gray-300 group-hover:text-aicc-purple transition-colors"
-                    aria-hidden
-                  />
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {topTopics.map((g) => (
-                    <span
-                      key={g.topic}
-                      className="inline-flex items-center px-2 py-0.5 text-[11px] font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded"
-                    >
-                      {g.topic}
-                      <span className="ml-1 text-[10px] tabular-nums opacity-50">{g.count}</span>
-                    </span>
-                  ))}
-                </div>
-              </a>
-            );
-          })}
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 pt-12 pb-24 space-y-16">
         {visibleSections.map(({ section, tasks }) => {
           const Icon = sectionIcons[section.id];
@@ -299,17 +251,15 @@ const Roadmap = () => {
                       <button
                         key={g.topic}
                         onClick={() => handleTopicClick(section.id, g.topic)}
-                        className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium border rounded-full transition-colors ${
-                          isSelected
+                        className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium border rounded-full transition-colors ${isSelected
                             ? 'bg-aicc-purple text-white border-aicc-purple'
                             : 'bg-white dark:bg-white/5 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-white/10 hover:border-aicc-purple/50 hover:text-aicc-purple'
-                        }`}
+                          }`}
                       >
                         {g.topic}
                         <span
-                          className={`text-[10px] tabular-nums ${
-                            isSelected ? 'text-white/80' : 'text-gray-400'
-                          }`}
+                          className={`text-[10px] tabular-nums ${isSelected ? 'text-white/80' : 'text-gray-400'
+                            }`}
                         >
                           {g.count}
                         </span>

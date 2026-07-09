@@ -20,7 +20,7 @@ const teamMembers: TeamMember[] = [
   { name: 'Georgios Tzovairis', username: 'Gior', emoji: '🇬🇷', description: 'IOAI \'25, HS student class of \'27', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Stefan Asandei', username: 'Stefan', emoji: '🇷🇴', description: 'Math and CS student at Ecole Polytechnique, Bronze medal at IOAI \'25', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Yue Heng Wong', username: 'Walnit', emoji: '🇸🇬', description: "IOAI '25 (Silver), Singapore NOAI '25 (Gold), 6/13 Hackathons Won, NUS CS '32", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
-  { name: 'Antony Ingorokva', username: 'Cowile', emoji: '🇬🇪', description: "Honourable Mention at IOAI \'25", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
+  { name: 'Antony Ingorokva', username: 'Cowile', emoji: '🇬🇪', description: "Honourable Mention at IOAI '25", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
   { name: 'Nikoloz Gegenava', username: 'Nikoloz', emoji: '🇬🇪', description: "IOAI '25, EUCYS '25 Special Jury Award, IYNT '25 Bronze Medal", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
   { name: 'Henry Ho', username: 'Convexhulltrick', emoji: '🇦🇺', description: 'Bronze medal at IOAI \'25', teams: [TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Apostolidis Charalampos', username: 'Bl4ck', emoji: '🇬🇷', description: 'Hellenic NOI Top 12, Hellenic NOAI Top 25', teams: [TeamRole.Logistics] },
