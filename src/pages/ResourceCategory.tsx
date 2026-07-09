@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useLayoutEffect } from 'react';
+import { useState, useMemo, useLayoutEffect } from 'react';
 import { useParams, Navigate, Link, useLocation } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import Navigation from '@/components/Navigation';
@@ -6,7 +6,6 @@ import Footer from '@/components/Footer';
 import ResourceSidebar from '@/components/resources/ResourceSidebar';
 import ResourceBreadcrumb from '@/components/resources/ResourceBreadcrumb';
 import MdxGuide from '@/components/resources/MdxGuide';
-import ResourceFilters from '@/components/resources/ResourceFilters';
 import ResourceCard from '@/components/resources/ResourceCard';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -129,20 +128,16 @@ const ResourceCategory = () => {
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-5">
                     Resources
                   </h2>
-                  <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    <div className="lg:col-span-4">
-                      {filteredResources.length === 0 ? (
-                        <div className="text-center py-16 bg-white dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/10">
-                          <p className="text-gray-600 dark:text-gray-300">No resources match your filters.</p>
-                        </div>
-                      ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          {filteredResources.map((resource) => (
-                            <ResourceCard key={resource.id} resource={resource} />
-                          ))}
-                        </div>
-                      )}
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {filteredResources.length === 0 ? (
+                      <div className="text-center py-16 bg-white dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/10 col-span-full">
+                        <p className="text-gray-600 dark:text-gray-300">No resources for this topic yet.</p>
+                      </div>
+                    ) : (
+                      filteredResources.map((resource) => (
+                        <ResourceCard key={resource.id} resource={resource} />
+                      ))
+                    )}
                   </div>
                 </section>
 
@@ -151,7 +146,7 @@ const ResourceCategory = () => {
                     {prevCategory ? (
                       <Link
                         to={`/resources/general/${prevCategory.id}`}
-                        scroll={false}
+
                         className="text-sm text-gray-600 dark:text-gray-400 hover:text-aicc-purple dark:hover:text-aicc-purple-light"
                       >
                         ← {prevCategory.title}
@@ -162,7 +157,6 @@ const ResourceCategory = () => {
                     {nextCategory ? (
                       <Link
                         to={`/resources/general/${nextCategory.id}`}
-                        scroll={false}
                         className="text-sm text-aicc-purple dark:text-aicc-purple-light hover:underline"
                       >
                         {nextCategory.title} →
