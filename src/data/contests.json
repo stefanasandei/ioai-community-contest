@@ -60,7 +60,6 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/scientific-facts-aicc-round-7",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-7/scientific-facts.ipynb",
-                    "blog": "solutions/round-7/scientific-facts",
                     "author": "Stefan Asandei",
                     "practiceStatus": "medium"
                 }
