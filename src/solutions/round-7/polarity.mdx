@@ -1,0 +1,95 @@
+## Problem Overview
+
+Polarity addresses a classic NLP challenge: distinguish between synonyms and antonyms. Synonyms are words with the same or very similar meanings, whereas antonyms are words with opposite meanings.
+
+You are given heavily damaged book of word pairs, with 50 labeled pairs (25 synonyms, 25 antnyms) and must predict the labes for 686 hidden pairs.
+
+You are only allowed to use the `bert-large-uncased` pretrained model. No external datasets, lexicons, WordNets, ...
+
+## Zero-Shot NLP with MLM
+
+Standard BERT is trained on two tasks: Next Sentence Prediction (NSP) and Masked Language Modelling (MLM).
+
+### Next Sentence Prediction
+
+During pretraining, we use NSP to teach BERT to predict sentence order correctly. NSP makes BERT understand whether two sentences logically follow each other.
+
+We build pairs:
+
+$[\texttt{CLS}] \; A \; [\texttt{SEP}] \; B \; [\texttt{SEP}]$
+
+We define $y \in \{0,1\}$, where 1 means B follows A and 0 means random sentence.
+
+NSP uses the $\texttt{[CLS]}$ embedding with a linear softmax classifier: $P(y|A,B)=\text{softmax}(W h_{\texttt{CLS}}+b)$.
+
+The loss for NSP is standard cross-entropy.
+
+### Masked Language Modelling
+
+Except NSP, BERT pretraining uses MLM too, which forces model to predict masked tokens from their context.  MLM masks random words and forces the model to infer them using both left and right context.
+
+We take an input sequence:
+
+$X = [x_1, x_2, \dots, x_n]$
+
+A subset of tokens $M$ is replaced with $\texttt{[MASK]}$ (or random/unchanged tokens during training).
+
+The model produces contextual embeddings $H = [h_1, h_2, \dots, h_n]$ and predicts masked tokens using:
+
+$P(x_i|X)=\text{softmax}(W h_i + b), \quad i \in M$
+
+The loss for MLM is computed only over masked positions:
+
+$\mathcal{L}_{MLM} = -\sum_{i \in M} \log P(x_i|X)$
+
+We then train BERT on both MLM and NSP.
+
+### Using MLM
+
+We can hijack MLM pretraining objective to perform Zero-Shot Classification without fine-tuning. If we want to know if "happy" and "sad" are antonyms, we can format them into a fill-in-the-blank sentence: "the opposite of happy is [MASK] ."
+
+If we pass this sentence through BERT, we can look at the probability distribution over the entire vocabulary for the [MASK] token. If the log-probability of the token "sad" is very high, it is a strong indicator that the model recognizes the antonym relationship based on its internal linguistic knowledge.
+
+## Prompt Engineering
+
+Single template during MLM might fail depending on the part of the speech of word. Reference solution constructs handcrafted prompts for MLM to make it more robust.
+
+Antonym templates include phrases like:
+
+  - "{w} but not [MASK] ."
+  - "{w} as opposed to [MASK] ."
+
+Synonym templates include:
+
+  - "{w} means [MASK] ."
+  - "another word for {w} is [MASK] ."
+
+For a given pair of words (w1, w2), the code dynamically generates these sentences, passes them through BERTforMaskedLM and extracts the log-probs of w2 appearing in the [MASK] slot. To make features symmetric, it averages the probability of predicting w2 from w1 and vice versa.
+
+```python
+def featurize(df):
+    w1, w2 = list(df['w1']), list(df['w2'])
+    return np.stack([(mask_logprob(t, w1, w2) + mask_logprob(t, w2, w1)) / 2 for t in templates], axis=1)
+```
+
+This results in a feature vector for every pair. We then train a simple
+LogisticRegression classifier on these feature vectors using the 50 labeled
+pairs.
+
+## Rule-based Systems
+
+While BERT is powerful, it struggles with morphology (how words are builg from prefixes and suffixes) because of subword tokenization. For example, distinguishing "logical" and "illogical" or "careful" and "careless" might yield blurry probabilities.
+
+To guarantee accuracy on morphological opposites, reference solution implements function is_affix_antonym(a, b), whichc hecks if the two words sharea common root but differ by specific, hardcoded antonym prefixes (like un-, dis-, anti-, ir-) or suffixes (-less, -ful).
+
+```python
+override = np.array([is_affix_antonym(a, b) for a, b in zip(test['w1'], test['w2'])])
+pred[override] = 1
+```
+
+If the rule triggers, the Logistic Regression prediction is manually overridden
+to class 1 (Antonym).
+
+## Final Remarks
+
+With this problem, we demonstrate the usage of BERT's Masked Language Modeling (MLM), while this editorial explains BERT's two pretraining objectives: Masked Language Modeling (MLM) and Next Sentence Prediction (NSP), we highlight how prompt engineering can be highly effective for certain tasks. Polarity showcases this by combining prompt-based MLM inference with a simple deterministic prefix/suffix rule-based function, creating a robust, data-efficient classification pipeline that requires no backpropagation.
