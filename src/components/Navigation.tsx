@@ -241,7 +241,7 @@ const Navigation = () => {
               </button>
 
               <div className="hidden md:flex items-center">
-                <div ref={navRef} className="relative flex items-center gap-1">
+                <div ref={navRef} className="relative flex items-center gap-3">
                   {hoverPill && (
                     <span
                       aria-hidden
@@ -275,7 +275,7 @@ const Navigation = () => {
                         onClick={() => handleNavigation(item.path, item.sectionId)}
                         onMouseEnter={() => setHoverIndex(i)}
                         onMouseLeave={() => setHoverIndex(null)}
-                        className={`relative z-10 flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
+                        className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
                           ? 'text-white'
                           : 'text-gray-700 dark:text-gray-300 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
                           }`}

@@ -179,7 +179,7 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order }
             </div>
 
             {showActions && (
-                <div className="px-5 pb-5 pt-4 border-t border-gray-200 dark:border-white/10">
+                <div className="px-5 pb-5">
                     <div className="flex gap-2">
                         {hasCompetition ? (
                             <a
