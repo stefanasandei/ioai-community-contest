@@ -23,7 +23,7 @@ const teamMembers: TeamMember[] = [
   { name: 'Antony Ingorokva', username: 'Cowile', emoji: '🇬🇪', description: "Honourable Mention at IOAI '25", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
   { name: 'Nikoloz Gegenava', username: 'Nikoloz', emoji: '🇬🇪', description: "IOAI '25, EUCYS '25 Special Jury Award, IYNT '25 Bronze Medal", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
   { name: 'Henry Ho', username: 'Convexhulltrick', emoji: '🇦🇺', description: 'Bronze medal at IOAI \'25', teams: [TeamRole.ProblemReview, TeamRole.Logistics] },
-  { name: 'Apostolidis Charalampos', username: 'Bl4ck', emoji: '🇬🇷', description: 'Hellenic NOI Top 12, Hellenic NOAI Top 25', teams: [TeamRole.Logistics] },
+  { name: 'Apostolidis Charalampos', username: 'bl4ck', emoji: '🇬🇷', description: 'Hellenic NOI Top 12, Hellenic NOAI Top 25', teams: [TeamRole.Logistics] },
   { name: 'Zerui', username: 'iamnumber4', emoji: '🇸🇬', description: 'IOAI \'25', teams: [TeamRole.Logistics] },
 ];
 

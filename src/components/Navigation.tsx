@@ -131,7 +131,7 @@ const Navigation = () => {
   };
 
   useLayoutEffect(() => {
-    const t = window.setTimeout(() => setPillsAnimated(true), 60);
+    const t = window.setTimeout(() => setPillsAnimated(false), 60);
     return () => window.clearTimeout(t);
   }, []);
 

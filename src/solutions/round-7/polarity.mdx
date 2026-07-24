@@ -56,13 +56,13 @@ Single template during MLM might fail depending on the part of the speech of wor
 
 Antonym templates include phrases like:
 
-  - "{w} but not [MASK] ."
-  - "{w} as opposed to [MASK] ."
+  - "w but not [MASK] ."
+  - "w as opposed to [MASK] ."
 
 Synonym templates include:
 
-  - "{w} means [MASK] ."
-  - "another word for {w} is [MASK] ."
+  - "w means [MASK] ."
+  - "another word for w is [MASK] ."
 
 For a given pair of words (w1, w2), the code dynamically generates these sentences, passes them through BERTforMaskedLM and extracts the log-probs of w2 appearing in the [MASK] slot. To make features symmetric, it averages the probability of predicting w2 from w1 and vice versa.
 
