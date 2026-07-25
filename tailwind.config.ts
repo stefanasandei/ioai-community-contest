@@ -10,6 +10,13 @@ export default {
 	],
 	prefix: "",
 	theme: {
+		screens: {
+			sm: '640px',
+			md: '998px',
+			lg: '1052px',
+			xl: '1280px',
+			'2xl': '1536px',
+		},
 		container: {
 			center: true,
 			padding: '2rem',

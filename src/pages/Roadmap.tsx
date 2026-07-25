@@ -135,12 +135,12 @@ const Roadmap = () => {
       <Navigation />
 
       <div className="bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10 pt-4">
-        <div className="max-w-7xl mx-auto px-4 pt-4 pb-6">
+        <div className="max-w-7xl mx-auto px-4 pt-4 pb-4">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-3">
             <span className="text-gray-900 dark:text-white">Reference </span>
             <span className="text-gradient">Tasks</span>
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 font-light mb-6">
+          <p className="text-md text-gray-600 dark:text-gray-300 font-light mb-1">
             A learning roadmap for competitive AI.{' '}
             <span className="font-medium text-gray-900 dark:text-white">
               {totalTaskCount} tasks
@@ -149,6 +149,13 @@ const Roadmap = () => {
             it as a path to learn the topics that show up most often.
           </p>
 
+          
+        </div>
+      </div>
+
+      <div className="sticky top-16 z-30 bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10">
+      <div className="max-w-7xl mx-auto px-4 pt-4 pb-1 space-y-1">
+        <div className="max-w-7xl mx-auto">
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             <input
@@ -174,12 +181,10 @@ const Roadmap = () => {
               Showing {totalVisible} of {totalTaskCount} tasks
             </p>
           )}
-        </div>
-      </div>
-
-      <div className="sticky top-16 z-30 bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-4">
+          </div>
           <div className="flex items-center gap-1 overflow-x-auto py-2 -mx-1 px-1">
+            
+
             {referenceSections.map((section) => {
               const Icon = sectionIcons[section.id];
               const styles = accentStyles[section.accent];
@@ -203,7 +208,7 @@ const Roadmap = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 pt-12 pb-24 space-y-16">
+      <div className="max-w-7xl mx-auto px-4 pt-6 pb-4 space-y-16">
         {visibleSections.map(({ section, tasks }) => {
           const Icon = sectionIcons[section.id];
           const styles = accentStyles[section.accent];
@@ -216,7 +221,7 @@ const Roadmap = () => {
               id={section.id}
               className="scroll-mt-32"
             >
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-3 mb-3">
                 <div
                   className={`shrink-0 w-10 h-10 ${styles.bg} flex items-center justify-center`}
                 >

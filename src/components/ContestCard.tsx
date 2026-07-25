@@ -118,7 +118,7 @@ const ContestCard = ({
                         {year}
                     </span>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5 mb-0">
                     {title}
                 </p>
             </div>

@@ -432,12 +432,12 @@ const Contests = () => {
             <Navigation />
 
             <div className="bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10 pt-4">
-                <div className="max-w-7xl mx-auto px-4 pt-4 pb-4">
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
+                <div className="max-w-7xl mx-auto px-4 pt-4 pb-2">
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-3">
                         <span className="text-gray-900 dark:text-white">Past Contest </span>
                         <span className="text-gradient">Editions</span>
                     </h1>
-                    <p className="text-lg text-gray-600 dark:text-gray-300 font-light">
+                    <p className="text-md text-gray-600 dark:text-gray-300 font-light">
                         Browse and practice tasks from past rounds.
                     </p>
                 </div>
