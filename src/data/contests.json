@@ -11,6 +11,38 @@
     ],
     "contests": [
         {
+            "id": 10,
+            "month": "July",
+            "year": "2026",
+            "title": "Round 9",
+            "tasks": [
+                {
+                    "name": "Word Lookups",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/aicc-round-9-word-lookups",
+                    "solution": "todo",
+                    "author": "Gior",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Buried Fault",
+                    "type": "ML",
+                    "kaggle": "https://www.kaggle.com/competitions/buried-fault-aicc-round-9/",
+                    "solution": "todo",
+                    "author": "Antony Ingorokva",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Shuffled",
+                    "type": "NLP & CV",
+                    "kaggle": "https://www.kaggle.com/competitions/shuffled-aicc-round-9/",
+                    "solution": "todo",
+                    "author": "Antony Ingorokva",
+                    "practiceStatus": "medium"
+                }
+            ]
+        },
+        {
             "id": 9,
             "month": "June",
             "year": "2026",

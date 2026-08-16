@@ -7,6 +7,7 @@ export interface ReferenceTask {
   task: string;
   taskUrl?: string;
   competition: string;
+  solutionUrl?: string;
   learn: LearnItem[];
 }
 
@@ -45,7 +46,7 @@ export const referenceToTask = (
     kaggle: isNitro || isKilonova ? undefined : url || undefined,
     nitroJudge: isNitro ? url : undefined,
     source: isKilonova ? url : undefined,
-    solution: 'todo',
+    solution: ref.solutionUrl ?? 'todo',
     practiceStatus: difficulty,
   };
 };

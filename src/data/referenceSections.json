@@ -9,38 +9,44 @@
     "tasks": [
       {
         "id": "ojia-2025-smart-cargo",
-        "task": "smart cargo",
+        "task": "Smart Cargo",
         "competition": "OJIA 2025",
         "learn": [
           {
             "topic": "Basic Linear Regression"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/romania/regional/2025/smart-cargo/smart-cargo.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/roai-2025/ojia/1/view"
       },
       {
         "id": "bcs-easter-round-2025-cybersecurity-ai",
-        "task": "cybersecurity ai",
+        "task": "Cybersecurity AI",
         "competition": "BCS Easter Round 2025",
         "learn": [
           {
             "topic": "Data Cleaning"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/simulare-cram-school-easter/cybersec/cybsersec.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/cram-school/cram-school-practice/1/view"
       },
       {
         "id": "local-stage-simulation-2026-transport",
-        "task": "transport",
+        "task": "Transport",
         "competition": "Local Stage Simulation 2026",
         "learn": [
           {
             "topic": "Clustering",
             "seq": 1
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/romania/local/2026/onia_mock/transport.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/78"
       },
       {
         "id": "ioai-day-2-2025-antique",
-        "task": "antique",
+        "task": "Antique",
         "competition": "IOAI Day 2 2025",
         "learn": [
           {
@@ -50,33 +56,38 @@
           {
             "topic": "Data Exploration"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/ioai/2025/on-site/baseline/05-Antique.ipynb"
       },
       {
         "id": "simulare-ojia-1-2025-credit-score",
-        "task": "credit score",
+        "task": "Credit Score",
         "competition": "Simulare OJIA 1 2025",
         "learn": [
           {
             "topic": "Feature Engineering",
             "seq": 1
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/simulare-01/credit-score/credit-score.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/roai-2025/simulare-ojia/2/view"
       },
       {
         "id": "simulare-ojia-2-2025-status-pacient",
-        "task": "status pacient",
+        "task": "Status Pacient",
         "competition": "Simulare OJIA 2 2025",
         "learn": [
           {
             "topic": "Feature Engineering",
             "seq": 2
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/simulare-02/status-pacient/status-pacient.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/roai-2025/simulare-ojia-2/1/view"
       },
       {
         "id": "local-stage-simulation-2026-paintings",
-        "task": "paintings",
+        "task": "Paintings",
         "competition": "Local Stage Simulation 2026",
         "learn": [
           {
@@ -86,21 +97,25 @@
             "topic": "Feature Engineering",
             "seq": 3
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/romania/local/2026/onia_mock/paintings.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/81"
       },
       {
         "id": "unirea-college-round-2026-bac-under-scrutiny",
-        "task": "bac under scrutiny",
+        "task": "BAC Under Scrutiny",
         "competition": "\"Unirea\" College Round 2026",
         "learn": [
           {
             "topic": "Feature Engineering for Time Series"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/unirea_160/bac.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/85"
       },
       {
         "id": "simulare-ojia-2-2025-pret-casa",
-        "task": "pret casa",
+        "task": "Pret Casa",
         "competition": "Simulare OJIA 2 2025",
         "learn": [
           {
@@ -110,33 +125,39 @@
           {
             "topic": "Feature Engineering Recap"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/simulare-02/pret-casa/pret-casa.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/roai-2025/simulare-ojia-2/2/view"
       },
       {
         "id": "local-stage-simulation-2026-parkinson",
-        "task": "parkinson",
+        "task": "Parkinson",
         "competition": "Local Stage Simulation 2026",
         "learn": [
           {
             "topic": "Models",
             "seq": 2
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/romania/local/2026/onia_mock/parkinson.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/79"
       },
       {
         "id": "bcs-easter-round-2025-brain-anomaly-detection",
-        "task": "brain anomaly detection",
+        "task": "Brain Anomaly Detection",
         "competition": "BCS Easter Round 2025",
         "learn": [
           {
             "topic": "Models",
             "seq": 3
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/simulare-cram-school-easter/brain-anomaly/brain-anomaly.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/cram-school/cram-school-practice/2/view"
       },
       {
         "id": "onia-winter-warmup-2025-rabbit-exhibition",
-        "task": "rabbit exhibition",
+        "task": "Rabbit Exhibition",
         "competition": "ONIA Winter Warmup 2025",
         "learn": [
           {
@@ -146,11 +167,13 @@
           {
             "topic": "Data Cleaning"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/contests/winter_2025/rabbit.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/51"
       },
       {
         "id": "ioai-mock-2025-chem-simulation",
-        "task": "chem simulation",
+        "task": "Chem Simulation",
         "competition": "IOAI Mock 2025",
         "learn": [
           {
@@ -166,29 +189,34 @@
             "topic": "Models",
             "seq": 5
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/ioai/2025/mock-contest/02-chem-simulation.ipynb"
       },
       {
         "id": "georgia-round-1-2026-memory-trace",
-        "task": "memory trace",
+        "task": "Memory Trace",
         "competition": "Georgia Round 1 2026",
         "learn": [
           {
             "topic": "Model Theory",
             "seq": 1
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/georgia/2026/phase_1/memory-trace.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/gaia/ai-league-i/1/view"
       },
       {
         "id": "georgia-round-1-2026-planet-x",
-        "task": "planet x",
+        "task": "Planet X",
         "competition": "Georgia Round 1 2026",
         "learn": [
           {
             "topic": "Model Theory",
             "seq": 2
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/georgia/2026/phase_1/planet-x.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/gaia/ai-league-i/2/view"
       }
     ]
   },
@@ -202,7 +230,7 @@
     "tasks": [
       {
         "id": "nitro-nlp-2025-mickey-si-donald",
-        "task": "mickey si donald",
+        "task": "Mickey si Donald",
         "competition": "Nitro NLP 2025",
         "learn": [
           {
@@ -212,11 +240,13 @@
             "topic": "Models",
             "seq": 1
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/nitro-nlp/2025/mickey-si-donald/mickey-si-donald.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/nitro-2025/nitro-nlp/2/view"
       },
       {
         "id": "bcs-intermediate-1-2025-are-you-a-robot",
-        "task": "are you a robot",
+        "task": "Are You a Robot",
         "competition": "BCS Intermediate 1 2025",
         "learn": [
           {
@@ -225,11 +255,13 @@
           {
             "topic": "TF-IDF"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/bcs-training-01/robot/robot.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/cram-school/cram-school-training-1/1/view"
       },
       {
         "id": "onia-2025-om-vs-ai",
-        "task": "om vs ai",
+        "task": "Om vs AI",
         "competition": "ONIA 2025",
         "learn": [
           {
@@ -243,11 +275,13 @@
             "topic": "Models",
             "seq": 2
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/romania/national/2025/om_vs_ai/om_vs_ai.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/roai-2025/onia/1/view"
       },
       {
         "id": "roai-2025-toxic",
-        "task": "toxic",
+        "task": "Toxic",
         "competition": "ROAI 2025",
         "learn": [
           {
@@ -261,11 +295,13 @@
             "topic": "Models",
             "seq": 3
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/romania/selection_camp/2025/nlp/toxic/toxic.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/roai-2025/lot-baraj-2/1/view"
       },
       {
         "id": "mlcompete-verses-author",
-        "task": "verses author",
+        "task": "Verses Author",
         "competition": "MLCompete",
         "learn": [
           {
@@ -275,7 +311,9 @@
             "topic": "Text Cleaning",
             "seq": 3
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/others/autor_versuri.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/68"
       },
       {
         "id": "algolymp-winter-round-save-the-christmas",
@@ -285,7 +323,8 @@
           {
             "topic": "Named Entity Recognition"
           }
-        ]
+        ],
+        "taskUrl": "https://judge.nitro-ai.org/competitions/algolymp/algolymp-winter-contest/2/view"
       },
       {
         "id": "decebaltech-2026-bazarul-lui-riki",
@@ -295,11 +334,13 @@
           {
             "topic": "Latent Semantic Analysis"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/decebal-tech-2025/riki.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/decebaltech/decebaltech-ai-challenge/2/view"
       },
       {
         "id": "roai-2025-skeletons",
-        "task": "skeletons",
+        "task": "Skeletons",
         "competition": "ROAI 2025",
         "learn": [
           {
@@ -308,18 +349,21 @@
           {
             "topic": "Sequence Data"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/romania/selection_camp/2025/nlp/skeletons/skeletons.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/roai-2025/lot-baraj-2/2/view"
       },
       {
         "id": "poland-phase-2-2025-source-extraction",
-        "task": "source extraction",
+        "task": "Source Extraction",
         "competition": "Poland Phase 2 2025",
         "learn": [
           {
             "topic": "Embeddings",
             "seq": 1
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/poland/2025/phase_2/source_extraction.ipynb"
       },
       {
         "id": "mlcompete-residency-exam",
@@ -330,22 +374,24 @@
           {
             "topic": "Embeddings"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/rezi/notebook_bert.ipynb"
       },
       {
         "id": "neoai-2025-broken-bert",
-        "task": "broken bert",
+        "task": "Broken BERT",
         "competition": "NEOAI 2025",
         "learn": [
           {
             "topic": "Embeddings",
             "seq": 3
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/neoai/2025/day_2/5_broken_bert.ipynb"
       },
       {
         "id": "roai-2025-toxic-again",
-        "task": "toxic (again)",
+        "task": "Toxic (Again)",
         "competition": "ROAI 2025",
         "learn": [
           {
@@ -355,11 +401,13 @@
           {
             "topic": "BERT"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/romania/selection_camp/2025/nlp/toxic/toxic_bert.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/roai-2025/lot-baraj-2/1/view"
       },
       {
         "id": "mlcompete-text-correction",
-        "task": "Text correction",
+        "task": "Text Correction",
         "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/46",
         "competition": "MLCompete",
         "learn": [
@@ -370,11 +418,12 @@
           {
             "topic": "T5"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/text_correct/notebook.ipynb"
       },
       {
         "id": "aicc-round-2-essay-gap",
-        "task": "essay gap",
+        "task": "Essay Gap",
         "competition": "AICC Round 2",
         "learn": [
           {
@@ -384,22 +433,25 @@
           {
             "topic": "BERT"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/aicc/round-2/essay-gap.ipynb",
+        "taskUrl": "https://www.kaggle.com/competitions/essay-gap-aicc-round-2"
       },
       {
         "id": "mlcompete-residency-exam-again-for-full-score",
-        "task": "Residency Exam (again for full score)",
+        "task": "Residency Exam (Again for Full Score)",
         "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/43",
         "competition": "MLCompete",
         "learn": [
           {
             "topic": "LLM Inference"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/rezi/notebook_llm.ipynb"
       },
       {
         "id": "neoai-2025-evading-ai-text-detection",
-        "task": "evading ai text detection",
+        "task": "Evading AI Text Detection",
         "competition": "NEOAI 2025",
         "learn": [
           {
@@ -408,7 +460,8 @@
           {
             "topic": "Sparse Autoencoders"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/neoai/2025/day_1/3_evading_detection.ipynb"
       }
     ]
   },
@@ -428,7 +481,9 @@
           {
             "topic": "CNN Classification"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/cls_ai_art/notebook.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/35"
       },
       {
         "id": "mlcompete-saving-christmas",
@@ -438,76 +493,89 @@
           {
             "topic": "Pretrained CNN Regression"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/saving_christmas/notebook.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/66"
       },
       {
         "id": "roai-2025-hotspot",
-        "task": "hotspot",
+        "task": "Hotspot",
         "competition": "ROAI 2025",
         "learn": [
           {
             "topic": "Image Preprocessing",
             "seq": 1
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/romania/selection_camp/2025/cv/hotspot/hotspot.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/roai-2025/lot-baraj-1/1/view"
       },
       {
         "id": "onia-2025-notatie-bizantina",
-        "task": "notatie bizantina",
+        "task": "Notatie Bizantina",
         "competition": "ONIA 2025",
         "learn": [
           {
             "topic": "Image Processing",
             "seq": 2
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/romania/national/2025/notatie_bizantina/notatie_bizantina.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/roai-2025/onia/2/view"
       },
       {
         "id": "decebal-tech-2025-sami",
-        "task": "sami",
+        "task": "Sami",
         "competition": "Decebal Tech 2025",
         "learn": [
           {
             "topic": "Image Processing",
             "seq": 3
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/decebal-tech-2025/sami.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/decebaltech/decebaltech-ai-challenge/1/view"
       },
       {
         "id": "algolymp-preojia-11-12-2026-lunar-craters",
-        "task": "lunar craters",
+        "task": "Lunar Craters",
         "competition": "Algolymp PreOJIA 11-12 2026",
         "learn": [
           {
             "topic": "Image Processing",
             "seq": 4
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/algolymp/preojia-11-12-2026/lunar-craters.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/algolymp/algolymp-preojia-xi-xii/1/view"
       },
       {
         "id": "poland-phase-2-2025-non-normal-dist",
-        "task": "non-normal dist",
+        "task": "Non-Normal Dist",
         "competition": "Poland Phase 2 2025",
         "learn": [
           {
             "topic": "Encoder-Decoder Architecture"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/national-contests/poland/2025/phase_2/non-normal-dist.ipynb"
       },
       {
         "id": "onia-winter-warmup-2025-glitch-hunter",
-        "task": "glitch hunter",
+        "task": "Glitch Hunter",
         "competition": "ONIA Winter Warmup 2025",
         "learn": [
           {
             "topic": "Binary Segmentation (UNet)",
             "seq": 1
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/contests/winter_2025/glitch.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/48"
       },
       {
         "id": "ioai-at-home-2025-weather",
-        "task": "weather",
+        "task": "Weather",
         "competition": "IOAI At-Home 2025",
         "learn": [
           {
@@ -520,11 +588,12 @@
           {
             "topic": "Test-Time Augmentation"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/ioai/2025/at-home/02-weather.ipynb"
       },
       {
         "id": "ioai-at-home-2025-radar",
-        "task": "radar",
+        "task": "Radar",
         "competition": "IOAI At-Home 2025",
         "learn": [
           {
@@ -533,11 +602,12 @@
           {
             "topic": "Focal Loss"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/ioai/2025/at-home/01-radar.ipynb"
       },
       {
         "id": "spooky-round-2025-haunt-me",
-        "task": "haunt me",
+        "task": "Haunt Me",
         "competition": "Spooky Round 2025",
         "learn": [
           {
@@ -547,11 +617,13 @@
           {
             "topic": "Faster R-CNN"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/spooky-round-01/haunt-me/haunt-me.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/nitro/spooky-round-2025/1/view"
       },
       {
         "id": "nitro-nlp-2025-find-the-ducks",
-        "task": "find the ducks",
+        "task": "Find the Ducks",
         "competition": "Nitro NLP 2025",
         "learn": [
           {
@@ -561,11 +633,13 @@
           {
             "topic": "YOLO"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/nitro-nlp/2025/find-the-ducks/find-the-ducks.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/nitro-2025/nitro-nlp/3/view"
       },
       {
         "id": "aicc-round-2-face-matching",
-        "task": "face matching",
+        "task": "Face Matching",
         "competition": "AICC Round 2",
         "learn": [
           {
@@ -575,11 +649,13 @@
           {
             "topic": "Embeddings Retrieval"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/aicc/round-2/face-matching.ipynb",
+        "taskUrl": "https://www.kaggle.com/competitions/face-matching-aicc-round-2"
       },
       {
         "id": "onia-winter-warmup-2025-magic-of-words",
-        "task": "magic of words",
+        "task": "Magic of Words",
         "competition": "ONIA Winter Warmup 2025",
         "learn": [
           {
@@ -589,11 +665,13 @@
           {
             "topic": "Fine-Tuning"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/contests/winter_2025/magic-ft.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/50"
       },
       {
         "id": "neoai-2025-cuties-segmentation",
-        "task": "cuties segmentation",
+        "task": "Cuties Segmentation",
         "competition": "NEOAI 2025",
         "learn": [
           {
@@ -603,11 +681,12 @@
           {
             "topic": "CLIPSeg"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/neoai/2025/day_3/7_cuties_segmentation.ipynb"
       },
       {
         "id": "ioai-day-2-2025-restroom",
-        "task": "restroom",
+        "task": "Restroom",
         "competition": "IOAI Day 2 2025",
         "learn": [
           {
@@ -617,11 +696,12 @@
           {
             "topic": "CLIPReID"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/ioai/2025/on-site/baseline/04-Restroom.ipynb"
       },
       {
         "id": "ioai-day-2-2025-pixel",
-        "task": "pixel",
+        "task": "Pixel",
         "competition": "IOAI Day 2 2025",
         "learn": [
           {
@@ -631,27 +711,31 @@
           {
             "topic": "MaskCLIP"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/ioai/2025/on-site/baseline/06-Pixel.ipynb"
       },
       {
         "id": "neoai-2025-hogspell-challenge",
-        "task": "hogspell challenge",
+        "task": "Hogspell Challenge",
         "competition": "NEOAI 2025",
         "learn": [
           {
             "topic": "Stable Diffusion Fine-Tuning"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/neoai/2025/day_2/6_hogspell.ipynb"
       },
       {
         "id": "mlcompete-thousand-rooms",
-        "task": "thousand rooms",
+        "task": "Thousand Rooms",
         "competition": "MLCompete",
         "learn": [
           {
             "topic": "VQA"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/thousand_rooms/vqa.ipynb",
+        "taskUrl": "https://platform.olimpiada-ai.ro/en/problems/57"
       }
     ]
   },
@@ -665,33 +749,37 @@
     "tasks": [
       {
         "id": "aicc-round-3-soud-of-nature",
-        "task": "soud of nature",
+        "task": "Soud of Nature",
         "competition": "AICC Round 3",
         "learn": [
           {
             "topic": "Mel-Spectrogram Classification"
           }
-        ]
+        ],
+        "taskUrl": "https://www.kaggle.com/competitions/sound-of-nature-aicc-round-3"
       },
       {
         "id": "spooky-round-2025-creepy-pizza",
-        "task": "creepy pizza",
+        "task": "Creepy Pizza",
         "competition": "Spooky Round 2025",
         "learn": [
           {
             "topic": "LSTM for Sound Classification"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/spooky-round-01/disaster/disaster.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/nitro/spooky-round-2025/2/view"
       },
       {
         "id": "aicc-round-2-demixing-audio",
-        "task": "demixing audio",
+        "task": "Demixing Audio",
         "competition": "AICC Round 2",
         "learn": [
           {
             "topic": "UNet for Sounds"
           }
-        ]
+        ],
+        "taskUrl": "https://www.kaggle.com/competitions/audio-demixing-aicc-round-2"
       }
     ]
   },
@@ -705,7 +793,7 @@
     "tasks": [
       {
         "id": "neoai-2025-underfitting-cv",
-        "task": "underfitting cv",
+        "task": "Underfitting CV",
         "competition": "NEOAI 2025",
         "learn": [
           {
@@ -714,47 +802,55 @@
           {
             "topic": "KL Divergence Loss"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/neoai/2025/day_1/2_underfitting_cv.ipynb"
       },
       {
         "id": "aicc-round-0-find-brain-tumors",
-        "task": "find brain tumors",
+        "task": "Find Brain Tumors",
         "competition": "AICC Round 0",
         "learn": [
           {
             "topic": "Self-Supervised Learning"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/aicc/round-0/brain_tumors_byol.ipynb",
+        "taskUrl": "https://www.kaggle.com/competitions/aicc-round-0-brain-tumor"
       },
       {
         "id": "ioai-mock-2025-grid-collage",
-        "task": "grid collage",
+        "task": "Grid Collage",
         "competition": "IOAI Mock 2025",
         "learn": [
           {
             "topic": "Pseudo-Labeling"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/ioai/2025/mock-contest/03-grid-collage.ipynb"
       },
       {
         "id": "aicc-round-1-the-defected-nuts",
-        "task": "the defected nuts",
+        "task": "The Defected Nuts",
         "competition": "AICC Round 1",
         "learn": [
           {
             "topic": "Anomaly Detection"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/aicc/round-1/defected-nuts.ipynb",
+        "taskUrl": "https://www.kaggle.com/competitions/the-defected-nuts-aicc-round-1-2"
       },
       {
         "id": "ceoai-practice-1-star-observatory",
-        "task": "star observatory",
+        "task": "Star Observatory",
         "competition": "CEOAI Practice 1",
         "learn": [
           {
             "topic": "Knowledge Distillation"
           }
-        ]
+        ],
+        "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/international-contests/ceoai-practice/round-1-2026/star-observatory.ipynb",
+        "taskUrl": "https://judge.nitro-ai.org/competitions/ceoai/ceoai-2026-practice-1/3/view"
       }
     ]
   }

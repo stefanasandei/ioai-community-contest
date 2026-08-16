@@ -22,7 +22,7 @@ const Resources = () => {
 
       <ResourceHero
         title="Useful"
-        titleAccent="Resources"
+        titleAccent="Resources - WORK IN PROGRESS"
         subtitle="A curated set of links and guides to help you learn AI and prepare for the IOAI — from foundational concepts to an explained, subsection-by-subsection syllabus."
         className="pt-16"
       />
