@@ -1,6 +1,6 @@
 export type SectionAccent = 'blue' | 'teal' | 'orange' | 'pink' | 'purple';
 
-import type { LearnItem } from './types';
+import type { LearnItem, PracticeStatus } from './types';
 
 export interface ReferenceTask {
   id: string;
@@ -8,6 +8,7 @@ export interface ReferenceTask {
   taskUrl?: string;
   competition: string;
   solutionUrl?: string;
+  difficulty?: PracticeStatus;
   learn: LearnItem[];
 }
 
@@ -29,12 +30,12 @@ export const totalTaskCount = referenceSections.reduce(
   0,
 );
 
-import type { PracticeStatus, Task } from './types';
+import type { Task } from './types';
 
 export const referenceToTask = (
   ref: ReferenceTask,
   section: ReferenceSection,
-  difficulty: PracticeStatus,
+  difficulty?: PracticeStatus,
 ): Task => {
   const url = ref.taskUrl ?? '';
   const isNitro = url.includes('nitro');

@@ -1,14 +1,4 @@
 {
-    "standaloneTasks": [
-        {
-            "name": "Hotel Reservations",
-            "type": "ML",
-            "author": "Stefan Asandei",
-            "source": "https://kilonova.ro/problems/4403",
-            "solution": "todo",
-            "practiceStatus": "easy"
-        }
-    ],
     "contests": [
         {
             "id": 10,
@@ -20,7 +10,7 @@
                     "name": "Word Lookups",
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/aicc-round-9-word-lookups",
-                    "solution": "todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-9/word-lookups.ipynb",
                     "author": "Gior",
                     "practiceStatus": "medium"
                 },
@@ -28,7 +18,7 @@
                     "name": "Buried Fault",
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/buried-fault-aicc-round-9/",
-                    "solution": "todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-9/buried-fault.ipynb",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "medium"
                 },
@@ -36,9 +26,9 @@
                     "name": "Shuffled",
                     "type": "NLP & CV",
                     "kaggle": "https://www.kaggle.com/competitions/shuffled-aicc-round-9/",
-                    "solution": "todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-9/shuffled.ipynb",
                     "author": "Antony Ingorokva",
-                    "practiceStatus": "medium"
+                    "practiceStatus": "hard"
                 }
             ]
         },
@@ -52,7 +42,7 @@
                     "name": "Dice Counting",
                     "type": "CV",
                     "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/1/view",
-                    "solution": "todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-8/dice-counting.ipynb",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "hard"
                 },
@@ -60,7 +50,7 @@
                     "name": "Pixel Quest",
                     "type": "RL",
                     "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/2/view",
-                    "solution": "todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-8/pixel-quest.ipynb",
                     "author": "Stefan Asandei",
                     "practiceStatus": "medium"
                 },
@@ -68,9 +58,9 @@
                     "name": "Archivist's Cards",
                     "type": "NLP & CV",
                     "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/3/view",
-                    "solution": "todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-8/archivists-cards.ipynb",
                     "author": "Antony Ingorokva",
-                    "practiceStatus": "medium"
+                    "practiceStatus": "hard"
                 }
             ]
         },
@@ -93,7 +83,7 @@
                     "name": "Oriented Ship",
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/oriented-ship-aicc-round-7",
-                    "solution": "todo",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-7/oriented-ships.ipynb",
                     "author": "Nikoloz Gegenava",
                     "practiceStatus": "hard"
                 },

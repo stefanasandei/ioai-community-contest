@@ -372,7 +372,8 @@
         "competition": "MLCompete",
         "learn": [
           {
-            "topic": "Embeddings"
+            "topic": "Embeddings",
+            "seq": 2
           }
         ],
         "solutionUrl": "https://github.com/stefanasandei/roai-solved/blob/main/contests/mlcompete/rezi/notebook_bert.ipynb"
@@ -381,6 +382,7 @@
         "id": "neoai-2025-broken-bert",
         "task": "Broken BERT",
         "competition": "NEOAI 2025",
+        "taskUrl": "https://www.kaggle.com/competitions/neoai-2025",
         "learn": [
           {
             "topic": "Embeddings",
@@ -453,6 +455,7 @@
         "id": "neoai-2025-evading-ai-text-detection",
         "task": "Evading AI Text Detection",
         "competition": "NEOAI 2025",
+        "taskUrl": "https://www.kaggle.com/competitions/neoai-2025",
         "learn": [
           {
             "topic": "LLM Steering"
@@ -673,6 +676,7 @@
         "id": "neoai-2025-cuties-segmentation",
         "task": "Cuties Segmentation",
         "competition": "NEOAI 2025",
+        "taskUrl": "https://www.kaggle.com/competitions/neoai-2025",
         "learn": [
           {
             "topic": "CLIP",
@@ -718,6 +722,7 @@
         "id": "neoai-2025-hogspell-challenge",
         "task": "Hogspell Challenge",
         "competition": "NEOAI 2025",
+        "taskUrl": "https://www.kaggle.com/competitions/neoai-2025",
         "learn": [
           {
             "topic": "Stable Diffusion Fine-Tuning"
@@ -749,14 +754,15 @@
     "tasks": [
       {
         "id": "aicc-round-3-soud-of-nature",
-        "task": "Soud of Nature",
+        "task": "Sound of Nature",
         "competition": "AICC Round 3",
         "learn": [
           {
             "topic": "Mel-Spectrogram Classification"
           }
         ],
-        "taskUrl": "https://www.kaggle.com/competitions/sound-of-nature-aicc-round-3"
+        "taskUrl": "https://www.kaggle.com/competitions/sound-of-nature-aicc-round-3",
+        "solutionUrl": "https://github.com/AI-Community-Contest/solutions/blob/main/round-3/sound-of-nature.ipynb"
       },
       {
         "id": "spooky-round-2025-creepy-pizza",
@@ -779,7 +785,8 @@
             "topic": "UNet for Sounds"
           }
         ],
-        "taskUrl": "https://www.kaggle.com/competitions/audio-demixing-aicc-round-2"
+        "taskUrl": "https://www.kaggle.com/competitions/audio-demixing-aicc-round-2",
+        "solutionUrl": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/audio-demixing.ipynb"
       }
     ]
   },
@@ -787,7 +794,7 @@
     "id": "deep-learning",
     "title": "Deep Learning",
     "shortTitle": "DL",
-    "description": "",
+    "description": "Tasks which teach general deep learning knowledge, not specific to any data type (NLP/CV). Topics learned here can be applied to any dataset.",
     "accent": "purple",
     "type": "ML",
     "tasks": [
@@ -795,6 +802,7 @@
         "id": "neoai-2025-underfitting-cv",
         "task": "Underfitting CV",
         "competition": "NEOAI 2025",
+        "taskUrl": "https://www.kaggle.com/competitions/neoai-2025",
         "learn": [
           {
             "topic": "Hyperparameter Tuning"

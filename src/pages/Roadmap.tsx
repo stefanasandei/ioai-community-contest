@@ -21,8 +21,6 @@ import {
 } from '@/data/referenceTasks';
 import type { PracticeStatus, LearnItem } from '@/data/types';
 
-type Difficulty = 'easy' | 'medium' | 'hard';
-
 const accentStyles: Record<
   SectionAccent,
   { bg: string; text: string; ring: string; soft: string; chip: string }
@@ -86,14 +84,6 @@ const getTopicGroups = (tasks: readonly { learn: readonly LearnItem[] }[]): Topi
     .sort((a, b) => b.count - a.count || a.topic.localeCompare(b.topic));
 };
 
-const getDifficulty = (index: number, total: number): Difficulty => {
-  if (total <= 1) return 'easy';
-  const ratio = index / (total - 1);
-  if (ratio < 0.34) return 'easy';
-  if (ratio < 0.67) return 'medium';
-  return 'hard';
-};
-
 const Roadmap = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTopics, setSelectedTopics] = useState<Record<string, string | null>>(
@@ -137,53 +127,53 @@ const Roadmap = () => {
       <div className="bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10 pt-4">
         <div className="max-w-7xl mx-auto px-4 pt-4 pb-4">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-3">
-            <span className="text-gray-900 dark:text-white">Reference </span>
-            <span className="text-gradient">Tasks</span>
+            <span className="text-gray-900 dark:text-white">Learning </span>
+            <span className="text-gradient">Roadmap</span>
           </h1>
           <p className="text-md text-gray-600 dark:text-gray-300 font-light mb-1">
-            A learning roadmap for competitive AI.{' '}
+            A straight forward way to approach the IOAI syllabus: learn by doing{' '}
             <span className="font-medium text-gray-900 dark:text-white">
               {totalTaskCount} tasks
             </span>{' '}
-            across {referenceSections.length} tracks, ordered easy → hard. Take
-            it as a path to learn the topics that show up most often.
+            across {referenceSections.length} tracks, ordered roughly easy to hard. Take
+            it as a path to learn the topics that show up most often. Our usual contest rounds tend to have harder difficulty, more common for IOAI's level.
           </p>
 
-          
+
         </div>
       </div>
 
       <div className="sticky top-16 z-30 bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10">
-      <div className="max-w-7xl mx-auto px-4 pt-4 pb-1 space-y-1">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Search tasks, competitions, topics…"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-10 pl-10 pr-10 rounded-lg bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-aicc-purple/50 focus:border-aicc-purple/50 transition-all"
-            />
+        <div className="max-w-7xl mx-auto px-4 pt-4 pb-1 space-y-1">
+          <div className="max-w-7xl mx-auto">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search tasks, competitions, topics…"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full h-10 pl-10 pr-10 rounded-lg bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-aicc-purple/50 focus:border-aicc-purple/50 transition-all"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-md hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
+                  aria-label="Clear search"
+                >
+                  <X className="w-3.5 h-3.5 text-gray-400" />
+                </button>
+              )}
+            </div>
+
             {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-md hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
-                aria-label="Clear search"
-              >
-                <X className="w-3.5 h-3.5 text-gray-400" />
-              </button>
+              <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+                Showing {totalVisible} of {totalTaskCount} tasks
+              </p>
             )}
           </div>
-
-          {searchQuery && (
-            <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-              Showing {totalVisible} of {totalTaskCount} tasks
-            </p>
-          )}
-          </div>
           <div className="flex items-center gap-1 overflow-x-auto py-2 -mx-1 px-1">
-            
+
 
             {referenceSections.map((section) => {
               const Icon = sectionIcons[section.id];
@@ -243,7 +233,7 @@ const Roadmap = () => {
               </div>
 
               {section.description && (
-                <p className="text-sm text-gray-600 dark:text-gray-300 font-light max-w-3xl mb-5">
+                <p className="text-sm text-gray-600 dark:text-gray-300 font-light mb-5">
                   {section.description}
                 </p>
               )}
@@ -257,8 +247,8 @@ const Roadmap = () => {
                         key={g.topic}
                         onClick={() => handleTopicClick(section.id, g.topic)}
                         className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium border rounded-full transition-colors ${isSelected
-                            ? 'bg-aicc-purple text-white border-aicc-purple'
-                            : 'bg-white dark:bg-white/5 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-white/10 hover:border-aicc-purple/50 hover:text-aicc-purple'
+                          ? 'bg-aicc-purple text-white border-aicc-purple'
+                          : 'bg-white dark:bg-white/5 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-white/10 hover:border-aicc-purple/50 hover:text-aicc-purple'
                           }`}
                       >
                         {g.topic}
@@ -285,12 +275,11 @@ const Roadmap = () => {
 
               {tasks.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {tasks.map((task, i) => {
-                    const difficulty = getDifficulty(i, tasks.length);
+                  {tasks.map((task) => {
                     return (
                       <TaskCard
                         key={task.id}
-                        task={referenceToTask(task, section, difficulty)}
+                        task={referenceToTask(task, section, task.difficulty)}
                         mode="reference"
                         iconType={section.id}
                         learnItems={task.learn}

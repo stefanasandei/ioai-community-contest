@@ -14,7 +14,7 @@ export interface Task {
     source?: string;
     solution: string;
     blog?: string;
-    practiceStatus: PracticeStatus;
+    practiceStatus?: PracticeStatus;
 }
 
 export interface Contest {

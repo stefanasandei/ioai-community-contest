@@ -45,7 +45,7 @@ const primaryNavItems: NavItem[] = [
   { label: 'Contests', path: '/contests', icon: Trophy },
   // { label: 'Tasks', path: '/tasks', icon: ListChecks },
   { label: 'Roadmap', path: '/roadmap', icon: Map },
-  { label: 'Resources', path: '/resources', icon: BookOpen },
+  // { label: 'Resources', path: '/resources', icon: BookOpen },
   {
     label: 'Team',
     path: '/team',
