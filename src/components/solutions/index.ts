@@ -6,6 +6,7 @@
 
 import ModelArchitecture from "./ModelArchitecture";
 import PhaseTable from "./PhaseTable";
+import MDXImage from "./MDXImage";
 import {
     MDXTable,
     MDXThead,
@@ -40,6 +41,10 @@ export const mdxComponents = {
     // Custom editorial components
     ModelArchitecture,
     PhaseTable,
+    MDXImage,
+
+    // Center images written with markdown syntax
+    img: MDXImage,
 } as const;
 
 export { ModelArchitecture, PhaseTable, MDXTable };

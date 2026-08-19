@@ -1,132 +1,92 @@
 ## Problem Overview
 
-Defected Nuts is an industrial computer vision challenge wrapped in a playful
-Willy Wonka storyline. The task places you in the role of a Quality Control
-Engineer. Your objective is to process high-resolution (1024×1024) images of
-hazelnuts and detect subtle, pixel-level defects such as hairline cracks, tiny
-cuts, small holes, and machine print contamination.
+Defected Nuts is an unsupervised anomaly segmentation task, where participants must detect and precisely localize subtle defects in high-resolution images of hazelnuts. The dataset provides 431 defect-free training images and 70 test images containing various defects, including hairline cracks, tiny cuts, small holes, and machine-print contamination. The goal is to generate a precise pixel-level anomaly mask (heatmap) for each test image, despite having no defective training examples.
 
-The catch? You are only provided with 431 images of perfect, defect-free
-hazelnuts for training. The test set contains 70 images, all of which contain
-some form of defect, and you must output a precise pixel-level anomaly mask
-(heatmap) localizing the damage. Because you have no training examples of what a
-defect looks like, nor any ground-truth segmentation masks to train on, this is
-a classic Unsupervised Anomaly Detection (UAD) and segmentation problem.
+![Anomalous Nut](/assets/comparasion_nuts.JPG)
 
-## Clarifying Constraints & The AUPRO Metric
+## Clarifying Constraints
 
-The prompt strictly limits participants to using only a standard ResNet18
-pretrained on ImageNet. No other models or external datasets are allowed.
+The task statement strictly limits participants to using only a standard ResNet18 pretrained on ImageNet. No other models or external datasets are allowed.
 
-The evaluation metric is AUPRO (Area Under the Per-Region Overlap curve), capped
-at a False Positive Rate (FPR) of 30%. Understanding this metric is crucial:
-Traditional pixel-wise metrics (like standard AUC) heavily bias towards large
-defects. If an anomaly detection system perfectly segments a massive dark stain
-but entirely misses a tiny, one-pixel-wide hairline crack, pixel-wise metrics
-will still report a high score because the vast majority of defective pixels
-were found.
+## How can we define "Normal"?
 
-AUPRO fixes this. It calculates the overlap for each independent defect region
-separately, normalizing them so that a tiny crack contributes just as much to
-your final score as a massive hole. If your heatmap smears over the image or
-loses high-resolution spatial details, your AUPRO score will tank. Furthermore,
-the 30% FPR cap simulates real-world factory economics: you cannot simply
-flag 50% of the normal nut surface as "defective" just to ensure you catch the
-cracks, because throwing away good product is too expensive.
+Since we cannot train a model to recognize defects (we don't have any), we must take the opposite approach: learn exactly what a "normal" hazelnut looks like and flag anything that deviates.
 
-## Defining "Normal"
+Traditional approaches in unsupervized anomaly segmentation use Autoencoders. They train AEs to reconstruct normal images, assuming anomalies will produce higher reconstruction errors. However, overgeneralization of AEs will cause the defected samples of nuts to be reconstructed as normal
 
-Since we cannot train a model to recognize defects (we don't have any), we must
-take the opposite approach: learn exactly what a "normal" hazelnut looks like,
-and flag anything that deviates.
+![Unsupervized Anomaly Segmentation](/assets/anomaly_ae.jpg)
 
-Historically, researchers used Autoencoders for this—compressing the image into
-a bottleneck and reconstructing it, hoping the model would fail to reconstruct
-anomalies. However, Autoencoders often produce blurry outputs and sometimes
-generalize too well, accidentally reconstructing the defects. The reference
-solution bypasses this entirely using an elegant feature-matching approach
-inspired by PatchCore, a state-of-the-art framework for industrial visual
-inspection.
+Thus, reference solution uses feature-matching approach, comparing local image features to those of known normal patterns to identify anomalies more precisely.
 
-## Feature Extraction: Why ResNet18 Mid-Layers?
+## Feature Extraction from ResNet18
 
-The solution uses the allowed ResNet18 as a fixed feature extractor (.eval()
-mode, no gradients). For every image, we pass it through the network, but we
-don't care about the final classification output. Instead, we extract the
-intermediate activation maps from the first three residual blocks (layer1,
-layer2, and layer3).
+The reference solution uses the allowed ResNet18 as a fixed feature extractor. For every image, we pass it through network, and extract intermediate activation maps from the first three residual blocks `layer1`, `layer2`, `layer3`. These layers are preferable because they preserve fine-grained local and textural information needed to detect subtle defects.
 
-Why not layer4? In convolutional networks, early layers capture low-level
-textures (edges, color gradients). Mid-layers capture patterns (the rough
-texture of a nut shell). Late layers capture high-level semantic meaning (the
-concept of a "nut"). For defect detection, semantic meaning is useless—we
-already know it's a nut. We need the local, textural descriptors from the
-mid-layers to spot abnormal cuts or cracks.
+The feature maps from these three layers are all bilinearly resized to a common spatial grid of layer3 height and width. By concatenating them along the channel dimension (64 + 128 + 256), we obtain a 448-dimensional vector for every single patch in that 128×128 grid:
 
-The feature maps from these three layers are all bilinearly resized to a common
-spatial grid of 128×128. By concatenating them along the channel dimension (64
-+ 128 + 256), we obtain a 448-dimensional vector for every single patch in that
-128×128 grid.
+```python
+        sz = f3.shape[2:]
+        f1 = F.interpolate(f1, size=sz, mode="bilinear", align_corners=False)
+        f2 = F.interpolate(f2, size=sz, mode="bilinear", align_corners=False)
+        return torch.cat([f1, f2, f3], dim=1)   # [B, 448, H', W']
+```
 
-for l in [l1, l2, l3]:
-    l = F.interpolate(l, size=(128,128), mode="bilinear")
-    # ... flattening and transposing ...
+## Solution A: Multi-Scale PatchCore
 
-## The Memory Bank & Subsampling
+Across 431 training images, this generates roughly 1.7 million normal feature patches. To avoid massive memory and computation bottlenecks at inference time, we randomly sample a 10% "coreset" memory bank.
+During inference, for every patch in the test image, we calculate the minimum $L_2$ distance to our normal memory bank. If a patch contains a defect, it will land far away from any normal patch in the feature space, yielding a high anomaly score.
 
-If we extract 128 \times 128 = 16,384 patch descriptors for all 431 training
-images, we end up with over 7 million 448-dimensional vectors. Storing all of
-these in a "memory bank" of normal features would consume massive amounts of RAM
-and make inference impossibly slow.
+![PathCore](/assets/patchcore.jpg)
 
-To solve this, the baseline uses random subsampling. We define a memory budget
-(n_keep = 100,000) and randomly sample a fraction (~1.4%) of the normal patches
-across the entire training set.
+```python
+with torch.no_grad():
+    for p in test_paths:
+        feats   = extractor(load_image(p).to(DEVICE))
+        patches = feats.permute(0, 2, 3, 1).reshape(-1, feats.shape[1])
+        dists   = torch.cdist(patches, memory_bank).min(dim=1).values.cpu().numpy()
+        score   = upsample_to_original(dists.reshape(feat_h, feat_w))
+        anomaly_maps.append(gaussian_filter(score, sigma=SIGMA))
+```
 
-idx = torch.randperm(len(f), device=device)[:round(len(f) * frac)]
-bank.append(f[idx])
+We use this distances as anomaly scores, upsample them to the original image dimensions (1028x1028) bilinearly and apply `gaussian_filter` to smooth them, reducing noisy, isolated pixel responses while preserving larger, consistent defect regions.
 
-Note for competitors: While random sampling works well enough to hit the 0.7492
-baseline, the original PatchCore paper uses a "k-Center Greedy" algorithm
-(coreset subsampling). This algorithm mathematically ensures that the subsampled
-bank maintains the maximum possible coverage of the feature space without
-redundant overlapping points, which would significantly boost performance over
-purely random sampling.
+This simple non-parametric nearest-neighbor approach scores a massive 0.9735 AUPRO on the leaderboard. Read more about [PatchCore](https://arxiv.org/pdf/2106.08265)
 
-## Anomaly Heatmaps by Distance
+## Solution B: EfficientAD
 
-At test time, the logic is brilliantly simple. We take a defective image,
-extract its 16,384 patches using the exact same ResNet process, and compare them
-to our normal memory bank.
+PatchCore is powerful but memory-bank queries can be slow, motivating a Student-Teacher architecture inspired by EfficientAD that encodes normal features directly into network weights.
 
-For every single patch in the test image, we calculate its Euclidean distance
-(torch.cdist) to the nearest neighbor in the normal memory bank.
+The core idea is to train a lightweight "Student" network to perfectly mimic a frozen pretrained "Teacher" (our ResNet18), but only on normal images.
 
-  - If the patch is just normal hazelnut shell, there will be a very similar
-    patch in the training bank, and the minimum distance will be close to zero.
-  - If the patch contains a crack, its 448-dimensional feature vector will look
-    completely alien compared to anything in the normal bank, resulting in a
-    massively high distance score.
+We also introduce an Autoencoder (AE) that compresses the Teacher's features into a tight bottleneck and tries to reconstruct them.
 
-d = torch.cat([torch.cdist(c, bank).min(1).values for c in patches.split(4096)])
+```python
+for img_t in train_tensors:
+    with torch.no_grad():
+        t_feat = teacher(img_t) # Frozen Teacher
 
-## Post-Processing the Heatmap
+    s_feat  = student(t_feat.detach())           # Mimic directly
+    ae_feat = decoder(encoder(t_feat.detach()))  # Compress and reconstruct
 
-The resulting distances naturally form a 128×128 heatmap of anomaly scores.
-Because the original image was 1024×1024, we bilinearly upsample the heatmap
-back to the original resolution.
+    loss = F.mse_loss(s_feat, t_feat.detach()) + F.mse_loss(ae_feat, t_feat.detach())
+    
+    loss.backward()
+    optimizer.step()
+```
 
-Finally, because feature maps inherently have receptive fields that overlap, the
-raw distance map can be a bit blocky or noisy. Applying a lightweight Gaussian
-filter (sigma=2) smoothly blends the anomaly scores, expanding the "hot" zones
-slightly to fully cover the edges of the defects. The map is then min-max
-normalized to [0, 1], scaled by 255, and cast to uint8 for the final submission.
+Because the Student and AE are trained exclusively on perfect, defect-free nuts, they become highly specialized experts at reconstructing normal hazelnut.
+
+When a test image containing a crack is fed into the system:
+- The frozen Teacher extracts the true features of the crack.
+- The Student and Autoencoder look at the image and attempt to output features, but because they have never seen a crack in their training data, their outputs will look like a normal hazelnut.
+- A massive discrepancy occurs between the Teacher's features and the Student/AE's features at the exact spatial location of the crack.
+
+We define anomaly score using:
+
+$ \text{Anomaly Score} = \text{MSE}(F_{\text{student}}, F_{\text{teacher}}) + \text{MSE}(F_{\text{ae}}, F_{\text{teacher}}) $
+
+By averaging the squared error across the channel dimension and scaling it up to 1024x1024, we obtain a pixel-wise anomaly map. This pushes the score even higher to 0.9763 AUPRO, while being extremely fast during inference. Read more about [EfficientAD](https://arxiv.org/pdf/2303.14535)
 
 ## Final Remarks
 
-Defected Nuts proves that you do not always need massive datasets of labelled
-anomalies to perform pixel-perfect segmentation. By creatively hacking a
-standard pretrained classification network to extract dense, mid-level textural
-descriptors, and utilizing a Nearest-Neighbor memory bank, we can perfectly map
-the boundaries of "normalcy". Spotting a defect simply becomes a matter of
-measuring how far an image patch wanders into the unknown.
+There are many methods that can be used to solve Unsupervized Anomaly Segmentation Tasks. In this editorial, we explored two SOTA methods: PatchCore, which uses distance-based approach to obtain anomaly scores and EfficientAD, which uses student-teacher inspired training. Unsupervised constraint forces us to find proxy tasks, making it one of the most creatively engaging domains in Computer Vision.
