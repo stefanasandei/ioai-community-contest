@@ -61,7 +61,7 @@ export const ResourceCard = ({ resource, className }: ResourceCardProps) => {
               rel="noreferrer"
               className="group/link inline-flex items-start gap-2 "
             >
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover/link:text-aicc-purple dark:group-hover/link:text-aicc-purple-light transition-colors">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover/link:text-aicc-purple dark:group-hover/link:text-aicc-purple-light transition-colors max-w-[14rem]">
                 {resource.title}
               </h3>
               <ExternalLink className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0 mt-1 opacity-0 group-hover/link:opacity-100 transition-opacity" />

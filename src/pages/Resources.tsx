@@ -22,7 +22,7 @@ const Resources = () => {
 
       <ResourceHero
         title="Useful"
-        titleAccent="Resources - WORK IN PROGRESS"
+        titleAccent="Resources"
         subtitle="A curated set of links and guides to help you learn AI and prepare for the IOAI — from foundational concepts to an explained, subsection-by-subsection syllabus."
         className="pt-16"
       />
@@ -62,9 +62,9 @@ const Resources = () => {
 
           {featuredResources.length > 0 && (
             <section>
-              <div className="flex items-center gap-2 mb-5">
+              <div className="flex items-center gap-3 mb-5">
                 <Star className="w-5 h-5 text-aicc-orange" />
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Featured resources</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Featured Resources</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {featuredResources.map((resource) => (

@@ -109,9 +109,7 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order }
         ? "Solve on Kilonova"
         : task.nitroJudge
             ? "View on Nitro Judge"
-            : competitionHref?.includes('olimpiada-ai.ro')
-                ? "View on MLCompete"
-                : "View on Kaggle";
+            : "View on Kaggle";
 
     return (
         <div
@@ -181,7 +179,7 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order }
             </div>
 
             {showActions && (
-                <div className="px-5 pb-5 pt-4 border-t border-gray-200 dark:border-white/10">
+                <div className="px-5 pb-5">
                     <div className="flex gap-2">
                         {hasCompetition ? (
                             <a
@@ -222,7 +220,7 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order }
                                 className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2"
                             >
                                 <Github className="w-4 h-4" />
-                                View solution
+                                View notebook
                             </a>
                         ) : null}
                     </div>

@@ -73,7 +73,7 @@ export const ResourceCategoryNav = ({ className }: ResourceCategoryNavProps) => 
                     </h3>
                     <ArrowRight className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mt-0.5">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mt-0.5 mb-0.5">
                     {category.description}
                   </p>
                 </div>
@@ -105,7 +105,7 @@ export const ResourceCategoryNav = ({ className }: ResourceCategoryNavProps) => 
                   </h3>
                   <ArrowRight className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mt-0.5">
+                <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mt-0.5 mb-0.5">
                   {section.description}
                 </p>
               </div>
