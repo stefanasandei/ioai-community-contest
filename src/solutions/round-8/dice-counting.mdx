@@ -1,0 +1,90 @@
+## Problem Overview
+
+Dice Counting is a dual-objective computer vision task. Given images of six-sided dice scattered on a table, participants must determine the total number of dice (Subtask 1) and the sum of all up-facing pips (Subtask 2). 
+
+The task features a significant domain shift: the training set contains up to 10 dice per photo with pip sums up to 37, while the hidden test set contains crowded scenes (10 to 25 dice) with pip sums up to 96.
+
+![Domain Shift](/assets/dices.JPG)
+<p align="center"><i>Domain shift between the training (left) and hidden test (right) sets.</i></p>
+
+We have to split this task into two parts:
+
+- Isolating individual dice in images
+- Classifying faces of individual dices to count pips
+
+## Density Estimation
+
+Density estimation is the ML approach to estimate how data is distributed across a space. Instead of predicting a single value, a model learns a density function/map showing where and how concentrated the data is.
+
+### Density Estimation for Counting
+
+Standard regression (outputting a single number for the pip count) fails to generalize to the crowded, OOD test set. Instead, the reference solution formulates counting as a density estimation problem.
+
+Using a lightweight custom CNN composed of repeated Conv2d, BatchNorm2d, and MaxPool2d layers, the model transforms an image into a 1 channel spatial density map. The sum of this density map equals the total number of dice in the image.
+
+```python
+class Block(nn.Sequential):
+    def __init__(self, cin, cout, n=2, pool=True):
+        layers = []
+        for i in range(n):
+            layers += [nn.Conv2d(cin if i == 0 else cout, cout, 3, 1, 'same'),
+                       nn.BatchNorm2d(cout), nn.ReLU()]
+        if pool:
+            layers.append(nn.MaxPool2d(2))
+        super().__init__(*layers)
+```
+
+To ensure the density map produces sharp, distinct peaks at the exact location of each die, the model applies a variance penalty during training. When an image contains only a **single** die, the loss function calculates the spatial variance of the density map and penalizes it, forcing the model to concentrate its activations into tight, localized blobs rather than spreading them across the image.
+
+$L_{\mathrm{var}}=\sqrt{\sigma_x^2+\sigma_y^2}$
+
+where $\sigma_x$ and $\sigma_y$ are the spatial standard deviations along the $x$- and $y$-axes, respectively.
+
+Thus, total loss for single dice image becomes:
+
+$L_{\mathrm{total}}=L_{\mathrm{count}}+0.05L_{\mathrm{var}}$
+
+## Peak Finding & Cropping
+
+Once we have a sharp density map, identifying individual dice becomes trivial. The `find_peaks` function iteratively searches for the maximum value (argmax) in the density map. After recording a peak's coordinate, it zeroes out a circular neighborhood around it to prevent detecting the same die twice, repeating this process until it has found exactly the number of dice predicted by the density sum.
+
+Using these coordinates, we can extract 96x96 pixel crops of every single die from the original high-resolution image, reducing Subtask 2 to a localized image classification problem.
+
+![Density Map](/assets/dice_density.png)
+
+### Peak Alignment
+
+The density-map peaks do not necessarily correspond to the geometric centers of the dice, so we estimate and correct this systematic offset. For images containing a single die, we locate the actual die center using a background-subtracted saliency map and compute the displacement from the detected peak; taking the median displacement across examples gives a robust global shift $(\mathrm{shift}_x,\mathrm{shift}_y)$. This shift is then subtracted from all detected peak coordinates.
+
+![Peak Alignment](/assets/peak_align.png)
+
+## Expectation-Maximization for Unsupervised Pip Counting
+
+Subtask 2 requires summing the pips, but our training data only provides the total sum of the image, not the pip counts of individual dice. This means we have to train a classifier without explicit labels.
+
+To solve this, the reference solution utilizes the Expectation-Maximization (EM) algorithm:
+
+- E-Step (Expectation): We use a Forward-Backward dynamic programming algorithm. Given the current predictions of the reader network for a batch of cropped dice, it calculates the posterior marginal probability that a specific die shows a face (1-6), strictly conditioned on the constraint that the total sum of all dice in the image must equal the ground-truth sum.
+- M-Step (Maximization): We treat these posterior probabilities as soft targets. The reader network is trained using KL Divergence to update its weights to match these estimated targets.
+
+```python
+def m_step(net, targets, epochs, lr):
+    opt = optim.AdamW(net.parameters(), lr, weight_decay=1e-4)
+    tgt = torch.from_numpy(targets).to(d)
+    net.train()
+    for _ in range(epochs):
+        for ixs in torch.randperm(n_crops, device=d).split(96):
+            # Augmentations and normalization omitted for brevity
+            with torch.autocast("cuda", dtype=torch.bfloat16):
+                loss = F.kl_div(F.log_softmax(net(view), 1), tgt[ixs], reduction="batchmean")
+            opt.zero_grad()
+            loss.backward()
+            opt.step()
+```
+
+By repeating these EM rounds, the model naturally organizes its latent space to distinguish the six faces of the dice perfectly, allowing us to simply sum the argmax predictions during test time.
+
+## Final Remarks
+
+In this task, we had to count dices and total number of pips on the dices for 2736×2736 resolution images. We approached each subtask with insightful ML approaches: Density Estimation to count dices, and EM algorithm for pip counting. 
+

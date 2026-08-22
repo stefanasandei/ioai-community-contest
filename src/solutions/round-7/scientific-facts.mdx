@@ -1,0 +1,58 @@
+## Problem Overview
+
+Scientific Facts is an NLP task centered on automated fact-checking. Given a scientific claim and text evidence extracted from biomedical abstracts, the goal is to determine the relationship between them. This is a 3-class classification problem: the evidence either **SUPPORT**s the claim, **CONTRADICT**s it, or there is **NOT_ENOUGH_INFO** (NEI).
+
+The domain is heavily filled in dense technical language. Furthermore, the dataset exhibits class imbalance, with SUPPORT (365) and NEI (333) appearing much more frequently than CONTRADICT (189). Participants are constrained to use the allenai/scibert_scivocab_uncased model.
+
+## Tokenization & Encoding
+
+Because the problem requires reasoning over both the claim and the evidence together, reference solution implements it as a sentence-pair classification task. The tokenizer packs both strings into a single sequence separated by special tokens ([CLS] claim [SEP] evidence [SEP]).
+
+```python
+encoding = self.tokenizer(
+    row["claim"], row["evidence"],
+    max_length=MAX_LEN, truncation=True,
+    padding="max_length", return_tensors="pt",
+)
+```
+
+This bidirectional merging allows the self-attention mechanisms in the transformer to calculate cross-attention between specific biomedical terms in the claim and corresponding context in the evidence.
+
+## SciBERT & Classification Head
+
+The backbone of the solution is SciBERT, a BERT model pretrained entirely on semantic corpora from Semantic Scholar. Usage of this vocabulary reduces out-of-vocabulary technical words compared to a standard BERT model.
+
+We extract the [CLS] token's hidden state from the last layer, which serves as an aggregated representation of the entire sequence. Obtained feature vector is passed through a simple MLP (Linear -> ReLU -> Dropout -> Linear) mapping it down to the 3 required class logits.
+
+## Handling Class Imbalance (Focal Loss)
+
+A major challenge in this dataset is the rarity of the CONTRADICT class. If we use standard CE loss as criterion, the network might optimize its loss by guessing SUPPORT or NEI most of the time.
+
+To fix this, the reference solution employs Focal Loss combined with inverse class-frequency weighting.
+
+- Alpha Weighting: The weights are computed as $1 / (\text{count} + 1)$, ensuring the rare CONTRADICT class generates a vastly larger gradient signal.
+- Gamma Modulator: Focal loss scales the standard cross-entropy loss by $(1 - p_t)^\gamma$. This down weights easy, highly confident examples and forces the optimizer to focus much more on hard examples.
+
+```python
+class FocalLoss(nn.Module):
+    def __init__(self, alpha=None, gamma=2.0):
+        super().__init__()
+        self.alpha = alpha
+        self.gamma = gamma
+
+    def forward(self, inputs, targets):
+        ce = F.cross_entropy(inputs, targets, reduction="none", weight=self.alpha)
+        pt = torch.exp(-ce)
+        return ((1 - pt) ** self.gamma * ce).mean()
+```
+
+## Cross-Validation & Ensembling
+
+Since the dataset is small (~887 training rows), neural networks can easily overfit and also have some variance depending on the random initialization. To reduce this, the solution uses 3-fold Stratified K-Fold cross-val, so each split keeps roughly the same class distribution as the full dataset.
+
+During inference, all 3 trained models predict the test set, and their logits are averaged before applying `argmax`. This helps reduce the variance of individual models and makes the final predictions more stable.
+
+## Final Remarks
+
+The main challenge of this task is understanding the relationship between a scientific claim and its evidence, especially for the underrepresented `CONTRADICT` class. Combining SciBERT with Focal Loss and class weighting helps the model focus on harder and rarer examples, while cross-val and ensembling make the final predictions more stable.
+

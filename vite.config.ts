@@ -8,6 +8,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
+import remarkMathDisplayDollars from './src/lib/remark-math-display-dollars.js'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -18,7 +19,8 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     mdx({
       remarkPlugins: [
-        remarkMath
+        remarkMath,
+        remarkMathDisplayDollars
       ],
       rehypePlugins: [
         rehypeSlug,
