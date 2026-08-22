@@ -80,7 +80,7 @@ export const MdxGuide = ({ path }: MdxGuideProps) => {
   }
 
   return (
-    <article className="prose text-justify dark:prose-invert max-w-none prose-headings:font-bold prose-headings:mb-2 prose-p:my-2 prose-li:my-0.5 prose-ul:my-3 prose-h1:text-3xl md:prose-h1:text-4xl prose-h2:text-2xl md:prose-h2:text-3xl prose-h3:text-xl md:prose-h3:text-2xl prose-a:font-semibold dark:prose-a:text-purple-400 prose-a:no-underline hover:prose-a:underline">
+    <article className="prose text-left dark:prose-invert max-w-none prose-headings:font-bold prose-headings:mb-2 prose-p:my-2 prose-li:my-0.5 prose-ul:my-3 prose-h1:text-3xl md:prose-h1:text-4xl prose-h2:text-2xl md:prose-h2:text-3xl prose-h3:text-xl md:prose-h3:text-2xl prose-a:font-semibold dark:prose-a:text-purple-400 prose-a:no-underline hover:prose-a:underline prose-headings:tracking-tight">
       <MDXProvider components={mdxComponents}>
         <MDXContent components={mdxComponents} />
       </MDXProvider>

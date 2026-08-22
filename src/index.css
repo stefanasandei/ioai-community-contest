@@ -193,6 +193,13 @@ body {
   html {
     @apply scroll-smooth;
   }
+
+  /* Prevent wide markdown content (code blocks, display math, tables)
+     from expanding the page horizontally on small screens. */
+  html,
+  body {
+    overflow-x: hidden;
+  }
 }
 
 @layer components {
@@ -430,6 +437,22 @@ body {
     @apply my-6;
     border-radius: 0.5rem;
     overflow: hidden;
+  }
+
+  /* Make wide code blocks internally scrollable instead of
+     clipping at the right edge (which looks "left-shifted" on mobile). */
+  .syntax-highlighter-wrapper pre[class*="language-"] {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  /* Allow wide display math (KaTeX display mode) to scroll inside
+     the prose column rather than widening the page on small screens. */
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.25rem 0;
+    max-width: 100%;
   }
 
   .syntax-highlighter-wrapper pre[class*="language-"]::-webkit-scrollbar {
