@@ -1,0 +1,116 @@
+## Problem Overview
+
+Archivist's Cards is a cross-modal retrieval task. Given a highly detailed textual description (the "card") containing dozens of fragmented observations about an image, the objective is to retrieve the exact corresponding image from a gallery of 1,500 candidates.
+
+Main difficulty of task lies in the fact that many gallery images depict highly similar scenes, and the descriptions lack global summaries, focusing instead on specific local descriptions ("a full green tree behind a building").
+
+## Text Chunking
+
+The input descriptions are texts with huge length, exceeding CLIP's 77 token limit. To handle this, reference solution parses the descriptions, splitting them by newlines and punctuation to isolate individual lines.
+
+Each small text chunk is passed through the CLIP text encoder independently.
+
+## Dense Image Representations from CLIP
+
+Standard CLIP processes image and outputs a single global embedding (usually via an attention pooler). However, our textual descriptions refer to local, specific image regions, so a global embedding loses important spatial detail. We therefore want to score each **image region** against each **textual line**.
+
+A naive approach would be to take the final ViT patch embeddings and pass them through CLIP's visual projection. This does not work directly: CLIP is trained to align the global [CLS] representation with text; individual patch embeddings were never explicitly trained to lie in the text embedding space.
+
+We use the insight from MaskCLIP. In the final self-attention layer, the [CLS] representation can be viewed as a weighted sum of patch value vectors:
+
+$$
+h_{\mathrm{CLS}} = \sum_i \alpha_i v_i,
+$$
+
+where $\alpha_i$ are the attention weights and $v_i$ are the per-patch value vectors. CLIP then applies a linear visual projection $F$:
+
+$$
+z_I = F(h_{\mathrm{CLS}})
+= F\left(\sum_i \alpha_i v_i\right)
+= \sum_i \alpha_i F(v_i).
+$$
+
+Because $F$ is linear, the global text aligned representation is therefore a weighted combination of the individually projected patch terms $F(v_i)$. This allows us to use these terms directly as localized, approximately text aligned features. Aligned sum does not mathematically guarantee that every individual term is aligned, however, empirically this works well.
+
+In the final ViT layer, we discard the **queries, keys, attention computation, residual connection, and MLP**, keeping only:
+
+$$
+\text{LayerNorm}_1
+\rightarrow
+V\text{-projection}
+\rightarrow
+\text{output projection}
+\rightarrow
+\text{post-LayerNorm}
+\rightarrow
+\text{visual projection}.
+$$
+
+```python
+def maskclip(px, res): 
+    # Extract patches and bypass global pooling
+    v = last.self_attn.v_proj(last.layer_norm1(h))
+    out = vm.post_layernorm(last.self_attn.out_proj(v))
+    feats = F.normalize(clip.visual_projection(out), dim=-1)
+    return feats[:, 1:, :] # Drop CLS token, keep spatial patches    
+```
+
+![MaskCLIP](/assets/MaskCLIP.png)
+
+The [CLS] token is removed, leaving a feature vector for each spatial 16x16 patch. These vectors can be compared directly with textual embeddings to determine which image regions best match each textual line.
+
+Reference solution additionally process images at 112, 224, and 512 px, providing multiple spatial scales that capture both medium-sized objects and minimal details. [MaskCLIP](https://arxiv.org/pdf/2112.01071)
+
+## Comparing textual and visual embeddings
+
+Using text chunking and MaskCLIP, we obtained line and patch vectors. Thus, we are able to build similarity matrix and reduce it to scalar with a metric called BERTScore. Originally, BERTScore evaluates generated text against a reference using contextual BERT embeddings, but it works well for this task too.
+
+### Text-to-image matching
+
+For each line, we find its best matching patch (maximum) and average the resulting similarities. Using this method, we obtain precision:
+
+$$
+P =
+\frac{1}{N_T}
+\sum_{i=1}^{N_T}
+\max_{j} S_{ij},
+$$
+
+where $N_T$ is the number of textual lines. This measures how well the textual descriptions are represented somewhere in the image.
+
+### Image-to-text matching
+
+We apply same method on the patchs to obtain recall:
+
+$$
+R =
+\frac{1}{N_P}
+\sum_{j=1}^{N_P}
+\max_{i} S_{ij},
+$$
+
+where $N_P$ is the number of image patches.
+
+We combine precision and recall to obtain BERTScore, which is defined as:
+
+$$
+F_1 =
+\frac{2PR}{P+R}.
+$$
+
+By obtaining BERTScore, we are able to rank every gallery image and take top 10 matches. Read more about [BERTScore](https://arxiv.org/pdf/1904.09675)
+
+## Improving the Retrieval Score
+
+To push score even higher, small **linear layer** can be trained on top of each encoder using an **InfoNCE loss**. For each card, its own photo is the positive and the other photos in the batch are negatives.
+
+## Minimal interesting insights
+
+- We can also improve retrieval when gallery images are visually similar. Among the top 20 candidates, for each textual line we can measure its **coefficient of variation** across candidates
+- Generic lines such as *"a grey wall"* have similar scores across candidates and receive low weights, while discriminative lines receive higher weights. We can thus compute the Weighted F1.
+- CLIP's default preprocessing **resizes the short side to 224 and center-crops**, which might remove important regions near the edges. We instead resize the entire image to a square, preserving all content. This also enables multi-scale MaskCLIP extraction at **112, 224, and 512 px** by interpolating the ViT positional embeddings and combining the resulting features.
+- Sliding-window chunking can also handle text exceeding CLIP's token limit, but after training the linear layers it provided little additional benefit to reference solution.
+
+## Final Remarks
+
+Overall, combining text chunking, dense MaskCLIP features, BERTScore matching, and lightweight refinements provides an effective way to distinguish highly similar gallery images using their fine-grained minimalistic descriptions.

@@ -1,0 +1,104 @@
+## Problem Overview
+
+Visual Relations is a **computer vision task focused on object detection and scene understanding**. The goal is to predict visual relationship triplets of the form:
+
+$$
+[\text{Subject Box}] - [\text{Predicate}] - [\text{Object Box}]
+$$
+
+Simply detecting a "person" and a "horse" is not enough. the model must understand their **relationship**, such as whether the person is *riding*, *walking next to*, or *feeding* the horse.
+
+![Visual Relations](/assets/visual_relations.png)
+
+Participants are strictly limited to the pretrained `facebook/detr-resnet-50` model. With 35 predicate classes, the task requires both accurate object localization and understanding of relationships between objects.
+
+## Detection using Transformers (DETR)
+
+> Note: DETR is included in the **IOAI syllabus**, so understanding its basic architecture and object-query mechanism might be helpful.
+
+DETR (**DEtection TRansformer**) treats object detection as a direct prediction problem, without using anchors or region proposals.
+
+![DETR](/assets/detr.png)
+
+DETR architecture is roughly:
+
+- Image converted to spatial feature maps using ResNet backbone.
+- Features are flattened into a sequence of visual tokens
+- Visual tokens are passed along the transformer encoder, and thus we add positional encoding so the transformer knows where each token came from.
+- A fixed set of learnable **object queries** is passed through the decoder. Each query tries to find and describe one object in the image.
+- Queries communicate with each other, thus considering other objects while building rich Representations
+- Each query looks at the image features (Cross-attention) and focuses on regions that are most useful for finding its object.
+- Finally, each query produces an object class and a bounding box $(x,y,w,h)$
+
+![DETR](/assets/detr_detail.png)
+
+### Hungarian Matching
+
+During training, the model's predictions do not initially have a fixed correspondence to the ground truth objects. For example, prediction #17 might detect the ground-truth horse while prediction #3 detects the person.
+
+DETR solves this using the **Hungarian algorithm**. It constructs a cost between every predicted object and every ground-truth object and finds the one-to-one assignment with the lowest total cost.
+
+This means that each real object is matched to **one prediction**, while the remaining queries are trained to predict **no object.** This is one of the key ideas that allows DETR to produce a clean set of detections without traditional proposal generation or NMS.
+
+Read more about [DETR](https://arxiv.org/pdf/2005.12872)
+
+## Extracting Features from DETR's Attention
+
+Instead of relying solely on cropped bounding box pixels, the reference solution extracts the hidden graph structure directly from the DETR transformer.
+
+DETR's decoder processes object queries via self-attention. For any pair of detected objects (i, j), self-attention weights from query i to query j explicitly encode the measure of how much object i "looks" at object j during context reasoning. Because attention is directed, $A_{i \to j}$ is different from $A_{j \to i}$
+
+Reference solution concatenates these attentoin weights across all 6 layers and 8 heads, combines them with final hidden states. Except this, our solution also adds 6 geometric features because attention doesn't clearly represent **where the objects are relative to each other. Center offsets, size ratios, and IoU helps the model understand both semantic and spatial information from image.
+
+```python
+def build_pair_features(feat, si, sj):
+    parts = []
+    for a in feat['attn']:
+        parts.append(a[:, si, sj].T)
+        parts.append(a[:, sj, si].T)
+    # ... concatenates spatial features (IoU, log area, center offsets)
+    return torch.cat(parts, dim=1)
+```
+
+## Handling Multilabel & Negative Mining
+
+Relationships between objects are multi-label. A person can be "holding" a cup, while simultaneously being "near" it. Thus, applying a standard Softmax over the 35 predicates is mathematically incorrect. We must treat each predicate as an independent binary classification using `BCEWithLogitsLoss`.
+
+Furthermore, the vast majority of object pairs in an image have absolutely no relationship (a "cloud" and a "shoe"). If the model is only trained on positive relations, it will hallucinate relationships everywhere. The solution explicitly samples negative pairs (pairs with no ground truth relation) at a 2:1 ratio during training.
+
+## Mitigating Long-Tail Distribution
+
+The dataset has a severe long-tail imbalance. Predicates like "on" appear thousands of times, while predicates like "chasing" appear fewer than 30 times.
+
+Since the metric is mAP averaged evenly across all classes, ignoring the tail classes will ruin the score.
+
+Reference solution addresses this in two phases:
+
+- Training: Uses [Effective Number of Samples](https://arxiv.org/pdf/1901.05555) formula to calculate a scaling weight for the BCE loss, significantly upweighting gradients for rare classes:
+
+$$
+w_c = \frac{1-\beta}{1-\beta^{n_c}}
+$$
+
+where $n_c$ is the number of samples in class $c$ and $\beta$ is close to $1$.
+
+![Effective Number](/assets/effective_number.png)
+
+- Inference: Applies a mathematical shift to the outputs before the sigmoid activation
+
+$$
+z'_c = z_c + \log(\pi_c)
+$$
+
+$\pi_c$ is just class's frequency in the training set
+
+```python
+# During prediction
+rp = torch.sigmoid(rl - TAU * log_freq).cpu()
+```
+
+By subtracting $\tau \cdot \log(\text{frequency})$ from the logits, we lower the scores of common classes, making the model less biased toward them and giving rare predicates a better chance to be predicted.
+
+## Final Remarks
+
+Overall, the main idea of the task is to make DETR understand not just what objects are in the image, but how they relate to each other. Using attention, spatial features, and some careful handling of rare and negative examples makes the final relation predictions much more reliable.

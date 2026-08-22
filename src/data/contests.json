@@ -43,6 +43,7 @@
                     "type": "CV",
                     "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/1/view",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-8/dice-counting.ipynb",
+                    "blog": "solutions/round-8/dice-counting",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "hard"
                 },
@@ -59,6 +60,7 @@
                     "type": "NLP & CV",
                     "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/3/view",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-8/archivists-cards.ipynb",
+                    "blog": "solutions/round-8/archivists-cards",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "hard"
                 }
@@ -84,6 +86,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/oriented-ship-aicc-round-7",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-7/oriented-ships.ipynb",
+                    "blog": "solutions/round-7/oriented-ship",
                     "author": "Nikoloz Gegenava",
                     "practiceStatus": "hard"
                 },
@@ -92,6 +95,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/scientific-facts-aicc-round-7",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-7/scientific-facts.ipynb",
+                    "blog": "solutions/round-7/scientific-facts",
                     "author": "Stefan Asandei",
                     "practiceStatus": "medium"
                 }
@@ -160,6 +164,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/visual-relations-aicc-round-5",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-5/visual-relations.ipynb",
+                    "blog": "/solutions/round-5/visual-relations",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "medium"
                 }

@@ -1,0 +1,79 @@
+## Problem Overview
+
+Oriented Ships is an object detection task that departs from traditional axis-aligned bounding boxes. Participants must detect ships in aerial imagery using Oriented Bounding Boxes (OBB), defined by center coordinates, width, height, and a horizontal rotation angle $\theta$.
+
+![Oriented Ships](/assets/oriented_ships.png)
+
+The primary challenge of this task lies in mathematically handling the rotation angle, as angles are periodic (e.g., $-\pi$ and $\pi$ are adjacent in reality but distant numerically) and exhibit boundary exchange issues (swapping width and height while rotating by 90 degrees represents exactly same box).
+
+## Architecture & Grid Prediction
+
+Reference solution uses a custom anchor-free grid detector. Difference between anchor-based and anchor-free detectors is that anchor-based predicts offsets from **predefined** anchors, while anchor-free directly predicts object center, location and its geometry without predefined anchors.
+
+Task rules indicate that we are allowed to use pretrained backbones such as ResNet, EfficientNet and e.t.c. Thus we are able to employ satndard ResNet18 backbone. We strip final pooling layers to retain spatial feature map and add small conv head to map these features dow to a dense prediction grid (16x16), where each cell predicts 6 channels:
+
+- Objectness Confidence (Required during submission)
+- Center X offset
+- Center Y offset
+- Width
+- Height
+- Horizontal rotation angle
+
+```python
+self.head = nn.Sequential(
+    nn.Conv2d(512, 256, 3, padding=1),
+    nn.BatchNorm2d(256),
+    nn.ReLU(),
+    nn.Conv2d(256, 6, 1),
+)
+```
+
+## Classification bins for angles
+
+When dealing with angle, the most naive approach is to use direct regression. However, regression fails drastically at the wrap-around boundaries (-89° and 89° comparasion).
+
+One highly effective, robust alternative is classification bin based solution. Instead of regressing a continuous value, we can discretize 180 degrees of possible rotation into $n$ categorical bins (Most effective $n$ is 180). The network outputs a 180 dimensional classification logit vector for the angle and we can train it using Cross-Entropy loss.
+
+![Angle Discretization Methods](/assets/angle_bins.png)
+<p align="center"><i>Popular definitions of bounding boxes, such as (a) five parameter method with 90° angular range (b) five parameter method with 180° angular range (c) Ordered quadri-lateral method</i></p>
+
+You can read more about classification-bin based approaches in OOB (Oriented Bounding Box) Detection. [Research](https://arxiv.org/pdf/2003.05597)
+
+## Gaussian Bounding Boxes (KLD Loss)
+
+Even though classification based approaches are highly effective, higher score can be achieved by different methods. Such method used in referencesolution is Gaussian Bounding Boxes.
+
+Instead of comparing a rotated box using its raw parameters $(c_x,c_y,w,h,\theta)$, we turn the box into a **2D Gaussian Distribution**:
+
+![2D Gaussian](/assets/2d_gaussian.png)
+
+- **Mean $\mu=(c_x,c_y)$** → the center of the box.
+- **Covariance $\Sigma$** → the box's width, height, and rotation.
+  - Larger variance → larger box dimension.
+  - Rotating the covariance → rotating the box.
+
+![2D Gaussian](/assets/bounding_gaussian.png)
+<p align="center"><i>Modelling bounding box as 2D gaussian distribution</i></p>
+
+```python
+def gaussian(cx, cy, w, h, theta):
+    mean = torch.stack([cx, cy], dim=-1)
+    cos, sin = torch.cos(theta), torch.sin(theta)
+    rotation = torch.stack([
+        torch.stack([cos, -sin], dim=-1),
+        torch.stack([sin, cos], dim=-1),
+    ], dim=-2)
+    axes = torch.diag_embed(torch.stack([(w / 2) ** 2, (h / 2) ** 2], dim=-1))
+    covariance = rotation @ axes @ rotation.transpose(-1, -2)
+    return MultivariateNormal(mean, covariance_matrix=covariance)
+```
+
+Instead of penalizing the raw parameters (cx, cy, w, h, \theta), the model computes the KL Divergence between the predicted Gaussian and the ground-truth Gaussian. KLD compares the whole predicted box shape and position at once, so we don't need to handle the center, size, and rotation or worry about angle ambiguity (different parameter values representing the same box).
+
+## Evaluation Metric
+
+The Mean SkewIoU metric could be exploited by submitting many overlapping high-confidence boxes, since false positives were not penalized, making it possible to artificially increase the score.
+
+## Final Remarks
+
+Rotated object detection depends heavily on how the box geometry is represented. Classification bins handle angle discontinuities, while Gaussian boxes provide a smooth representation of position, size, and rotation.
