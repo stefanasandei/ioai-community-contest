@@ -1,0 +1,84 @@
+## Problem Overview
+
+Nuclei Reconstruction is a semantic segmentation task operating on microscopic Hematoxylin and Eosin (H&E) stained tissue images. The goal is to output a binary mask where cell nuclei are white (255) and the background is black (0).
+
+![Nuclei Image](/assets/nuclei.jpg)
+<p align="center"><i>Image of H&E stained tissue</i></p>
+
+The dataset contains multiple organs and is digitized by various scanners, resulting in massive variance in many parameters, such as color appearance, tissue density and image resolution. Test images vary significantly in aspect ratio and size, thus a robust pipeline must handle sliding window inferences and correct for inconsistencies.
+
+## Domain-Specific Preprocessing
+
+H&E images are governed by the physics of chemical dye absorption, not natural light. This makes standard RGB normalization sub-optimal. The reference solution implements Macenko Stain Normalization (Provided in task statement).
+
+Macenko normalization maps RGB values into Optical Density (OD) space, where the combination of stains is linear. By performing SVD (Singular Value Decomposition) on the OD pixels, we can identify the two dominant stain vectors (Hematoxylin and Eosin) for that specific slide. It then aligns these vectors to a standardized reference distribution. 
+
+This method practically eliminates domain shift between scanners. Additionally, Contrast Limited Adaptive Histogram Equalization (CLAHE) is applied to the luminance channel to drastically enhance the visibility of faint nuclei hidden in tissue folds.
+
+> Note: All of the domain knowledge needed in this task was provided in task statement!
+
+## Patch-Based Training & UNet
+
+Given the massive sizes of the pathology slides, downscaling the entire image into a network destroys the important microscopic features required for segmentation. Instead reference solution extracts `384x384` overlapping patches. To prevent the model from wasting capacity on blank background tissue, patches containing less than 2% nuclei are discarded during training.
+
+The model architecture is a U-Net with pretrained `ResNet34` encoder. The decoder uses Transposed Convolutions and Skip Connections to recover the spatial details lost during the encoder's downsampling.
+
+![UNet](/assets/unet.png)
+
+## Loss Functions
+
+Segmentation tasks often suffer from **class imbalance**, since background pixels heavily outnumber nuclei pixels. To address this, the solution uses BCE + Dice Loss.
+
+### Dice Loss
+
+Dice Loss measures how well the predicted mask overlaps with the ground-truth mask. It is particularly useful for segmentation because it handles **class imbalance** well.
+
+The Dice coefficient is:
+
+$$
+\mathrm{Dice} = \frac{2\sum_i p_i y_i + \epsilon}
+{\sum_i p_i + \sum_i y_i + \epsilon}
+$$
+
+where $p_i$ is the predicted probability for pixel $i$, $y_i$ is the ground-truth label, and $\epsilon$ is a small constant for numerical stability.
+
+![Dice Coefficient](/assets/dice_loss.png)
+
+The loss is then:
+
+$$
+\mathcal{L}_{Dice} = 1 - \mathrm{Dice}
+$$
+
+A higher Dice score means better overlap between the prediction and the true mask, so minimizing Dice Loss directly encourages accurate segmentation of the nuclei.
+
+Together, BCE and Dice Loss help the model achieve accurate pixel-level predictions and good overall mask overlap.
+
+## Sliding Window Inference & TTA
+
+At test time, large images are processed patch-by-patch using a sliding window. Since neighboring patches overlap, their predictions can be combined to reconstruct the final segmentation.
+
+To prevent ugly artifacts where patches meet (near the edges), a **2D Gaussian window** is applied. Predictions near the center of each patch receive higher weights, while predictions near the edges receive lower weights, thus preventing lossy artifacts.
+
+
+```python
+def create_gaussian_window(patch_size, sigma_ratio=0.3):
+    center = (patch_size - 1) / 2
+    sigma = patch_size * sigma_ratio
+
+    xs = (np.arange(patch_size) - center) / sigma
+    ys = (np.arange(patch_size) - center) / sigma
+
+    gauss_1d_x = np.exp(-0.5 * xs ** 2)
+    gauss_1d_y = np.exp(-0.5 * ys ** 2)
+
+    return np.outer(gauss_1d_y, gauss_1d_x).astype(np.float32)
+```
+
+Finally, Test-Time Augmentation (TTA) is used additionally to make the predictions more robust. The image is transformed using 8 different rotations and flips, and the resulting predictions are averaged together.
+
+After TTA, morphological closing is applied to clean up the mask, filling small gaps and removing isolated rogue pixels.
+
+## Final Remarks
+
+Overall, the pipeline combines domain knowledge provided from task statement, patch-based training, U-Net segmentation, BCE+Dice loss, and robust inference to handle the main challenges of large and highly variable histopathology images.
