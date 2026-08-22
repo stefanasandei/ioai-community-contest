@@ -165,7 +165,7 @@ const Solution = () => {
 
             <div className="max-w-6xl mx-auto px-6 mt-4 pb-8">
                 {MDXContent ? (
-                    <article className="prose text-justify prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-a:font-semibold dark:prose-a:text-purple-400 prose-a:no-underline hover:prose-a:underline">
+                    <article className="prose text-left prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-a:font-semibold dark:prose-a:text-purple-400 prose-a:no-underline hover:prose-a:underline prose-headings:tracking-tight">
                         <div className="syntax-highlighter-wrapper">
                             <MDXProvider components={mdxComponents}>
                                 <MDXContent components={mdxComponents} />
