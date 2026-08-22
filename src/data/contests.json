@@ -130,6 +130,7 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/nuclei-reconstruction-aicc-round-6",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-6/nuclei-reconstruction.ipynb",
+                    "blog": "/solutions/round-6/nuclei-reconstruction",
                     "author": "Stefan Asandei",
                     "practiceStatus": "medium"
                 }
