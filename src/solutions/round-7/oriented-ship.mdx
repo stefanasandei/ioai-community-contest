@@ -68,7 +68,7 @@ def gaussian(cx, cy, w, h, theta):
     return MultivariateNormal(mean, covariance_matrix=covariance)
 ```
 
-Instead of penalizing the raw parameters (cx, cy, w, h, \theta), the model computes the KL Divergence between the predicted Gaussian and the ground-truth Gaussian. KLD compares the whole predicted box shape and position at once, so we don't need to handle the center, size, and rotation or worry about angle ambiguity (different parameter values representing the same box).
+Instead of penalizing the raw parameters $(cx, cy, w, h, \theta)$, the model computes the KL Divergence between the predicted Gaussian and the ground-truth Gaussian. KLD compares the whole predicted box shape and position at once, so we don't need to handle the center, size, and rotation or worry about angle ambiguity (different parameter values representing the same box).
 
 ## Evaluation Metric
 

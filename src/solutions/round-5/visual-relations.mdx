@@ -48,7 +48,7 @@ Instead of relying solely on cropped bounding box pixels, the reference solution
 
 DETR's decoder processes object queries via self-attention. For any pair of detected objects (i, j), self-attention weights from query i to query j explicitly encode the measure of how much object i "looks" at object j during context reasoning. Because attention is directed, $A_{i \to j}$ is different from $A_{j \to i}$
 
-Reference solution concatenates these attentoin weights across all 6 layers and 8 heads, combines them with final hidden states. Except this, our solution also adds 6 geometric features because attention doesn't clearly represent **where the objects are relative to each other. Center offsets, size ratios, and IoU helps the model understand both semantic and spatial information from image.
+Reference solution concatenates these attention weights across all 6 layers and 8 heads, combines them with final hidden states. Except this, our solution also adds 6 geometric features because attention doesn't clearly represent where the objects are relative to each other. Center offsets, size ratios, and IoU helps the model understand both semantic and spatial information from image.
 
 ```python
 def build_pair_features(feat, si, sj):
