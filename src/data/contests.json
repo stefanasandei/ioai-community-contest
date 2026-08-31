@@ -1,6 +1,38 @@
 {
     "contests": [
         {
+            "id": 11,
+            "month": "August",
+            "year": "2026",
+            "title": "Round 10",
+            "tasks": [
+                {
+                    "name": "What I Want and What I Don't",
+                    "type": "CV",
+                    "kaggle": "https://www.kaggle.com/competitions/what-i-want-and-what-i-dont-aicc-round-10",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-10/what-i-want-and-what-i-dont.ipynb",
+                    "author": "Beketov Dauzhan",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Inverse Translation",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/overview",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-10/inverse-translation.ipynb",
+                    "author": "Antony Ingorokva",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Moment Match",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/overview",
+                    "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-10/moment-match.ipynb",
+                    "author": "Antony Ingorokva",
+                    "practiceStatus": "medium"
+                }
+            ]
+        },
+        {
             "id": 10,
             "month": "July",
             "year": "2026",
