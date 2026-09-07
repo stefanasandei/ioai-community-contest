@@ -1,61 +1,73 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
-import { ArrowUpRight, BookOpen } from 'lucide-react';
+import BlogLayout from '@/components/BlogLayout';
+import BlogLoading from '@/components/BlogLoading';
+import { ArrowUpRight, ArrowLeft, BookOpen, Download, ChevronDown } from 'lucide-react';
 import BlogAuthor from '@/components/BlogAuthor';
-import NotebookArticle from '@/components/NotebookArticle';
-import { loadBlogs, downloadBlogFile, notebookText, type BlogPost } from '@/lib/blogs';
+import { loadBlog, downloadBlogFile, notebookText, type BlogPost } from '@/lib/blogs';
+import posts from 'virtual:blog-index';
 
-function blogCover(post: BlogPost) {
-  for (const cell of post.notebook.cells) {
-    for (const output of cell.outputs ?? []) {
-      for (const mime of ['image/png', 'image/jpeg', 'image/webp']) {
-        if (output.data?.[mime]) return `data:${mime};base64,${notebookText(output.data[mime])}`;
-      }
-    }
-  }
-  return null;
+const loadRenderer = () => import('@/components/NotebookArticle');
+const NotebookArticle = lazy(loadRenderer);
+
+const controlClass = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4';
+
+function BackToBlogs() {
+  return <Link to="/blogs" className={`${controlClass} -ml-3 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-purple-700 dark:hover:text-purple-300`}><ArrowLeft size={17} aria-hidden="true" />Back to blogs</Link>;
+}
+
+function ArticleContents({ post }: { post: BlogPost }) {
+  const sections = post.notebook.cells.flatMap((cell, index) => {
+    const heading = cell.cell_type === 'markdown' && notebookText(cell.source).match(/^# (.+)$/m);
+    return heading ? [{ title: heading[1], id: `notebook-section-${index}` }] : [];
+  });
+  if (sections.length < 2) return null;
+  return <details className="group mb-10 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5">
+    <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-medium rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 [&::-webkit-details-marker]:hidden">On this page<ChevronDown size={16} className="transition-transform group-open:rotate-180" aria-hidden="true" /></summary>
+    <nav aria-label="Article sections" className="grid gap-1 border-t border-gray-200 dark:border-white/10 p-3">
+      {sections.map(section => <a key={section.id} href={`#${section.id}`} className="rounded-md px-2 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-white/5 hover:text-purple-700 dark:hover:text-purple-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600">{section.title}</a>)}
+    </nav>
+  </details>;
 }
 
 export default function Blogs() {
   const { slug } = useParams();
-  const [posts, setPosts] = useState<BlogPost[] | null>(null);
+  const [loadedPost, setLoadedPost] = useState<BlogPost | null>(null);
   const [error, setError] = useState(false);
-  useEffect(() => { let active = true; loadBlogs().then(data => { if (active) setPosts(data); }).catch(() => { if (active) setError(true); }); return () => { active = false; }; }, []);
-  const post = posts?.find(item => item.slug === slug);
+  const summary = posts.find(item => item.slug === slug);
+  useEffect(() => {
+    let active = true;
+    setError(false);
+    if (summary) Promise.all([loadBlog(summary.file), loadRenderer()]).then(([data]) => { if (active) setLoadedPost(data); }).catch(() => { if (active) setError(true); });
+    return () => { active = false; };
+  }, [summary]);
+  const post = loadedPost?.slug === slug ? loadedPost : null;
   useEffect(() => {
     const previous = document.title;
     document.title = `${post?.title ?? 'Blogs'} | AICC`;
     return () => { document.title = previous; };
   }, [post]);
-  return <div className="min-h-screen bg-white text-gray-900 dark:bg-[#0a0a0f] dark:text-gray-100">
-    <Navigation />
-    <main className={`mx-auto ${slug ? 'max-w-4xl' : 'max-w-6xl'} px-5 pt-32 pb-24 sm:px-10`}>
-      {error ? <p role="alert">Blogs could not be loaded. Please refresh to try again.</p> : !posts ? <p role="status">Loading blogs…</p> : slug ? post ? <>
-        <Link to="/blogs" className="text-sm text-purple-600 dark:text-purple-400 hover:underline">Back to blogs</Link>
-        <header className="mt-8 mb-12 border-b border-gray-200 dark:border-white/10 pb-8">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-tight">{post.title}</h1>
-          <p className="mt-5 text-lg text-gray-600 dark:text-gray-300">{post.description}</p>
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 text-sm">
-            <p className="flex flex-wrap items-center gap-2">By <BlogAuthor {...post} /></p>
-            <button onClick={() => downloadBlogFile(`${post.slug}.ipynb`, JSON.stringify(post.notebook, null, 2))} className="text-purple-600 dark:text-purple-400 hover:underline">Download notebook</button>
-          </div>
-        </header>
-        <NotebookArticle notebook={post.notebook} />
-      </> : <><h1 className="text-3xl font-bold">Blog not found</h1><Link to="/blogs" className="inline-block mt-5 text-purple-600">Back to blogs</Link></> : <>
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight">Blogs</h1>
-            <p className="mt-5 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">Ideas, experiments, and insights into machine learning from the AICC community.</p>
-          </div>
-        </div>
-        <div className="mt-12 grid sm:grid-cols-2 gap-8">
+  const articleHeader = slug && post ? <>
+    <BackToBlogs />
+    <div className="flex flex-col sm:flex-row items-start justify-between gap-5 mt-3 mb-4">
+      <h1 className="text-4xl font-bold text-gray-900 dark:text-white flex-1 tracking-tight leading-tight">{post.title}</h1>
+      <button onClick={() => downloadBlogFile(`${post.slug}.ipynb`, JSON.stringify(post.notebook, null, 2))} className="inline-flex min-h-11 shrink-0 items-center gap-2 px-5 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4">Download notebook<Download size={16} aria-hidden="true" /></button>
+    </div>
+    <p className="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300 mb-4">{post.description}</p>
+    <p className="flex flex-wrap items-center gap-2 text-sm">By <BlogAuthor {...post} /></p>
+  </> : undefined;
+  return <BlogLayout article={Boolean(slug)} articleHeader={articleHeader}>
+      {error ? <p role="alert">This article could not be loaded. Please refresh to try again.</p> : slug && summary && !post ? <BlogLoading article /> : slug ? post ? <>
+        <ArticleContents post={post} />
+        <article aria-label={post.title}><Suspense fallback={<BlogLoading article />}><NotebookArticle notebook={post.notebook} /></Suspense></article>
+        <div className="mt-12 border-t border-gray-200 dark:border-white/10 pt-6"><BackToBlogs /></div>
+      </> : <div className="py-16"><h1 className="text-3xl font-bold mb-3">Blog not found</h1><p className="text-gray-500 dark:text-gray-400 mb-5">This article is unavailable. Browse the blog for more posts.</p><BackToBlogs /></div> : <>
+        <div className="grid md:grid-cols-2 gap-4">
           {posts.map((item, index) => {
-            const cover = blogCover(item);
-            return <article key={item.slug} className={index === 0 ? 'sm:col-span-2' : ''}>
-              <Link to={`/blogs/${item.slug}`} className={`group overflow-hidden rounded-xl border border-gray-200 dark:border-white/10 hover:border-purple-300 dark:hover:border-purple-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4 ${index === 0 ? 'grid sm:grid-cols-2' : 'flex h-full flex-col'}`}>
-                <div className="flex items-center justify-center bg-purple-50 dark:bg-purple-950/20 p-5 sm:p-8 aspect-[4/3] min-w-0">
+            const cover = item.cover;
+            return <article key={item.slug} className={index === 0 ? 'md:col-span-2' : ''}>
+              <Link to={`/blogs/${item.slug}`} className={`group overflow-hidden rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 hover:border-purple-300 dark:hover:border-purple-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4 ${index === 0 ? 'grid md:grid-cols-2' : 'flex h-full flex-col'}`}>
+                <div className="flex items-center justify-center bg-purple-50 dark:bg-purple-950/20 p-5 sm:p-8 aspect-[16/11] min-w-0">
                   {cover ? <img src={cover} alt={`Plot from ${item.title}`} className="w-full max-h-full object-contain rounded-md bg-white" loading="lazy" /> : <BookOpen className="w-20 h-20 text-purple-400" strokeWidth={1} aria-hidden="true" />}
                 </div>
                 <div className="p-6 sm:p-8 flex flex-col justify-center items-start">
@@ -72,7 +84,5 @@ export default function Blogs() {
           Want to share your own blog? Contact an organizer on the <a href="https://discord.gg/7GfxrqRreY" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-purple-600 dark:hover:text-purple-400">AICC Discord</a>.
         </p>
       </>}
-    </main>
-    <Footer />
-  </div>;
+  </BlogLayout>;
 }

@@ -1,5 +1,10 @@
 .notebook-article { line-height: 1.85; overflow-wrap: anywhere; }
-.notebook-article h2 { margin-top: 2.8em; scroll-margin-top: 6rem; font-size: 1.8em; letter-spacing: -.025em; }
+/* Skip layout/paint for off-screen math-heavy cells, retaining their measured size. */
+.notebook-article > section { content-visibility: auto; contain-intrinsic-size: auto 300px; }
+.notebook-article h2 { margin-top: 2.2em; scroll-margin-top: 6rem; font-size: 1.65em; letter-spacing: -.025em; line-height: 1.3; }
+.notebook-article section[id] { scroll-margin-top: 6rem; }
+.notebook-article section:first-child > :first-child { margin-top: 0; }
+.notebook-article a:focus-visible, .notebook-code summary:focus-visible { outline: 2px solid #8c00ff; outline-offset: 4px; border-radius: 2px; }
 .notebook-article h3 { margin-top: 2em; letter-spacing: -.015em; }
 .notebook-article a { color: #8c00ff; text-underline-offset: 3px; }
 .dark .notebook-article a { color: #b366ff; }
@@ -7,9 +12,9 @@
 .notebook-article .katex-display { overflow-x: auto; overflow-y: hidden; padding: .5rem 0; }
 .notebook-article img { max-width: 100%; height: auto; margin: 1.5rem auto; }
 .notebook-article .notebook-code { margin: 1.25rem 0; border: 1px solid #e5e7eb; border-radius: .5rem; overflow: hidden; }
-.notebook-code summary { cursor: pointer; padding: .65rem 1rem; font-size: .8rem; font-weight: 500; background: #f9fafb; }
-.notebook-code summary span { float: right; color: #6b7280; font-weight: 400; }
-.notebook-article .notebook-code pre { margin: 0; border-radius: 0; }
+.notebook-code summary { cursor: pointer; padding: .65rem 1rem; min-height: 44px; font-size: .8rem; font-weight: 500; background: #f9fafb; }
+.notebook-code summary:hover { background: #f3f4f6; }
+.notebook-article .notebook-code pre { margin: 0; border-radius: 0; max-height: min(36rem, 70vh); }
 .notebook-article .notebook-output { max-height: 26rem; background: #f3f4f6; color: #374151; }
 .dark .notebook-code { border-color: #374151; }
 .dark .notebook-code summary, .dark .notebook-article .notebook-output { background: #111827; color: #d1d5db; }
@@ -18,3 +23,10 @@
 .dark .notebook-article section > div:not(.notebook-code):not(.notebook-html) { background: #111827; }
 .notebook-article :not(pre) > code::before, .notebook-article :not(pre) > code::after { content: none; }
 .notebook-article table { display: block; max-width: 100%; overflow-x: auto; }
+@media (max-width: 639px) {
+  .notebook-article { font-size: 1rem; line-height: 1.8; }
+  .notebook-article h2 { font-size: 1.5em; }
+}
+@media print {
+  .notebook-article > section { content-visibility: visible; contain-intrinsic-size: none; }
+}

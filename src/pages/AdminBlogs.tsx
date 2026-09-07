@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import NotebookArticle from '@/components/NotebookArticle';
 import BlogAuthor from '@/components/BlogAuthor';
 import { parseNotebook, downloadBlogFile, type Notebook, type BlogPost } from '@/lib/blogs';
@@ -6,19 +6,22 @@ import { parseNotebook, downloadBlogFile, type Notebook, type BlogPost } from '@
 export default function AdminBlogs() {
   const [notebook, setNotebook] = useState<Notebook | null>(null);
   const [error, setError] = useState('');
+  const uploadVersion = useRef(0);
   const [fields, setFields] = useState({ title: '', slug: '', description: '', author: '', handle: '', flag: '' });
   const valid = notebook && fields.title.trim() && fields.author.trim() && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(fields.slug);
   async function upload(file?: File) {
     if (!file) return;
+    const version = ++uploadVersion.current;
     setError('');
     setNotebook(null);
     try {
       if (file.size > 20 * 1024 * 1024) throw new Error('Please use a notebook smaller than 20 MB. Remove unnecessary saved outputs first.');
       const parsed = parseNotebook(JSON.parse(await file.text()));
+      if (version !== uploadVersion.current) return;
       setNotebook(parsed);
       const stem = file.name.replace(/\.ipynb$/i, '');
       setFields(current => ({ ...current, title: current.title || stem, slug: current.slug || stem.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') }));
-    } catch (e) { setError(e instanceof SyntaxError ? 'This file is not valid notebook JSON.' : e instanceof Error ? e.message : 'Could not read this notebook.'); }
+    } catch (e) { if (version === uploadVersion.current) setError(e instanceof SyntaxError ? 'This file is not valid notebook JSON.' : e instanceof Error ? e.message : 'Could not read this notebook.'); }
   }
   function download() {
     if (!valid) return;
