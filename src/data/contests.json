@@ -199,7 +199,7 @@
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-5/visual-relations.ipynb",
                     "blog": "/solutions/round-5/visual-relations",
                     "author": "Antony Ingorokva",
-                    "practiceStatus": "medium"
+                    "practiceStatus": "hard"
                 }
             ]
         },
@@ -319,7 +319,7 @@
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/defected-nuts.ipynb",
                     "blog": "/solutions/round-1/the-defected-nuts",
                     "author": "Antony Ingorokva",
-                    "practiceStatus": "hard"
+                    "practiceStatus": "medium"
                 },
                 {
                     "name": "Autocorrect",

@@ -21,6 +21,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import contestsData from "@/data/contests.json";
+import popularityData from "@/data/popularity.json";
 import type { Contest, Task } from "@/data/types";
 
 const allContests = (contestsData.contests as Contest[])
@@ -28,11 +29,16 @@ const allContests = (contestsData.contests as Contest[])
     .sort((a, b) => b.id - a.id);
 const allTasks: Task[] = allContests.flatMap((c) => c.tasks);
 
-type SortKey = "newest" | "oldest";
+type SortKey = "newest" | "oldest" | "popular" | "least-popular";
+
+// Supplied ranking snapshot. Missing scores remain unranked in either direction.
+const taskPopularity = new Map(popularityData.map(entry => [`${entry.round + 1}:${entry.task}`, entry.popularity]));
 
 const SORT_OPTIONS: { value: SortKey; label: string }[] = [
     { value: "newest", label: "Newest first" },
     { value: "oldest", label: "Oldest first" },
+    { value: "popular", label: "Most popular" },
+    { value: "least-popular", label: "Least popular" },
 ];
 
 interface FilterOption {
@@ -112,7 +118,9 @@ const Contests = () => {
         () => searchParams.get("platform")?.split(",").filter(Boolean) ?? [],
         [searchParams]
     );
-    const sort: SortKey = (searchParams.get("sort") as SortKey) ?? "newest";
+    const requestedSort = searchParams.get("sort");
+    const sort: SortKey = SORT_OPTIONS.find(option => option.value === requestedSort)?.value ?? "newest";
+    const sortByPopularity = sort === "popular" || sort === "least-popular";
 
     const setParam = useCallback(
         (key: string, value: string | null) => {
@@ -381,6 +389,16 @@ const Contests = () => {
         0
     );
 
+    const popularityTasks = useMemo(() => filteredContests
+        .flatMap(contest => contest.tasks.map(task => ({ contest, task, score: taskPopularity.get(`${contest.id}:${task.name}`) })))
+        .sort((a, b) => {
+            if (a.score === undefined && b.score === undefined) return a.task.name.localeCompare(b.task.name);
+            if (a.score === undefined) return 1;
+            if (b.score === undefined) return -1;
+            return (sort === "least-popular" ? a.score - b.score : b.score - a.score)
+                || a.task.name.localeCompare(b.task.name);
+        }), [filteredContests, sort]);
+
     const activeChips: ActiveChip[] = useMemo(() => {
         const chips: ActiveChip[] = [];
         for (const t of selectedTypes) {
@@ -418,14 +436,14 @@ const Contests = () => {
         toggleArrayParam,
     ]);
 
-    const resultPrimaryCount = hasSearchOrFilter
+    const resultPrimaryCount = hasSearchOrFilter || sortByPopularity
         ? totalTasksInResults
         : filteredContests.length;
-    const resultPrimaryLabel = hasSearchOrFilter ? "task" : "contest";
-    const resultSecondaryCount = hasSearchOrFilter
+    const resultPrimaryLabel = hasSearchOrFilter || sortByPopularity ? "task" : "contest";
+    const resultSecondaryCount = hasSearchOrFilter || sortByPopularity
         ? filteredContests.length
         : totalTasksInResults;
-    const resultSecondaryLabel = hasSearchOrFilter ? "contest" : "task";
+    const resultSecondaryLabel = hasSearchOrFilter || sortByPopularity ? "contest" : "task";
 
     return (
         <div className="min-h-screen pt-14 bg-gray-50 dark:bg-[#0a0a0f]">
@@ -445,8 +463,8 @@ const Contests = () => {
 
             <div className="sticky top-16 z-30 bg-white/90 dark:bg-[#0a0a0f]/90 backdrop-blur-md border-b border-gray-200 dark:border-white/10">
                 <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
-                    <div className="flex gap-2 items-center">
-                        <div className="relative flex-1 min-w-0">
+                    <div className="flex gap-2 items-center flex-wrap sm:flex-nowrap">
+                        <div className="relative flex-1 min-w-0 basis-full sm:basis-0">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                             <input
                                 type="text"
@@ -537,6 +555,7 @@ const Contests = () => {
                         <div className="relative">
                             <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
                             <select
+                                aria-label="Sort tasks"
                                 value={sort}
                                 onChange={(e) =>
                                     setParam(
@@ -602,8 +621,25 @@ const Contests = () => {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 md:px-6 pb-24">
+                {sortByPopularity && (
+                    <p className="mb-5 text-sm text-gray-500 dark:text-gray-400">
+                        Popularity is calculated using a formula that accounts for participation, contest age, notebook upvotes, and other factors. Tasks without scores appear last.
+                    </p>
+                )}
                 {filteredContests.length > 0 ? (
-                    hasSearchOrFilter ? (
+                    sortByPopularity ? (
+                        <ol aria-label="Tasks by popularity" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {popularityTasks.map(({ contest, task }) => (
+                                <li key={`${contest.id}-${task.name}`}>
+                                    <TaskCard
+                                        task={task}
+                                        roundId={contest.id}
+                                        contextLabel={`${contest.title} · ${contest.month} ${contest.year}`}
+                                    />
+                                </li>
+                            ))}
+                        </ol>
+                    ) : hasSearchOrFilter ? (
                         <div className="space-y-8">
                             {filteredContests.map((contest) => (
                                 <section key={contest.id}>

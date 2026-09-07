@@ -28,6 +28,7 @@ interface TaskCardProps {
     iconType?: string;
     learnItems?: LearnItem[];
     order?: number;
+    contextLabel?: string;
 }
 
 const TASK_CONFIG: Record<string, { icon: LucideIcon; gradient: string }> = {
@@ -91,7 +92,7 @@ const getTypePillClass = (type: string) =>
 const getTaskSlug = (name: string) =>
     name.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").trim();
 
-const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order }: TaskCardProps) => {
+const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order, contextLabel }: TaskCardProps) => {
     const { icon: TaskIcon, gradient } = getTaskConfig(iconType ?? task.type);
     const statusConfig = task.practiceStatus ? PRACTICE_STATUS_CONFIG[task.practiceStatus] : undefined;
     const StatusIcon = statusConfig?.icon;
@@ -118,6 +119,7 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order }
             className="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm hover:border-aicc-purple/40 dark:hover:border-aicc-purple/50"
         >
             <div className="p-5">
+                {contextLabel && <p className="mb-3 text-xs font-medium text-gray-500 dark:text-gray-400">{contextLabel}</p>}
                 <div className="flex items-start gap-3.5">
                     <div
                         className={cn(
