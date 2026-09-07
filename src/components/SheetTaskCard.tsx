@@ -152,13 +152,6 @@ export const SheetTaskCard = ({ task }: SheetTaskCardProps) => {
           {problem}
         </h3>
 
-        {/* Topic as Description Paragraph (Rendered ONLY if non-empty!) */}
-        {topic && topic.trim() !== "" && (
-          <p className="text-sm text-gray-600 dark:text-gray-300 font-normal leading-relaxed mb-3">
-            {topic}
-          </p>
-        )}
-
         {/* Bottom Metadata Row: Category Pill + Difficulty Pill + Insightfulness Pill */}
         <div className="flex items-center gap-1.5 flex-wrap mt-2">
           {/* Category Pill */}
