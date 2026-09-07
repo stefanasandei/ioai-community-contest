@@ -1,0 +1,164 @@
+[
+  {
+    "task": "Nuclei Reconstruction",
+    "round": 6,
+    "popularity": 100,
+    "confidence": "high"
+  },
+  {
+    "task": "Polarity",
+    "round": 7,
+    "popularity": 94.1,
+    "confidence": "med"
+  },
+  {
+    "task": "Find Brain Tumors",
+    "round": 0,
+    "popularity": 93.3,
+    "confidence": "high"
+  },
+  {
+    "task": "Classifier Classifier",
+    "round": 6,
+    "popularity": 93.2,
+    "confidence": "high"
+  },
+  {
+    "task": "Deceptive Points",
+    "round": 0,
+    "popularity": 91.4,
+    "confidence": "high"
+  },
+  {
+    "task": "Oriented Ship",
+    "round": 7,
+    "popularity": 78,
+    "confidence": "med"
+  },
+  {
+    "task": "Sticky Note Blindness",
+    "round": 4,
+    "popularity": 74.2,
+    "confidence": "high"
+  },
+  {
+    "task": "Alchemy",
+    "round": 4,
+    "popularity": 71.6,
+    "confidence": "high"
+  },
+  {
+    "task": "Scientific Facts",
+    "round": 7,
+    "popularity": 68.4,
+    "confidence": "med"
+  },
+  {
+    "task": "Latent Model Classification",
+    "round": 0,
+    "popularity": 65.2,
+    "confidence": "high"
+  },
+  {
+    "task": "The Defected Nuts",
+    "round": 1,
+    "popularity": 63.5,
+    "confidence": "high"
+  },
+  {
+    "task": "What I Want and What I Don't",
+    "round": 10,
+    "popularity": 62,
+    "confidence": "provisional"
+  },
+  {
+    "task": "Moment Match",
+    "round": 10,
+    "popularity": 56.8,
+    "confidence": "provisional"
+  },
+  {
+    "task": "Lost Interpreter",
+    "round": 5,
+    "popularity": 56.3,
+    "confidence": "high"
+  },
+  {
+    "task": "Buried Fault",
+    "round": 9,
+    "popularity": 51.9,
+    "confidence": "med"
+  },
+  {
+    "task": "Watermark Removal",
+    "round": 5,
+    "popularity": 51.5,
+    "confidence": "high"
+  },
+  {
+    "task": "Autocorrect",
+    "round": 1,
+    "popularity": 50,
+    "confidence": "high"
+  },
+  {
+    "task": "Word Lookups",
+    "round": 9,
+    "popularity": 45.9,
+    "confidence": "med"
+  },
+  {
+    "task": "Inverse Translation",
+    "round": 10,
+    "popularity": 44.5,
+    "confidence": "provisional"
+  },
+  {
+    "task": "Essay Gap",
+    "round": 2,
+    "popularity": 32.6,
+    "confidence": "high"
+  },
+  {
+    "task": "Sound of Nature",
+    "round": 3,
+    "popularity": 30.7,
+    "confidence": "high"
+  },
+  {
+    "task": "Extreme Condensation",
+    "round": 4,
+    "popularity": 29.9,
+    "confidence": "high"
+  },
+  {
+    "task": "Shuffled",
+    "round": 9,
+    "popularity": 27.1,
+    "confidence": "med"
+  },
+  {
+    "task": "Massive Problem",
+    "round": 6,
+    "popularity": 25.1,
+    "confidence": "high"
+  },
+  {
+    "task": "Visual Relations",
+    "round": 5,
+    "popularity": 20.6,
+    "confidence": "high"
+  },
+  {
+    "task": "Audio Demixing",
+    "round": 2,
+    "popularity": 12,
+    "confidence": "high"
+  },
+  {
+    "task": "Is that audio?",
+    "round": 1,
+    "popularity": 11.1,
+    "confidence": "high"
+  }
+]
