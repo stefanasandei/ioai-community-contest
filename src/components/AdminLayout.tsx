@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate, Outlet } from 'react-router-dom';
-import { Map, Library, LogOut, ExternalLink, type LucideIcon } from 'lucide-react';
+import { Map, Library, ListChecks, LogOut, ExternalLink, type LucideIcon } from 'lucide-react';
 import { isAdminAuthed, logoutAdmin } from '@/lib/admin';
 import { cn } from '@/lib/utils';
 
@@ -12,6 +12,12 @@ interface AdminNavItem {
 }
 
 const adminNavItems: AdminNavItem[] = [
+  {
+    label: 'Tasks editor',
+    path: '/admin/tasks',
+    icon: ListChecks,
+    description: 'Edit problems, ratings & solutions',
+  },
   {
     label: 'Roadmap editor',
     path: '/admin/roadmap',

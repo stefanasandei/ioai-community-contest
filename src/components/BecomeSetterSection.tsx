@@ -175,7 +175,7 @@ const BecomeSetterSection = () => {
                       </div>
                     ))}
 
-                    <p className='text-gray-600'>We recommend studying IOAI 2025 and NEOAI 2025 tasks, to understand their type and style - this is what we are looking for.</p>
+                    <p className='text-gray-600'>We recommend reviewing past IOAI, NEOAI and AICC round problems to understand the type and style of tasks we are looking for.</p>
                   </div>
                 </AccordionContent>
               </AccordionItem>

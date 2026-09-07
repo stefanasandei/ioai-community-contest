@@ -380,9 +380,9 @@ const Tasks = () => {
                 label: "Not Insightful (0★)",
                 count: filterCounts.insightfulness["0"],
                 selectedClass:
-                    "bg-gray-200 border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100",
+                    "bg-rose-100 border-rose-300 text-rose-900 dark:bg-rose-900/40 dark:border-rose-700 dark:text-rose-100",
                 unselectedClass:
-                    "bg-gray-100/60 border-gray-200/40 text-gray-700 dark:bg-white/5 dark:border-white/10 dark:text-gray-300 hover:bg-gray-200/70 dark:hover:bg-white/10",
+                    "bg-rose-50/60 border-rose-200/40 text-rose-700 dark:bg-rose-900/10 dark:border-rose-800/30 dark:text-rose-300 hover:bg-rose-100/70 dark:hover:bg-rose-900/25",
             },
             {
                 value: "unrated",
@@ -599,10 +599,10 @@ const Tasks = () => {
                             </div>
                             <div>
                                 <h4 className="font-semibold text-gray-900 dark:text-white mb-0.5 flex items-center gap-1.5">
-                                    Insightfulness Rating (0 to 3 Stars)
+                                    Insightfulness (4 levels)
                                 </h4>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                                    Measures how much a problem depends on a non-obvious idea beyond standard textbook approaches. Insight may come from model internals, mathematical structure, or an unexpected combination of familiar ideas. Standard ideas that are not new do not count as insightful. 0 stars: Not Insightful; 1 star: Slightly Insightful; 2 stars: Insightful; 3 stars: Very Insightful.
+                                    Measures how much a problem depends on a non-obvious idea beyond standard textbook approaches. Insight may come from model internals, mathematical structure, or an unexpected combination of familiar ideas. Standard ideas that are not new do not count as insightful.
                                 </p>
                             </div>
                         </div>

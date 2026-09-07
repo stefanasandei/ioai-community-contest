@@ -20,6 +20,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminLayout from "./components/AdminLayout";
 import AdminRoadmap from "./pages/AdminRoadmap";
 import AdminResources from "./pages/AdminResources";
+import AdminTasks from "./pages/AdminTasks";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -58,6 +59,7 @@ const App = () => (
           <Route element={<AdminLayout />}>
             <Route path="/admin/roadmap" element={<AdminRoadmap />} />
             <Route path="/admin/resources" element={<AdminResources />} />
+            <Route path="/admin/tasks" element={<AdminTasks />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
