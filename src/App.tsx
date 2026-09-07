@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
 import BecomeSetter from "./pages/BecomeSetter";
 import Rules from "./pages/Rules";
@@ -24,6 +24,8 @@ import AdminTasks from "./pages/AdminTasks";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+const Blogs = lazy(() => import('./pages/Blogs'));
+const AdminBlogs = lazy(() => import('./pages/AdminBlogs'));
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -50,6 +52,8 @@ const App = () => (
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/solutions/:round/:taskSlug" element={<Solution />} />
           <Route path="/team" element={<Team />} />
+          <Route path="/blogs" element={<Suspense fallback={<p className="p-12">Loading blogs…</p>}><Blogs /></Suspense>} />
+          <Route path="/blogs/:slug" element={<Suspense fallback={<p className="p-12">Loading blog…</p>}><Blogs /></Suspense>} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/resources/general/:categoryId" element={<ResourceCategory />} />
           <Route path="/resources/syllabus/:sectionId" element={<ResourceSyllabus />} />
@@ -60,6 +64,7 @@ const App = () => (
             <Route path="/admin/roadmap" element={<AdminRoadmap />} />
             <Route path="/admin/resources" element={<AdminResources />} />
             <Route path="/admin/tasks" element={<AdminTasks />} />
+            <Route path="/admin/blogs" element={<Suspense fallback={<p className="p-12">Loading editor…</p>}><AdminBlogs /></Suspense>} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

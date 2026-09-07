@@ -41,7 +41,7 @@ const Footer = () => {
 
   const resources = [
     { label: "IOAI Official", href: "https://ioai-official.org/" },
-    { label: "Kaggle", href: "https://www.kaggle.com" },
+    { label: "Kaggle", href: "https://www.kaggle.com/organizations/aicc" },
     { label: "Hugging Face", href: "https://huggingface.co" },
     { label: "All resources", href: "/resources" },
   ];
