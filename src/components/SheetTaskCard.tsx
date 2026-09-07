@@ -94,43 +94,39 @@ export const SheetTaskCard = ({ task }: SheetTaskCardProps) => {
   let diffLabel = "Unrated";
 
   if (difficulty !== null) {
-    if (difficulty <= 3.4) {
+    if (difficulty < 4) {
       diffBadgeClass =
         "bg-emerald-50 border-emerald-200/70 text-emerald-700 dark:bg-emerald-900/25 dark:border-emerald-800/50 dark:text-emerald-300";
-      diffLabel = `Easy (${difficulty.toFixed(1)})`;
-    } else if (difficulty <= 6.4) {
+      diffLabel = "Easy";
+    } else if (difficulty < 7) {
       diffBadgeClass =
         "bg-amber-50 border-amber-200/70 text-amber-700 dark:bg-amber-900/25 dark:border-amber-800/50 dark:text-amber-300";
-      diffLabel = `Medium (${difficulty.toFixed(1)})`;
-    } else if (difficulty <= 8.4) {
-      diffBadgeClass =
-        "bg-orange-50 border-orange-200/70 text-orange-700 dark:bg-orange-900/25 dark:border-orange-800/50 dark:text-orange-300";
-      diffLabel = `Hard (${difficulty.toFixed(1)})`;
+      diffLabel = "Medium";
     } else {
       diffBadgeClass =
-        "bg-red-50 border-red-200/70 text-red-700 dark:bg-red-900/25 dark:border-red-800/50 dark:text-red-300";
-      diffLabel = `Expert (${difficulty.toFixed(1)})`;
+        "bg-orange-50 border-orange-200/70 text-orange-700 dark:bg-orange-900/25 dark:border-orange-800/50 dark:text-orange-300";
+      diffLabel = "Hard";
     }
   }
 
   // Insightfulness Pill Configuration
   let insightBadgeClass = "bg-gray-100 border-gray-200/70 text-gray-500 dark:bg-gray-800/50 dark:border-gray-700 dark:text-gray-400";
-  let insightLabel = "Unrated";
+  let insightLabel = insightful === 0 ? "Not Insightful" : "Unrated";
   const starsCount = insightful ?? 0;
 
   if (insightful !== null && insightful > 0) {
     if (insightful === 1) {
       insightBadgeClass =
         "bg-indigo-50 border-indigo-200/70 text-indigo-700 dark:bg-indigo-900/25 dark:border-indigo-800/50 dark:text-indigo-300";
-      insightLabel = "Insightful";
+      insightLabel = "Slightly Insightful";
     } else if (insightful === 2) {
       insightBadgeClass =
         "bg-purple-50 border-purple-200/70 text-purple-700 dark:bg-purple-900/25 dark:border-purple-800/50 dark:text-purple-300";
-      insightLabel = "Very Insightful";
+      insightLabel = "Insightful";
     } else if (insightful === 3) {
       insightBadgeClass =
         "bg-amber-50 border-amber-200/70 text-amber-800 dark:bg-amber-900/30 dark:border-amber-800/60 dark:text-amber-300 font-bold";
-      insightLabel = "Masterpiece";
+      insightLabel = "Very Insightful";
     }
   }
 
@@ -149,7 +145,24 @@ export const SheetTaskCard = ({ task }: SheetTaskCardProps) => {
 
         {/* Problem Title */}
         <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-2">
-          {problem}
+          {topic ? (
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  aria-label={`Show topics for ${problem}`}
+                  title={`Topics: ${topic}`}
+                  className="text-left cursor-help rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aicc-purple"
+                >
+                  {problem}
+                </button>
+              </PopoverTrigger>
+              <PopoverContent side="top" align="start" className="w-max max-w-[min(20rem,calc(100vw-2rem))] px-3 py-2 text-sm font-normal">
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-0.5">Topics</p>
+                <p className="text-gray-600 dark:text-gray-300 break-words">{topic}</p>
+              </PopoverContent>
+            </Popover>
+          ) : problem}
         </h3>
 
         {/* Bottom Metadata Row: Category Pill + Difficulty Pill + Insightfulness Pill */}
@@ -166,15 +179,37 @@ export const SheetTaskCard = ({ task }: SheetTaskCardProps) => {
           </span>
 
           {/* Difficulty Pill */}
-          <span
-            className={cn(
-              "inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold border shrink-0",
-              diffBadgeClass
-            )}
-          >
-            <Gauge className="w-3 h-3" />
-            {diffLabel}
-          </span>
+          {difficulty !== null ? (
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  title={`Difficulty: ${difficulty.toFixed(1)} / 10`}
+                  aria-label={`${diffLabel} difficulty: show exact rating`}
+                  className={cn(
+                    "inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold border shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aicc-purple focus-visible:ring-offset-2",
+                    diffBadgeClass
+                  )}
+                >
+                  <Gauge className="w-3 h-3" />
+                  {diffLabel}
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto px-3 py-2 text-sm" side="top">
+                Difficulty: {difficulty.toFixed(1)} / 10
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <span
+              className={cn(
+                "inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold border shrink-0",
+                diffBadgeClass
+              )}
+            >
+              <Gauge className="w-3 h-3" />
+              {diffLabel}
+            </span>
+          )}
 
           {/* Insightfulness Pill */}
           <span
