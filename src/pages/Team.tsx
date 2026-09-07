@@ -25,6 +25,9 @@ const teamMembers: TeamMember[] = [
   { name: 'Henry Ho', username: 'Convexhulltrick', emoji: '🇦🇺', description: 'Bronze medal at IOAI \'25', teams: [TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Apostolidis Charalampos', username: 'bl4ck', emoji: '🇬🇷', description: 'Hellenic NOI Top 12, Hellenic NOAI Top 25', teams: [TeamRole.Logistics] },
   { name: 'Zerui', username: 'iamnumber4', emoji: '🇸🇬', description: 'IOAI \'25', teams: [TeamRole.Logistics] },
+  { name: 'Dauzhan Beketov', username: 'Megazhan', emoji: '🇰🇿', description: 'IOAI \'26 Gold (2nd overall), IOAI \'25 Bronze, IOI \'25 Bronze, EUROAI \'26 Silver', teams: [TeamRole.ProblemSetter] },
+  { name: 'Luvidi Pranawa Alghari', username: 'Luvidi', emoji: '🇮🇩', description: 'IOAI \'26 Gold, IOAI \'25 Silver', teams: [TeamRole.ProblemSetter] },
+  { name: 'Wang Jiayu', username: 'Sabkx', emoji: '🇸🇬', description: 'IOAI \'25 Gold (3rd overall), IOAI \'24 Gold', teams: [TeamRole.ProblemSetter] },
 ];
 
 const problemSetters = teamMembers.filter(m => m.teams.includes(TeamRole.ProblemSetter));
