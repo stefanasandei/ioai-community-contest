@@ -88,6 +88,7 @@ const testimonials: Testimonial[] = [
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
   const AchievementIcon = testimonial.icon;
 
+  
   return (
     <article className="group relative flex min-h-[300px] w-[calc(100vw-2rem)] max-w-[350px] shrink-0 flex-col overflow-hidden rounded-2xl border border-gray-200/80 bg-white/90 p-5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-aicc-purple/30 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.06] dark:hover:border-aicc-purple/40">
       <div
