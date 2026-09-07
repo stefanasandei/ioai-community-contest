@@ -854,7 +854,7 @@ const Tasks = () => {
                             </div>
                         </div>
                     </div>
-                    <DialogContent className="max-h-[85vh] overflow-y-auto">
+                    <DialogContent className="max-h-[85vh] overflow-y-auto [&>button]:text-gray-700 dark:[&>button]:text-gray-200">
                         <DialogHeader>
                             <DialogTitle>Suggest a task, solution, or rating</DialogTitle>
                             <DialogDescription>
@@ -883,6 +883,9 @@ const Tasks = () => {
                         </li>
                         <li>
                             <a href="https://github.com/Hungarian-AI-Olympiad/HAIO-Hungarian-AI-Olympiad" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Hungarian AI Olympiad (HAIO)</a>
+                        </li>
+                        <li>
+                            <a href="https://pdtn.gr/?hl=en" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Greece AI Olympiad</a>
                         </li>
                     </ul>
                 </div>
