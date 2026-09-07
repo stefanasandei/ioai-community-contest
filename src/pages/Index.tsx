@@ -4,6 +4,7 @@ import HeroSection from '@/components/HeroSection';
 import RulesSection from '@/components/RulesSection';
 import Footer from '@/components/Footer';
 import ContestCard from '@/components/ContestCard';
+import TestimonialsSection from '@/components/TestimonialsSection';
 import { ChevronRight } from 'lucide-react';
 import { contests } from '@/data/contests.json';
 
@@ -61,6 +62,8 @@ const Index = () => {
             </div>
           </div>
         </section>
+
+        <TestimonialsSection />
       </main>
       <Footer />
     </div>

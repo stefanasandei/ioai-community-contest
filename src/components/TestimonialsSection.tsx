@@ -1,0 +1,191 @@
+import { Award, Medal, Quote, Trophy } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+interface Testimonial {
+  name: string;
+  quote: string;
+  achievement: string;
+  placement?: string;
+  role?: string;
+  icon: LucideIcon;
+  accentClass: string;
+  badgeClass: string;
+  iconClass: string;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    name: "Beketov Dauzhan",
+    quote:
+      "Great platform with high-quality problems. Thank you AICC for those problems; they used several topics.",
+    achievement: "Gold Medal",
+    placement: "2nd overall",
+    icon: Trophy,
+    accentClass: "from-amber-400 via-orange-500 to-amber-600",
+    badgeClass:
+      "bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-900/25 dark:text-amber-200 dark:border-amber-700/60",
+    iconClass: "text-amber-600 dark:text-amber-300",
+  },
+  {
+    name: "Nikoloz Gegenava",
+    quote:
+      "AICC was instrumental in earning my IOAI gold.",
+    achievement: "Gold Medal",
+    role: "AICC organizer",
+    icon: Medal,
+    accentClass: "from-yellow-400 via-amber-500 to-orange-500",
+    badgeClass:
+      "bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-900/25 dark:text-yellow-200 dark:border-yellow-700/60",
+    iconClass: "text-yellow-600 dark:text-yellow-300",
+  },
+  {
+    name: "Georgescu David",
+    quote:
+      "The level of difficulty of AICC problems is similar to IOAI. During IOAI, I had a strong intuition on solving a problem thanks to a very similar problem idea from AICC.",
+    achievement: "Gold Medal",
+    icon: Medal,
+    accentClass: "from-yellow-400 via-amber-500 to-orange-500",
+    badgeClass:
+      "bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-900/25 dark:text-yellow-200 dark:border-yellow-700/60",
+    iconClass: "text-yellow-600 dark:text-yellow-300",
+  },
+  {
+    name: "Giorgi Maisuradze",
+    quote:
+      "AICC offered some of the hardest and most rigorous problems in my journey preparing for IOAI, and I would say it played a significant role in my success.",
+    achievement: "Gold Medal",
+    icon: Medal,
+    accentClass: "from-yellow-400 via-amber-500 to-orange-500",
+    badgeClass:
+      "bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-900/25 dark:text-yellow-200 dark:border-yellow-700/60",
+    iconClass: "text-yellow-600 dark:text-yellow-300",
+  },
+  {
+    name: "Sasuke Kondo",
+    quote:
+      "Coming from a country with an underdeveloped preparation program, AICC was my only real practice base for short-term competitions.",
+    achievement: "Silver Medal",
+    icon: Award,
+    accentClass: "from-slate-300 via-slate-400 to-slate-500",
+    badgeClass:
+      "bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-800/50 dark:text-slate-200 dark:border-slate-600",
+    iconClass: "text-slate-500 dark:text-slate-300",
+  },
+  {
+    name: "Mobtasim Chowdhury Priom",
+    quote:
+      "AICC contests were incredible, to say the least. They really helped me think outside the box in other contests.",
+    achievement: "Bronze Medal",
+    icon: Award,
+    accentClass: "from-orange-300 via-orange-500 to-amber-700",
+    badgeClass:
+      "bg-orange-50 text-orange-800 border-orange-200 dark:bg-orange-900/25 dark:text-orange-200 dark:border-orange-700/60",
+    iconClass: "text-orange-600 dark:text-orange-300",
+  },
+];
+
+const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
+  const AchievementIcon = testimonial.icon;
+
+  return (
+    <article className="group relative flex min-h-[300px] w-[calc(100vw-2rem)] max-w-[350px] shrink-0 flex-col overflow-hidden rounded-2xl border border-gray-200/80 bg-white/90 p-5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-aicc-purple/30 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.06] dark:hover:border-aicc-purple/40">
+      <div
+        className={cn(
+          "absolute inset-x-0 top-0 h-1 bg-gradient-to-r",
+          testimonial.accentClass
+        )}
+      />
+
+      <div className="flex items-start justify-between gap-4">
+        <div
+          className={cn(
+            "flex h-12 w-12 items-center justify-center rounded-xl border bg-gradient-to-br from-white to-gray-50 shadow-sm dark:from-white/10 dark:to-white/5",
+            testimonial.badgeClass
+          )}
+        >
+          <AchievementIcon className={cn("h-6 w-6", testimonial.iconClass)} />
+        </div>
+        <Quote className="h-7 w-7 text-aicc-purple/15 transition-colors group-hover:text-aicc-purple/30 dark:text-aicc-purple-light/20 dark:group-hover:text-aicc-purple-light/40" />
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <span
+          className={cn(
+            "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider",
+            testimonial.badgeClass
+          )}
+        >
+          {testimonial.achievement}
+        </span>
+        {testimonial.placement && (
+          <span className="inline-flex items-center rounded-full border border-aicc-purple/15 bg-aicc-purple/5 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-aicc-purple dark:border-aicc-purple/30 dark:bg-aicc-purple/15 dark:text-aicc-purple-light">
+            {testimonial.placement}
+          </span>
+        )}
+      </div>
+
+      <p className="mt-4 flex-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
+        “{testimonial.quote}”
+      </p>
+
+      <div className="mt-5 border-t border-gray-200/80 pt-3 dark:border-white/10">
+        <p className="mb-0 text-sm font-bold text-gray-900 dark:text-white">
+          {testimonial.name}
+        </p>
+        <p className="mb-0 mt-1 text-xs font-medium text-gray-500 dark:text-gray-400">
+          {testimonial.role ?? "AICC community member"}
+        </p>
+      </div>
+    </article>
+  );
+};
+
+const TestimonialsSection = () => {
+  return (
+    <section className="relative overflow-hidden border-t border-gray-200/70 bg-white py-16 md:py-20 dark:border-white/10 dark:bg-[#0a0a0f]">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute -left-24 top-16 h-72 w-72 rounded-full bg-aicc-purple/10 blur-3xl" />
+        <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-aicc-orange/10 blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-aicc-purple/5 blur-3xl" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
+        <div className="mx-auto mb-8 max-w-3xl text-center">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-aicc-purple/20 bg-aicc-purple/5 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-aicc-purple dark:border-aicc-purple/30 dark:bg-aicc-purple/10 dark:text-aicc-purple-light">
+            <Medal className="h-3.5 w-3.5" />
+            From the community
+          </div>
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+            Built for ambitious{" "}
+            <span className="text-gradient">problem solvers</span>
+          </h2>
+          <p className="mb-0 text-sm leading-relaxed text-gray-600 dark:text-gray-400 md:text-base">
+            See how AICC helps students prepare for the world’s toughest AI
+            competitions.
+          </p>
+        </div>
+
+        <div
+          className="relative overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+          aria-label="AICC participant testimonials"
+        >
+          <div className="testimonials-marquee flex w-max">
+            <div className="flex shrink-0 gap-5 pr-5">
+              {testimonials.map((testimonial) => (
+                <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+              ))}
+            </div>
+            <div className="flex shrink-0 gap-5 pr-5" aria-hidden="true">
+              {testimonials.map((testimonial) => (
+                <TestimonialCard key={"duplicate-" + testimonial.name} testimonial={testimonial} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default TestimonialsSection;

@@ -615,6 +615,29 @@ body {
   animation: gradient 8s ease infinite;
 }
 
+@keyframes testimonials-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.testimonials-marquee {
+  animation: testimonials-marquee 56s linear infinite;
+  animation-play-state: running;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-marquee {
+    animation-duration: 24s;
+  }
+}
+
 .animate-scroll {
   animation: scroll 2s ease-in-out infinite;
 }
