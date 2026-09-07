@@ -95,7 +95,7 @@ const Team = () => {
             <div className="flex items-center justify-center w-10 h-10 rounded-none bg-purple-600">
               <Users className="w-5 h-5 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Problem Setters</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Problem Authors</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

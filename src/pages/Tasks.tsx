@@ -89,10 +89,29 @@ interface ActiveChip {
     onRemove: () => void;
 }
 
+type SortMode = "default" | "insightfulness" | "difficulty";
+
+const SORT_OPTIONS: { value: Exclude<SortMode, "default">; label: string }[] = [
+    { value: "insightfulness", label: "Insightfulness (high to low)" },
+    { value: "difficulty", label: "Difficulty (high to low)" },
+];
+
+const getPracticeDifficulty = (status: Task["practiceStatus"]): number | null => {
+    if (status === "easy") return 2;
+    if (status === "medium") return 5;
+    if (status === "hard") return 8;
+    return null;
+};
+
 const Tasks = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const searchQuery = searchParams.get("q") ?? "";
+
+    const sortMode = useMemo<SortMode>(() => {
+        const value = searchParams.get("sort");
+        return value === "difficulty" || value === "insightfulness" ? value : "default";
+    }, [searchParams]);
 
     const selectedCategories = useMemo(
         () => searchParams.get("category")?.split(",").filter(Boolean) ?? [],
@@ -147,11 +166,17 @@ const Tasks = () => {
                 next.delete("category");
                 next.delete("difficulty");
                 next.delete("insightfulness");
+                next.delete("sort");
                 return next;
             },
             { replace: true }
         );
     }, [setSearchParams]);
+
+    const setSortMode = useCallback(
+        (value: SortMode) => setParam("sort", value === "default" ? null : value),
+        [setParam]
+    );
 
     // Build categories list dynamically from sheet.json and community tasks
     const allCategoriesList = useMemo(() => {
@@ -160,7 +185,6 @@ const Tasks = () => {
         catSet.add("Natural Language Processing");
         catSet.add("Classical ML");
         catSet.add("Deep Learning");
-        catSet.add("Audio & Signal Processing");
         return Array.from(catSet).sort();
     }, []);
 
@@ -356,7 +380,8 @@ const Tasks = () => {
     const activeFilterCount =
         selectedCategories.length +
         selectedDifficulties.length +
-        selectedInsightfulness.length;
+        selectedInsightfulness.length +
+        (sortMode !== "default" ? 1 : 0);
     const hasSearchOrFilter = searchQuery !== "" || activeFilterCount > 0;
 
     // Filter Sheet Tasks
@@ -437,6 +462,26 @@ const Tasks = () => {
         });
     }, [searchQuery, selectedCategories, selectedDifficulties, selectedInsightfulness]);
 
+    const sortedSheetTasks = useMemo(() => {
+        if (sortMode === "default") return filteredSheetTasks;
+
+        return [...filteredSheetTasks].sort((a, b) => {
+            const aValue = sortMode === "difficulty" ? a.difficulty : a.insightful;
+            const bValue = sortMode === "difficulty" ? b.difficulty : b.insightful;
+            return (bValue ?? -1) - (aValue ?? -1);
+        });
+    }, [filteredSheetTasks, sortMode]);
+
+    const sortedStandaloneTasks = useMemo(() => {
+        if (sortMode === "default") return filteredStandaloneTasks;
+
+        return [...filteredStandaloneTasks].sort((a, b) => {
+            const aValue = sortMode === "difficulty" ? getPracticeDifficulty(a.practiceStatus) : null;
+            const bValue = sortMode === "difficulty" ? getPracticeDifficulty(b.practiceStatus) : null;
+            return (bValue ?? -1) - (aValue ?? -1);
+        });
+    }, [filteredStandaloneTasks, sortMode]);
+
     // Combined active chips
     const activeChips: ActiveChip[] = useMemo(() => {
         const chips: ActiveChip[] = [];
@@ -464,18 +509,27 @@ const Tasks = () => {
                 onRemove: () => toggleArrayParam("insightfulness", ins),
             });
         }
+        if (sortMode !== "default") {
+            chips.push({
+                key: "sort",
+                label: `Sorted by ${sortMode}`,
+                onRemove: () => setSortMode("default"),
+            });
+        }
         return chips;
     }, [
         selectedCategories,
         selectedDifficulties,
         selectedInsightfulness,
+        sortMode,
         categoryOptions,
         difficultyOptions,
         insightfulnessOptions,
         toggleArrayParam,
+        setSortMode,
     ]);
 
-    const totalTasksCount = filteredSheetTasks.length + filteredStandaloneTasks.length;
+    const totalTasksCount = sortedSheetTasks.length + sortedStandaloneTasks.length;
 
     return (
         <div className="min-h-screen pt-14 bg-gray-50 dark:bg-[#0a0a0f]">
@@ -597,6 +651,40 @@ const Tasks = () => {
                                             toggleArrayParam("category", v)
                                         }
                                     />
+                                    <div>
+                                        <h4 className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5">
+                                            Sort by
+                                        </h4>
+                                        <div className="space-y-1">
+                                            <button
+                                                type="button"
+                                                onClick={() => setSortMode("default")}
+                                                className={cn(
+                                                    "w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-md cursor-pointer transition-colors text-sm border border-transparent text-left",
+                                                    sortMode === "default"
+                                                        ? "bg-aicc-purple/10 border-aicc-purple/30 text-aicc-purple dark:bg-aicc-purple/20 dark:border-aicc-purple/40 dark:text-aicc-purple-light"
+                                                        : "bg-gray-50 border-gray-200/50 text-gray-700 dark:bg-white/5 dark:border-white/10 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
+                                                )}
+                                            >
+                                                Default order
+                                            </button>
+                                            {SORT_OPTIONS.map((option) => (
+                                                <button
+                                                    key={option.value}
+                                                    type="button"
+                                                    onClick={() => setSortMode(option.value)}
+                                                    className={cn(
+                                                        "w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-md cursor-pointer transition-colors text-sm border border-transparent text-left",
+                                                        sortMode === option.value
+                                                            ? "bg-aicc-purple/10 border-aicc-purple/30 text-aicc-purple dark:bg-aicc-purple/20 dark:border-aicc-purple/40 dark:text-aicc-purple-light"
+                                                            : "bg-gray-50 border-gray-200/50 text-gray-700 dark:bg-white/5 dark:border-white/10 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
+                                                    )}
+                                                >
+                                                    {option.label}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
                                     <FilterSection
                                         title="Difficulty"
                                         options={difficultyOptions}
@@ -652,19 +740,25 @@ const Tasks = () => {
                 )}
             </div>
 
-            {/* Task Grid Rendering - Innovative Masonry Columns Layout */}
+            {/* Task Grid Rendering */}
             <div className="max-w-7xl mx-auto px-4 md:px-6 pb-24 pt-2">
                 {totalTasksCount > 0 ? (
-                    <div className="columns-1 md:columns-2 gap-4 space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
                         {/* Render Sheet Tasks first */}
-                        {filteredSheetTasks.map((task, idx) => (
-                            <div key={task.problem + idx} className="break-inside-avoid">
+                        {sortedSheetTasks.map((task, idx) => (
+                            <div
+                                key={task.problem + idx}
+                                className="h-full [&>div]:h-full [&>div]:flex [&>div]:flex-col [&>div>div:last-child]:mt-auto"
+                            >
                                 <SheetTaskCard task={task} />
                             </div>
                         ))}
                         {/* Render Standalone Community Tasks */}
-                        {filteredStandaloneTasks.map((task) => (
-                            <div key={task.name} className="break-inside-avoid">
+                        {sortedStandaloneTasks.map((task) => (
+                            <div
+                                key={task.name}
+                                className="h-full [&>div]:h-full [&>div]:flex [&>div]:flex-col [&>div>div:last-child]:mt-auto"
+                            >
                                 <TaskCard task={task} />
                             </div>
                         ))}
