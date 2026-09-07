@@ -380,9 +380,9 @@ const Tasks = () => {
                 label: "Not Insightful (0★)",
                 count: filterCounts.insightfulness["0"],
                 selectedClass:
-                    "bg-gray-200 border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100",
+                    "bg-rose-100 border-rose-300 text-rose-900 dark:bg-rose-900/40 dark:border-rose-700 dark:text-rose-100",
                 unselectedClass:
-                    "bg-gray-100/60 border-gray-200/40 text-gray-700 dark:bg-white/5 dark:border-white/10 dark:text-gray-300 hover:bg-gray-200/70 dark:hover:bg-white/10",
+                    "bg-rose-50/60 border-rose-200/40 text-rose-700 dark:bg-rose-900/10 dark:border-rose-800/30 dark:text-rose-300 hover:bg-rose-100/70 dark:hover:bg-rose-900/25",
             },
             {
                 value: "unrated",

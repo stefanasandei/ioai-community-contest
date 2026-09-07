@@ -114,7 +114,10 @@ export const SheetTaskCard = ({ task }: SheetTaskCardProps) => {
   let insightLabel = insightful === 0 ? "Not Insightful" : "Unrated";
   const starsCount = insightful ?? 0;
 
-  if (insightful !== null && insightful > 0) {
+  if (insightful === 0) {
+    insightBadgeClass =
+      "bg-rose-50 border-rose-200/70 text-rose-700 dark:bg-rose-900/25 dark:border-rose-800/50 dark:text-rose-300";
+  } else if (insightful !== null && insightful > 0) {
     if (insightful === 1) {
       insightBadgeClass =
         "bg-indigo-50 border-indigo-200/70 text-indigo-700 dark:bg-indigo-900/25 dark:border-indigo-800/50 dark:text-indigo-300";
