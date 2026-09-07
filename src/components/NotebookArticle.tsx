@@ -1,4 +1,5 @@
 import ReactMarkdown, { defaultUrlTransform } from 'react-markdown';
+import { memo, useEffect } from 'react';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import remarkMathDisplayDollars from '@/lib/remark-math-display-dollars.js';
@@ -38,16 +39,21 @@ function Output({ output }: { output: NotebookOutput }) {
   const text = notebookText(output.text ?? data?.['text/plain'] ?? output.traceback);
   return text ? <pre className="notebook-output"><code>{text}</code></pre> : <p className="text-sm text-muted-foreground">This interactive output is available in the original notebook.</p>;
 }
-export default function NotebookArticle({ notebook }: { notebook: Notebook }) {
+const NotebookArticle = memo(function NotebookArticle({ notebook }: { notebook: Notebook }) {
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (/^notebook-section-\d+$/.test(id)) document.getElementById(id)?.scrollIntoView({ behavior: 'instant' });
+  }, [notebook]);
   return <div className="notebook-article prose prose-lg dark:prose-invert max-w-none">
     {notebook.cells.map((cell, index) => {
       const source = notebookText(cell.source);
-      if (cell.cell_type === 'markdown') return <section key={index}><Markdown text={source} cell={cell} /></section>;
+      if (cell.cell_type === 'markdown') return <section key={index} id={`notebook-section-${index}`}><Markdown text={source} cell={cell} /></section>;
       if (cell.cell_type === 'raw') return <pre key={index}>{source}</pre>;
       return <section key={index} className="notebook-code-cell">
-        {source.trim() && <details open={source.split('\n').length <= 12} className="notebook-code"><summary>Code <span>{notebook.metadata?.language_info?.name ?? 'Python'}</span></summary><pre><code>{source}</code></pre></details>}
+        {source.trim() && <details open={source.split('\n').length <= 12} className="notebook-code"><summary>Code</summary><pre><code>{source}</code></pre></details>}
         {cell.outputs?.map((output, i) => <Output key={i} output={output} />)}
       </section>;
     })}
   </div>;
-}
+});
+export default NotebookArticle;

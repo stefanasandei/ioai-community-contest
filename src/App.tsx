@@ -22,6 +22,7 @@ import AdminRoadmap from "./pages/AdminRoadmap";
 import AdminResources from "./pages/AdminResources";
 import AdminTasks from "./pages/AdminTasks";
 import NotFound from "./pages/NotFound";
+import BlogLoading from "./components/BlogLoading";
 
 const queryClient = new QueryClient();
 const Blogs = lazy(() => import('./pages/Blogs'));
@@ -52,8 +53,8 @@ const App = () => (
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/solutions/:round/:taskSlug" element={<Solution />} />
           <Route path="/team" element={<Team />} />
-          <Route path="/blogs" element={<Suspense fallback={<p className="p-12">Loading blogs…</p>}><Blogs /></Suspense>} />
-          <Route path="/blogs/:slug" element={<Suspense fallback={<p className="p-12">Loading blog…</p>}><Blogs /></Suspense>} />
+          <Route path="/blogs" element={<Suspense fallback={<BlogLoading page />}><Blogs /></Suspense>} />
+          <Route path="/blogs/:slug" element={<Suspense fallback={<BlogLoading page article />}><Blogs /></Suspense>} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/resources/general/:categoryId" element={<ResourceCategory />} />
           <Route path="/resources/syllabus/:sectionId" element={<ResourceSyllabus />} />

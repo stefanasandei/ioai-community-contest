@@ -9,6 +9,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import remarkMathDisplayDollars from './src/lib/remark-math-display-dollars.js'
+import blogIndex from './build/blogIndex';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -17,6 +18,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
+    blogIndex(),
     mdx({
       remarkPlugins: [
         remarkMath,
