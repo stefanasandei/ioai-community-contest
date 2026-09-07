@@ -599,10 +599,10 @@ const Tasks = () => {
                             </div>
                             <div>
                                 <h4 className="font-semibold text-gray-900 dark:text-white mb-0.5 flex items-center gap-1.5">
-                                    Insightfulness Rating (0 to 3 Stars)
+                                    Insightfulness (4 levels)
                                 </h4>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                                    Measures how much a problem depends on a non-obvious idea beyond standard textbook approaches. Insight may come from model internals, mathematical structure, or an unexpected combination of familiar ideas. Standard ideas that are not new do not count as insightful. 0 stars: Not Insightful; 1 star: Slightly Insightful; 2 stars: Insightful; 3 stars: Very Insightful.
+                                    Measures how much a problem depends on a non-obvious idea beyond standard textbook approaches. Insight may come from model internals, mathematical structure, or an unexpected combination of familiar ideas. Standard ideas that are not new do not count as insightful.
                                 </p>
                             </div>
                         </div>

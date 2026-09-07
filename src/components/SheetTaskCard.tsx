@@ -229,19 +229,20 @@ export const SheetTaskCard = ({ task }: SheetTaskCardProps) => {
                   : "opacity-60"
               )}
             />
-            {starsCount > 0 && (
-              <span className="flex items-center gap-0.5">
+            {insightful !== null && (
+              <span aria-label={`${starsCount} out of 3 stars`} className="flex items-center gap-0.5">
                 {[1, 2, 3].map((star) => (
                   <span
                     key={star}
+                    aria-hidden="true"
                     className={cn(
                       "text-[10px] leading-none",
                       starsCount >= star
                         ? "text-amber-500 dark:text-amber-400 font-bold"
-                        : "opacity-30"
+                        : "opacity-60"
                     )}
                   >
-                    ★
+                    {starsCount >= star ? "★" : "☆"}
                   </span>
                 ))}
               </span>
