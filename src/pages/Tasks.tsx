@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
     Search,
@@ -119,6 +119,7 @@ const getPracticeDifficulty = (status: Task["practiceStatus"]): number | null =>
 
 const Tasks = () => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const suggestionTitleRef = useRef<HTMLHeadingElement>(null);
 
     const searchQuery = searchParams.get("q") ?? "";
 
@@ -854,9 +855,15 @@ const Tasks = () => {
                             </div>
                         </div>
                     </div>
-                    <DialogContent className="max-h-[85vh] overflow-y-auto [&>button]:text-gray-700 dark:[&>button]:text-gray-200">
+                    <DialogContent
+                        className="max-h-[85vh] overflow-y-auto [&>button]:text-gray-700 dark:[&>button]:text-gray-200"
+                        onOpenAutoFocus={(event) => {
+                            event.preventDefault();
+                            suggestionTitleRef.current?.focus();
+                        }}
+                    >
                         <DialogHeader>
-                            <DialogTitle>Suggest a task, solution, or rating</DialogTitle>
+                            <DialogTitle ref={suggestionTitleRef} tabIndex={-1} className="outline-none">Suggest a task, solution, or rating</DialogTitle>
                             <DialogDescription>
                                 Think a task is missing, have a solution to share, or want to suggest a rating? Please message @cowile or @gegenava on Discord, preferably, or any other organizer in the AICC Discord server.
                             </DialogDescription>
@@ -885,7 +892,7 @@ const Tasks = () => {
                             <a href="https://github.com/Hungarian-AI-Olympiad/HAIO-Hungarian-AI-Olympiad" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Hungarian AI Olympiad (HAIO)</a>
                         </li>
                         <li>
-                            <a href="https://pdtn.gr/?hl=en" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Greece AI Olympiad</a>
+                            <a href="https://pdtn.gr/?hl=en" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Greek AI Olympiad</a>
                         </li>
                     </ul>
                 </div>
