@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate, Outlet } from 'react-router-dom';
-import { Map, Library, ListChecks, LogOut, ExternalLink, type LucideIcon } from 'lucide-react';
+import { Map, Library, ListChecks, BookOpen, LogOut, ExternalLink, type LucideIcon } from 'lucide-react';
 import { isAdminAuthed, logoutAdmin } from '@/lib/admin';
 import { cn } from '@/lib/utils';
 
@@ -12,6 +12,7 @@ interface AdminNavItem {
 }
 
 const adminNavItems: AdminNavItem[] = [
+  { label: 'Blogs editor', path: '/admin/blogs', icon: BookOpen, description: 'Upload notebooks & preview posts' },
   {
     label: 'Tasks editor',
     path: '/admin/tasks',

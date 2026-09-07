@@ -1,0 +1,20 @@
+.notebook-article { line-height: 1.85; overflow-wrap: anywhere; }
+.notebook-article h2 { margin-top: 2.8em; scroll-margin-top: 6rem; font-size: 1.8em; letter-spacing: -.025em; }
+.notebook-article h3 { margin-top: 2em; letter-spacing: -.015em; }
+.notebook-article a { color: #8c00ff; text-underline-offset: 3px; }
+.dark .notebook-article a { color: #b366ff; }
+.notebook-article pre { max-width: 100%; overflow: auto; font-size: .8em; line-height: 1.7; }
+.notebook-article .katex-display { overflow-x: auto; overflow-y: hidden; padding: .5rem 0; }
+.notebook-article img { max-width: 100%; height: auto; margin: 1.5rem auto; }
+.notebook-article .notebook-code { margin: 1.25rem 0; border: 1px solid #e5e7eb; border-radius: .5rem; overflow: hidden; }
+.notebook-code summary { cursor: pointer; padding: .65rem 1rem; font-size: .8rem; font-weight: 500; background: #f9fafb; }
+.notebook-code summary span { float: right; color: #6b7280; font-weight: 400; }
+.notebook-article .notebook-code pre { margin: 0; border-radius: 0; }
+.notebook-article .notebook-output { max-height: 26rem; background: #f3f4f6; color: #374151; }
+.dark .notebook-code { border-color: #374151; }
+.dark .notebook-code summary, .dark .notebook-article .notebook-output { background: #111827; color: #d1d5db; }
+.notebook-article section > div:not(.notebook-code):not(.notebook-html) { margin: 1.5rem 0; padding: 1rem 1.25rem; border-left: 3px solid #8c00ff; background: #f9fafb; font-size: .95em; }
+.notebook-article section > div > div + div { margin-top: .6rem; }
+.dark .notebook-article section > div:not(.notebook-code):not(.notebook-html) { background: #111827; }
+.notebook-article :not(pre) > code::before, .notebook-article :not(pre) > code::after { content: none; }
+.notebook-article table { display: block; max-width: 100%; overflow-x: auto; }
