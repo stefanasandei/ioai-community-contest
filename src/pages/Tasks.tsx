@@ -7,6 +7,7 @@ import {
     SlidersHorizontal,
     Gauge,
     Lightbulb,
+    Plus,
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -19,6 +20,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import data from "@/data/contests.json";
 import { getSheetTasks, getUniqueSheetCategories, type ParsedSheetTask } from "@/data/sheet/sheetUtils";
@@ -89,12 +91,24 @@ interface ActiveChip {
     onRemove: () => void;
 }
 
-type SortMode = "default" | "insightfulness" | "difficulty";
+type SortField = "insightfulness" | "difficulty";
+type SortRule = { field: SortField; direction: "asc" | "desc" };
 
-const SORT_OPTIONS: { value: Exclude<SortMode, "default">; label: string }[] = [
-    { value: "insightfulness", label: "Insightfulness (high to low)" },
-    { value: "difficulty", label: "Difficulty (high to low)" },
+const SORT_OPTIONS: { value: SortField; label: string }[] = [
+    { value: "insightfulness", label: "Insightfulness" },
+    { value: "difficulty", label: "Difficulty" },
 ];
+
+const sortDirectionLabel = ({ field, direction }: SortRule) =>
+    field === "difficulty"
+        ? direction === "asc" ? "Easy → Hard" : "Hard → Easy"
+        : direction === "asc" ? "Low → High" : "High → Low";
+
+const compareRatings = (a: number | null, b: number | null, direction: SortRule["direction"]) => {
+    if (a === null) return b === null ? 0 : 1;
+    if (b === null) return -1;
+    return direction === "asc" ? a - b : b - a;
+};
 
 const getPracticeDifficulty = (status: Task["practiceStatus"]): number | null => {
     if (status === "easy") return 2;
@@ -108,9 +122,17 @@ const Tasks = () => {
 
     const searchQuery = searchParams.get("q") ?? "";
 
-    const sortMode = useMemo<SortMode>(() => {
-        const value = searchParams.get("sort");
-        return value === "difficulty" || value === "insightfulness" ? value : "default";
+    const sortRules = useMemo<SortRule[]>(() => {
+        const rules: SortRule[] = [];
+        for (const token of (searchParams.get("sort") ?? "").split(",")) {
+            const [field, direction = "desc"] = token.split(":");
+            if ((field === "difficulty" || field === "insightfulness") &&
+                (direction === "asc" || direction === "desc") &&
+                !rules.some((rule) => rule.field === field)) {
+                rules.push({ field, direction });
+            }
+        }
+        return rules;
     }, [searchParams]);
 
     const selectedCategories = useMemo(
@@ -173,10 +195,18 @@ const Tasks = () => {
         );
     }, [setSearchParams]);
 
-    const setSortMode = useCallback(
-        (value: SortMode) => setParam("sort", value === "default" ? null : value),
+    const setSortRules = useCallback(
+        (rules: SortRule[]) => setParam("sort", rules.map(({ field, direction }) => `${field}:${direction}`).join(",") || null),
         [setParam]
     );
+
+    const cycleSort = (field: SortField) => {
+        const current = sortRules.find((rule) => rule.field === field);
+        if (!current) setSortRules([...sortRules, { field, direction: "desc" }]);
+        else if (current.direction === "desc") {
+            setSortRules(sortRules.map((rule) => rule.field === field ? { ...rule, direction: "asc" } : rule));
+        } else setSortRules(sortRules.filter((rule) => rule.field !== field));
+    };
 
     // Build categories list dynamically from sheet.json and community tasks
     const allCategoriesList = useMemo(() => {
@@ -199,7 +229,6 @@ const Tasks = () => {
             easy: 0,
             medium: 0,
             hard: 0,
-            expert: 0,
             unrated: 0,
         };
 
@@ -220,10 +249,9 @@ const Tasks = () => {
             }
 
             if (st.difficulty !== null) {
-                if (st.difficulty <= 3.4) difficulties.easy++;
-                else if (st.difficulty <= 6.4) difficulties.medium++;
-                else if (st.difficulty <= 8.4) difficulties.hard++;
-                else difficulties.expert++;
+                if (st.difficulty < 4) difficulties.easy++;
+                else if (st.difficulty < 7) difficulties.medium++;
+                else difficulties.hard++;
             } else {
                 difficulties.unrated++;
             }
@@ -279,7 +307,7 @@ const Tasks = () => {
         () => [
             {
                 value: "easy",
-                label: "Easy (0 - 3.4)",
+                label: "Easy",
                 count: filterCounts.difficulties.easy,
                 selectedClass:
                     "bg-emerald-100 border-emerald-300 text-emerald-900 dark:bg-emerald-900/40 dark:border-emerald-700 dark:text-emerald-100",
@@ -288,7 +316,7 @@ const Tasks = () => {
             },
             {
                 value: "medium",
-                label: "Medium (3.5 - 6.4)",
+                label: "Medium",
                 count: filterCounts.difficulties.medium,
                 selectedClass:
                     "bg-amber-100 border-amber-300 text-amber-900 dark:bg-amber-900/40 dark:border-amber-700 dark:text-amber-100",
@@ -297,21 +325,12 @@ const Tasks = () => {
             },
             {
                 value: "hard",
-                label: "Hard (6.5 - 8.4)",
+                label: "Hard",
                 count: filterCounts.difficulties.hard,
                 selectedClass:
                     "bg-orange-100 border-orange-300 text-orange-900 dark:bg-orange-900/40 dark:border-orange-700 dark:text-orange-100",
                 unselectedClass:
                     "bg-orange-50/60 border-orange-200/40 text-orange-700 dark:bg-orange-900/10 dark:border-orange-800/30 dark:text-orange-300 hover:bg-orange-100/70 dark:hover:bg-orange-900/25",
-            },
-            {
-                value: "expert",
-                label: "Expert (8.5 - 10.0)",
-                count: filterCounts.difficulties.expert,
-                selectedClass:
-                    "bg-red-100 border-red-300 text-red-900 dark:bg-red-900/40 dark:border-red-700 dark:text-red-100",
-                unselectedClass:
-                    "bg-red-50/60 border-red-200/40 text-red-700 dark:bg-red-900/10 dark:border-red-800/30 dark:text-red-300 hover:bg-red-100/70 dark:hover:bg-red-900/25",
             },
             {
                 value: "unrated",
@@ -330,7 +349,7 @@ const Tasks = () => {
         () => [
             {
                 value: "3",
-                label: "Masterpiece (3★)",
+                label: "Very Insightful (3★)",
                 count: filterCounts.insightfulness["3"],
                 selectedClass:
                     "bg-amber-100 border-amber-300 text-amber-900 dark:bg-amber-900/40 dark:border-amber-700 dark:text-amber-100 font-bold",
@@ -339,7 +358,7 @@ const Tasks = () => {
             },
             {
                 value: "2",
-                label: "Very Insightful (2★)",
+                label: "Insightful (2★)",
                 count: filterCounts.insightfulness["2"],
                 selectedClass:
                     "bg-purple-100 border-purple-300 text-purple-900 dark:bg-purple-900/40 dark:border-purple-700 dark:text-purple-100",
@@ -348,7 +367,7 @@ const Tasks = () => {
             },
             {
                 value: "1",
-                label: "Insightful (1★)",
+                label: "Slightly Insightful (1★)",
                 count: filterCounts.insightfulness["1"],
                 selectedClass:
                     "bg-indigo-100 border-indigo-300 text-indigo-900 dark:bg-indigo-900/40 dark:border-indigo-700 dark:text-indigo-100",
@@ -357,7 +376,7 @@ const Tasks = () => {
             },
             {
                 value: "0",
-                label: "Standard (0★)",
+                label: "Not Insightful (0★)",
                 count: filterCounts.insightfulness["0"],
                 selectedClass:
                     "bg-gray-200 border-gray-300 text-gray-900 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100",
@@ -381,7 +400,7 @@ const Tasks = () => {
         selectedCategories.length +
         selectedDifficulties.length +
         selectedInsightfulness.length +
-        (sortMode !== "default" ? 1 : 0);
+        sortRules.length;
     const hasSearchOrFilter = searchQuery !== "" || activeFilterCount > 0;
 
     // Filter Sheet Tasks
@@ -402,10 +421,9 @@ const Tasks = () => {
                 const matchesDiff = selectedDifficulties.some((d) => {
                     if (d === "unrated") return diff === null;
                     if (diff === null) return false;
-                    if (d === "easy") return diff <= 3.4;
-                    if (d === "medium") return diff >= 3.5 && diff <= 6.4;
-                    if (d === "hard") return diff >= 6.5 && diff <= 8.4;
-                    if (d === "expert") return diff >= 8.5;
+                    if (d === "easy") return diff < 4;
+                    if (d === "medium") return diff >= 4 && diff < 7;
+                    if (d === "hard") return diff >= 7;
                     return true;
                 });
                 if (!matchesDiff) return false;
@@ -463,24 +481,36 @@ const Tasks = () => {
     }, [searchQuery, selectedCategories, selectedDifficulties, selectedInsightfulness]);
 
     const sortedSheetTasks = useMemo(() => {
-        if (sortMode === "default") return filteredSheetTasks;
+        if (sortRules.length === 0) return filteredSheetTasks;
 
         return [...filteredSheetTasks].sort((a, b) => {
-            const aValue = sortMode === "difficulty" ? a.difficulty : a.insightful;
-            const bValue = sortMode === "difficulty" ? b.difficulty : b.insightful;
-            return (bValue ?? -1) - (aValue ?? -1);
+            for (const { field, direction } of sortRules) {
+                const result = compareRatings(
+                    field === "difficulty" ? a.difficulty : a.insightful,
+                    field === "difficulty" ? b.difficulty : b.insightful,
+                    direction
+                );
+                if (result !== 0) return result;
+            }
+            return 0;
         });
-    }, [filteredSheetTasks, sortMode]);
+    }, [filteredSheetTasks, sortRules]);
 
     const sortedStandaloneTasks = useMemo(() => {
-        if (sortMode === "default") return filteredStandaloneTasks;
+        if (sortRules.length === 0) return filteredStandaloneTasks;
 
         return [...filteredStandaloneTasks].sort((a, b) => {
-            const aValue = sortMode === "difficulty" ? getPracticeDifficulty(a.practiceStatus) : null;
-            const bValue = sortMode === "difficulty" ? getPracticeDifficulty(b.practiceStatus) : null;
-            return (bValue ?? -1) - (aValue ?? -1);
+            for (const { field, direction } of sortRules) {
+                const result = compareRatings(
+                    field === "difficulty" ? getPracticeDifficulty(a.practiceStatus) : null,
+                    field === "difficulty" ? getPracticeDifficulty(b.practiceStatus) : null,
+                    direction
+                );
+                if (result !== 0) return result;
+            }
+            return 0;
         });
-    }, [filteredStandaloneTasks, sortMode]);
+    }, [filteredStandaloneTasks, sortRules]);
 
     // Combined active chips
     const activeChips: ActiveChip[] = useMemo(() => {
@@ -509,11 +539,11 @@ const Tasks = () => {
                 onRemove: () => toggleArrayParam("insightfulness", ins),
             });
         }
-        if (sortMode !== "default") {
+        for (const [index, rule] of sortRules.entries()) {
             chips.push({
-                key: "sort",
-                label: `Sorted by ${sortMode}`,
-                onRemove: () => setSortMode("default"),
+                key: `sort-${rule.field}`,
+                label: `${index > 0 ? "Then " : ""}${SORT_OPTIONS.find((option) => option.value === rule.field)?.label}: ${sortDirectionLabel(rule)}`,
+                onRemove: () => setSortRules(sortRules.filter((item) => item.field !== rule.field)),
             });
         }
         return chips;
@@ -521,12 +551,12 @@ const Tasks = () => {
         selectedCategories,
         selectedDifficulties,
         selectedInsightfulness,
-        sortMode,
+        sortRules,
         categoryOptions,
         difficultyOptions,
         insightfulnessOptions,
         toggleArrayParam,
-        setSortMode,
+        setSortRules,
     ]);
 
     const totalTasksCount = sortedSheetTasks.length + sortedStandaloneTasks.length;
@@ -543,7 +573,7 @@ const Tasks = () => {
                         <span className="text-gradient">Bank</span>
                     </h1>
                     <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 font-light max-w-3xl mb-6">
-                        Explore Olympiad & National AI contest problems along with standalone community practice tasks.
+                        This problem bank brings together publicly available problems from AI olympiads worldwide.
                     </p>
 
                     {/* Explanation Callout Banner for Difficulty & Insightfulness */}
@@ -554,10 +584,10 @@ const Tasks = () => {
                             </div>
                             <div>
                                 <h4 className="font-semibold text-gray-900 dark:text-white mb-0.5 flex items-center gap-1.5">
-                                    Difficulty Rating (0.0 to 10.0)
+                                    Difficulty (Easy, Medium, Hard)
                                 </h4>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                                    Measures technical and implementation complexity — ranging from Easy (0.0–3.4), Medium (3.5–6.4), Hard (6.5–8.4), to Expert (8.5–10.0). Unrated indicates tasks pending benchmark evaluation.
+                                    Estimates how hard a problem is for a contestant with strong fundamentals, given roughly two hours and limited compute. It reflects the steps, implementation, experimentation, and debugging needed to reach a full solution.
                                 </p>
                             </div>
                         </div>
@@ -571,11 +601,14 @@ const Tasks = () => {
                                     Insightfulness Rating (0 to 3 Stars)
                                 </h4>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                                    Measures creative problem-solving and mathematical depth — from Standard (0★), Insightful (1★), Very Insightful (2★), to Masterpiece (3★).
+                                    Measures how much a problem depends on a non-obvious idea beyond standard textbook approaches. Insight may come from model internals, mathematical structure, or an unexpected combination of familiar ideas. Standard ideas that are not new do not count as insightful. 0 stars: Not Insightful; 1 star: Slightly Insightful; 2 stars: Insightful; 3 stars: Very Insightful.
                                 </p>
                             </div>
                         </div>
                     </div>
+                    <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                        These ratings are highly subjective and should be taken with a grain of salt.
+                    </p>
                 </div>
             </div>
 
@@ -625,11 +658,14 @@ const Tasks = () => {
                                 </button>
                             </PopoverTrigger>
                             <PopoverContent
-                                className="w-72 p-4 max-h-[80vh] overflow-y-auto"
+                                className="z-40 w-72 max-w-[calc(100vw-2rem)] p-0 flex flex-col overflow-hidden rounded-xl shadow-xl"
+                                style={{ maxHeight: "min(80vh, calc(var(--radix-popover-content-available-height) - 8px))" }}
                                 align="end"
+                                side="bottom"
+                                avoidCollisions={false}
                                 sideOffset={6}
                             >
-                                <div className="flex items-center justify-between mb-3">
+                                <div className="flex shrink-0 items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-white/10">
                                     <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                                         Filters
                                     </h3>
@@ -642,15 +678,7 @@ const Tasks = () => {
                                         </button>
                                     )}
                                 </div>
-                                <div className="space-y-4">
-                                    <FilterSection
-                                        title="Category"
-                                        options={categoryOptions}
-                                        selected={selectedCategories}
-                                        onToggle={(v) =>
-                                            toggleArrayParam("category", v)
-                                        }
-                                    />
+                                <div className="min-h-0 overflow-y-auto overscroll-contain space-y-4 p-4">
                                     <div>
                                         <h4 className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5">
                                             Sort by
@@ -658,31 +686,45 @@ const Tasks = () => {
                                         <div className="space-y-1">
                                             <button
                                                 type="button"
-                                                onClick={() => setSortMode("default")}
+                                                onClick={() => setSortRules([])}
+                                                aria-pressed={sortRules.length === 0}
                                                 className={cn(
                                                     "w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-md cursor-pointer transition-colors text-sm border border-transparent text-left",
-                                                    sortMode === "default"
+                                                    sortRules.length === 0
                                                         ? "bg-aicc-purple/10 border-aicc-purple/30 text-aicc-purple dark:bg-aicc-purple/20 dark:border-aicc-purple/40 dark:text-aicc-purple-light"
                                                         : "bg-gray-50 border-gray-200/50 text-gray-700 dark:bg-white/5 dark:border-white/10 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
                                                 )}
                                             >
                                                 Default order
                                             </button>
-                                            {SORT_OPTIONS.map((option) => (
+                                            {SORT_OPTIONS.map((option) => {
+                                                const priority = sortRules.findIndex((rule) => rule.field === option.value);
+                                                const rule = sortRules[priority];
+                                                return (
                                                 <button
                                                     key={option.value}
                                                     type="button"
-                                                    onClick={() => setSortMode(option.value)}
+                                                    onClick={() => cycleSort(option.value)}
+                                                    aria-pressed={!!rule}
                                                     className={cn(
                                                         "w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-md cursor-pointer transition-colors text-sm border border-transparent text-left",
-                                                        sortMode === option.value
+                                                        rule
                                                             ? "bg-aicc-purple/10 border-aicc-purple/30 text-aicc-purple dark:bg-aicc-purple/20 dark:border-aicc-purple/40 dark:text-aicc-purple-light"
                                                             : "bg-gray-50 border-gray-200/50 text-gray-700 dark:bg-white/5 dark:border-white/10 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
                                                     )}
                                                 >
-                                                    {option.label}
+                                                    <span className="flex-1 font-medium">
+                                                        {priority > 0 && <span className="mr-1 text-xs opacity-70">Then</span>}
+                                                        {option.label}
+                                                    </span>
+                                                    {rule && (
+                                                        <span className="shrink-0 rounded px-2 py-0.5 text-[11px] font-semibold bg-aicc-purple text-white dark:bg-aicc-purple-light dark:text-gray-950">
+                                                            {sortDirectionLabel(rule)}
+                                                        </span>
+                                                    )}
                                                 </button>
-                                            ))}
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                     <FilterSection
@@ -699,6 +741,14 @@ const Tasks = () => {
                                         selected={selectedInsightfulness}
                                         onToggle={(v) =>
                                             toggleArrayParam("insightfulness", v)
+                                        }
+                                    />
+                                    <FilterSection
+                                        title="Category"
+                                        options={categoryOptions}
+                                        selected={selectedCategories}
+                                        onToggle={(v) =>
+                                            toggleArrayParam("category", v)
                                         }
                                     />
                                 </div>
@@ -784,6 +834,58 @@ const Tasks = () => {
                         </button>
                     </div>
                 )}
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 md:px-6 pb-16">
+                <Dialog>
+                    <div className="rounded-xl border border-dashed border-gray-300 dark:border-white/20 bg-white dark:bg-white/5 p-6">
+                        <div className="flex items-start gap-3">
+                            <Plus className="w-5 h-5 mt-1 shrink-0 text-aicc-purple dark:text-aicc-purple-light" />
+                            <div>
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-white">Help improve the problem bank</h3>
+                                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                    Suggest a missing task, add a solution, or propose a new or updated rating.
+                                </p>
+                                <DialogTrigger asChild>
+                                    <button type="button" className="mt-4 rounded-lg bg-aicc-purple px-4 py-2 text-sm font-medium text-white hover:bg-aicc-purple-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aicc-purple focus-visible:ring-offset-2">
+                                        Suggest a task, solution, or rating
+                                    </button>
+                                </DialogTrigger>
+                            </div>
+                        </div>
+                    </div>
+                    <DialogContent className="max-h-[85vh] overflow-y-auto">
+                        <DialogHeader>
+                            <DialogTitle>Suggest a task, solution, or rating</DialogTitle>
+                            <DialogDescription>
+                                Think a task is missing, have a solution to share, or want to suggest a rating? Please message @cowile or @gegenava on Discord, preferably, or any other organizer in the AICC Discord server.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="text-sm text-gray-700 dark:text-gray-300">
+                            <p className="font-semibold mb-2">Include what applies:</p>
+                            <ul className="list-disc pl-5 space-y-2">
+                                <li><strong>Missing task:</strong> the problem name, contest and year, a public problem link, and its category or topics if known.</li>
+                                <li><strong>Solution:</strong> the problem name, a public solution link, and the author or source to credit.</li>
+                                <li><strong>New or updated rating:</strong> the problem name, your proposed difficulty or insightfulness rating, and a short explanation.</li>
+                            </ul>
+                        </div>
+                        <a href="https://discord.gg/7GfxrqRreY" target="_blank" rel="noopener noreferrer" className="inline-flex justify-center rounded-lg bg-aicc-purple px-4 py-2 text-sm font-medium text-white hover:bg-aicc-purple-light">
+                            Open AICC Discord
+                        </a>
+                    </DialogContent>
+                </Dialog>
+                <div className="mt-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-5">
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white">To be added</h3>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Problems from these contests are not in the bank yet:</p>
+                    <ul className="mt-3 space-y-2 text-sm">
+                        <li>
+                            <a href="https://saio.kattis.com/" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Sweden AI Olympiad (SAIO)</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Hungarian-AI-Olympiad/HAIO-Hungarian-AI-Olympiad" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Hungarian AI Olympiad (HAIO)</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <Footer />

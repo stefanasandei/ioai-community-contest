@@ -53,7 +53,7 @@ export function parseSheetTask(item: SheetTask): ParsedSheetTask {
   const problem = item.Problem ? String(item.Problem).trim() : "Untitled Problem";
   
   // Clean category (e.g. fix typo "Computer VIsion" -> "Computer Vision")
-  let category = item.Category ? String(item.Category).trim() : "General ML";
+  let category = String(item.Category ?? "").trim() || "Unspecified";
   if (category.toLowerCase() === "computer vision") {
     category = "Computer Vision";
   }
