@@ -33,7 +33,7 @@ const BecomeSetterSection = () => {
   }, []);
 
   const guidelines = [
-    { icon: Users, color: 'bg-violet-500', text: 'Anyone can submit tasks via Discord tickets or other channels' },
+    { icon: Users, color: 'bg-violet-500', text: 'Anyone can submit tasks on Discord in the #submit-a-task channel' },
     { icon: Sparkles, color: 'bg-orange-500', text: 'Tasks must be original, not reused from other competitions' },
     { icon: CheckCircle2, color: 'bg-teal-500', text: 'Instructions must be clear with unambiguous evaluation criteria' },
     { icon: Target, color: 'bg-pink-500', text: 'Appropriate for top high school students' },
