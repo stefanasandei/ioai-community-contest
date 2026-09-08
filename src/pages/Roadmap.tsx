@@ -298,7 +298,7 @@ const Roadmap = () => {
                         handleTopicClick(section.id, selectedTopic || '');
                         setSearchQuery('');
                       }}
-                      className="mt-2 text-xs font-medium text-aicc-purple hover:underline"
+                      className="mt-2 text-xs font-medium text-aicc-purple dark:text-aicc-purple-light hover:underline"
                     >
                       Clear filters
                     </button>

@@ -39,7 +39,7 @@ const HeroSection = () => {
       </div>
 
       <div
-        className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]"
+        className="absolute inset-0 text-white dark:text-foreground opacity-[0.02] dark:opacity-[0.05]"
         style={{
           backgroundImage:
             `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 1px)`,
@@ -65,9 +65,10 @@ const HeroSection = () => {
         <img
           src="/assets/aicc_long_black.png"
           alt="AICC Logo"
-          className="opacity-100 max-h-24 inline-flex mb-5"
+          className="opacity-100 max-h-24 inline-flex mb-5 dark:hidden"
 
         />
+        <img src="/assets/aicc_long.png" alt="AICC Logo" className="hidden opacity-100 max-h-24 mb-5 dark:inline-flex" />
 
         <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-4 font-medium">
           Contests to prepare for AI Olympiads
@@ -82,7 +83,7 @@ const HeroSection = () => {
         {/* Stats */}
         <div className="flex flex-wrap justify-center gap-8 mb-10">
           <div className="text-center">
-            <div className="text-3xl font-bold text-aicc-purple bg-clip-text">
+            <div className="text-3xl font-bold text-aicc-purple dark:text-aicc-purple-light bg-clip-text">
               {filteredContests.length}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">

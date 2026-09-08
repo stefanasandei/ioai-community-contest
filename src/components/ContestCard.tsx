@@ -199,7 +199,7 @@ const ContestCard = ({
                                             </span>
                                         ))}
                                         {task.author && (
-                                            <span className="text-xs text-gray-500 dark:text-gray-500 truncate min-w-0">
+                                            <span className="text-xs text-gray-500 dark:text-gray-400 truncate min-w-0">
                                                 by{" "}
                                                 <span className="font-medium text-gray-700 dark:text-gray-300">
                                                     {task.author}

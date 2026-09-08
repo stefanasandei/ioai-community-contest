@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './navigation.css';
+import ThemeToggle from './ThemeToggle';
 
 
 interface NavItem {
@@ -239,8 +240,9 @@ const Navigation = () => {
                 <img
                   src="/assets/AICCCC.png"
                   alt="AICC Logo"
-                  className="h-9 transition-transform group-hover:scale-105"
+                  className="h-9 transition-transform group-hover:scale-105 dark:hidden"
                 />
+                <img src="/assets/aicc_white.png" alt="AICC Logo" className="hidden h-9 transition-transform group-hover:scale-105 dark:block" />
               </button>
 
               <div className="hidden md:flex items-center">
@@ -417,6 +419,7 @@ const Navigation = () => {
               </div>
 
               <div className="hidden md:flex items-center gap-2 shrink-0">
+                <ThemeToggle />
                 <a
                   href="https://github.com/AI-Community-Contest"
                   target="_blank"
@@ -438,18 +441,21 @@ const Navigation = () => {
                 </button>
               </div>
 
-              <button
-                className="md:hidden p-2 -mr-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
-                onClick={() => setMobileMenuOpen((open) => !open)}
-                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={mobileMenuOpen}
-              >
-                {mobileMenuOpen ? (
-                  <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                ) : (
-                  <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                )}
-              </button>
+              <div className="flex items-center gap-2 md:hidden">
+                <ThemeToggle />
+                <button
+                  className="p-2 -mr-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                  aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                  aria-expanded={mobileMenuOpen}
+                >
+                  {mobileMenuOpen ? (
+                    <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                  ) : (
+                    <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </nav>

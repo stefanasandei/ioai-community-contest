@@ -77,11 +77,11 @@ const ACCENT: Record<Accent, { ring: string; text: string; chip: string; bg: str
     },
     purple: {
         ring: "border-aicc-purple/40 hover:border-aicc-purple/60",
-        text: "text-aicc-purple",
-        chip: "bg-aicc-purple/15 text-aicc-purple",
+        text: "text-aicc-purple dark:text-aicc-purple-light",
+        chip: "bg-aicc-purple/15 text-aicc-purple dark:text-aicc-purple-light",
         bg: "bg-aicc-purple/[0.03] dark:bg-aicc-purple/[0.06]",
         divider: "border-aicc-purple/20",
-        icon: "text-aicc-purple",
+        icon: "text-aicc-purple dark:text-aicc-purple-light",
     },
     orange: {
         ring: "border-aicc-orange/40 hover:border-aicc-orange/60",
@@ -97,7 +97,7 @@ const PhaseTable = () => {
     return (
         <div className="not-prose my-10">
             <div className="mb-5 flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-aicc-purple">
+                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-aicc-purple dark:text-aicc-purple-light">
                     Training Curriculum
                 </span>
                 <span className="h-px flex-1 bg-gradient-to-r from-aicc-purple/30 to-transparent" />

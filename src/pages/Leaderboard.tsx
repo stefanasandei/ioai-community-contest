@@ -325,7 +325,7 @@ const Leaderboard = () => {
                                     </div>
                                     {activeMode === "normalized" && (
                                         <div className="shrink-0 text-right">
-                                            <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                                            <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-400">
                                                 Total
                                             </p>
                                             <p className="text-sm font-bold tabular-nums text-aicc-purple dark:text-aicc-purple-light">

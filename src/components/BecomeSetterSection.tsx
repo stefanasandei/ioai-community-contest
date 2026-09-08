@@ -113,7 +113,7 @@ const BecomeSetterSection = () => {
               <AccordionItem value="materials" className="rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 px-5">
                 <AccordionTrigger className="hover:no-underline py-5">
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-orange-500 text-white font-semibold text-md">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-orange-500 dark:bg-orange-700 text-white font-semibold text-md">
                       2
                     </div>
                     <span className="text-lg font-semibold text-gray-900 dark:text-white">Required Submission Materials</span>
@@ -175,7 +175,7 @@ const BecomeSetterSection = () => {
                       </div>
                     ))}
 
-                    <p className='text-gray-600'>We recommend reviewing past IOAI, NEOAI and AICC round problems to understand the type and style of tasks we are looking for.</p>
+                    <p className='text-gray-600 dark:text-gray-300'>We recommend reviewing past IOAI, NEOAI and AICC round problems to understand the type and style of tasks we are looking for.</p>
                   </div>
                 </AccordionContent>
               </AccordionItem>

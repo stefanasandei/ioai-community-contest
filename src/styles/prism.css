@@ -147,27 +147,24 @@ pre[class*="language-"].line-numbers>code {
     text-align: right;
 }
 
-/* Dark theme optimizations */
-@media (prefers-color-scheme: dark) {
+/* Follow the site's chosen theme, including an explicit light-mode override. */
+.dark code[class*="language-"],
+.dark pre[class*="language-"] {
+    color: #e6e6e6;
+}
 
-    code[class*="language-"],
-    pre[class*="language-"] {
-        color: #e6e6e6;
-    }
+.dark .token.comment {
+    color: #8a8a8a;
+}
 
-    .token.comment {
-        color: #8a8a8a;
-    }
+.dark .token.string {
+    color: #a8ff60;
+}
 
-    .token.string {
-        color: #a8ff60;
-    }
+.dark .token.keyword {
+    color: #66d9ef;
+}
 
-    .token.keyword {
-        color: #66d9ef;
-    }
-
-    .token.function {
-        color: #ffd479;
-    }
+.dark .token.function {
+    color: #ffd479;
 }
