@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Task, PracticeStatus } from "@/data/types";
+import LeaderboardButton from "@/components/LeaderboardButton";
 
 interface ContestCardProps {
     month: string;
@@ -25,6 +26,7 @@ interface ContestCardProps {
     tasks: Task[];
     roundId: number;
     highlightQuery?: string;
+    showLeaderboard?: boolean;
 }
 
 const TASK_CONFIG = {
@@ -104,23 +106,29 @@ const ContestCard = ({
     tasks,
     roundId,
     highlightQuery,
+    showLeaderboard = false,
 }: ContestCardProps) => {
     const trimmedQuery = highlightQuery?.trim() ?? "";
 
     return (
         <div className="rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-100 dark:border-white/5">
-                <div className="flex items-baseline gap-2">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                        {month}
-                    </h3>
-                    <span className="text-base text-gray-500 dark:text-gray-400">
-                        {year}
-                    </span>
+            <div className="flex items-center justify-between gap-4 border-b border-gray-100 px-6 py-4 dark:border-white/5">
+                <div>
+                    <div className="flex items-baseline gap-2">
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                            {month}
+                        </h3>
+                        <span className="text-base text-gray-500 dark:text-gray-400">
+                            {year}
+                        </span>
+                    </div>
+                    <p className="mt-0.5 text-sm text-gray-600 dark:text-gray-400">
+                        {title}
+                    </p>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5 mb-0">
-                    {title}
-                </p>
+                {showLeaderboard && (
+                    <LeaderboardButton roundNumber={roundId - 1} />
+                )}
             </div>
 
             <ul className="divide-y divide-gray-100 dark:divide-white/5">

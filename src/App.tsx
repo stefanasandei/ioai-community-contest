@@ -21,6 +21,7 @@ import AdminLayout from "./components/AdminLayout";
 import AdminRoadmap from "./pages/AdminRoadmap";
 import AdminResources from "./pages/AdminResources";
 import AdminTasks from "./pages/AdminTasks";
+import Leaderboard from "./pages/Leaderboard";
 import NotFound from "./pages/NotFound";
 import BlogLoading from "./components/BlogLoading";
 
@@ -50,6 +51,7 @@ const App = () => (
           <Route path="/become-setter" element={<BecomeSetter />} />
           <Route path="/rules" element={<Rules />} />
           <Route path="/contests" element={<Contests />} />
+          <Route path="/contests/:roundPath/leaderboard" element={<Leaderboard />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/solutions/:round/:taskSlug" element={<Solution />} />
           <Route path="/team" element={<Team />} />

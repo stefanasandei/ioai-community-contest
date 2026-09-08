@@ -12,6 +12,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ContestCard from "@/components/ContestCard";
 import TaskCard from "@/components/TaskCard";
+import LeaderboardButton from "@/components/LeaderboardButton";
 import { isTaskMatch } from "@/lib/taskUtils";
 import {
     Popover,
@@ -607,19 +608,22 @@ const Contests = () => {
                         <div className="space-y-8">
                             {filteredContests.map((contest) => (
                                 <section key={contest.id}>
-                                    <div className="flex-1 mb-4">
-                                        <div className="flex items-baseline gap-2 mb-1">
-                                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                                                {contest.month}
-                                            </h3>
-                                            <span className="text-lg text-gray-500 dark:text-gray-400">
-                                                {contest.year}
-                                            </span>
+                                    <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                                        <div>
+                                            <div className="flex items-baseline gap-2 mb-1">
+                                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                                    {contest.month}
+                                                </h3>
+                                                <span className="text-lg text-gray-500 dark:text-gray-400">
+                                                    {contest.year}
+                                                </span>
+                                            </div>
+                                            <p className="text-sm text-gray-600 dark:text-gray-300">
+                                                {contest.title} · {contest.tasks.length} task
+                                                {contest.tasks.length !== 1 ? "s" : ""}
+                                            </p>
                                         </div>
-                                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                                            {contest.title} · {contest.tasks.length} task
-                                            {contest.tasks.length !== 1 ? "s" : ""}
-                                        </p>
+                                        <LeaderboardButton roundNumber={contest.id - 1} />
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {contest.tasks.map((task) => (
@@ -644,6 +648,7 @@ const Contests = () => {
                                     tasks={contest.tasks}
                                     roundId={contest.id}
                                     highlightQuery={searchQuery}
+                                    showLeaderboard
                                 />
                             ))}
                         </div>
