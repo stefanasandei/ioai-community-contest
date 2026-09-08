@@ -127,7 +127,9 @@ const ContestCard = ({
                     </p>
                 </div>
                 {showLeaderboard && (
-                    <LeaderboardButton roundNumber={roundId - 1} />
+                    <div className="mt-1.5 shrink-0">
+                        <LeaderboardButton roundNumber={roundId - 1} />
+                    </div>
                 )}
             </div>
 

@@ -6,13 +6,14 @@ enum TeamRole {
   ProblemSetter = 'Problem Setter',
   ProblemReview = 'Problem Review',
   Logistics = 'Logistics',
+  Contributor = 'Contributor',
 }
 
 interface TeamMember {
   name: string;
-  username: string;
+  username?: string;
   emoji?: string;
-  description: string;
+  description?: string;
   teams: TeamRole[];
 }
 
@@ -20,30 +21,42 @@ const teamMembers: TeamMember[] = [
   { name: 'Georgios Tzovairis', username: 'Gior', emoji: '🇬🇷', description: 'IOAI \'26 Silver, EUROAI \'26 Bronze, IOAI \'25, HS student class of \'27', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Stefan Asandei', username: 'Stefan', emoji: '🇷🇴', description: 'Math and CS at Ecole Polytechnique, EUROAI \'26 Silver, IOAI \'25 Bronze', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Yue Heng Wong', username: 'Walnit', emoji: '🇸🇬', description: "IOAI '25 (Silver), Singapore NOAI '25 (Gold), 6/13 Hackathons Won, NUS CS '32", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
-  { name: 'Antony Ingorokva', username: 'Cowile', emoji: '🇬🇪', description: "IOAI \'26 Silver, EUROAI \'26 Bronze, Honourable Mention at IOAI '25", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
-  { name: 'Nikoloz Gegenava', username: 'Nikoloz', emoji: '🇬🇪', description: "IOAI \'26 Gold, IOAI '25, EUCYS '25 Special Jury Award, IYNT '25 Bronze Medal", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
+  { name: 'Antony Ingorokva', username: 'Cowile', emoji: '🇬🇪', description: "IOAI '26 Silver, EUROAI '26 Bronze, Honourable Mention at IOAI '25", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
+  { name: 'Nikoloz Gegenava', username: 'Nikoloz', emoji: '🇬🇪', description: "IOAI '26 Gold, IOAI '25, EUCYS '25 Special Jury Award, IYNT '25 Bronze Medal", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
   { name: 'Henry Ho', username: 'Convexhulltrick', emoji: '🇦🇺', description: 'Bronze medal at IOAI \'25', teams: [TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Apostolidis Charalampos', username: 'bl4ck', emoji: '🇬🇷', description: 'Hellenic NOI Top 12, Hellenic NOAI Top 25', teams: [TeamRole.Logistics] },
   { name: 'Zerui', username: 'iamnumber4', emoji: '🇸🇬', description: 'IOAI \'25', teams: [TeamRole.Logistics] },
   { name: 'Dauzhan Beketov', username: 'Megazhan', emoji: '🇰🇿', description: 'IOAI \'26 Gold (2nd overall), IOAI \'25 Bronze, IOI \'25 Bronze, EUROAI \'26 Silver', teams: [TeamRole.ProblemSetter] },
   { name: 'Luvidi Pranawa Alghari', username: 'Luvidi', emoji: '🇮🇩', description: 'IOAI \'26 Gold, IOAI \'25 Silver', teams: [TeamRole.ProblemSetter] },
-  { name: 'Wang Jiayu', username: 'Sabkx', emoji: '🇸🇬', description: 'IOAI \'25 Gold (3rd overall), IOAI \'24 Gold', teams: [TeamRole.ProblemSetter] },
+  { name: 'Wang Jiayu', username: 'Sabkx', emoji: '🇸🇬', description: 'IOAI \'25 Gold (3rd overall), IOAI \'24 Gold', teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
+  { name: 'Carson Cheng', emoji: '🇭🇰', teams: [TeamRole.Contributor] },
+  { name: 'Malo Tessé', emoji: '🇫🇷', teams: [TeamRole.Contributor] },
+  { name: 'Theo Bustamante', emoji: '🇵🇭', teams: [TeamRole.Contributor] },
+  { name: 'Elison Ang', emoji: '🇵🇭', teams: [TeamRole.Contributor] },
+  { name: 'Chon Feng Qi', emoji: '🇲🇾', teams: [TeamRole.Contributor] },
+  { name: 'Gheorghiță Istrate David', emoji: '🇷🇴', teams: [TeamRole.Contributor] },
+  { name: 'Jithun Methusahan', emoji: '🇱🇰', teams: [TeamRole.Contributor] },
+  { name: 'Martin Haoxuan Zhang', emoji: '🇸🇪', teams: [TeamRole.Contributor] },
+  { name: 'Low Yu Xuan', emoji: '🇲🇾', teams: [TeamRole.Contributor] },
+  { name: 'Zane Kumar', emoji: '🇬🇧', teams: [TeamRole.Contributor] },
 ];
 
 const problemSetters = teamMembers.filter(m => m.teams.includes(TeamRole.ProblemSetter));
 const problemReview = teamMembers.filter(m => m.teams.includes(TeamRole.ProblemReview));
 const logistics = teamMembers.filter(m => m.teams.includes(TeamRole.Logistics));
 
+const contributors = teamMembers.filter(m => m.teams.includes(TeamRole.Contributor));
+
 const getInitials = (name: string) => {
   return name.split(' ').map(n => n[0]).join('').toUpperCase();
 };
 
-const TeamCard = ({ member, color }: { member: TeamMember; color: 'purple' | 'orange' | 'red' }) => {
+const TeamCard = ({ member, color }: { member: TeamMember; color: 'purple' | 'orange' | 'red' | 'blue' }) => {
   return (
     <div className="border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-      <div className="px-5 pt-5">
+      <div className={`px-5 pt-5 ${!member.description ? 'pb-5' : ''}`}>
         <div className="flex items-start gap-4">
-          <div className={`w-12 h-12 flex items-center justify-center text-white font-bold text-sm shrink-0 ${color === 'purple' ? 'bg-purple-600' : color === 'orange' ? 'bg-orange-600' : 'bg-aicc-red'
+          <div className={`w-12 h-12 flex items-center justify-center text-white font-bold text-sm shrink-0 ${color === 'purple' ? 'bg-purple-600' : color === 'orange' ? 'bg-orange-600' : color === 'blue' ? 'bg-blue-600' : 'bg-aicc-red'
             }`}>
             {getInitials(member.name)}
           </div>
@@ -51,12 +64,12 @@ const TeamCard = ({ member, color }: { member: TeamMember; color: 'purple' | 'or
             <h3 className="text-base font-semibold text-gray-900 dark:text-white">
               {member.name} {member.emoji}
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400 font-light">
+            {member.username && <p className="text-sm text-gray-500 dark:text-gray-400 font-light">
               {member.username}
-            </p>
-            <p className="text-sm text-gray-600 dark:text-gray-300 font-light">
+            </p>}
+            {member.description && <p className="text-sm text-gray-600 dark:text-gray-300 font-light">
               {member.description}
-            </p>
+            </p>}
           </div>
         </div>
       </div>
@@ -68,7 +81,8 @@ const Team = () => {
   const allNames = [
     ...problemSetters.map(m => m.name),
     ...problemReview.map(m => m.name),
-    ...logistics.map(m => m.name)
+    ...logistics.map(m => m.name),
+    ...contributors.map(m => m.name)
   ];
   const uniqueMembers = new Set(allNames).size;
 
@@ -89,22 +103,6 @@ const Team = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 pt-10 pb-24">
-        {/* Problem Setters Section */}
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center justify-center w-10 h-10 rounded-none bg-purple-600">
-              <Users className="w-5 h-5 text-white" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Problem Authors</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {problemSetters.map((member, index) => (
-              <TeamCard key={index} member={member} color="purple" />
-            ))}
-          </div>
-        </div>
-
         {/* Problem Review Section */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-6">
@@ -122,7 +120,7 @@ const Team = () => {
         </div>
 
         {/* Logistics Section */}
-        <div>
+        <div className="mb-12">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex items-center justify-center w-10 h-10 rounded-none bg-aicc-red">
               <Wrench className="w-5 h-5 text-white" />
@@ -135,6 +133,42 @@ const Team = () => {
               <TeamCard key={index} member={member} color="red" />
             ))}
           </div>
+        </div>
+
+        {/* Problem Setters Section */}
+        <div className="mb-12">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center justify-center w-10 h-10 rounded-none bg-purple-600">
+              <Users className="w-5 h-5 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Problem Authors</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {problemSetters.map((member, index) => (
+              <TeamCard key={index} member={member} color="purple" />
+            ))}
+          </div>
+        </div>
+
+        {/* Contributors Section */}
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center justify-center w-10 h-10 bg-blue-600">
+              <Users className="w-5 h-5 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-blue-600 dark:text-blue-400">Contributors</h2>
+          </div>
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8">
+            {contributors.map(member => (
+              <li key={member.name} className="flex items-center gap-3 border-b border-gray-200 py-4 dark:border-gray-800">
+                <span aria-hidden="true" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-blue-50 text-xs font-semibold text-blue-600 dark:bg-blue-950 dark:text-blue-300">
+                  {getInitials(member.name)}
+                </span>
+                <span className="text-sm font-medium text-gray-900 dark:text-white">{member.name} <span className="whitespace-nowrap">{member.emoji}</span></span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

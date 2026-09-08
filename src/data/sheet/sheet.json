@@ -33,7 +33,7 @@
   },
   {
     "Contest":"Poland 2024 Stage I",
-    "Problem":"Dependancy Parsing",
+    "Problem":"Dependency Parsing",
     "Category":"Natural Language Processing",
     "Topic":null,
     "Insightful":null,
@@ -1217,7 +1217,7 @@
   },
   {
     "Contest":"GEOAI 2025",
-    "Problem":"Classifiation of images using weak labels",
+    "Problem":"Classification of Images Using Weak Labels",
     "Category":"Computer Vision",
     "Topic":"EDA, Damaged labels, Residual blocks in CNN",
     "Insightful":"0",
@@ -1249,7 +1249,7 @@
   },
   {
     "Contest":"Kazakhstan 2025",
-    "Problem":"Code Difficulty Classificaiton",
+    "Problem":"Code Difficulty Classification",
     "Category":"Natural Language Processing",
     "Topic":null,
     "Insightful":null,
@@ -1284,8 +1284,8 @@
     "Problem":"Jimmy and Aibek brotherhood",
     "Category":"Natural Language Processing",
     "Topic":null,
-    "Insightful":null,
-    "Difficulty":null,
+    "Insightful":1,
+    "Difficulty":1,
     "To-do":null,
     "Link":"https:\/\/judge.nitro-ai.org\/competitions\/cpfed\/ai-olymp-2026-first-round\/1\/view",
     "Solution":null,
@@ -1316,8 +1316,8 @@
     "Problem":"Forgotten labels",
     "Category":"Computer Vision",
     "Topic":null,
-    "Insightful":null,
-    "Difficulty":null,
+    "Insightful":0,
+    "Difficulty":2,
     "To-do":null,
     "Link":"https:\/\/judge.nitro-ai.org\/competitions\/cpfed\/ai-olymp-2026-second-round\/2\/view",
     "Solution":null,
@@ -2129,7 +2129,7 @@
   },
   {
     "Contest":"AICC Round 0",
-    "Problem":"Find the Brain Tumor",
+    "Problem":"Find Brain Tumors",
     "Category":"Computer Vision",
     "Topic":"SSL",
     "Insightful":"1",
@@ -2193,7 +2193,7 @@
   },
   {
     "Contest":"AICC Round 1",
-    "Problem":"Is this audio?!",
+    "Problem":"Is that audio?",
     "Category":"Audio",
     "Topic":null,
     "Insightful":"0",
@@ -2289,7 +2289,7 @@
   },
   {
     "Contest":"AICC Round 3",
-    "Problem":"Mortys Time Paradox",
+    "Problem":"Morty's Time Paradox",
     "Category":"Classical ML",
     "Topic":"Cyclical Features, Clustering, CLL, PLL",
     "Insightful":"2",
@@ -2401,7 +2401,7 @@
   },
   {
     "Contest":"AICC Round 6",
-    "Problem":"Classifer Classifier",
+    "Problem":"Classifier Classifier",
     "Category":"Computer Vision",
     "Topic":"Gradient Ascent",
     "Insightful":"2",
@@ -2449,7 +2449,7 @@
   },
   {
     "Contest":"AICC Round 7",
-    "Problem":"Oriented Ships",
+    "Problem":"Oriented Ship",
     "Category":"Computer Vision",
     "Topic":"YOLO, Oriented Bounding Box, Trigonometric Encoding",
     "Insightful":"2",
@@ -2689,7 +2689,7 @@
   },
   {
     "Contest":"China NOAI",
-    "Problem":"Combinatorial Word Segmentation (SAME AS IOAI 2025 GAITE!)",
+    "Problem":"Combinatorial Word Segmentation",
     "Category":"Natural Language Processing",
     "Topic":null,
     "Insightful":null,
@@ -2721,7 +2721,7 @@
   },
   {
     "Contest":"China NOAI",
-    "Problem":"Synthetic Speech Detector (SAME AS IOAI 2025 GAITE!)",
+    "Problem":"Synthetic Speech Detector",
     "Category":"Audio",
     "Topic":null,
     "Insightful":null,
@@ -2849,7 +2849,7 @@
   },
   {
     "Contest":"UKOAI 2026",
-    "Problem":"Sublimial Learning",
+    "Problem":"Subliminal Learning",
     "Category":"Deep Learning",
     "Topic":null,
     "Insightful":"1",
