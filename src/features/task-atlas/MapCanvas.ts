@@ -1,9 +1,9 @@
 import { tasks, clusters, fineClusters, colors, labelColors, type MapTask } from './data';
-import type { AtlasLaunch } from './atlasTransition';
 
 const clamp = (value: number, low: number, high: number) => Math.min(high, Math.max(low, value));
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 type View = { x: number; y: number; zoom: number };
+export type TransitionPoint = { id: number; cluster: number; x: number; y: number; radius: number; color: string; opacity: number };
 type LabelBox = { x: number; y: number; width: number; height: number; cluster?: number };
 const labelGroup = (name: string, group: MapTask[], cluster: number) => {
   const xs = group.map(t => t.x).sort((a, b) => a - b), ys = group.map(t => t.y).sort((a, b) => a - b);
@@ -15,6 +15,7 @@ const fineLabels = fineClusters.map((c, id) => labelGroup(c.n, tasks.filter(t =>
 /** Canvas drawing and view maths adapted from the supplied dependency-free task-map. */
 export class MapCanvas {
   private ctx: CanvasRenderingContext2D;
+  private labelCtx: CanvasRenderingContext2D;
   private width = 1;
   private height = 1;
   private scale = 1;
@@ -26,8 +27,6 @@ export class MapCanvas {
   private matches: Set<number> | null = null;
   private frame = 0;
   private animation = 0;
-  private entrance: { x: number; y: number; start: number } | null = null;
-  private entranceProgress = 1;
   private events = new AbortController();
   private resize: ResizeObserver;
   private theme: MutationObserver;
@@ -39,26 +38,16 @@ export class MapCanvas {
   private get originX() { return this.width / 2; }
   private get originY() { return (this.height + (this.width <= 760 ? 110 : 0)) / 2; }
 
-  constructor(private canvas: HTMLCanvasElement, private onSelect: (task: MapTask) => void, private onZoom: (value: number) => void, private onCluster: (id: number) => void, launch?: AtlasLaunch) {
+  constructor(private canvas: HTMLCanvasElement, private labelCanvas: HTMLCanvasElement, private onSelect: (task: MapTask) => void, private onZoom: (value: number) => void, private onCluster: (id: number) => void) {
     this.ctx = canvas.getContext('2d')!;
-    if (!this.ctx) throw new Error('Canvas is unavailable');
-    if (launch && Number.isFinite(launch.x) && Number.isFinite(launch.y) && Date.now() - launch.at < 2000 && !reducedMotion()) {
-      this.entrance = { x: launch.x, y: launch.y - canvas.getBoundingClientRect().top, start: performance.now() + 80 };
-      this.entranceProgress = 0;
-    }
+    this.labelCtx = labelCanvas.getContext('2d')!;
+    if (!this.ctx || !this.labelCtx) throw new Error('Canvas is unavailable');
     this.tip = document.createElement('div');
     this.tip.className = 'cluster-tooltip';
     this.tip.setAttribute('aria-hidden', 'true');
     canvas.parentElement!.append(this.tip);
     this.resize = new ResizeObserver(() => {
-      // The entrance transform must not change the canvas's drawing/hit-test size.
-      this.width = canvas.clientWidth;
-      this.height = canvas.clientHeight;
-      this.scale = Math.max(100, Math.min(this.width - (this.width > 760 ? 100 : 40), this.height - (this.width > 760 ? 100 : 240)));
-      this.dpr = clamp(devicePixelRatio || 1, 1, 2);
-      canvas.width = Math.round(this.width * this.dpr);
-      canvas.height = Math.round(this.height * this.dpr);
-      this.requestDraw();
+      if (this.resizeCanvas()) this.requestDraw();
     });
     this.resize.observe(canvas);
     this.dark = document.documentElement.classList.contains('dark');
@@ -68,24 +57,48 @@ export class MapCanvas {
     });
     this.theme.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     this.bind();
+    // Produce both layers before the entrance starts, rather than waiting for
+    // ResizeObserver and losing the opening frames on a busy device.
+    if (this.resizeCanvas()) this.draw();
+  }
+
+  private resizeCanvas() {
+    // Use layout dimensions: an entrance transform must not resize/clear the bitmap.
+    const width = this.canvas.clientWidth, height = this.canvas.clientHeight;
+    const dpr = clamp(devicePixelRatio || 1, 1, 2);
+    if (!width || !height || (width === this.width && height === this.height && dpr === this.dpr)) return false;
+    this.width = width;
+    this.height = height;
+    this.dpr = dpr;
+    this.scale = Math.max(100, Math.min(width - (width > 760 ? 100 : 40), height - (width > 760 ? 100 : 240)));
+    this.canvas.width = Math.round(width * dpr);
+    this.canvas.height = Math.round(height * dpr);
+    this.labelCanvas.width = this.canvas.width;
+    this.labelCanvas.height = this.canvas.height;
+    return true;
   }
 
   private point(task: { x: number; y: number }): [number, number] {
     const size = this.scale * this.view.zoom;
     const x = this.originX + (task.x - this.view.x) * size, y = this.originY + (task.y - this.view.y) * size;
-    if (!this.entrance || !('id' in task)) return [x, y];
-    const dot = task as MapTask;
-    const delay = dot.cluster * 0.009 + (dot.id % 7) * 0.004;
-    const progress = clamp((this.entranceProgress - delay) / (1 - delay), 0, 1);
-    const eased = 1 - (1 - progress) ** 4;
-    const angle = dot.cluster * Math.PI / 4;
-    const sx = this.entrance.x + Math.cos(angle) * 16, sy = this.entrance.y + Math.sin(angle) * 10;
-    const bend = Math.sin(progress * Math.PI) * (1 - progress) * 70;
-    return [sx + (x - sx) * eased + Math.sin(angle) * bend, sy + (y - sy) * eased - Math.cos(angle) * bend];
+    return [x, y];
   }
 
   private visible(task: MapTask) {
     return (this.active === null || task.cluster === this.active) && (!this.matches || this.matches.has(task.id));
+  }
+
+  private dotRadius(task: MapTask) {
+    const radius = clamp((this.width > 760 ? 5.6 : 3.8) + this.view.zoom * 0.7, 4.5, 9);
+    return radius + (task.id === this.selected || task.id === this.hover ? 2 : 0);
+  }
+
+  getTransitionPoints(): TransitionPoint[] {
+    return tasks.flatMap(task => {
+      const [x, y] = this.point(task);
+      if (x < -10 || y < -10 || x > this.width + 10 || y > this.height + 10) return [];
+      return [{ id: task.id, cluster: task.cluster, x, y, radius: this.dotRadius(task), color: colors[task.cluster], opacity: this.visible(task) ? 0.82 : 0.09 }];
+    });
   }
 
   private pick(x: number, y: number, touch = false): number | null {
@@ -104,10 +117,12 @@ export class MapCanvas {
   }
 
   private fly(next: View, duration = 420, smooth = false) {
-    this.entrance = null;
-    this.entranceProgress = 1;
     cancelAnimationFrame(this.animation);
     this.hideTip();
+    if (next.x === this.view.x && next.y === this.view.y && next.zoom === this.view.zoom) {
+      this.requestDraw();
+      return;
+    }
     if (reducedMotion() || document.hidden) { this.view = next; this.requestDraw(); return; }
     const start = { ...this.view }, began = performance.now();
     const step = (now: number) => {
@@ -130,7 +145,7 @@ export class MapCanvas {
     this.active = id;
     this.selected = null;
     this.hover = null;
-    if (id === null) { if (!this.entrance) this.reset(); return; }
+    if (id === null) { this.reset(); return; }
     const group = clusters[id].tasks;
     const xs = group.map(t => t.x), ys = group.map(t => t.y);
     const xmin = Math.min(...xs), xmax = Math.max(...xs), ymin = Math.min(...ys), ymax = Math.max(...ys);
@@ -139,7 +154,6 @@ export class MapCanvas {
   }
 
   setMatches(ids: number[] | null) {
-    if (ids) { this.entrance = null; this.entranceProgress = 1; }
     this.matches = ids ? new Set(ids) : null;
     this.hideTip();
     this.requestDraw();
@@ -188,7 +202,6 @@ export class MapCanvas {
     };
     canvas.addEventListener('pointerdown', event => {
       if (event.button !== 0) return;
-      this.entrance = null; this.entranceProgress = 1; this.requestDraw();
       cancelAnimationFrame(this.animation);
       start = local(event);
       if (!pointers.size) moved = false;
@@ -248,13 +261,11 @@ export class MapCanvas {
     canvas.addEventListener('pointerleave', () => { this.hideTip(); this.requestDraw(); }, { signal });
     canvas.addEventListener('wheel', event => {
       event.preventDefault();
-      this.entrance = null; this.entranceProgress = 1;
       const p = local(event);
       const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? this.height : 1);
       this.zoomAt(p.x, p.y, Math.exp(-delta * 0.0015));
     }, { signal, passive: false });
     canvas.addEventListener('keydown', event => {
-      this.entrance = null; this.entranceProgress = 1;
       if (event.key === '+' || event.key === '=') this.zoom(1.3);
       else if (event.key === '-') this.zoom(1 / 1.3);
       else if (event.key.startsWith('Arrow')) {
@@ -269,32 +280,33 @@ export class MapCanvas {
   }
 
   private draw() {
-    const ctx = this.ctx, { width, height } = this;
-    if (this.entrance) {
-      this.entranceProgress = reducedMotion() ? 1 : clamp((performance.now() - this.entrance.start) / 1050, 0, 1);
-      if (this.entranceProgress >= 1) this.entrance = null;
-      else this.requestDraw();
-    }
+    let ctx = this.ctx;
+    const { width, height } = this;
+
     ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
     const ground = this.dark ? '#101017' : '#fdfdfd';
     const ink = this.dark ? '#e5e7eb' : '#374151';
-    const radius = clamp((width > 760 ? 5.6 : 3.8) + this.view.zoom * 0.7, 4.5, 9) * (0.45 + 0.55 * (1 - (1 - this.entranceProgress) ** 3));
     for (const task of tasks) {
+      const radius = this.dotRadius(task);
       const [x, y] = this.point(task);
       if (x < -10 || y < -10 || x > width + 10 || y > height + 10) continue;
       const highlighted = task.id === this.selected || task.id === this.hover;
       ctx.globalAlpha = this.visible(task) ? 0.82 : 0.09;
-      ctx.beginPath(); ctx.arc(x, y, highlighted ? radius + 2 : radius, 0, Math.PI * 2);
+      ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2);
       ctx.fillStyle = colors[task.cluster]; ctx.fill();
       ctx.strokeStyle = ground; ctx.lineWidth = 0.7; ctx.stroke();
       if (highlighted) {
         ctx.globalAlpha = 1;
-        ctx.beginPath(); ctx.arc(x, y, radius + 5, 0, Math.PI * 2);
+        ctx.beginPath(); ctx.arc(x, y, radius + 3, 0, Math.PI * 2);
         ctx.strokeStyle = colors[task.cluster]; ctx.lineWidth = 1.6; ctx.stroke();
       }
     }
     ctx.globalAlpha = 1;
+    // Keep text on its own layer so its entrance can fade without redrawing dots.
+    ctx = this.labelCtx;
+    ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    ctx.clearRect(0, 0, width, height);
     // Large regions cross-fade into the finer concepts as the visitor zooms in.
     this.labelHits = [];
     this.taskLabelHits = [];
@@ -302,7 +314,6 @@ export class MapCanvas {
     const mobile = width <= 760;
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
     const paintLabels = (groups: typeof coarseLabels, size: number, alpha: number, coarse: boolean) => {
-      alpha *= clamp((this.entranceProgress - 0.48) / 0.4, 0, 1);
       if (alpha < 0.03 || this.matches) return;
       ctx.font = `${coarse ? 650 : 550} ${size}px Inter, system-ui, sans-serif`;
       for (const group of groups) {

@@ -2165,7 +2165,7 @@
     "Category":"Computer Vision",
     "Topic":"Unsupervised Anomaly Segmentation",
     "Insightful":"2",
-    "Difficulty":"9",
+    "Difficulty":"7",
     "To-do":null,
     "Link":"https:\/\/www.kaggle.com\/competitions\/the-defected-nuts-aicc-round-1-2",
     "Solution":"1. https:\/\/github.com\/AI-Community-Contest\/solutions\/tree\/main\/round-1 2. https:\/\/www.kaggle.com\/code\/antoningorokva\/ref-solution-the-defected-nuts-aicc-round",

@@ -1,3 +1,4 @@
+import { buttonDots, colors as atlasColors } from '@/features/task-atlas/palette';
 import { useMemo, useCallback, useRef } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
@@ -576,7 +577,7 @@ const Tasks = () => {
                             <span className="text-gray-900 dark:text-white">Problem </span>
                             <span className="text-gradient">Bank</span>
                         </h1>
-                        <Link to="/tasks/atlas" state={{ returnTo: `/tasks${searchParams.size ? `?${searchParams}` : ''}` }} onClick={async event => {
+                        <Link data-atlas-entry to="/tasks/atlas" state={{ returnTo: `/tasks${searchParams.size ? `?${searchParams}` : ''}` }} onClick={async event => {
                             if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
                             event.preventDefault();
                             if (openingAtlas.current) return;
@@ -588,9 +589,7 @@ const Tasks = () => {
                             } finally { openingAtlas.current = false; }
                         }} onMouseEnter={() => { void import('@/features/task-atlas/TaskAtlas'); }} onFocus={() => { void import('@/features/task-atlas/TaskAtlas'); }} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/15 pl-2 pr-4 text-sm font-medium text-gray-800 dark:text-gray-100 hover:border-purple-300 dark:hover:border-purple-600 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4">
                             <svg width="50" height="32" viewBox="0 0 50 32" fill="none" aria-hidden="true">
-                                <g fill="#a68bd3"><circle cx="8" cy="19" r="3"/><circle cx="14" cy="10" r="2.5"/><circle cx="19" cy="20" r="2"/></g>
-                                <g fill="#67b6a1"><circle cx="29" cy="9" r="3"/><circle cx="36" cy="15" r="2"/><circle cx="43" cy="8" r="2.5"/></g>
-                                <g fill="#dc9868"><circle cx="28" cy="26" r="2.5"/><circle cx="40" cy="24" r="3"/></g>
+                                {buttonDots.map((dot, cluster) => <circle key={cluster} data-cluster={cluster} cx={dot.x} cy={dot.y} r={dot.radius} fill={atlasColors[cluster]} />)}
                             </svg>
                             Explore task atlas
                         </Link>
