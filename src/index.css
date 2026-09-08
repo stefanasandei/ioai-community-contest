@@ -433,7 +433,7 @@ body {
   }
 
   .dark .text-gradient {
-    background-image: linear-gradient(135deg, #c18aff 0%, #ff9c69 60%, #ff9c69 100%);
+    background-image: linear-gradient(135deg, #a43dff 0%, #ff7a24 60%, #ff7a24 100%);
   }
 
   .shadow-glow {

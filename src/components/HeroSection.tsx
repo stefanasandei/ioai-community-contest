@@ -99,7 +99,7 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-aicc-red bg-clip-text">
+            <div className="text-3xl font-bold text-[#d95f4d] dark:text-[#f28b78] bg-clip-text">
               750+
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
