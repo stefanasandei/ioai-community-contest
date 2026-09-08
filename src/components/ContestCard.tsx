@@ -112,17 +112,17 @@ const ContestCard = ({
 
     return (
         <div className="rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm overflow-hidden">
-            <div className="flex items-center justify-between gap-4 border-b border-gray-100 px-6 py-4 dark:border-white/5">
+            <div className="flex items-start justify-between gap-4 border-b border-gray-100 px-6 py-3 dark:border-white/5">
                 <div>
                     <div className="flex items-baseline gap-2">
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        <h3 className="m-0 text-xl font-bold text-gray-900 dark:text-white">
                             {month}
                         </h3>
                         <span className="text-base text-gray-500 dark:text-gray-400">
                             {year}
                         </span>
                     </div>
-                    <p className="mt-0.5 text-sm text-gray-600 dark:text-gray-400">
+                    <p className="mb-0 mt-0.5 text-sm text-gray-600 dark:text-gray-400">
                         {title}
                     </p>
                 </div>
