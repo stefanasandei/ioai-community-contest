@@ -866,7 +866,7 @@
   {
     "Contest":"Asia-Pacific 2026",
     "Problem":"Cosmic Probe",
-    "Category":null,
+    "Category":"Classical ML",
     "Topic":null,
     "Insightful":null,
     "Difficulty":null,
@@ -2514,7 +2514,7 @@
   {
     "Contest":"AICC Round 8",
     "Problem":"Pixel Quest",
-    "Category":"Reinforcment Learning",
+    "Category":"Reinforcement Learning",
     "Topic":null,
     "Insightful":null,
     "Difficulty":null,
@@ -3298,7 +3298,7 @@
   {
     "Contest":"CEOAI 2026",
     "Problem":"Faithful Explanations",
-    "Category":null,
+    "Category":"Natural Language Processing",
     "Topic":null,
     "Insightful":"1",
     "Difficulty":"6",
@@ -3314,7 +3314,7 @@
   {
     "Contest":"CEOAI 2026",
     "Problem":"TextSnap",
-    "Category":null,
+    "Category":"Multimodal",
     "Topic":null,
     "Insightful":"1",
     "Difficulty":"7",
@@ -3330,7 +3330,7 @@
   {
     "Contest":"CEOAI 2026",
     "Problem":"Clockwork Ellipses",
-    "Category":null,
+    "Category":"Classical ML",
     "Topic":null,
     "Insightful":"1",
     "Difficulty":"6",
@@ -3346,7 +3346,7 @@
   {
     "Contest":"CEOAI 2026",
     "Problem":"Stowaway",
-    "Category":null,
+    "Category":"Deep Learning",
     "Topic":null,
     "Insightful":"1",
     "Difficulty":"5",
@@ -3362,7 +3362,7 @@
   {
     "Contest":"CEOAI 2026",
     "Problem":"Interleaved Lines",
-    "Category":null,
+    "Category":"Natural Language Processing",
     "Topic":null,
     "Insightful":"2",
     "Difficulty":"7",
@@ -3426,7 +3426,7 @@
   {
     "Contest":"CEOAI Practice Round 2",
     "Problem":"Panda MNIST",
-    "Category":null,
+    "Category":"Computer Vision",
     "Topic":null,
     "Insightful":"2",
     "Difficulty":"6",
@@ -3442,7 +3442,7 @@
   {
     "Contest":"CEOAI Practice Round 2",
     "Problem":"Trace Twins",
-    "Category":null,
+    "Category":"Natural Language Processing",
     "Topic":null,
     "Insightful":"2",
     "Difficulty":"6",
@@ -3458,7 +3458,7 @@
   {
     "Contest":"ROAI 2026 Selection Camp",
     "Problem":"Smart Warehouse",
-    "Category":null,
+    "Category":"Reinforcement Learning",
     "Topic":null,
     "Insightful":null,
     "Difficulty":null,

@@ -217,7 +217,7 @@ const BecomeSetterSection = () => {
                 </div>
 
                 <p className="text-md text-gray-600 dark:text-gray-400 mb-4 font-light">
-                  Join our Discord server and create a thread (on #task-suggestions) with your task details.
+                  Join our Discord server and create a thread (on #submit-a-task) with your task details.
                 </p>
 
                 <a

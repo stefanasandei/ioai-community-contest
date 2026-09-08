@@ -1,6 +1,10 @@
 import { Award, Medal, Quote, Trophy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useEffect, useRef } from "react";
+
+
+
 
 interface Testimonial {
   name: string;
@@ -22,10 +26,10 @@ const testimonials: Testimonial[] = [
     achievement: "Gold Medal",
     placement: "2nd overall",
     icon: Trophy,
-    accentClass: "from-amber-400 via-orange-500 to-amber-600",
+    accentClass: "from-[#c09c46] via-[#ead18d] to-[#c09c46]",
     badgeClass:
-      "bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-900/25 dark:text-amber-200 dark:border-amber-700/60",
-    iconClass: "text-amber-600 dark:text-amber-300",
+      "bg-[#fbf5e5] text-[#9b7526] border-[#c8a44e] shadow-[inset_0_0_0_1px_#fff9e8] dark:bg-[#332b19] dark:text-[#e3c779] dark:border-[#a78a42] dark:shadow-none",
+    iconClass: "text-[#bb963d] dark:text-[#ddbe69]",
   },
   {
     name: "Nikoloz Gegenava",
@@ -34,10 +38,10 @@ const testimonials: Testimonial[] = [
     achievement: "Gold Medal",
     role: "AICC organizer",
     icon: Medal,
-    accentClass: "from-yellow-400 via-amber-500 to-orange-500",
+    accentClass: "from-[#c09c46] via-[#ead18d] to-[#c09c46]",
     badgeClass:
-      "bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-900/25 dark:text-yellow-200 dark:border-yellow-700/60",
-    iconClass: "text-yellow-600 dark:text-yellow-300",
+      "bg-[#fbf5e5] text-[#9b7526] border-[#c8a44e] shadow-[inset_0_0_0_1px_#fff9e8] dark:bg-[#332b19] dark:text-[#e3c779] dark:border-[#a78a42] dark:shadow-none",
+    iconClass: "text-[#bb963d] dark:text-[#ddbe69]",
   },
   {
     name: "Georgescu David",
@@ -45,10 +49,10 @@ const testimonials: Testimonial[] = [
       "The level of difficulty of AICC problems is similar to IOAI. During IOAI, I had a strong intuition on solving a problem thanks to a very similar problem idea from AICC.",
     achievement: "Gold Medal",
     icon: Medal,
-    accentClass: "from-yellow-400 via-amber-500 to-orange-500",
+    accentClass: "from-[#c09c46] via-[#ead18d] to-[#c09c46]",
     badgeClass:
-      "bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-900/25 dark:text-yellow-200 dark:border-yellow-700/60",
-    iconClass: "text-yellow-600 dark:text-yellow-300",
+      "bg-[#fbf5e5] text-[#9b7526] border-[#c8a44e] shadow-[inset_0_0_0_1px_#fff9e8] dark:bg-[#332b19] dark:text-[#e3c779] dark:border-[#a78a42] dark:shadow-none",
+    iconClass: "text-[#bb963d] dark:text-[#ddbe69]",
   },
   {
     name: "Giorgi Maisuradze",
@@ -56,10 +60,10 @@ const testimonials: Testimonial[] = [
       "AICC offered some of the hardest and most rigorous problems in my journey preparing for IOAI, and I would say it played a significant role in my success.",
     achievement: "Gold Medal",
     icon: Medal,
-    accentClass: "from-yellow-400 via-amber-500 to-orange-500",
+    accentClass: "from-[#c09c46] via-[#ead18d] to-[#c09c46]",
     badgeClass:
-      "bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-900/25 dark:text-yellow-200 dark:border-yellow-700/60",
-    iconClass: "text-yellow-600 dark:text-yellow-300",
+      "bg-[#fbf5e5] text-[#9b7526] border-[#c8a44e] shadow-[inset_0_0_0_1px_#fff9e8] dark:bg-[#332b19] dark:text-[#e3c779] dark:border-[#a78a42] dark:shadow-none",
+    iconClass: "text-[#bb963d] dark:text-[#ddbe69]",
   },
   {
     name: "Sasuke Kondo",
@@ -78,10 +82,10 @@ const testimonials: Testimonial[] = [
       "AICC contests were incredible, to say the least. They really helped me think outside the box in other contests.",
     achievement: "Bronze Medal",
     icon: Award,
-    accentClass: "from-orange-300 via-orange-500 to-amber-700",
+    accentClass: "from-[#cd9460] via-[#a66a3e] to-[#774326]",
     badgeClass:
-      "bg-orange-50 text-orange-800 border-orange-200 dark:bg-orange-900/25 dark:text-orange-200 dark:border-orange-700/60",
-    iconClass: "text-orange-600 dark:text-orange-300",
+      "bg-[#edcfb7] text-[#653719] border-[#b77b50] dark:bg-[#704527]/40 dark:text-[#e5b58e] dark:border-[#a66a3e]",
+    iconClass: "text-[#96572e] dark:text-[#d89b6c]",
   },
 ];
 
@@ -120,7 +124,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
           {testimonial.achievement}
         </span>
         {testimonial.placement && (
-          <span className="inline-flex items-center rounded-full border border-aicc-purple/15 bg-aicc-purple/5 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-aicc-purple dark:border-aicc-purple/30 dark:bg-aicc-purple/15 dark:text-aicc-purple-light">
+          <span className="inline-flex items-center rounded-full border border-[#bea052] bg-[linear-gradient(115deg,#d1ae57_0%,#f9edc2_42%,#edda98_55%,#c5a049_100%)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#654d1f]">
             {testimonial.placement}
           </span>
         )}
@@ -143,8 +147,65 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
 };
 
 const TestimonialsSection = () => {
+const strip = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = strip.current;
+    if (!el) return;
+    const viewport = el.parentElement!;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const animation = el.animate([
+      { transform: 'translate3d(0,0,0)' },
+      { transform: 'translate3d(-50%,0,0)' },
+    ], { duration: 56000, iterations: Infinity, easing: 'linear' });
+    const normalize = (time: number) => ((time % 56000) + 56000) % 56000;
+    let pointer: number | null = null, previousX = 0, previousTime = 0, velocity = 0, frame = 0;
+    const shift = (pixels: number) => {
+      animation.currentTime = normalize(Number(animation.currentTime ?? 0) - pixels * 56000 / (el.offsetWidth / 2));
+    };
+    const resume = () => { if (!reduced.matches && !document.hidden) animation.play(); else animation.pause(); };
+    const down = (event: PointerEvent) => {
+      if (event.button !== 0 || pointer !== null) return;
+      cancelAnimationFrame(frame); animation.pause();
+      pointer = event.pointerId; previousX = event.clientX; previousTime = performance.now(); velocity = 0;
+      viewport.setPointerCapture(pointer); viewport.style.cursor = 'grabbing';
+    };
+    const move = (event: PointerEvent) => {
+      if (event.pointerId !== pointer) return;
+      const now = performance.now(), dx = event.clientX - previousX;
+      velocity = Math.max(-1.5, Math.min(1.5, dx / Math.max(8, now - previousTime)));
+      shift(dx); previousX = event.clientX; previousTime = now;
+    };
+    const end = (event: PointerEvent) => {
+      if (event.pointerId !== pointer) return;
+      pointer = null; viewport.style.cursor = 'grab';
+      if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
+      if (event.type !== 'pointerup' || reduced.matches || performance.now() - previousTime > 100) { resume(); return; }
+      let last = performance.now();
+      const coast = (now: number) => {
+        const dt = Math.min(32, now - last); last = now;
+        shift(velocity * dt); velocity *= Math.exp(-dt / 120);
+        if (Math.abs(velocity) > 0.025) frame = requestAnimationFrame(coast); else resume();
+      };
+      frame = requestAnimationFrame(coast);
+    };
+    const visibility = () => { if (document.hidden) { cancelAnimationFrame(frame); animation.pause(); } else if (pointer === null) resume(); };
+    viewport.addEventListener('pointerdown', down);
+    viewport.addEventListener('pointermove', move);
+    viewport.addEventListener('pointerup', end);
+    viewport.addEventListener('pointercancel', end);
+    viewport.addEventListener('lostpointercapture', end);
+    document.addEventListener('visibilitychange', visibility);
+    reduced.addEventListener('change', resume);
+    resume();
+    return () => {
+      cancelAnimationFrame(frame); animation.cancel();
+      viewport.removeEventListener('pointerdown', down); viewport.removeEventListener('pointermove', move);
+      viewport.removeEventListener('pointerup', end); viewport.removeEventListener('pointercancel', end); viewport.removeEventListener('lostpointercapture', end);
+      document.removeEventListener('visibilitychange', visibility); reduced.removeEventListener('change', resume);
+    };
+  }, []);
   return (
-    <section className="relative overflow-hidden border-t border-gray-200/70 bg-white py-16 md:py-20 dark:border-white/10 dark:bg-[#0a0a0f]">
+    <section id="testimonials" className="scroll-mt-20 relative overflow-hidden border-t border-gray-200/70 bg-white py-16 md:py-20 dark:border-white/10 dark:bg-[#0a0a0f]">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute -left-24 top-16 h-72 w-72 rounded-full bg-aicc-purple/10 blur-3xl" />
         <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-aicc-orange/10 blur-3xl" />
@@ -152,7 +213,7 @@ const TestimonialsSection = () => {
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-6">
-        <div className="mx-auto mb-8 max-w-3xl text-center">
+<div className="mx-auto mb-8 max-w-3xl text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-aicc-purple/20 bg-aicc-purple/5 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-aicc-purple dark:border-aicc-purple/30 dark:bg-aicc-purple/10 dark:text-aicc-purple-light">
             <Medal className="h-3.5 w-3.5" />
             From the community
@@ -168,10 +229,10 @@ const TestimonialsSection = () => {
         </div>
 
         <div
-          className="relative overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+          className="relative overflow-hidden py-2 cursor-grab select-none touch-pan-y [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
           aria-label="AICC participant testimonials"
         >
-          <div className="testimonials-marquee flex w-max">
+          <div ref={strip} className="flex w-max will-change-transform">
             <div className="flex shrink-0 gap-5 pr-5">
               {testimonials.map((testimonial) => (
                 <TestimonialCard key={testimonial.name} testimonial={testimonial} />
