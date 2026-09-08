@@ -25,6 +25,7 @@ import {
 
 interface SheetTaskCardProps {
   task: ParsedSheetTask;
+  expanded?: boolean;
 }
 
 interface CategoryConfig {
@@ -84,7 +85,7 @@ function getCategoryConfig(categoryStr: string): CategoryConfig {
 const SOLUTION_BTN_CLASS =
   "flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2";
 
-export const SheetTaskCard = ({ task }: SheetTaskCardProps) => {
+export const SheetTaskCard = ({ task, expanded = false }: SheetTaskCardProps) => {
   const { category, contest, problem, topic, difficulty, insightful, link, solutions } = task;
   const categoryConfig = getCategoryConfig(category);
   const CategoryIcon = categoryConfig.icon;
@@ -148,7 +149,7 @@ export const SheetTaskCard = ({ task }: SheetTaskCardProps) => {
 
         {/* Problem Title */}
         <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-2">
-          {topic ? (
+          {topic && !expanded ? (
             <Popover>
               <PopoverTrigger asChild>
                 <button
@@ -160,13 +161,14 @@ export const SheetTaskCard = ({ task }: SheetTaskCardProps) => {
                   {problem}
                 </button>
               </PopoverTrigger>
-              <PopoverContent side="top" align="start" className="w-max max-w-[min(20rem,calc(100vw-2rem))] px-3 py-2 text-sm font-normal">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-0.5">Topics</p>
-                <p className="text-gray-600 dark:text-gray-300 break-words">{topic}</p>
+              <PopoverContent side="top" align="start" className="w-max max-w-[min(20rem,calc(100vw-2rem))] px-2.5 py-2 text-sm font-normal">
+                <div className="text-[10px] leading-tight font-semibold text-gray-400 mb-1">Topics</div>
+                <div className="text-gray-600 dark:text-gray-300 break-words leading-snug">{topic}</div>
               </PopoverContent>
             </Popover>
           ) : problem}
         </h3>
+        {expanded && topic && <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300 mb-3">{topic}</p>}
 
         {/* Bottom Metadata Row: Category Pill + Difficulty Pill + Insightfulness Pill */}
         <div className="flex items-center gap-1.5 flex-wrap mt-2">
@@ -195,7 +197,7 @@ export const SheetTaskCard = ({ task }: SheetTaskCardProps) => {
                   )}
                 >
                   <Gauge className="w-3 h-3" />
-                  {diffLabel}
+                  {diffLabel}{expanded && ` · ${difficulty}/10`}
                 </button>
               </PopoverTrigger>
               <PopoverContent className="w-auto px-3 py-2 text-sm" side="top">

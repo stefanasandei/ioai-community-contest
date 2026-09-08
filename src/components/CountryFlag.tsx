@@ -6,6 +6,13 @@ const countries = {
 
 export type CountryCode = keyof typeof countries;
 
+// Embed these tiny local assets so a cold page visit needs no flag requests.
+const flagSources = import.meta.glob<string>('/public/assets/flags/4x3/*.svg', { eager: true, query: '?raw', import: 'default' });
+const flagUrls = Object.fromEntries(Object.entries(flagSources).map(([path, svg]) => [
+  path.split('/').pop()!.replace('.svg', '').toUpperCase(),
+  `data:image/svg+xml,${encodeURIComponent(svg)}`,
+]));
+
 // Apple platforms include native flag emoji; Windows needs the SVG fallback.
 const useNativeFlags = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
 
@@ -15,7 +22,7 @@ export default function CountryFlag({ country }: { country: CountryCode }) {
     return <span role="img" aria-label={countries[country]} title={countries[country]} className="ml-1 inline-block text-sm leading-none" style={{ fontFamily: 'Apple Color Emoji' }}>{emoji}</span>;
   }
   return <img
-    src={`/assets/flags/4x3/${country.toLowerCase()}.svg`}
+    src={flagUrls[country]}
     alt={countries[country]}
     title={countries[country]}
     width={16}

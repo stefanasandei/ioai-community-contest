@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight, Crosshair, Minus, Plus, Search, X } from 'lucide-react';
 import Navigation from '@/components/Navigation';
+import SheetTaskCard from '@/components/SheetTaskCard';
 import { tasks, colors, fineClusters, type MapTask } from './data';
 import { MapCanvas } from './MapCanvas';
 import { animateAtlasEntry, closeAtlas } from './atlasTransition';
@@ -62,7 +63,7 @@ export default function TaskAtlas() {
     setActive(null); setSelected(task); setQuery(''); setSearchOpen(false);
 
     if (selected?.id === task.id) map.current?.select(task);
-    searchInput.current?.focus();
+    searchInput.current?.blur();
   };
 
   return <div className="task-atlas-page">
@@ -109,8 +110,12 @@ export default function TaskAtlas() {
         </div>}
       </div>
       {selected && <section className="cluster-selected" aria-live="polite" aria-label="Selected problem">
-        <div className="cluster-selected-top"><h2>{selected.name}</h2><button type="button" aria-label="Close task details" onClick={() => { setSelected(null); map.current?.setCluster(active); }}><X size={16} /></button></div>
-        <a href={selected.url} target="_blank" rel="noopener noreferrer" className="cluster-problem-link">View problem<ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
+        <button className="cluster-details-close" type="button" aria-label="Close task details" onClick={() => { setSelected(null); map.current?.setCluster(active); }}><X size={18} /></button>
+        <SheetTaskCard key={selected.id} task={selected.details} expanded />
+        <details className="cluster-context" key={`cluster-${selected.id}`}>
+          <summary>{fineClusters[selected.fine].n}</summary>
+          <p>{fineClusters[selected.fine].d}</p>
+        </details>
       </section>}
       {active !== null && <button type="button" className="cluster-clear-filter" onClick={reset} aria-label="Show all clusters">
         <X size={15} aria-hidden="true" />

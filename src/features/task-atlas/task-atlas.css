@@ -89,3 +89,32 @@
 }
 
 .cluster-heading:hover { border-color: #a855f7; }
+
+/* The bank card stays shared; only its atlas container changes. */
+.cluster-selected { width: min(410px, calc(100% - 56px)); max-height: calc(100dvh - 180px); overflow-y: auto; overscroll-behavior: contain; padding: 0; background: #fff; backdrop-filter: none; scrollbar-width: thin; }
+.dark .cluster-selected { background: #16151d; }
+.cluster-selected > div { border: 0; box-shadow: none; background: transparent; }
+.cluster-selected > div > div:first-child { padding-right: 48px; }
+.cluster-selected h3 { overflow-wrap: anywhere; }
+.cluster-selected .shrink-0 { flex-shrink: 1; }
+.cluster-details-close { position: absolute; top: 8px; right: 8px; width: 36px; height: 36px; display: grid; place-items: center; color: var(--cluster-muted); }
+.cluster-details-close:hover { background: var(--cluster-subtle); color: var(--cluster-ink); }
+.cluster-context { padding: 12px 20px 16px; border-top: 1px solid var(--cluster-border); font-size: 12px; line-height: 1.6; }
+.cluster-context summary { cursor: pointer; color: var(--cluster-muted); }
+.cluster-context p { margin-top: 8px; }
+@media (max-width: 760px) {
+  .cluster-selected { left: 12px; right: 12px; bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px)); width: auto; max-height: min(46dvh, calc(100dvh - 290px)); padding: 0; }
+  .cluster-zoom { bottom: max(12px, env(safe-area-inset-bottom)); }
+  .cluster-zoom button { min-width: 44px; min-height: 44px; }
+  .cluster-search input { font-size: 16px; }
+  .cluster-selected a { min-height: 44px; }
+  .cluster-details-close { width: 44px; height: 44px; top: 4px; right: 4px; }
+}
+@media (max-height: 500px) and (max-width: 950px) {
+  .cluster-heading { top: 10px; left: 12px; padding: 8px 12px; }
+  .cluster-heading h1 { font-size: 28px; }
+  .cluster-title-row { margin-top: 0; }
+  .cluster-search-area { top: 104px; left: 12px; width: min(290px, 42%); }
+  .cluster-selected { left: auto; right: 12px; top: 10px; bottom: 70px; width: 48%; max-height: none; }
+  .cluster-results { max-height: calc(100dvh - 250px); }
+}
