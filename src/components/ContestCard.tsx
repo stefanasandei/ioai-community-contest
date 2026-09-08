@@ -151,7 +151,7 @@ const ContestCard = ({
                         <li
                             key={idx}
                             className={cn(
-                                "px-5 py-4 transition-colors",
+                                "px-5 pb-4 pt-3 transition-colors",
                                 isMatch
                                     ? "bg-aicc-purple/5 dark:bg-aicc-purple/10"
                                     : "hover:bg-gray-50/70 dark:hover:bg-white/[0.02]"

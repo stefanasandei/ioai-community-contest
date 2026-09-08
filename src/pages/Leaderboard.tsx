@@ -90,7 +90,7 @@ const Leaderboard = () => {
         <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f]">
             <Navigation />
 
-            <main className="mx-auto max-w-7xl px-4 pb-24 pt-24 md:px-6">
+            <main className="mx-auto max-w-7xl px-3 pb-16 pt-20 sm:px-4 sm:pt-24 md:px-6 md:pb-24">
                 <Link
                     to="/contests"
                     className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-aicc-purple dark:text-gray-400 dark:hover:text-aicc-purple-light"
@@ -99,16 +99,16 @@ const Leaderboard = () => {
                     Back to contests
                 </Link>
 
-                <div className="relative mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-white/10 dark:bg-white/[0.05]">
-                    <div className="flex flex-col gap-6 p-6 md:flex-row md:items-center md:gap-8 md:p-8">
+                <div className="relative mb-6 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-white/10 dark:bg-white/[0.05] sm:mb-8">
+                    <div className="flex flex-col gap-5 p-5 md:flex-row md:items-center md:gap-8 md:p-8">
                         <div className="min-w-0 flex-1">
                             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-gray-500 dark:text-gray-400">
                                 AI Community Contest
                             </p>
-                            <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white md:text-5xl">
+                            <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl md:text-5xl">
                                 {contest?.title ?? "Round " + roundNumber}
                             </h1>
-                            <p className="mt-3 max-w-2xl text-base text-gray-600 dark:text-gray-300">
+                            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
                                 This competition is organized by the{" "}
                                 <a
                                     href="https://aicc-official.org/"
@@ -155,9 +155,9 @@ const Leaderboard = () => {
                 </div>
 
                 {rawLeaderboard && (
-                    <div className="mb-5 flex justify-center sm:justify-start">
+                    <div className="mb-4 flex justify-center sm:mb-5 sm:justify-start">
                         <div
-                            className="relative inline-flex rounded-xl border border-gray-200 bg-gray-100/80 p-1 dark:border-white/10 dark:bg-white/[0.06]"
+                            className="relative inline-flex w-full max-w-sm rounded-xl border border-gray-200 bg-gray-100/80 p-1 dark:border-white/10 dark:bg-white/[0.06]"
                             role="tablist"
                             aria-label="Leaderboard type"
                         >
@@ -174,7 +174,7 @@ const Leaderboard = () => {
                                     role="tab"
                                     aria-selected={activeMode === mode}
                                     onClick={() => setViewMode(mode)}
-                                    className={`relative z-10 min-w-32 rounded-lg px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
+                                    className={`relative z-10 min-w-0 flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
                                         activeMode === mode
                                             ? "text-white"
                                             : "text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
@@ -188,7 +188,7 @@ const Leaderboard = () => {
                 )}
 
                 <div key={activeMode} className="animate-fade-in">
-                <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+                <div className="hidden overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-white/10 dark:bg-white/[0.04] md:block">
                     <div className="overflow-x-auto">
                         <table
                             className={`${activeMode === "raw" ? "min-w-[900px]" : "min-w-[1100px]"} w-full table-fixed border-collapse text-left`}
@@ -305,6 +305,85 @@ const Leaderboard = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div className="space-y-3 md:hidden">
+                    {leaderboard.participants.map((participant, index) => {
+                        const participantRank =
+                            leaderboard.participants
+                                .slice(0, index)
+                                .filter(({ kind }) => kind === "participant")
+                                .length + 1;
+                        const isReference = participant.kind === "reference";
+                        const isBaseline = participant.kind === "baseline";
+                        const cardTone = isReference
+                            ? "border-pink-200 bg-pink-50/80 dark:border-pink-400/20 dark:bg-pink-500/[0.10]"
+                            : isBaseline
+                                ? "border-gray-200 bg-gray-50/80 dark:border-white/10 dark:bg-white/[0.06]"
+                                : "border-gray-200 bg-white dark:border-white/10 dark:bg-white/[0.04]";
+                        const badgeTone = isReference
+                            ? "bg-pink-100 text-pink-700 dark:bg-pink-400/20 dark:text-pink-200"
+                            : isBaseline
+                                ? "bg-gray-200 text-gray-600 dark:bg-white/10 dark:text-gray-400"
+                                : "bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-400";
+
+                        return (
+                            <article
+                                key={participant.username + "-mobile-" + index}
+                                className={`overflow-hidden rounded-xl border shadow-sm ${cardTone}`}
+                            >
+                                <div className="flex items-center justify-between gap-3 px-4 py-3">
+                                    <div className="flex min-w-0 items-center gap-3">
+                                        <span className={`flex h-8 min-w-8 shrink-0 items-center justify-center rounded-lg px-1.5 text-xs font-bold tabular-nums ${badgeTone}`}>
+                                            {isReference ? "R" : isBaseline ? "B" : participantRank}
+                                        </span>
+                                        <span className={`truncate text-sm font-bold ${isReference ? "text-pink-800 dark:text-pink-100" : "text-gray-900 dark:text-white"}`}>
+                                            {participant.username}
+                                        </span>
+                                    </div>
+                                    {activeMode === "normalized" && (
+                                        <div className="shrink-0 text-right">
+                                            <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                                                Total
+                                            </p>
+                                            <p className="text-sm font-bold tabular-nums text-aicc-purple dark:text-aicc-purple-light">
+                                                {formatLeaderboardScore(participant.totalPoints)}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="grid gap-2 border-t border-black/5 px-3 py-3 dark:border-white/5">
+                                    {leaderboard.tasks.map((task, taskIndex) => {
+                                        const score = participant.scores[taskIndex];
+                                        return (
+                                            <div
+                                                key={task.name}
+                                                className="flex min-w-0 items-center justify-between gap-3 rounded-lg bg-black/[0.035] px-3 py-2.5 dark:bg-white/[0.045]"
+                                            >
+                                                <a
+                                                    href={task.link}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="group flex min-w-0 items-center gap-1.5 text-sm font-semibold text-gray-700 transition-colors hover:text-aicc-purple dark:text-gray-200 dark:hover:text-aicc-purple-light"
+                                                >
+                                                    <span className="truncate">{task.name}</span>
+                                                    <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-50 group-hover:opacity-100" />
+                                                </a>
+                                                <span className="shrink-0 text-right text-sm font-semibold tabular-nums text-gray-700 dark:text-gray-200">
+                                                    {score === null ? (
+                                                        <span className="font-bold text-gray-500 dark:text-gray-400">—</span>
+                                                    ) : (
+                                                        formatLeaderboardScore(score)
+                                                    )}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </article>
+                        );
+                    })}
                 </div>
                 </div>
             </main>
