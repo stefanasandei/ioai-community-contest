@@ -103,7 +103,7 @@ export class MapCanvas {
     if (!this.frame) this.frame = requestAnimationFrame(() => { this.frame = 0; this.draw(); });
   }
 
-  private fly(next: View) {
+  private fly(next: View, duration = 420, smooth = false) {
     this.entrance = null;
     this.entranceProgress = 1;
     cancelAnimationFrame(this.animation);
@@ -111,8 +111,10 @@ export class MapCanvas {
     if (reducedMotion() || document.hidden) { this.view = next; this.requestDraw(); return; }
     const start = { ...this.view }, began = performance.now();
     const step = (now: number) => {
-      const progress = clamp((now - began) / 420, 0, 1);
-      const eased = 1 - (1 - progress) ** 3;
+      const progress = clamp((now - began) / duration, 0, 1);
+      const eased = smooth
+        ? progress * progress * progress * (progress * (progress * 6 - 15) + 10)
+        : 1 - (1 - progress) ** 3;
       this.view = {
         x: start.x + (next.x - start.x) * eased,
         y: start.y + (next.y - start.y) * eased,
@@ -148,7 +150,7 @@ export class MapCanvas {
     this.matches = null;
     this.selected = task.id;
     this.hover = null;
-    this.fly({ x: task.x, y: task.y, zoom: Math.max(2.6, this.view.zoom) });
+    this.fly({ x: task.x, y: task.y, zoom: Math.max(2.6, this.view.zoom) }, 680, true);
   }
 
   reset() {
