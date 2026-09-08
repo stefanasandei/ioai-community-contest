@@ -1,5 +1,5 @@
 import { useMemo, useCallback, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
     Search,
     X as XIcon,
@@ -119,6 +119,8 @@ const getPracticeDifficulty = (status: Task["practiceStatus"]): number | null =>
 
 const Tasks = () => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const openingAtlas = useRef(false);
     const suggestionTitleRef = useRef<HTMLHeadingElement>(null);
 
     const searchQuery = searchParams.get("q") ?? "";
@@ -569,10 +571,30 @@ const Tasks = () => {
             {/* Page Header */}
             <div className="bg-white dark:bg-[#0a0a0f] border-b border-gray-200 dark:border-white/10 pt-4">
                 <div className="max-w-7xl mx-auto px-4 md:px-6 pt-4 pb-6">
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-3">
-                        <span className="text-gray-900 dark:text-white">Problem </span>
-                        <span className="text-gradient">Bank</span>
-                    </h1>
+                    <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 mb-3">
+                        <h1 className="text-4xl md:text-5xl font-extrabold">
+                            <span className="text-gray-900 dark:text-white">Problem </span>
+                            <span className="text-gradient">Bank</span>
+                        </h1>
+                        <Link to="/tasks/atlas" state={{ returnTo: `/tasks${searchParams.size ? `?${searchParams}` : ''}` }} onClick={async event => {
+                            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                            event.preventDefault();
+                            if (openingAtlas.current) return;
+                            openingAtlas.current = true;
+                            const link = event.currentTarget;
+                            try {
+                                const { openAtlas } = await import('@/features/task-atlas/atlasTransition');
+                                await openAtlas(link, navigate, `/tasks${searchParams.size ? `?${searchParams}` : ''}`);
+                            } finally { openingAtlas.current = false; }
+                        }} onMouseEnter={() => { void import('@/features/task-atlas/TaskAtlas'); }} onFocus={() => { void import('@/features/task-atlas/TaskAtlas'); }} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/15 pl-2 pr-4 text-sm font-medium text-gray-800 dark:text-gray-100 hover:border-purple-300 dark:hover:border-purple-600 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4">
+                            <svg width="50" height="32" viewBox="0 0 50 32" fill="none" aria-hidden="true">
+                                <g fill="#a68bd3"><circle cx="8" cy="19" r="3"/><circle cx="14" cy="10" r="2.5"/><circle cx="19" cy="20" r="2"/></g>
+                                <g fill="#67b6a1"><circle cx="29" cy="9" r="3"/><circle cx="36" cy="15" r="2"/><circle cx="43" cy="8" r="2.5"/></g>
+                                <g fill="#dc9868"><circle cx="28" cy="26" r="2.5"/><circle cx="40" cy="24" r="3"/></g>
+                            </svg>
+                            Explore task atlas
+                        </Link>
+                    </div>
                     <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 font-light max-w-3xl mb-6">
                         This problem bank brings together publicly available problems from AI olympiads worldwide.
                     </p>
@@ -892,7 +914,7 @@ const Tasks = () => {
                             <a href="https://github.com/Hungarian-AI-Olympiad/HAIO-Hungarian-AI-Olympiad" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Hungarian AI Olympiad (HAIO)</a>
                         </li>
                         <li>
-                            <a href="https://pdtn.gr/?hl=en" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Greek AI Olympiad</a>
+                            <a href="https://pdtn.gr/?hl=en" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Greek AI Olympiad (GAIO)</a>
                         </li>
                     </ul>
                 </div>
