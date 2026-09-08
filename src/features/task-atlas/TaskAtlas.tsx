@@ -72,6 +72,7 @@ export default function TaskAtlas() {
       <header className="cluster-heading">
         <Link to={returnTo} className="cluster-back"><ArrowLeft size={15} aria-hidden="true" />Problem bank</Link>
         <div className="cluster-title-row"><h1>Task <span className="text-gradient">atlas</span></h1></div>
+        <p>Explore ~ 200 AI Olympiad problems in dozens of clusters</p>
       </header>
       <div className="cluster-search-area" ref={searchBox}>
         <div className="cluster-search">
@@ -108,6 +109,10 @@ export default function TaskAtlas() {
         <p className="cluster-selected-topic">{fineClusters[selected.fine].n}</p>
         <a href={selected.url} target="_blank" rel="noopener noreferrer" className="cluster-problem-link">View problem<ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
       </section>}
+      {active !== null && <button type="button" className="cluster-clear-filter" onClick={reset} aria-label="Show all clusters">
+        <X size={15} aria-hidden="true" />
+        <span>Show all clusters</span>
+      </button>}
       {error && <p className="cluster-error" role="alert">The map could not be displayed. Use search to browse the problems.</p>}
       <div className="cluster-zoom" aria-label="Map controls"><button type="button" onClick={reset} aria-label="Reset view" title="Reset view"><Crosshair size={18} /></button><span className="cluster-control-divider" /><button type="button" onClick={() => map.current?.zoom(1 / 1.3)} aria-label="Zoom out"><Minus size={17} /></button><output aria-label="Zoom level">{zoom.toFixed(1)}×</output><button type="button" onClick={() => map.current?.zoom(1.3)} aria-label="Zoom in"><Plus size={17} /></button></div>
       <p id="cluster-controls-help" className="sr-only">Drag to explore <span>·</span> Scroll to zoom <span>·</span> Click a problem<span className="sr-only">. Use arrow keys to pan and plus or minus to zoom when the map has keyboard focus.</span></p>

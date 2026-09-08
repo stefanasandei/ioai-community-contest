@@ -18,17 +18,18 @@ html[data-atlas-transition]::view-transition-group(root) { animation-duration: 2
 @keyframes cluster-map-arrive { from { opacity: 0; transform: scale(.965); } to { opacity: 1; transform: scale(1); } }
 .cluster-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
 .cluster-stage canvas:focus-visible { outline-offset: -5px; }
-.cluster-heading { position: absolute; top: 24px; left: 28px; z-index: 2; max-width: calc(100% - 56px); pointer-events: none; }
+.cluster-heading { position: absolute; top: 24px; left: 28px; z-index: 2; width: min(540px, calc(100% - 56px)); padding: 25px 28px 26px; pointer-events: none; background: #ffffffdf; border: 1px solid #aa9fc999; border-radius: 15px; box-shadow: 0 8px 32px #22123818, 0 2px 8px #2212380c; backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+.dark .cluster-heading { background: #16151deb; border-color: #ffffff42; }
 .cluster-back { pointer-events: auto; display: inline-flex; align-items: center; gap: 7px; min-height: 28px; font-size: 12px; color: var(--cluster-muted); transition: color .15s; }
 .cluster-back:hover { color: #9333ea; }
 .cluster-title-row { display: flex; align-items: center; gap: 10px; margin-top: 9px; }
-.cluster-heading h1 { color: var(--cluster-ink); font-size: 32px; font-weight: 750; line-height: 1.15; letter-spacing: -1.2px; margin: 0; }
-.cluster-heading > p { margin: 10px 0 0; font-size: 13px; color: var(--cluster-muted); }
-.cluster-heading::before { content: ''; position: absolute; inset: -20px -25px; z-index: -1; background: radial-gradient(ellipse at 35% 40%, var(--cluster-ground) 45%, transparent 75%); pointer-events: none; }
-.cluster-search-area { position: absolute; z-index: 5; top: 28px; right: 28px; width: 304px; }
-.cluster-search { display: flex; align-items: center; gap: 10px; background: var(--cluster-paper); border: 1px solid var(--cluster-border); box-shadow: var(--cluster-shadow); border-radius: 11px; padding: 0 14px; color: var(--cluster-muted); }
+.cluster-heading h1 { color: var(--cluster-ink); font-size: clamp(40px, 4.3vw, 58px); font-weight: 750; line-height: 1.02; letter-spacing: -2.5px; margin: 0; }
+.cluster-heading > p { margin: 12px 0 0; font-size: 20px; line-height: 1.4; color: var(--cluster-muted); }
+.cluster-search-area { position: absolute; z-index: 5; top: 252px; left: 28px; width: min(410px, calc(100% - 56px)); }
+.cluster-search { display: flex; align-items: center; gap: 10px; background: #ffffffdf; border: 1px solid #aa9fc999; box-shadow: 0 8px 28px #22123818, 0 2px 8px #2212380c; border-radius: 11px; padding: 0 16px; color: var(--cluster-muted); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+.dark .cluster-search { background: #16151deb; border-color: #ffffff42; }
 .cluster-search:focus-within { border-color: #b482d866; box-shadow: 0 0 0 3px #9333ea08; }
-.cluster-search input { width: 100%; min-width: 0; height: 46px; background: transparent; font-size: 13px; color: var(--cluster-ink); }
+.cluster-search input { width: 100%; min-width: 0; height: 50px; background: transparent; font-size: 13px; color: var(--cluster-ink); }
 .cluster-search input::placeholder { color: var(--cluster-muted); }
 .cluster-search input:focus-visible { outline: none; }
 .cluster-search input::-webkit-search-cancel-button { display: none; }
@@ -65,14 +66,18 @@ html[data-atlas-transition]::view-transition-group(root) { animation-duration: 2
 .cluster-selected-topic { color: var(--cluster-muted); font-size: 12px; line-height: 1.6; margin-top: 9px; }
 .cluster-problem-link { margin-top: 19px; display: flex; align-items: center; justify-content: space-between; min-height: 38px; border-radius: 7px; padding: 9px 12px; font-size: 12px; font-weight: 550; background: #9333ea; color: white; transition: background .15s; }
 .cluster-problem-link:hover { background: #7e22ce; }
+.cluster-clear-filter { position: absolute; right: 28px; bottom: 80px; z-index: 4; display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 8px 13px; color: #b42318; background: #fff5f4e8; border: 1px solid #f0aaa3; border-radius: 9px; box-shadow: 0 4px 18px #7f1d1d12; backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); font-size: 12px; font-weight: 600; transition: background .15s, border-color .15s, color .15s, transform .15s; }
+.cluster-clear-filter:hover { color: #991b1b; background: #fee2e2f2; border-color: #e88980; transform: translateY(-1px); }
+.dark .cluster-clear-filter { color: #fca5a5; background: #3b1616e8; border-color: #b4535380; box-shadow: 0 4px 18px #00000022; }
+.dark .cluster-clear-filter:hover { color: #fecaca; background: #531b1bf2; border-color: #ef7d7d; }
 .cluster-error { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); padding: 20px; border-radius: 10px; background: var(--cluster-paper); font-size: 14px; max-width: 320px; }
-@media (max-width: 1100px) { .cluster-heading h1 { font-size: 28px; } }
+@media (max-width: 1100px) { .cluster-heading h1 { font-size: clamp(38px, 5vw, 50px); } }
 @media (max-width: 760px) {
-  .cluster-heading { top: 14px; left: 18px; max-width: calc(100% - 36px); }
+  .cluster-heading { top: 14px; left: 18px; width: calc(100% - 36px); padding: 20px 21px 21px; border-radius: 13px; }
   .cluster-title-row { margin-top: 6px; }
-  .cluster-heading h1 { font-size: 27px; }
-  .cluster-heading > p { display: none; }
-  .cluster-search-area { top: 103px; left: 18px; right: 18px; width: auto; }
+  .cluster-heading h1 { font-size: clamp(34px, 10vw, 44px); letter-spacing: -1.8px; }
+  .cluster-heading > p { margin-top: 9px; font-size: 20px; }
+  .cluster-search-area { top: 230px; left: 18px; right: 18px; width: auto; }
   .cluster-search input { height: 42px; }
   .cluster-search-results { max-height: calc(100svh - 300px); }
   .cluster-results { max-height: calc(100svh - 360px); }
@@ -80,6 +85,7 @@ html[data-atlas-transition]::view-transition-group(root) { animation-duration: 2
   .cluster-zoom button { min-width: 29px; min-height: 36px; }
   .cluster-zoom output { min-width: 32px; }
   .cluster-control-divider { margin: 0 3px; }
+  .cluster-clear-filter { right: 18px; bottom: 70px; }
   .cluster-selected { bottom: 80px; left: 18px; right: 18px; width: auto; padding: 16px; max-height: calc(100svh - 320px); overflow-y: auto; }
   .cluster-selected h2 { font-size: 18px; margin-top: 10px; }
 }
