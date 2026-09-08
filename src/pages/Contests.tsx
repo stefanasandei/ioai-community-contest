@@ -12,7 +12,6 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ContestCard from "@/components/ContestCard";
 import TaskCard from "@/components/TaskCard";
-import LeaderboardButton from "@/components/LeaderboardButton";
 import { isTaskMatch } from "@/lib/taskUtils";
 import {
     Popover,
@@ -659,7 +658,6 @@ const Contests = () => {
                                                 {contest.tasks.length !== 1 ? "s" : ""}
                                             </p>
                                         </div>
-                                        <LeaderboardButton roundNumber={contest.id - 1} />
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {contest.tasks.map((task) => (
