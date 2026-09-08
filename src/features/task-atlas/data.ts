@@ -1,5 +1,5 @@
 import snapshot from './tasks.json';
-import { getSheetTasks } from '@/data/sheet/sheetUtils';
+import { getSheetTasks, type ParsedSheetTask } from '@/data/sheet/sheetUtils';
 
 const normalizeUrl = (url: string) => url.trim()
   .replace(/[?#].*$/, '').replace(/\/overview\/?$/, '').replace(/\/$/, '')
@@ -40,6 +40,7 @@ export interface MapTask {
   cluster: number;
   url: string;
   contest: string;
+  details: ParsedSheetTask;
 }
 export const fineClusters = snapshot.fine;
 export const tasks: MapTask[] = snapshot.tasks.map((row, id) => {
@@ -51,7 +52,7 @@ export const tasks: MapTask[] = snapshot.tasks.map((row, id) => {
   return {
     id, name: bankTask.problem, x: Number(row[1]), y: Number(row[2]),
     fine: Number(row[3]), cluster: snapshot.fine[Number(row[3])].c,
-    url: String(row[4]), contest: bankTask.contest,
+    url: String(row[4]), contest: bankTask.contest, details: bankTask,
   };
 });
 export const clusters = snapshot.coarse.map((cluster, id) => ({

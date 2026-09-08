@@ -915,6 +915,9 @@ const Tasks = () => {
                         <li>
                             <a href="https://pdtn.gr/?hl=en" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Greek AI Olympiad (GAIO)</a>
                         </li>
+                        <li>
+                            <a href="https://uoi.eolymp.space/en/contests" target="_blank" rel="noopener noreferrer" className="text-aicc-purple dark:text-aicc-purple-light hover:underline">Ukrainian AI Olympiad (UAIO)</a>
+                        </li>
                     </ul>
                 </div>
             </div>
