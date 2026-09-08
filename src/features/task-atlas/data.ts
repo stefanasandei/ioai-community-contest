@@ -29,7 +29,7 @@ export const clusterNames = [
   'Retrieval & matching', 'Anomalies & audio', 'Visual perception',
   'Language & translation', 'Reasoning & games', 'Tabular & structured data',
 ];
-export const colors = ['#a68bd3', '#dc9868', '#67b6a1', '#7ca7ce', '#d983ac', '#a4b863', '#64a572', '#d67e80'];
+export { colors } from './palette';
 export const labelColors = ['#75608e', '#936742', '#477e70', '#506f8d', '#975a79', '#6d7f3d', '#426e49', '#945658'];
 export interface MapTask {
   id: number;

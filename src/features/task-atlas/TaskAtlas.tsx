@@ -1,17 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight, Crosshair, Minus, Plus, Search, X } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import { tasks, colors, fineClusters, type MapTask } from './data';
 import { MapCanvas } from './MapCanvas';
-import type { AtlasLaunch } from './atlasTransition';
+import { animateAtlasEntry, closeAtlas } from './atlasTransition';
 import './task-atlas.css';
 
 export default function TaskAtlas() {
   const location = useLocation();
-  const launch = useRef<AtlasLaunch | undefined>(location.state?.atlasLaunch);
+  const navigate = useNavigate();
   const returnTo = typeof location.state?.returnTo === 'string' && /^\/tasks(?:\?|$)/.test(location.state.returnTo) ? location.state.returnTo : '/tasks';
   const canvas = useRef<HTMLCanvasElement>(null);
+  const labelCanvas = useRef<HTMLCanvasElement>(null);
   const map = useRef<MapCanvas | null>(null);
   const [query, setQuery] = useState('');
   const [active, setActive] = useState<number | null>(null);
@@ -28,16 +29,17 @@ export default function TaskAtlas() {
     `${task.name} ${task.contest} ${fineClusters[task.fine].n}`.toLowerCase().includes(normalized)
   ), [normalized]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const oldTitle = document.title;
     document.title = 'Task atlas | AICC';
     try {
-      map.current = new MapCanvas(canvas.current!, task => {
+      map.current = new MapCanvas(canvas.current!, labelCanvas.current!, task => {
         setActive(null); setSelected(task); setQuery(''); setSearchOpen(false);
 
       }, setZoom, id => {
         setActive(id); setSelected(null); setQuery(''); setSearchOpen(false);
-      }, launch.current);
+      });
+      animateAtlasEntry(canvas.current!, map.current.getTransitionPoints());
     } catch { setError(true); }
     return () => { map.current?.destroy(); map.current = null; document.title = oldTitle; };
   }, []);
@@ -66,14 +68,17 @@ export default function TaskAtlas() {
   return <div className="task-atlas-page">
     <Navigation />
     <main className="cluster-explorer" aria-label="Interactive task map">
-      <div className={`cluster-stage ${launch.current ? 'cluster-stage-unfold' : ''}`}>
+      <div className="cluster-stage">
         <canvas ref={canvas} tabIndex={0} role="img" aria-label={`Map of ${tasks.length} AI olympiad problems grouped by similarity. Use search to explore with a keyboard.`} aria-describedby="cluster-controls-help" />
+        <canvas ref={labelCanvas} className="cluster-labels" aria-hidden="true" />
       </div>
-      <header className="cluster-heading">
-        <Link to={returnTo} className="cluster-back"><ArrowLeft size={15} aria-hidden="true" />Problem bank</Link>
+      <Link to={returnTo} className="cluster-heading" aria-label="Back to problem bank" onClick={event => {
+          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          closeAtlas(navigate, returnTo, map.current?.getTransitionPoints() ?? []);
+        }}><span className="cluster-back"><ArrowLeft size={15} aria-hidden="true" />Problem bank</span>
         <div className="cluster-title-row"><h1>Task <span className="text-gradient">atlas</span></h1></div>
-        <p>Explore ~ 200 AI Olympiad problems in dozens of clusters</p>
-      </header>
+      </Link>
       <div className="cluster-search-area" ref={searchBox}>
         <div className="cluster-search">
           <Search size={17} aria-hidden="true" />
@@ -104,9 +109,7 @@ export default function TaskAtlas() {
         </div>}
       </div>
       {selected && <section className="cluster-selected" aria-live="polite" aria-label="Selected problem">
-        <div className="cluster-selected-top"><span className="cluster-dot" style={{ backgroundColor: colors[selected.cluster] }} /><p>{selected.contest}</p><button type="button" aria-label="Close task details" onClick={() => { setSelected(null); map.current?.setCluster(active); }}><X size={16} /></button></div>
-        <h2>{selected.name}</h2>
-        <p className="cluster-selected-topic">{fineClusters[selected.fine].n}</p>
+        <div className="cluster-selected-top"><h2>{selected.name}</h2><button type="button" aria-label="Close task details" onClick={() => { setSelected(null); map.current?.setCluster(active); }}><X size={16} /></button></div>
         <a href={selected.url} target="_blank" rel="noopener noreferrer" className="cluster-problem-link">View problem<ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
       </section>}
       {active !== null && <button type="button" className="cluster-clear-filter" onClick={reset} aria-label="Show all clusters">

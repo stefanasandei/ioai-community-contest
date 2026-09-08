@@ -1,3 +1,4 @@
+import CountryFlag, { type CountryCode } from '@/components/CountryFlag';
 import { Users, Wrench, Eye } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -12,33 +13,33 @@ enum TeamRole {
 interface TeamMember {
   name: string;
   username?: string;
-  emoji?: string;
+  country: CountryCode;
   description?: string;
   teams: TeamRole[];
 }
 
 const teamMembers: TeamMember[] = [
-  { name: 'Georgios Tzovairis', username: 'Gior', emoji: '🇬🇷', description: 'IOAI \'26 Silver, EUROAI \'26 Bronze, IOAI \'25, HS student class of \'27', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
-  { name: 'Stefan Asandei', username: 'Stefan', emoji: '🇷🇴', description: 'Math and CS at Ecole Polytechnique, EUROAI \'26 Silver, IOAI \'25 Bronze', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
-  { name: 'Yue Heng Wong', username: 'Walnit', emoji: '🇸🇬', description: "IOAI '25 (Silver), Singapore NOAI '25 (Gold), 6/13 Hackathons Won, NUS CS '32", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
-  { name: 'Antony Ingorokva', username: 'Cowile', emoji: '🇬🇪', description: "IOAI '26 Silver, EUROAI '26 Bronze, Honourable Mention at IOAI '25", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
-  { name: 'Nikoloz Gegenava', username: 'Nikoloz', emoji: '🇬🇪', description: "IOAI '26 Gold, IOAI '25, EUCYS '25 Special Jury Award, IYNT '25 Bronze Medal", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
-  { name: 'Henry Ho', username: 'Convexhulltrick', emoji: '🇦🇺', description: 'Bronze medal at IOAI \'25', teams: [TeamRole.ProblemReview, TeamRole.Logistics] },
-  { name: 'Apostolidis Charalampos', username: 'bl4ck', emoji: '🇬🇷', description: 'Hellenic NOI Top 12, Hellenic NOAI Top 25', teams: [TeamRole.Logistics] },
-  { name: 'Zerui', username: 'iamnumber4', emoji: '🇸🇬', description: 'IOAI \'25', teams: [TeamRole.Logistics] },
-  { name: 'Dauzhan Beketov', username: 'Megazhan', emoji: '🇰🇿', description: 'IOAI \'26 Gold (2nd overall), IOAI \'25 Bronze, IOI \'25 Bronze, EUROAI \'26 Silver', teams: [TeamRole.ProblemSetter] },
-  { name: 'Luvidi Pranawa Alghari', username: 'Luvidi', emoji: '🇮🇩', description: 'IOAI \'26 Gold, IOAI \'25 Silver', teams: [TeamRole.ProblemSetter] },
-  { name: 'Wang Jiayu', username: 'Sabkx', emoji: '🇸🇬', description: 'IOAI \'25 Gold (3rd overall), IOAI \'24 Gold', teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
-  { name: 'Carson Cheng', emoji: '🇭🇰', teams: [TeamRole.Contributor] },
-  { name: 'Malo Tessé', emoji: '🇫🇷', teams: [TeamRole.Contributor] },
-  { name: 'Theo Bustamante', emoji: '🇵🇭', teams: [TeamRole.Contributor] },
-  { name: 'Elison Ang', emoji: '🇵🇭', teams: [TeamRole.Contributor] },
-  { name: 'Chon Feng Qi', emoji: '🇲🇾', teams: [TeamRole.Contributor] },
-  { name: 'Gheorghiță Istrate David', emoji: '🇷🇴', teams: [TeamRole.Contributor] },
-  { name: 'Jithun Methusahan', emoji: '🇱🇰', teams: [TeamRole.Contributor] },
-  { name: 'Martin Haoxuan Zhang', emoji: '🇸🇪', teams: [TeamRole.Contributor] },
-  { name: 'Low Yu Xuan', emoji: '🇲🇾', teams: [TeamRole.Contributor] },
-  { name: 'Zane Kumar', emoji: '🇬🇧', teams: [TeamRole.Contributor] },
+  { name: 'Georgios Tzovairis', username: 'Gior', country: 'GR', description: 'IOAI \'26 Silver, EUROAI \'26 Bronze, IOAI \'25, HS student class of \'27', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
+  { name: 'Stefan Asandei', username: 'Stefan', country: 'RO', description: 'Math and CS at Ecole Polytechnique, EUROAI \'26 Silver, IOAI \'25 Bronze', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
+  { name: 'Yue Heng Wong', username: 'Walnit', country: 'SG', description: "IOAI '25 (Silver), Singapore NOAI '25 (Gold), 6/13 Hackathons Won, NUS CS '32", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
+  { name: 'Antony Ingorokva', username: 'Cowile', country: 'GE', description: "IOAI '26 Silver, EUROAI '26 Bronze, Honourable Mention at IOAI '25", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
+  { name: 'Nikoloz Gegenava', username: 'Nikoloz', country: 'GE', description: "IOAI '26 Gold, IOAI '25, EUCYS '25 Special Jury Award, IYNT '25 Bronze Medal", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
+  { name: 'Henry Ho', username: 'Convexhulltrick', country: 'AU', description: 'Bronze medal at IOAI \'25', teams: [TeamRole.ProblemReview, TeamRole.Logistics] },
+  { name: 'Apostolidis Charalampos', username: 'bl4ck', country: 'GR', description: 'Hellenic NOI Top 12, Hellenic NOAI Top 25', teams: [TeamRole.Logistics] },
+  { name: 'Zerui', username: 'iamnumber4', country: 'SG', description: 'IOAI \'25', teams: [TeamRole.Logistics] },
+  { name: 'Dauzhan Beketov', username: 'Megazhan', country: 'KZ', description: 'IOAI \'26 Gold (2nd overall), IOAI \'25 Bronze, IOI \'25 Bronze, EUROAI \'26 Silver', teams: [TeamRole.ProblemSetter] },
+  { name: 'Luvidi Pranawa Alghari', username: 'Luvidi', country: 'ID', description: 'IOAI \'26 Gold, IOAI \'25 Silver', teams: [TeamRole.ProblemSetter] },
+  { name: 'Wang Jiayu', username: 'Sabkx', country: 'SG', description: 'IOAI \'25 Gold (3rd overall), IOAI \'24 Gold', teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
+  { name: 'Carson Cheng', country: 'HK', teams: [TeamRole.Contributor] },
+  { name: 'Malo Tessé', country: 'FR', teams: [TeamRole.Contributor] },
+  { name: 'Theo Bustamante', country: 'PH', teams: [TeamRole.Contributor] },
+  { name: 'Elison Ang', country: 'PH', teams: [TeamRole.Contributor] },
+  { name: 'Chon Feng Qi', country: 'MY', teams: [TeamRole.Contributor] },
+  { name: 'Gheorghiță Istrate David', country: 'RO', teams: [TeamRole.Contributor] },
+  { name: 'Jithun Methusahan', country: 'LK', teams: [TeamRole.Contributor] },
+  { name: 'Martin Haoxuan Zhang', country: 'SE', teams: [TeamRole.Contributor] },
+  { name: 'Low Yu Xuan', country: 'MY', teams: [TeamRole.Contributor] },
+  { name: 'Zane Kumar', country: 'GB', teams: [TeamRole.Contributor] },
 ];
 
 const problemSetters = teamMembers.filter(m => m.teams.includes(TeamRole.ProblemSetter));
@@ -62,7 +63,7 @@ const TeamCard = ({ member, color }: { member: TeamMember; color: 'purple' | 'or
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-              {member.name} {member.emoji}
+              {member.name}<CountryFlag country={member.country} />
             </h3>
             {member.username && <p className="text-sm text-gray-500 dark:text-gray-400 font-light">
               {member.username}
@@ -165,7 +166,7 @@ const Team = () => {
                 <span aria-hidden="true" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-blue-50 text-xs font-semibold text-blue-600 dark:bg-blue-950 dark:text-blue-300">
                   {getInitials(member.name)}
                 </span>
-                <span className="text-sm font-medium text-gray-900 dark:text-white">{member.name} <span className="whitespace-nowrap">{member.emoji}</span></span>
+                <span className="text-sm font-medium text-gray-900 dark:text-white">{member.name}<CountryFlag country={member.country} /></span>
               </li>
             ))}
           </ul>
