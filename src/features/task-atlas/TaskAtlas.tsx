@@ -73,12 +73,14 @@ export default function TaskAtlas() {
         <canvas ref={canvas} tabIndex={0} role="img" aria-label={`Map of ${tasks.length} AI olympiad problems grouped by similarity. Use search to explore with a keyboard.`} aria-describedby="cluster-controls-help" />
         <canvas ref={labelCanvas} className="cluster-labels" aria-hidden="true" />
       </div>
+      <div className="cluster-header-stack">
       <Link to={returnTo} className="cluster-heading" aria-label="Back to problem bank" onClick={event => {
           if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
           event.preventDefault();
           closeAtlas(navigate, returnTo, map.current?.getTransitionPoints() ?? []);
-        }}><span className="cluster-back"><ArrowLeft size={15} aria-hidden="true" />Problem bank</span>
+      }}><span className="cluster-back"><ArrowLeft size={15} aria-hidden="true" />Problem bank</span>
         <div className="cluster-title-row"><h1>Task <span className="text-gradient">atlas</span></h1></div>
+        <p>Explore 200+ AI Olympiad problems clustered by domain</p>
       </Link>
       <div className="cluster-search-area" ref={searchBox}>
         <div className="cluster-search">
@@ -108,6 +110,7 @@ export default function TaskAtlas() {
             {results.map((task, index) => <button key={task.id} type="button" className="cluster-result" onFocus={() => setResultIndex(index)} onClick={() => chooseTask(task)}><span className="cluster-dot" style={{ backgroundColor: colors[task.cluster] }} /><span><strong>{task.name}</strong><small>{task.contest}</small></span><ArrowUpRight size={14} aria-hidden="true" /></button>)}
           </div>
         </div>}
+      </div>
       </div>
       {selected && <section className="cluster-selected" aria-live="polite" aria-label="Selected problem">
         <button className="cluster-details-close" type="button" aria-label="Close task details" onClick={() => { setSelected(null); map.current?.setCluster(active); }}><X size={18} /></button>
