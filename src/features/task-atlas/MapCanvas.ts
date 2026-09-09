@@ -36,7 +36,12 @@ export class MapCanvas {
   private taskLabelHits: (LabelBox & { id: number })[] = [];
 
   private get originX() { return this.width / 2; }
-  private get originY() { return (this.height + (this.width <= 760 ? 110 : 0)) / 2; }
+  private get originY() { return this.height / 2; }
+  private get defaultView(): View {
+    return this.width <= 760
+      ? { x: 0.53, y: 0.38, zoom: 1 }
+      : { x: 0.5, y: 0.5, zoom: 1 };
+  }
 
   constructor(private canvas: HTMLCanvasElement, private labelCanvas: HTMLCanvasElement, private onSelect: (task: MapTask) => void, private onZoom: (value: number) => void, private onCluster: (id: number) => void) {
     this.ctx = canvas.getContext('2d')!;
@@ -59,7 +64,10 @@ export class MapCanvas {
     this.bind();
     // Produce both layers before the entrance starts, rather than waiting for
     // ResizeObserver and losing the opening frames on a busy device.
-    if (this.resizeCanvas()) this.draw();
+    if (this.resizeCanvas()) {
+      this.view = this.defaultView;
+      this.draw();
+    }
   }
 
   private resizeCanvas() {
@@ -171,7 +179,7 @@ export class MapCanvas {
     this.active = null;
     this.selected = null;
     this.hover = null;
-    this.fly({ x: 0.5, y: 0.5, zoom: 1 });
+    this.fly(this.defaultView);
   }
 
   zoom(factor: number) { this.fly({ ...this.view, zoom: clamp(this.view.zoom * factor, 0.7, 12) }); }

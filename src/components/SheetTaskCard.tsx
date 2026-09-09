@@ -300,7 +300,7 @@ export const SheetTaskCard = ({ task, expanded = false }: SheetTaskCardProps) =>
                   <ChevronDown className="w-3.5 h-3.5 opacity-60 ml-0.5" />
                 </button>
               </PopoverTrigger>
-              <PopoverContent className="w-48 p-1.5 shadow-lg border border-gray-200 dark:border-white/10" align="end">
+              <PopoverContent className="task-solution-popover w-48 p-1.5 shadow-lg border border-gray-200 dark:border-white/10" align="end">
                 <div className="text-[10px] font-semibold text-gray-400 dark:text-gray-400 px-2 py-1 uppercase tracking-wider">
                   Available Solutions
                 </div>
