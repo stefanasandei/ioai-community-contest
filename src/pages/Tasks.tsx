@@ -591,7 +591,7 @@ const Tasks = () => {
                             <svg width="50" height="32" viewBox="0 0 50 32" fill="none" aria-hidden="true">
                                 {buttonDots.map((dot, cluster) => <circle key={cluster} data-cluster={cluster} cx={dot.x} cy={dot.y} r={dot.radius} fill={atlasColors[cluster]} />)}
                             </svg>
-                            Explore task atlas
+                            Explore Task Atlas
                         </Link>
                     </div>
                     <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 font-light max-w-3xl mb-6">

@@ -13,23 +13,22 @@
 .cluster-stage .cluster-labels { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .cluster-stage canvas:focus-visible { outline-offset: -5px; }
 .cluster-header-stack { position: absolute; top: 24px; left: 28px; z-index: 5; width: min(540px, calc(100% - 56px)); display: flex; flex-direction: column; align-items: flex-start; gap: 12px; pointer-events: none; }
-.cluster-heading { position: relative; width: 100%; max-width: none; padding: 20px 24px 21px; display: block; pointer-events: auto; cursor: pointer; background: #ffffffdf; border: 1px solid #aa9fc999; border-radius: 15px; box-shadow: 0 8px 32px #22123818, 0 2px 8px #2212380c; }
+.cluster-heading { position: relative; width: fit-content; max-width: 100%; padding: 20px 24px 21px; display: block; pointer-events: auto; cursor: pointer; background: #ffffffdf; border: 1px solid #aa9fc999; border-radius: 15px; box-shadow: 0 8px 32px #22123818, 0 2px 8px #2212380c; }
 .dark .cluster-heading { background: #16151deb; border-color: #ffffff42; }
 .cluster-back { pointer-events: auto; display: inline-flex; align-items: center; gap: 7px; min-height: 28px; font-size: 12px; color: var(--cluster-muted); transition: color .15s; }
 .cluster-back:hover { color: #9333ea; }
 .cluster-title-row { display: flex; align-items: center; gap: 10px; margin-top: 9px; }
 .cluster-heading h1 { color: var(--cluster-ink); font-size: clamp(40px, 4.3vw, 58px); font-weight: 750; line-height: 1.02; letter-spacing: -2.5px; margin: 0; }
 .cluster-heading > p { max-width: 470px; margin: 12px 0 0; color: var(--cluster-muted); font-size: 16px; line-height: 1.4; }
-.cluster-search-area { position: relative; width: min(410px, 100%); pointer-events: auto; }
-.cluster-search { display: flex; align-items: center; gap: 10px; background: #ffffffdf; border: 1px solid #aa9fc999; box-shadow: 0 8px 28px #22123818, 0 2px 8px #2212380c; border-radius: 11px; padding: 0 16px; color: var(--cluster-muted);  }
-.dark .cluster-search { background: #16151deb; border-color: #ffffff42; }
-.cluster-search:focus-within { border-color: #b482d866; box-shadow: 0 0 0 3px #9333ea08; }
+.cluster-search-area { position: relative; width: min(410px, 100%); pointer-events: auto; background: var(--cluster-paper); border: 1px solid var(--cluster-border); border-radius: 11px; overflow: hidden; box-shadow: var(--cluster-shadow); }
+.cluster-search { display: flex; align-items: center; gap: 10px; padding: 0 16px; color: var(--cluster-muted); }
+.cluster-search-area:focus-within { border-color: #b482d8; box-shadow: 0 0 0 3px #9333ea08; }
 .cluster-search input { width: 100%; min-width: 0; height: 50px; background: transparent; font-size: 13px; color: var(--cluster-ink); }
 .cluster-search input::placeholder { color: var(--cluster-muted); }
 .cluster-search input:focus-visible { outline: none; }
 .cluster-search input::-webkit-search-cancel-button { display: none; }
 .cluster-search button, .cluster-results-heading button { display: grid; place-items: center; padding: 5px; }
-.cluster-search-results { background: var(--cluster-paper); border: 1px solid var(--cluster-border); box-shadow: var(--cluster-shadow); border-radius: 11px; margin-top: 8px; overflow: hidden; }
+.cluster-search-results { border-top: 1px solid var(--cluster-border); overflow: hidden; }
 .cluster-results-heading { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 10px 12px; font-size: 11px; color: var(--cluster-muted); border-bottom: 1px solid var(--cluster-border); }
 .cluster-results { padding: 5px; max-height: min(420px, calc(100svh - 235px)); overflow-y: auto; scrollbar-width: thin; }
 .cluster-result { display: flex; align-items: flex-start; gap: 10px; padding: 12px 10px; width: 100%; text-align: left; }
@@ -141,3 +140,7 @@
   .cluster-selected { left: 12px; right: auto; top: auto; bottom: 70px; width: min(260px, 42vw); max-height: calc(100dvh - 100px); }
   .cluster-results { max-height: calc(100dvh - 250px); }
 }
+
+.cluster-topic-sections { margin: 0 6px 6px 17px; padding-left: 10px; border-left: 1px solid var(--cluster-border); }
+.cluster-topic-sections .cluster-result { padding-block: 9px; }
+.cluster-topic-sections .cluster-result strong { font-size: 12px; font-weight: 500; }

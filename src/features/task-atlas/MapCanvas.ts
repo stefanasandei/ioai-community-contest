@@ -22,6 +22,7 @@ export class MapCanvas {
   private dpr = 1;
   private view: View = { x: 0.5, y: 0.5, zoom: 1 };
   private active: number | null = null;
+  private focusedFine: number | null = null;
   private selected: number | null = null;
   private hover: number | null = null;
   private matches: Set<number> | null = null;
@@ -149,12 +150,14 @@ export class MapCanvas {
     this.animation = requestAnimationFrame(step);
   }
 
-  setCluster(id: number | null) {
+  setCluster(id: number | null, fineId: number | null = null) {
+    this.focusedFine = fineId;
     this.active = id;
     this.selected = null;
     this.hover = null;
     if (id === null) { this.reset(); return; }
-    const group = clusters[id].tasks;
+    const group = clusters[id].tasks.filter(task => fineId === null || task.fine === fineId);
+    if (!group.length) return;
     const xs = group.map(t => t.x), ys = group.map(t => t.y);
     const xmin = Math.min(...xs), xmax = Math.max(...xs), ymin = Math.min(...ys), ymax = Math.max(...ys);
     const zoom = clamp(Math.min((this.width - (this.width > 760 ? 140 : 50)) / ((xmax - xmin + 0.12) * this.scale), (this.height - (this.width > 760 ? 140 : 260)) / ((ymax - ymin + 0.12) * this.scale)), 1, 6);
@@ -168,6 +171,7 @@ export class MapCanvas {
   }
 
   select(task: MapTask) {
+    this.focusedFine = null;
     this.active = null;
     this.matches = null;
     this.selected = task.id;
@@ -176,6 +180,7 @@ export class MapCanvas {
   }
 
   reset() {
+    this.focusedFine = null;
     this.active = null;
     this.selected = null;
     this.hover = null;
@@ -322,10 +327,11 @@ export class MapCanvas {
     const mobile = width <= 760;
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
     const paintLabels = (groups: typeof coarseLabels, size: number, alpha: number, coarse: boolean) => {
-      if (alpha < 0.03 || this.matches) return;
+      if (alpha < 0.03 || (this.matches && this.focusedFine === null)) return;
       ctx.font = `${coarse ? 650 : 550} ${size}px Inter, system-ui, sans-serif`;
       for (const group of groups) {
         if (this.active !== null && group.cluster !== this.active) continue;
+        if (this.focusedFine !== null && (coarse || group.group[0]?.fine !== this.focusedFine)) continue;
         const [anchorX, anchorY] = this.point(group);
         const lines: string[] = []; let line = '';
         for (const word of group.name.split(' ')) {
@@ -358,7 +364,7 @@ export class MapCanvas {
       }
     };
     paintLabels(coarseLabels, mobile ? 15 : 23, clamp((2.7 - this.view.zoom) / 0.9, 0, 1), true);
-    paintLabels(fineLabels, mobile ? 11 : 14, clamp((this.view.zoom - 1.2) / 0.7, 0, 0.88), false);
+    paintLabels(fineLabels, mobile ? 11 : 14, this.focusedFine !== null ? 1 : clamp((this.view.zoom - 1.2) / 0.7, 0, 0.88), false);
     ctx.globalAlpha = 1;
     // At close range, reveal task names where they fit without covering other labels.
     ctx.font = '550 12px Inter, system-ui, sans-serif';
