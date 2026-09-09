@@ -80,7 +80,7 @@ export const ResourceSidebar = ({ className }: ResourceSidebarProps) => {
         </div>
 
         <div>
-          <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 dark:text-gray-500 px-2.5 mb-2">
+          <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 dark:text-gray-400 px-2.5 mb-2">
             General
           </div>
           <nav className="space-y-0.5">
@@ -108,7 +108,7 @@ export const ResourceSidebar = ({ className }: ResourceSidebarProps) => {
         </div>
 
         <div>
-          <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 dark:text-gray-500 px-2.5 mb-2">
+          <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 dark:text-gray-400 px-2.5 mb-2">
             IOAI Syllabus
           </div>
           <nav className="space-y-1">
@@ -124,7 +124,7 @@ export const ResourceSidebar = ({ className }: ResourceSidebarProps) => {
                   <div className="flex items-center">
                     <button
                       onClick={() => toggleSection(section.id)}
-                      className="p-1 rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5"
+                      className="p-1 rounded-md text-gray-400 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5"
                       aria-label={isOpen ? 'Collapse section' : 'Expand section'}
                     >
                       {isOpen ? (

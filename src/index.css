@@ -140,43 +140,47 @@ body {
   }
 
   .dark {
-    /* Dark mode - Clean dark theme */
-    --background: 0 0% 100%;
-    --foreground: 240 10% 10%;
+    /* Match the existing AICC page surfaces; keep overlays a step lighter. */
+    --background: 240 20% 5%;
+    --foreground: 260 20% 94%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 240 10% 10%;
+    --card: 240 17% 9%;
+    --card-foreground: 260 20% 94%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 10%;
+    --popover: 240 17% 10%;
+    --popover-foreground: 260 20% 94%;
 
-    --primary: 270 70% 60%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 269 100% 76%;
+    --primary-foreground: 270 60% 10%;
 
-    --secondary: 220 10% 90%;
-    --secondary-foreground: 240 10% 10%;
+    --secondary: 240 12% 16%;
+    --secondary-foreground: 260 20% 94%;
 
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 46%;
+    --muted: 240 12% 13%;
+    --muted-foreground: 250 10% 69%;
 
-    --accent: 270 30% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 260 22% 19%;
+    --accent-foreground: 260 20% 94%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 6% 90%;
-    --input: 240 5% 96%;
-    --ring: 270 70% 60%;
+    --border: 240 12% 20%;
+    --input: 240 12% 23%;
+    --ring: 269 100% 76%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 240 17% 9%;
+    --sidebar-foreground: 260 20% 94%;
+    --sidebar-primary: 269 100% 76%;
+    --sidebar-primary-foreground: 270 60% 10%;
+    --sidebar-accent: 260 22% 19%;
+    --sidebar-accent-foreground: 260 20% 94%;
+    --sidebar-border: 240 12% 20%;
+    --sidebar-ring: 269 100% 76%;
+
+    --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.15);
+    --shadow-medium: 0 2px 8px rgb(0 0 0 / 0.2);
+    --shadow-large: 0 8px 24px rgb(0 0 0 / 0.25);
   }
 }
 
@@ -336,7 +340,7 @@ body {
 
   /* Typography refinements */
   body {
-    @apply font-sans text-base leading-relaxed text-aicc-white;
+    @apply font-sans text-base leading-relaxed text-foreground;
   }
 
   p {
@@ -426,6 +430,10 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  .dark .text-gradient {
+    background-image: linear-gradient(135deg, #a43dff 0%, #ff7a24 60%, #ff7a24 100%);
   }
 
   .shadow-glow {

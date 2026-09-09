@@ -84,7 +84,7 @@ const RulesSection = () => {
                 <div className="space-y-3">
                   {category.items.map((item, index) => (
                     <div key={index} className="flex items-start gap-3 text-gray-600 dark:text-gray-300">
-                      <div className="w-1.5 h-1.5 rounded-full bg-aicc-dark mt-2 flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-aicc-dark dark:bg-gray-400 mt-2 flex-shrink-0" />
                       <span className="font-light text-sm">{item}</span>
                     </div>
                   ))}

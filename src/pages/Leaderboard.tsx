@@ -109,25 +109,7 @@ const Leaderboard = () => {
                                 {contest?.title ?? "Round " + roundNumber}
                             </h1>
                             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
-                                This competition is organized by the{" "}
-                                <a
-                                    href="https://aicc-official.org/"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="font-medium text-aicc-purple underline decoration-aicc-purple/30 underline-offset-2 transition-colors hover:text-aicc-purple-light dark:text-aicc-purple-light"
-                                >
-                                    AI Community Contest group
-                                </a>
-                                . It is meant to prepare students for the{" "}
-                                <a
-                                    href="https://ioai-official.org/"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="font-medium text-aicc-purple underline decoration-aicc-purple/30 underline-offset-2 transition-colors hover:text-aicc-purple-light dark:text-aicc-purple-light"
-                                >
-                                    IOAI (International Olympiad in Artificial Intelligence)
-                                </a>
-                                .
+                                Normalized scores represent performance on the private leaderboard, linearly scaled between the baseline and reference solution scores.
                             </p>
                             <span className="mt-5 inline-flex w-fit rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm font-medium text-gray-600 dark:border-white/10 dark:bg-white/5 dark:text-gray-300">
                                 {participantCount} participants
@@ -343,7 +325,7 @@ const Leaderboard = () => {
                                     </div>
                                     {activeMode === "normalized" && (
                                         <div className="shrink-0 text-right">
-                                            <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                                            <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-400">
                                                 Total
                                             </p>
                                             <p className="text-sm font-bold tabular-nums text-aicc-purple dark:text-aicc-purple-light">

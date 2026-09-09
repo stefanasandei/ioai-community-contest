@@ -11,12 +11,14 @@ import {
   Map,
   UserPlus,
   ChevronDown,
-  Sparkles,
   ExternalLink,
   Github,
   type LucideIcon,
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import './navigation.css';
+import ThemeToggle from './ThemeToggle';
+
 
 interface NavItem {
   label: string;
@@ -44,7 +46,7 @@ const primaryNavItems: NavItem[] = [
   { label: 'Home', path: '/', icon: Home },
   { label: 'Contests', path: '/contests', icon: Trophy },
   // { label: 'Tasks', path: '/tasks', icon: ListChecks },
-  { label: 'Roadmap', path: '/roadmap', icon: Map },
+
   // { label: 'Resources', path: '/resources', icon: BookOpen },
   {
     label: 'Team',
@@ -61,7 +63,9 @@ const primaryNavItems: NavItem[] = [
 ];
 
 const moreNavItems: DropdownItem[] = [
-
+  { label: 'Problem Bank', path: '/tasks', icon: ListChecks, description: 'Browse and practice olympiad problems' },
+  { label: 'Roadmap', path: '/roadmap', icon: Map, description: 'A guided path through machine learning' },
+  { label: 'Blogs', path: '/blogs', icon: BookOpen, description: 'Ideas from the AICC community' },
 ];
 
 const MORE_INDEX = primaryNavItems.length;
@@ -236,8 +240,9 @@ const Navigation = () => {
                 <img
                   src="/assets/AICCCC.png"
                   alt="AICC Logo"
-                  className="h-9 transition-transform group-hover:scale-105"
+                  className="h-9 transition-transform group-hover:scale-105 dark:hidden"
                 />
+                <img src="/assets/aicc_white.png" alt="AICC Logo" className="hidden h-9 transition-transform group-hover:scale-105 dark:block" />
               </button>
 
               <div className="hidden md:flex items-center">
@@ -263,7 +268,7 @@ const Navigation = () => {
                     />
                   )}
 
-                  {primaryNavItems.map((item, i) => {
+                  {primaryNavItems.slice(0, 2).map((item, i) => {
                     const active = isActive(item.path);
                     const Icon = item.icon;
                     return (
@@ -275,6 +280,7 @@ const Navigation = () => {
                         onClick={() => handleNavigation(item.path, item.sectionId)}
                         onMouseEnter={() => setHoverIndex(i)}
                         onMouseLeave={() => setHoverIndex(null)}
+                        data-current={active || undefined}
                         className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
                           ? 'text-white'
                           : 'text-gray-700 dark:text-gray-300 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
@@ -286,32 +292,55 @@ const Navigation = () => {
                     );
                   })}
 
-                  {/* <div ref={moreRef} className="relative ml-1">
+                  <div ref={moreRef} className="relative" onKeyDown={event => {
+                    if (event.key === 'Escape' && moreOpen) { event.preventDefault(); setMoreOpen(false); itemRefs.current[MORE_INDEX]?.focus(); }
+                    if (moreOpen && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+                      event.preventDefault();
+                      const options = Array.from(moreRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? []);
+                      const current = options.indexOf(document.activeElement as HTMLElement);
+                      options[(current + (event.key === 'ArrowDown' ? 1 : options.length - 1)) % options.length]?.focus();
+                    }
+                  }}>
                     <button
                       ref={(el) => {
                         itemRefs.current[MORE_INDEX] = el;
                       }}
                       onClick={() => setMoreOpen((open) => !open)}
+                      onKeyDown={event => {
+                        if (!moreOpen && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+                          event.preventDefault(); event.stopPropagation(); setMoreOpen(true);
+                          requestAnimationFrame(() => {
+                            const items = moreRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]');
+                            items?.[event.key === 'ArrowUp' ? items.length - 1 : 0]?.focus();
+                          });
+                        }
+                      }}
                       onMouseEnter={() => setHoverIndex(MORE_INDEX)}
                       onMouseLeave={() => setHoverIndex(null)}
-                      className={`relative z-10 flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${activeIndex === MORE_INDEX
+                      data-current={activeIndex === MORE_INDEX || undefined}
+                      className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${activeIndex === MORE_INDEX
                           ? 'text-white'
                           : 'text-gray-700 dark:text-gray-300 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
                         }`}
                       aria-expanded={moreOpen}
-                      aria-haspopup="true"
+                      aria-haspopup="menu" aria-controls="learn-menu"
                     >
-                      <Sparkles className="w-4 h-4" />
-                      <span>More</span>
+                      <BookOpen className="w-4 h-4" aria-hidden="true" />
+                      <span>Learn</span>
                       <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${moreOpen ? 'rotate-180' : ''
-                          }`}
+                        strokeWidth={2.5}
+                        aria-hidden="true"
+                        className="learn-chevron ml-1 w-4 h-4"
+                        data-open={moreOpen}
                       />
                     </button>
 
-                    {moreOpen && (
+                    {
                       <div
-                        className="absolute right-0 top-full mt-2 w-72 origin-top-right rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0f0f15] shadow-xl shadow-black/5 dark:shadow-black/30 overflow-hidden"
+                        ref={node => { node?.toggleAttribute('inert', !moreOpen); }}
+                        data-open={moreOpen}
+                        aria-hidden={!moreOpen}
+                        id="learn-menu" className="learn-dropdown absolute right-0 top-full mt-2 w-72 origin-top-right rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0f0f15] shadow-xl shadow-black/5 dark:shadow-black/30 overflow-hidden"
                         role="menu"
                       >
                         <div className="p-2">
@@ -358,40 +387,39 @@ const Navigation = () => {
                             );
                           })}
                         </div>
-                        <div className="px-3 py-2.5 border-t border-gray-200 dark:border-white/10 bg-gray-50/60 dark:bg-white/[0.02]">
-                          <p className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400">
-                            Quick Links
-                          </p>
-                          <div className="flex items-center gap-1 mt-2">
-                            <a
-                              href="https://github.com/AI-Community-Contest"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 hover:text-aicc-purple hover:bg-white dark:hover:bg-white/5 rounded-md transition-colors"
-                            >
-                              <Github className="w-3.5 h-3.5" />
-                              GitHub
-                            </a>
-                            <a
-                              href="https://discord.gg/7GfxrqRreY"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 hover:text-aicc-purple hover:bg-white dark:hover:bg-white/5 rounded-md transition-colors"
-                            >
-                              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-                              </svg>
-                              Discord
-                            </a>
-                          </div>
-                        </div>
+
                       </div>
-                    )}
-                  </div> */}
+                    }
+                  </div>
+                  {primaryNavItems.slice(2).map((item, index) => {
+                    const i = index + 2;
+                    const active = isActive(item.path);
+                    const Icon = item.icon;
+                    return (
+                      <button
+                        key={item.path}
+                        ref={(el) => {
+                          itemRefs.current[i] = el;
+                        }}
+                        onClick={() => handleNavigation(item.path, item.sectionId)}
+                        onMouseEnter={() => setHoverIndex(i)}
+                        onMouseLeave={() => setHoverIndex(null)}
+                        data-current={active || undefined}
+                        className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
+                          ? 'text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
+                          }`}
+                      >
+                        <Icon className="w-4 h-4" />
+                        <span>{item.label}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
               <div className="hidden md:flex items-center gap-2 shrink-0">
+                <ThemeToggle />
                 <a
                   href="https://github.com/AI-Community-Contest"
                   target="_blank"
@@ -413,18 +441,21 @@ const Navigation = () => {
                 </button>
               </div>
 
-              <button
-                className="md:hidden p-2 -mr-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
-                onClick={() => setMobileMenuOpen((open) => !open)}
-                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={mobileMenuOpen}
-              >
-                {mobileMenuOpen ? (
-                  <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                ) : (
-                  <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                )}
-              </button>
+              <div className="flex items-center gap-2 md:hidden">
+                <ThemeToggle />
+                <button
+                  className="p-2 -mr-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                  aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                  aria-expanded={mobileMenuOpen}
+                >
+                  {mobileMenuOpen ? (
+                    <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                  ) : (
+                    <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </nav>
@@ -480,7 +511,7 @@ const Navigation = () => {
             })}
 
             <div className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400 px-2 pt-6 pb-1">
-              More
+              Learn
             </div>
             {moreNavItems.map((item) => {
               const active = isActive(item.path);

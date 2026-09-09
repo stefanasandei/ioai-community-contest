@@ -301,7 +301,7 @@ export const SheetTaskCard = ({ task, expanded = false }: SheetTaskCardProps) =>
                 </button>
               </PopoverTrigger>
               <PopoverContent className="w-48 p-1.5 shadow-lg border border-gray-200 dark:border-white/10" align="end">
-                <div className="text-[10px] font-semibold text-gray-400 dark:text-gray-500 px-2 py-1 uppercase tracking-wider">
+                <div className="text-[10px] font-semibold text-gray-400 dark:text-gray-400 px-2 py-1 uppercase tracking-wider">
                   Available Solutions
                 </div>
                 <div className="space-y-1">

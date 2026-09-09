@@ -54,10 +54,10 @@ const getInitials = (name: string) => {
 
 const TeamCard = ({ member, color }: { member: TeamMember; color: 'purple' | 'orange' | 'red' | 'blue' }) => {
   return (
-    <div className="border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+    <div className="border border-gray-200 dark:border-white/10 bg-white dark:bg-card">
       <div className={`px-5 pt-5 ${!member.description ? 'pb-5' : ''}`}>
         <div className="flex items-start gap-4">
-          <div className={`w-12 h-12 flex items-center justify-center text-white font-bold text-sm shrink-0 ${color === 'purple' ? 'bg-purple-600' : color === 'orange' ? 'bg-orange-600' : color === 'blue' ? 'bg-blue-600' : 'bg-aicc-red'
+          <div className={`w-12 h-12 flex items-center justify-center text-white font-bold text-sm shrink-0 ${color === 'purple' ? 'bg-purple-600' : color === 'orange' ? 'bg-orange-600 dark:bg-orange-700' : color === 'blue' ? 'bg-blue-600' : 'bg-aicc-red dark:bg-red-700'
             }`}>
             {getInitials(member.name)}
           </div>

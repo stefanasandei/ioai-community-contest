@@ -70,7 +70,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <img src="/assets/AICCCC.png" alt="AICC Logo" className="h-8" />
+              <img src="/assets/AICCCC.png" alt="AICC Logo" className="h-8 dark:hidden" />
+              <img src="/assets/aicc_white.png" alt="AICC Logo" className="hidden h-8 dark:block" />
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
               AICC (AI Community Contest) - Monthly IOAI practice rounds and
@@ -136,7 +137,7 @@ const Footer = () => {
 
         <div className="pt-8 border-t border-gray-200 dark:border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-gray-500 dark:text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               &copy; {new Date().getFullYear()}{" "}
               AI Community Contest. All rights reserved.
             </p>

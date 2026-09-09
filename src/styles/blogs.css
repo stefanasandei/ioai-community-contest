@@ -18,6 +18,7 @@
 .notebook-article .notebook-output { max-height: 26rem; background: #f3f4f6; color: #374151; }
 .dark .notebook-code { border-color: #374151; }
 .dark .notebook-code summary, .dark .notebook-article .notebook-output { background: #111827; color: #d1d5db; }
+.dark .notebook-code summary:hover { background: #1f2937; }
 .notebook-article section > div:not(.notebook-code):not(.notebook-html) { margin: 1.5rem 0; padding: 1rem 1.25rem; border-left: 3px solid #8c00ff; background: #f9fafb; font-size: .95em; }
 .notebook-article section > div > div + div { margin-top: .6rem; }
 .dark .notebook-article section > div:not(.notebook-code):not(.notebook-html) { background: #111827; }

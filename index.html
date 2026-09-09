@@ -4,6 +4,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    // Apply the saved choice before the app or styles paint.
+    try {
+      const dark = localStorage.getItem('aicc-theme') === 'dark';
+      document.documentElement.classList.toggle('dark', dark);
+      document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+    } catch (_) { document.documentElement.style.colorScheme = 'light'; }
+  </script>
   <title>AICC | AI Community Contest - AI Practice Competitions</title>
   <meta name="description"
     content="AICC (AI Community Contest) - Monthly practice rounds for IOAI (International Olympiad in AI), CEOAI, IAIO. Join competitive AI challenges, prepare for IOAI, and improve your AI skills with our community-driven contests." />
