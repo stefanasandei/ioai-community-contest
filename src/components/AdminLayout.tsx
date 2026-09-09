@@ -12,6 +12,7 @@ interface AdminNavItem {
 }
 
 const adminNavItems: AdminNavItem[] = [
+  { label: 'Round announcements', path: '/admin/rounds', icon: ListChecks, description: 'Schedule banners & propose dates' },
   { label: 'Blogs editor', path: '/admin/blogs', icon: BookOpen, description: 'Upload notebooks & preview posts' },
   {
     label: 'Tasks editor',

@@ -1,4 +1,6 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { LiveRoundNotice } from '@/components/LiveRoundPreview';
+import LiveRoundBanner from '@/components/LiveRoundBanner';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import RulesSection from '@/components/RulesSection';
@@ -16,11 +18,14 @@ const latestContest = contests
 
 const Index = () => {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const livePreview = import.meta.env.DEV && params.get('preview') === 'live-round';
 
   return (
     <div className="min-h-screen">
       <Navigation />
       <main>
+        {livePreview ? <LiveRoundNotice /> : <LiveRoundBanner />}
         <HeroSection />
         <RulesSection />
 

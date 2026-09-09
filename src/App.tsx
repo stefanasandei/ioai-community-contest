@@ -21,6 +21,7 @@ import AdminLayout from "./components/AdminLayout";
 import AdminRoadmap from "./pages/AdminRoadmap";
 import AdminResources from "./pages/AdminResources";
 import AdminTasks from "./pages/AdminTasks";
+import AdminRounds from "./pages/AdminRounds";
 import Leaderboard from "./pages/Leaderboard";
 import NotFound from "./pages/NotFound";
 import BlogLoading from "./components/BlogLoading";
@@ -67,6 +68,7 @@ const App = () => (
           <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route element={<AdminLayout />}>
+            <Route path="/admin/rounds" element={<AdminRounds />} />
             <Route path="/admin/roadmap" element={<AdminRoadmap />} />
             <Route path="/admin/resources" element={<AdminResources />} />
             <Route path="/admin/tasks" element={<AdminTasks />} />
