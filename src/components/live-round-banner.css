@@ -1,0 +1,22 @@
+.round-banner { margin-top: 64px; border-bottom: 1px solid #ebe6f0; background: #fcfaff; color: #493458; }
+.dark .round-banner { background: #100d15; border-color: #28212f; color: #e4d9ef; }
+.round-banner-row { max-width: 1280px; margin: auto; padding: 12px 24px; min-height: 48px; display: flex; align-items: center; gap: 18px; font-size: 13px; }
+.round-banner-row + .round-banner-row { border-top: 1px solid rgb(140 100 160 / .12); }
+.round-banner-row strong { font-weight: 600; }
+.round-banner-live { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; white-space: nowrap; color: #547364; }
+.dark .round-banner-live { color: #a2c8b2; }
+.round-banner-live i { width: 6px; height: 6px; background: #27966b; border-radius: 50%; }
+.round-banner-time { color: #756780; font-size: 12px; white-space: nowrap; }
+.dark .round-banner-time { color: #b1a4bd; }
+.round-banner-action { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap; }
+.round-banner-row:hover .round-banner-action { color: #9339cb; }
+.dark .round-banner-row:hover .round-banner-action { color: #d2a5f6; }
+.round-banner-row:focus-visible { outline: 2px solid #a43dff; outline-offset: -3px; }
+.round-banner + #hero { min-height: calc(100svh - 112px); padding-top: 48px; }
+@media(max-width: 640px) {
+  .round-banner-row { padding: 11px 20px; gap: 4px 10px; display: grid; grid-template-columns: auto 1fr auto; }
+  .round-banner-row strong { grid-column: 2; overflow-wrap: anywhere; }
+  .round-banner-time { grid-column: 2; grid-row: 2; }
+  .round-banner-action { grid-column: 3; grid-row: 1 / 3; }
+  .round-banner-live { font-size: 10px; }
+}
