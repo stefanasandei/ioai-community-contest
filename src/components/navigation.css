@@ -1,3 +1,21 @@
+.navigation-balanced {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  column-gap: 16px;
+}
+.navigation-center { grid-column: 2; justify-self: center; }
+.navigation-actions, .navigation-mobile { grid-column: 3; justify-self: end; }
+@media (min-width: 998px) and (max-width: 1199px) {
+  .navigation-actions { gap: 4px; }
+  .navigation-join-full { display: none; }
+  .navigation-join-short { display: inline; }
+}
+@media (min-width: 998px) and (max-width: 1099px) {
+  .navigation-center > div { gap: 4px; }
+  .navigation-center > div > button,
+  .navigation-center > div > div > button { padding-inline: 10px; }
+}
+
 .learn-chevron {
   transform: rotate(0deg);
   transform-origin: center;
