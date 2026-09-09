@@ -227,7 +227,7 @@ const Navigation = () => {
             : 'border-transparent'
             }`}
         >
-          <div className="w-full px-6">
+          <div className="navigation-shell">
             <div className="navigation-balanced items-center h-16">
               <button
                 onClick={() => {
