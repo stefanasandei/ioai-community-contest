@@ -9,6 +9,7 @@ import {
     ChevronDown,
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import { RatingsEntryPreview } from '@/components/RatingsEntryPreview';
 import Footer from "@/components/Footer";
 import ContestCard from "@/components/ContestCard";
 import TaskCard from "@/components/TaskCard";
@@ -103,6 +104,7 @@ interface ActiveChip {
 
 const Contests = () => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const ratingsPreview = import.meta.env.DEV;
 
     const searchQuery = searchParams.get("q") ?? "";
     const selectedTypes = useMemo(
@@ -609,6 +611,7 @@ const Contests = () => {
                         </button>
                     ))}
                 </div>
+                {ratingsPreview && <RatingsEntryPreview />}
                 {hasActiveFilters && (
                     <button
                         onClick={clearAll}

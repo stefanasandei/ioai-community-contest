@@ -30,6 +30,7 @@ const queryClient = new QueryClient();
 const Blogs = lazy(() => import('./pages/Blogs'));
 const AdminBlogs = lazy(() => import('./pages/AdminBlogs'));
 const TaskAtlas = lazy(() => import('./features/task-atlas/TaskAtlas'));
+const Ratings = import.meta.env.DEV ? lazy(() => import('./pages/Ratings')) : null;
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -53,6 +54,7 @@ const App = () => (
           <Route path="/become-setter" element={<BecomeSetter />} />
           <Route path="/rules" element={<Rules />} />
           <Route path="/contests" element={<Contests />} />
+          {Ratings && <Route path="/ratings" element={<Suspense fallback={<div className="p-20" role="status">Loading ratings…</div>}><Ratings /></Suspense>} />}
           <Route path="/contests/:roundPath/leaderboard" element={<Leaderboard />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/tasks/clusters" element={<Navigate to="/tasks/atlas" replace />} />

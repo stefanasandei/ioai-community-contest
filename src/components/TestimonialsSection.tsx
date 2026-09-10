@@ -94,7 +94,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
 
   
   return (
-    <article className="group relative flex min-h-[300px] w-[calc(100vw-2rem)] max-w-[350px] shrink-0 flex-col overflow-hidden rounded-2xl border border-gray-200/80 bg-white/90 p-5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-aicc-purple/30 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.06] dark:hover:border-aicc-purple/40">
+    <article className="group relative flex min-h-[260px] w-[calc(100vw-2rem)] max-w-[350px] shrink-0 flex-col overflow-hidden rounded-2xl border border-gray-200/80 bg-white/90 px-5 py-4 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-aicc-purple/30 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.06] dark:hover:border-aicc-purple/40">
       <div
         className={cn(
           "absolute inset-x-0 top-0 h-1 bg-gradient-to-r",
@@ -105,7 +105,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
       <div className="flex items-start justify-between gap-4">
         <div
           className={cn(
-            "flex h-12 w-12 items-center justify-center rounded-xl border bg-gradient-to-br from-white to-gray-50 shadow-sm dark:from-white/10 dark:to-white/5",
+            "flex h-10 w-10 items-center justify-center rounded-xl border bg-gradient-to-br from-white to-gray-50 shadow-sm dark:from-white/10 dark:to-white/5",
             testimonial.badgeClass
           )}
         >
@@ -114,7 +114,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
         <Quote className="h-7 w-7 text-aicc-purple/15 transition-colors group-hover:text-aicc-purple/30 dark:text-aicc-purple-light/20 dark:group-hover:text-aicc-purple-light/40" />
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2">
+      <div className="mt-3 flex flex-wrap items-center gap-2">
         <span
           className={cn(
             "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider",
@@ -130,11 +130,11 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
         )}
       </div>
 
-      <p className="mt-4 flex-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
-        “{testimonial.quote}”
+      <p className="mb-0 mt-3 flex-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
+        {testimonial.quote}
       </p>
 
-      <div className="mt-5 border-t border-gray-200/80 pt-3 dark:border-white/10">
+      <div className="mt-3 border-t border-gray-200/80 pt-3 dark:border-white/10">
         <p className="mb-0 text-sm font-bold text-gray-900 dark:text-white">
           {testimonial.name}
         </p>
@@ -205,7 +205,7 @@ const strip = useRef<HTMLDivElement>(null);
     };
   }, []);
   return (
-    <section id="testimonials" className="scroll-mt-20 relative overflow-hidden border-t border-gray-200/70 bg-white py-16 md:py-20 dark:border-white/10 dark:bg-[#0a0a0f]">
+    <section id="testimonials" className="scroll-mt-20 relative overflow-hidden border-t border-gray-200/70 bg-white py-12 md:py-16 dark:border-white/10 dark:bg-[#0a0a0f]">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute -left-24 top-16 h-72 w-72 rounded-full bg-aicc-purple/10 blur-3xl" />
         <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-aicc-orange/10 blur-3xl" />
