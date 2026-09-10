@@ -144,3 +144,8 @@
 .cluster-topic-sections { margin: 0 6px 6px 17px; padding-left: 10px; border-left: 1px solid var(--cluster-border); }
 .cluster-topic-sections .cluster-result { padding-block: 9px; }
 .cluster-topic-sections .cluster-result strong { font-size: 12px; font-weight: 500; }
+
+.atlas-matched-width { width: max-content; max-width: calc(100% - 56px); }
+.atlas-matched-width .cluster-heading { width: 100%; }
+.atlas-matched-width .cluster-search-area { width: 100%; min-width: 0; }
+@media (max-width: 760px) { .atlas-matched-width { max-width: calc(100% - 24px); } }

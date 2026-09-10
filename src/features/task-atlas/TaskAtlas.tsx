@@ -85,7 +85,7 @@ export default function TaskAtlas() {
         <canvas ref={canvas} tabIndex={0} role="img" aria-label={`Map of ${tasks.length} AI olympiad problems grouped by similarity. Use search to explore with a keyboard.`} aria-describedby="cluster-controls-help" />
         <canvas ref={labelCanvas} className="cluster-labels" aria-hidden="true" />
       </div>
-      <div className="cluster-header-stack">
+      <div className="cluster-header-stack atlas-matched-width">
       <Link to={returnTo} className="cluster-heading" aria-label="Back to problem bank" onClick={event => {
           if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
           event.preventDefault();
