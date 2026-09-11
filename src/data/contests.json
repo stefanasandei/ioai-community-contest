@@ -43,6 +43,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/aicc-round-9-word-lookups",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-9/word-lookups.ipynb",
+                    "blog": "solutions/round-9/word-lookups",
                     "author": "Gior",
                     "practiceStatus": "medium"
                 },
