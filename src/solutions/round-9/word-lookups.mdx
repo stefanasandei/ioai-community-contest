@@ -1,0 +1,88 @@
+## Problem Overview
+
+Word Lookups is an unsupervised word segmentation task that requires Chinese sentences to be split into words, or vocabulary items. 
+
+You are provided with a training corpus of ~37,000 Chinese sentences, which are sequences of tokens (Chinese characters or punctuation) without whitespace separation. Despite the division between the training split (~37,000 sentences) and the test split (~9,200 sentences), no ground-truth word boundary labels are provided. 
+
+The goal is to identify word boundaries to segment sentences into words as accurately as possible. The evaluation metric is the boundary F1 score.
+
+## The Core Idea
+
+In natural language, the constituent characters of a word co-occur far more frequently than a random pairing of adjacent characters.
+
+## Solution 1: Byte-Pair Encoding Tokenization
+
+This insight leads to 2 possible classes of solutions, one of which is related to tokenization. Specifically, the key procedure of byte-pair encoding (BPE) tokenization is shown below:
+
+1. Initialize the list of tokens as all single characters in the corpus.
+2. Find the pair of tokens that occur together most frequently (e.g., ‘e’ and ‘m’ appear together as ‘em’) by counting all adjacent token pairs across the corpus.
+3. Group the pair into one token and add it to the list of tokens. Tokenize the corpus again using the new list of tokens.
+4. Repeat step 2 and 3 with the new token set, until a designated number of distinct tokens is reached. 
+
+Through this process, common sequences of characters are merged into single tokens, while uncommon ones remain split as multi-token sequences. This aligns directly with the goal of separating frequently co-occurring character subsequences from rare ones.
+
+Using BPE with a reasonable estimate of the number of distinct tokens (10000), a score of 0.8265 public / 0.8282 private can be reached.
+
+```
+from tokenizers import Tokenizer
+from tokenizers.models import BPE
+from tokenizers.trainers import BpeTrainer
+
+tokenizer = Tokenizer(BPE(unk_token="[UNK]"))
+trainer = BpeTrainer(
+    vocab_size=10000,
+    special_tokens=["[UNK]"]
+)
+```
+
+A further enhancement (reaching 0.8755 public / 0.8774 private) is achieved by setting the pre-tokenizer to the Whitespace pre-tokenizer, which splits on both whitespaces and punctuations. This ensures that punctuation marks always serve as word boundaries.
+
+```
+from tokenizers.pre_tokenizers import Whitespace
+tokenizer.pre_tokenizer = Whitespace()
+```
+
+Moreover, purely statistical BPE can over-merge high-frequency functional words, such as prepositions, with neighboring content words simply because they appear together frequently. Forcibly separating on these common functional markers prevents false merges and further boost evaluation scores. Tuning the vocabulary size to 100000 and also forcing separation of the 10 most common characters into individual words produces scores of up to 0.8990 public / 0.9013 private.
+
+## Solution 2: Language Modeling
+
+The official solution provides another approach based on language modeling. The idea is that if character $t_1$ is followed by $t_2$, and $P(t_2 \mid t_1)$ is high, $t_1t_2$ likely belongs to the same word as it corresponds to a likely sequence of two characters co-occurring together. Conversely, if $P(t_3 \mid t_1)$ is low, the transition from $t_1$ to $t_3$ likely marks a boundary between two distinct words.
+
+The solution executes the following few steps:
+
+1. Train a bidirectional LSTM (BiLSTM) for autoregressive language modeling at the character level.
+2. Compute the surprisal ($-\log P(t_i \mid t_1, t_2, ..., t_{i-1})$) for each character in a sequence using model outputs. 
+3. Mark a word boundary whenever the surprisal spikes above a threshold (in this case the global mean of the surprisal scores)
+
+This part of Solution 2 above achieves a score of 0.8103 public / 0.8087 private.
+
+What matters in the end of the modeling task is to separate two categories of adjacent token pairs: tokens belonging to the same word and tokens belonging to different words. Therefore the language modeling (including the training and inference) can be done in both directions independently, and the token-level surprisals are summed together. This enhances the score to 0.8794 public / 0.8786 private.
+
+```
+def compute_surprisal(sentence):
+    fwd_probs, bwd_probs = get_lm_outputs(model, sentence) # softmaxed model logits
+    x = sentence.cpu()
+    T = len(x)
+    fwd = torch.zeros(T - 1)
+    bwd = torch.zeros(T - 1)
+    # forward LM
+    for i in range(T - 1):
+        target = x[i + 1]
+        p = fwd_probs[i, target]
+        fwd[i] = -torch.log(p + 1e-12)
+    # backward LM
+    x_rev = torch.flip(x, dims=[0])
+    for i in range(T - 1):
+        target = x_rev[i + 1]
+        p = bwd_probs[i, target]
+        bwd[T - 2 - i] = -torch.log(p + 1e-12)
+    return fwd, bwd
+def boundary_scores(sentence):
+    fwd, bwd = compute_surprisal(sentence)
+    return fwd + bwd
+```
+
+## Comparing the Two Solutions
+
+- Solution 1: easier to implement, but may require a reasonable estimate of the number of distinct words in the corpus
+- Solution 2: the segmentation is based on full-sentence context in both forward and backward directions rather than relying on a static set of tokens, but it may be challenging to complete, debug, and fine-tune the implementation under strict time constraints.
