@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { posthogLogs } from '@/lib/posthogLogs';
 
 const NotFound = () => {
   const location = useLocation();
@@ -9,6 +10,7 @@ const NotFound = () => {
       "404 Error: User attempted to access non-existent route:",
       location.pathname
     );
+    posthogLogs.info('not_found_route_rendered', { route_kind: 'unknown' });
   }, [location.pathname]);
 
   return (

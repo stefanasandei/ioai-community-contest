@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import NotebookArticle from '@/components/NotebookArticle';
 import BlogAuthor from '@/components/BlogAuthor';
 import { parseNotebook, downloadBlogFile, type Notebook, type BlogPost } from '@/lib/blogs';
+import { capturePostHogEvent, posthogLogs } from '@/lib/posthogLogs';
 
 export default function AdminBlogs() {
   const [notebook, setNotebook] = useState<Notebook | null>(null);
@@ -27,6 +28,8 @@ export default function AdminBlogs() {
     if (!valid) return;
     const post: BlogPost = { ...fields, title: fields.title.trim(), author: fields.author.trim(), notebook };
     downloadBlogFile(`${fields.slug}.json`, JSON.stringify(post, null, 2));
+    capturePostHogEvent('blog_exported');
+    posthogLogs.info('blog_json_export_completed', { export_format: 'blog_json' });
   }
   return <div className="p-6 sm:p-10 text-gray-900 dark:text-gray-100">
     <h1 className="text-3xl font-bold">Blogs editor</h1>

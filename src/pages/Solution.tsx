@@ -6,6 +6,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { mdxComponents } from '@/components/solutions';
 import contestsData from '@/data/contests.json';
+import { capturePostHogEvent } from '@/lib/posthogLogs';
 import type { PracticeStatus, ContestsData, Task } from '@/data/types';
 
 const DATA = contestsData as ContestsData;
@@ -113,6 +114,10 @@ const Solution = () => {
                                 href={competitionHref}
                                 target="_blank"
                                 rel="noreferrer"
+                                onClick={() => capturePostHogEvent('task_competition_opened', {
+                                    task_type: task.type,
+                                    source: task.source ? 'kilonova' : task.nitroJudge ? 'nitro_judge' : 'kaggle',
+                                })}
                                 className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors"
                             >
                                 {competitionLabel}
@@ -123,6 +128,7 @@ const Solution = () => {
                                     href={task.solution}
                                     target="_blank"
                                     rel="noreferrer"
+                                    onClick={() => capturePostHogEvent('task_solution_opened', { solution_type: 'notebook' })}
                                     className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                                 >
                                     <Github className="w-4 h-4" />
@@ -184,6 +190,7 @@ const Solution = () => {
                             href={task.solution}
                             target="_blank"
                             rel="noreferrer"
+                            onClick={() => capturePostHogEvent('task_solution_opened', { solution_type: 'notebook' })}
                             className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                         >
                             <Github className="w-4 h-4" />

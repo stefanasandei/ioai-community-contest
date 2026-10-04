@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { loginAdmin, isAdminAuthed } from '@/lib/admin';
 import { cn } from '@/lib/utils';
+import { capturePostHogEvent, posthogLogs } from '@/lib/posthogLogs';
 
 const inputCls =
   'bg-white dark:bg-white/10 text-gray-900 dark:text-white border-gray-300 dark:border-white/15 placeholder:text-gray-400 dark:placeholder:text-gray-500';
@@ -25,6 +26,8 @@ const AdminLogin = () => {
     e.preventDefault();
     setError('');
     if (loginAdmin(username, password)) {
+      capturePostHogEvent('admin_login_succeeded');
+      posthogLogs.info('admin_access_granted', { auth_mode: 'local_shared_gate' });
       navigate('/admin/roadmap', { replace: true });
     } else {
       setError('Invalid username or password.');

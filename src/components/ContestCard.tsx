@@ -16,6 +16,7 @@ import {
     Github,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { capturePostHogEvent } from "@/lib/posthogLogs";
 import type { Task, PracticeStatus } from "@/data/types";
 import LeaderboardButton from "@/components/LeaderboardButton";
 
@@ -215,6 +216,10 @@ const ContestCard = ({
                                     href={competitionHref}
                                     target="_blank"
                                     rel="noreferrer"
+                                    onClick={() => capturePostHogEvent("task_competition_opened", {
+                                        task_type: task.type,
+                                        source: task.source ? "kilonova" : task.nitroJudge ? "nitro_judge" : "kaggle",
+                                    })}
                                     className={PRIMARY_BTN}
                                 >
                                     {competitionLabel}
@@ -225,6 +230,7 @@ const ContestCard = ({
                                         href={`/solutions/round-${roundId - 1}/${getTaskSlug(task.name)}`}
                                         target="_blank"
                                         rel="noreferrer"
+                                        onClick={() => capturePostHogEvent("task_solution_opened", { solution_type: "article" })}
                                         className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
                                     >
                                         <BookOpen className="w-4 h-4" />
@@ -240,6 +246,7 @@ const ContestCard = ({
                                         href={task.solution}
                                         target="_blank"
                                         rel="noreferrer"
+                                        onClick={() => capturePostHogEvent("task_solution_opened", { solution_type: "notebook" })}
                                         className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2"
                                     >
                                         <Github className="w-4 h-4" />
