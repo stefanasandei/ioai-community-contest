@@ -2,6 +2,35 @@
     "contests": [
         {
             "id": 11,
+            "month": "September",
+            "year": "2026",
+            "title": "Round 11",
+            "tasks": [
+                {
+                    "name": "Guess Animals Again",
+                    "type": "CV",
+                    "kaggle": "https://www.kaggle.com/competitions/guess-animals-again-aicc-round-11",
+                    "author": "Beketov Dauzhan",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Tally",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/tally-aicc-round-11",
+                    "author": "Antony Ingorokva",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Cosmos Cosmic Run",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/cosmos-cosmic-run-aicc-round-11/",
+                    "author": "Henry Ho",
+                    "practiceStatus": "medium"
+                }
+            ]
+        },
+        {
+            "id": 11,
             "month": "August",
             "year": "2026",
             "title": "Round 10",
