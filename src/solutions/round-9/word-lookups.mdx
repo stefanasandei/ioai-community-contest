@@ -50,7 +50,7 @@ The official solution provides another approach based on language modeling. The 
 
 The solution executes the following few steps:
 
-1. Train a bidirectional LSTM (BiLSTM) for autoregressive language modeling at the character level.
+1. Train an LSTM for autoregressive language modeling at the character level.
 2. Compute the surprisal ($-\log P(t_i \mid t_1, t_2, ..., t_{i-1})$) for each character in a sequence using model outputs. 
 3. Mark a word boundary whenever the surprisal spikes above a threshold (in this case the global mean of the surprisal scores)
 
