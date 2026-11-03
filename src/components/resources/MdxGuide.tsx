@@ -2,6 +2,8 @@ import { useEffect, useState, type ComponentType } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import type { MDXProps } from 'mdx/types';
 import { mdxComponents } from '@/components/solutions';
+import 'katex/dist/katex.min.css';
+import '@/styles/prism.css';
 
 const mdxModules = import.meta.glob('@/resources/**/*.mdx');
 

@@ -5,7 +5,7 @@ import BlogLoading from '@/components/BlogLoading';
 import { ArrowUpRight, ArrowLeft, BookOpen, Download, ChevronDown } from 'lucide-react';
 import BlogAuthor from '@/components/BlogAuthor';
 import BlogDate from '@/components/BlogDate';
-import { loadBlog, downloadBlogFile, notebookText, type BlogPost } from '@/lib/blogs';
+import { loadBlog, notebookText, type BlogPost } from '@/lib/blogs';
 import posts from 'virtual:blog-index';
 
 const loadRenderer = () => import('@/components/NotebookArticle');
@@ -52,7 +52,7 @@ export default function Blogs() {
     <BackToBlogs />
     <div className="flex flex-col sm:flex-row items-start justify-between gap-5 mt-3 mb-4">
       <h1 className="text-4xl font-bold text-gray-900 dark:text-white flex-1 tracking-tight leading-tight">{post.title}</h1>
-      <button onClick={() => downloadBlogFile(`${post.slug}.ipynb`, JSON.stringify(post.notebook, null, 2))} className="inline-flex min-h-11 shrink-0 items-center gap-2 px-5 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4">Download notebook<Download size={16} aria-hidden="true" /></button>
+      <a href={post.downloadUrl} download={`${post.slug}.ipynb`} className="inline-flex min-h-11 shrink-0 items-center gap-2 px-5 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4">Download notebook<Download size={16} aria-hidden="true" /></a>
     </div>
     <p className="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300 mb-4">{post.description}</p>
     <div className="mb-3"><BlogDate date={post.publishedAt} /></div>
