@@ -33,10 +33,11 @@ const Footer = () => {
   const quickLinks = [
     { label: "Home", path: "/" },
     { label: "Contests", path: "/contests" },
-    { label: "Tasks", path: "/tasks" },
+    { label: "Problem Bank", path: "/tasks" },
     { label: "Team", path: "/team" },
     { label: "Resources", path: "/resources" },
     { label: "Roadmap", path: "/roadmap" },
+    { label: "Blogs", path: "/blogs" },
     { label: "Become a Setter", path: "/become-setter" },
     //{ label: "Community", path: "/community" },
   ];

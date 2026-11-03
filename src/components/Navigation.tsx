@@ -355,8 +355,8 @@ const Navigation = () => {
 
       <div
         className={`fixed inset-0 z-40 bg-white/95 dark:bg-[#0a0a0f]/95 backdrop-blur-xl transition-opacity duration-300 md:hidden ${mobileMenuOpen
-          ? 'opacity-100 pointer-events-auto'
-          : 'opacity-0 pointer-events-none'
+          ? 'visible opacity-100 pointer-events-auto'
+          : 'invisible opacity-0 pointer-events-none'
           }`}
         aria-hidden={!mobileMenuOpen}
       >

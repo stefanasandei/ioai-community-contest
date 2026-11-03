@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import { mdxComponents } from '@/components/solutions';
 import contestsData from '@/data/contests.json';
 import { capturePostHogEvent } from '@/lib/posthogLogs';
+import { recoverPageLoad } from '@/lib/recoverPageLoad';
 import type { PracticeStatus, ContestsData, Task } from '@/data/types';
 
 const DATA = contestsData as ContestsData;
@@ -79,8 +80,8 @@ const Solution = () => {
                     setMDXContent(() => mdxModule.default);
                     setArticleStatus('ready');
                 }
-            } catch {
-                if (active) setArticleStatus('error');
+            } catch (error) {
+                if (active && !recoverPageLoad(error)) setArticleStatus('error');
             }
         };
         void loadMDX();
