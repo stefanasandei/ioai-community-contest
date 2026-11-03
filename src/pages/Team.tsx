@@ -13,7 +13,7 @@ enum TeamRole {
 interface TeamMember {
   name: string;
   username?: string;
-  country: CountryCode;
+  country?: CountryCode;
   description?: string;
   teams: TeamRole[];
 }
@@ -30,11 +30,13 @@ const teamMembers: TeamMember[] = [
   { name: 'Dauzhan Beketov', username: 'Megazhan', country: 'KZ', description: 'IOAI \'26 Gold (2nd overall), IOAI \'25 Bronze, IOI \'25 Bronze, EUROAI \'26 Silver', teams: [TeamRole.ProblemSetter] },
   { name: 'Luvidi Pranawa Alghari', username: 'Luvidi', country: 'ID', description: 'IOAI \'26 Gold, IOAI \'25 Silver', teams: [TeamRole.ProblemSetter] },
   { name: 'Wang Jiayu', username: 'Sabkx', country: 'SG', description: 'IOAI \'25 Gold (3rd overall), IOAI \'24 Gold', teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
-  { name: 'Carson Cheng', country: 'HK', teams: [TeamRole.Contributor] },
+  { name: 'Carson Cheng', country: 'HK', teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
+  { name: 'Erwin', teams: [TeamRole.ProblemSetter] },
+  { name: 'Mobtasim Priom', country: 'BD', teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
   { name: 'Malo Tessé', country: 'FR', teams: [TeamRole.Contributor] },
   { name: 'Theo Bustamante', country: 'PH', teams: [TeamRole.Contributor] },
   { name: 'Elison Ang', country: 'PH', teams: [TeamRole.Contributor] },
-  { name: 'Chon Feng Qi', country: 'MY', teams: [TeamRole.Contributor] },
+  { name: 'Chong Feng Qi', country: 'MY', teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
   { name: 'Gheorghiță Istrate David', country: 'RO', teams: [TeamRole.Contributor] },
   { name: 'Jithun Methusahan', country: 'LK', teams: [TeamRole.Contributor] },
   { name: 'Martin Haoxuan Zhang', country: 'SE', teams: [TeamRole.Contributor] },
@@ -63,7 +65,7 @@ const TeamCard = ({ member, color }: { member: TeamMember; color: 'purple' | 'or
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-              {member.name}<CountryFlag country={member.country} />
+              {member.name}{member.country && <CountryFlag country={member.country} />}
             </h3>
             {member.username && <p className="text-sm text-gray-500 dark:text-gray-400 font-light">
               {member.username}
@@ -166,7 +168,7 @@ const Team = () => {
                 <span aria-hidden="true" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-blue-50 text-xs font-semibold text-blue-600 dark:bg-blue-950 dark:text-blue-300">
                   {getInitials(member.name)}
                 </span>
-                <span className="text-sm font-medium text-gray-900 dark:text-white">{member.name}<CountryFlag country={member.country} /></span>
+                <span className="text-sm font-medium text-gray-900 dark:text-white">{member.name}{member.country && <CountryFlag country={member.country} />}</span>
               </li>
             ))}
           </ul>

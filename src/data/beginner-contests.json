@@ -15,24 +15,32 @@
                     "name": "Restoring Image Size",
                     "type": "CV",
                     "sprawdzai": "https://sprawdzai.org/task/restoring-image-size-challenge",
+                    "author": "Dauzhan Beketov",
+                    "practiceStatus": "easy",
                     "solution": ""
                 },
                 {
                     "name": "Piano Chord Challenge",
                     "type": "Audio",
                     "sprawdzai": "https://sprawdzai.org/task/piano-chord-challenge",
+                    "author": "Chong Feng Qi",
+                    "practiceStatus": "easy",
                     "solution": ""
                 },
                 {
                     "name": "Who Are the Impostors",
                     "type": "ML",
                     "sprawdzai": "https://sprawdzai.org/task/who-are-the-impostors",
+                    "author": "Carson Cheng",
+                    "practiceStatus": "easy",
                     "solution": ""
                 },
                 {
                     "name": "Grid Puzzle Reconstruction",
                     "type": "CV",
                     "sprawdzai": "https://sprawdzai.org/task/grid-puzzle-reconstruction",
+                    "author": "Erwin",
+                    "practiceStatus": "medium",
                     "solution": ""
                 }
             ]

@@ -10,18 +10,21 @@
                     "name": "Put the Sounds Back Together",
                     "type": "NLP & CV",
                     "kaggle": "https://www.kaggle.com/competitions/put-the-sounds-back-together-aicc-round-12/",
+                    "author": "Antony Ingorokva",
                     "solution": ""
                 },
                 {
                     "name": "Alakazam",
                     "type": "CV & NLP",
                     "kaggle": "https://www.kaggle.com/competitions/alakazam-aicc-round-12",
+                    "author": "Mobtasim Priom",
                     "solution": ""
                 },
                 {
                     "name": "Moonlight At Midday",
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/moonlight-at-midday-aicc-round-12/",
+                    "author": "Wang Jiayu",
                     "solution": ""
                 }
             ]
