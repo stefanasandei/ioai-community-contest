@@ -131,11 +131,6 @@ const Leaderboard = () => {
                                         ? "Raw private leaderboard scores for each task. Participants remain ordered by their normalized total points."
                                         : "Normalized scores show private leaderboard performance, scaled between each task’s baseline and 100-point benchmark."}
                             </p>
-                            {series === "main" && roundNumber === 12 && (
-                                <p className="mt-2 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
-                                    For Moonlight At Midday, 0 is the baseline and the winning score of 0.9864 is the 100-point benchmark. Round 12 points are capped at 0–100 per task.
-                                </p>
-                            )}
                             {series === "beginner" && (
                                 <a href={beginnerRound0.sourceUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-aicc-purple dark:text-aicc-purple-light hover:underline">
                                     View on SprawdzAI <ExternalLink className="h-3.5 w-3.5" />

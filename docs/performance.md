@@ -51,3 +51,5 @@ The subsequent [pre-merge review](premerge-review.md) fixes Netlify dependency
 resolution, pins reproducible installs, and applies compatible dependency security
 updates. That final build measures about 450 KB / 133.5 KB gzip for initial
 JavaScript. The table above remains the original same-dependency comparison.
+
+Navigation and footer links now start loading their destination page on pointer entry or keyboard focus. Other routes remain deferred. The follow-up build measures 451.1 KB / 133.8 KB gzip for initial JavaScript. This reduces the potential wait after selecting a link, but is not a measured network-speed improvement; first-time navigation can still show a loading state.

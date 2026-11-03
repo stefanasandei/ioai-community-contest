@@ -18,6 +18,7 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import './navigation.css';
 import ThemeToggle from './ThemeToggle';
+import { prefetchPage } from '@/lib/prefetchPage';
 
 
 interface NavItem {
@@ -174,6 +175,8 @@ const Navigation = () => {
                     return (
                       <button
                         key={item.path}
+                        onPointerEnter={() => prefetchPage(item.path)}
+                        onFocus={() => prefetchPage(item.path)}
                         onClick={() => handleNavigation(item.path, item.sectionId)}
                         data-current={active || undefined}
                         className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
@@ -241,6 +244,8 @@ const Navigation = () => {
                             return (
                               <button
                                 key={item.path}
+                                onPointerEnter={() => prefetchPage(item.path)}
+                                onFocus={() => prefetchPage(item.path)}
                                 onClick={() => {
                                   handleNavigation(item.path);
                                   setMoreOpen(false);
@@ -288,6 +293,8 @@ const Navigation = () => {
                     return (
                       <button
                         key={item.path}
+                        onPointerEnter={() => prefetchPage(item.path)}
+                        onFocus={() => prefetchPage(item.path)}
                         onClick={() => handleNavigation(item.path, item.sectionId)}
                         data-current={active || undefined}
                         className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
@@ -364,6 +371,8 @@ const Navigation = () => {
               return (
                 <button
                   key={item.path}
+                  onPointerEnter={() => prefetchPage(item.path)}
+                  onFocus={() => prefetchPage(item.path)}
                   onClick={() => {
                     handleNavigation(item.path);
                     setMobileMenuOpen(false);
@@ -404,6 +413,8 @@ const Navigation = () => {
               return (
                 <button
                   key={item.path}
+                  onPointerEnter={() => prefetchPage(item.path)}
+                  onFocus={() => prefetchPage(item.path)}
                   onClick={() => {
                     handleNavigation(item.path);
                     setMobileMenuOpen(false);

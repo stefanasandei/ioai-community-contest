@@ -75,8 +75,8 @@ const HeroSection = () => {
         </h1>
 
         <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
-          Join IOAI alumni and AI enthusiasts in main and beginner contests on
-          Kaggle, Nitro Judge, and SprawdzAI. Sharpen your skills, learn from the community, and prepare for
+          Join IOAI alumni and AI enthusiasts in challenging monthly contests on
+          Kaggle. Sharpen your skills, learn from the community, and prepare for
           the international level.
         </p>
 

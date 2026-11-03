@@ -1,6 +1,7 @@
 import { ExternalLink, Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import DiscordIcon from "./DiscordIcon";
+import { prefetchPage } from '@/lib/prefetchPage';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -118,6 +119,8 @@ const Footer = () => {
                 <button
                   key={index}
                   onClick={() => handleNavigation(link.path)}
+                  onPointerEnter={() => prefetchPage(link.path)}
+                  onFocus={() => prefetchPage(link.path)}
                   className="block text-sm text-gray-600 dark:text-gray-400 hover:text-aicc-purple dark:hover:text-aicc-purple-light transition-colors transform duration-200"
                 >
                   {link.label}
