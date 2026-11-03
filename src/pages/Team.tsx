@@ -31,7 +31,7 @@ const teamMembers: TeamMember[] = [
   { name: 'Luvidi Pranawa Alghari', username: 'Luvidi', country: 'ID', description: 'IOAI \'26 Gold, IOAI \'25 Silver', teams: [TeamRole.ProblemSetter] },
   { name: 'Wang Jiayu', username: 'Sabkx', country: 'SG', description: 'IOAI \'25 Gold (3rd overall), IOAI \'24 Gold', teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
   { name: 'Carson Cheng', country: 'HK', teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
-  { name: 'Erwin', teams: [TeamRole.ProblemSetter] },
+  { name: 'Aleksandar Lyubomirov Slavov', teams: [TeamRole.ProblemSetter] },
   { name: 'Mobtasim Priom', country: 'BD', teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
   { name: 'Malo Tessé', country: 'FR', teams: [TeamRole.Contributor] },
   { name: 'Theo Bustamante', country: 'PH', teams: [TeamRole.Contributor] },

@@ -18,6 +18,7 @@ import round8Banner from "@/leaderboard/banners/round-8.png";
 import round9Banner from "@/leaderboard/banners/round-9.png";
 import round10Banner from "@/leaderboard/banners/round-10.jpg";
 import round11Banner from "@/leaderboard/banners/round-11.png";
+import round12Banner from "@/leaderboard/banners/round-12.png";
 import {
     formatLeaderboardScore,
     getContestLeaderboard,
@@ -37,6 +38,7 @@ const leaderboardBanners: Record<number, string> = {
     9: round9Banner,
     10: round10Banner,
     11: round11Banner,
+    12: round12Banner,
 };
 
 const Leaderboard = () => {
