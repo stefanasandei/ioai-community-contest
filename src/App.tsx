@@ -45,7 +45,7 @@ const ScrollToTop = () => {
 
 const PageRoutes = () => {
   const { pathname } = useLocation();
-  return <RouteBoundary key={pathname}>
+  return <RouteBoundary resetKey={pathname}>
     <Suspense fallback={<PageLoading />}>
         <Routes>
           <Route path="/" element={<Index />} />

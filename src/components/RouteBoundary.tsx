@@ -14,10 +14,18 @@ export function PageLoading() {
 
 // Keep navigation available after a failed download. Reloading also clears
 // React.lazy's rejected promise and picks up files from a newer deployment.
-export default class RouteBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+export default class RouteBoundary extends Component<{ children: ReactNode; resetKey: string }, { failed: boolean }> {
   state = { failed: false };
 
   static getDerivedStateFromError() { return { failed: true }; }
+
+  componentDidUpdate(previous: Readonly<{ children: ReactNode; resetKey: string }>) {
+    // Reset errors when navigating, without remounting healthy pages on parameter
+    // changes (resource tabs keep their scroll-restoration state this way).
+    if (this.state.failed && previous.resetKey !== this.props.resetKey) {
+      this.setState({ failed: false });
+    }
+  }
 
   render() {
     if (!this.state.failed) return this.props.children;

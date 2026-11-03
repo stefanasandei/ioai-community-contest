@@ -46,3 +46,8 @@ An isolated test server delivered scripts/styles in 16 KB blocks every 80 ms, af
 Seven pre-existing Fast Refresh lint warnings remain. The deferred Markdown/math renderer still exceeds Vite's 500 KB uncompressed chunk warning threshold; it is only requested for notebook rendering. Deployment compression, cache headers, real-device CPU performance, and all possible network failures are outside this local verification.
 
 The browser viewport override did not change the observed viewport in this pass, so these checks do not claim a new narrow-screen or real mobile-device validation.
+
+The subsequent [pre-merge review](premerge-review.md) fixes Netlify dependency
+resolution, pins reproducible installs, and applies compatible dependency security
+updates. That final build measures about 450 KB / 133.5 KB gzip for initial
+JavaScript. The table above remains the original same-dependency comparison.
