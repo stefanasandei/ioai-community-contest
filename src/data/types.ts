@@ -11,6 +11,7 @@ export interface Task {
     author?: string;
     kaggle?: string;
     nitroJudge?: string;
+    sprawdzai?: string;
     source?: string;
     solution: string;
     blog?: string;
@@ -25,6 +26,11 @@ export interface Contest {
     winner?: string;
     tasks: Task[];
     disabled?: boolean;
+    format?: "main" | "beginner";
+    dateLabel?: string;
+    description?: string;
+    contestUrl?: string;
+    leaderboardUrl?: string;
 }
 
 export interface ContestsData {

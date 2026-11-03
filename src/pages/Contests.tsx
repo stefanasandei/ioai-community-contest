@@ -14,6 +14,7 @@ import Footer from "@/components/Footer";
 import ContestCard from "@/components/ContestCard";
 import TaskCard from "@/components/TaskCard";
 import { isTaskMatch } from "@/lib/taskUtils";
+import { getContestLeaderboard } from "@/lib/leaderboard";
 import {
     Popover,
     PopoverContent,
@@ -22,13 +23,14 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import contestsData from "@/data/contests.json";
+import beginnerContestsData from "@/data/beginner-contests.json";
 import popularityData from "@/data/popularity.json";
 import type { Contest, Task } from "@/data/types";
 
-const allContests = (contestsData.contests as Contest[])
-    .slice()
-    .sort((a, b) => b.id - a.id);
-const allTasks: Task[] = allContests.flatMap((c) => c.tasks);
+const contestsBySeries: Record<"main" | "beginner", Contest[]> = {
+    main: contestsData.contests as Contest[],
+    beginner: beginnerContestsData.contests as Contest[],
+};
 
 type SortKey = "newest" | "oldest" | "popular" | "least-popular";
 
@@ -105,6 +107,12 @@ interface ActiveChip {
 const Contests = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const ratingsPreview = import.meta.env.DEV;
+    const series = searchParams.get("series") === "beginner" ? "beginner" : "main";
+    const allContests = contestsBySeries[series];
+    const allTasks: Task[] = useMemo(
+        () => allContests.filter(contest => !contest.disabled).flatMap(contest => contest.tasks),
+        [allContests]
+    );
 
     const searchQuery = searchParams.get("q") ?? "";
     const selectedTypes = useMemo(
@@ -152,8 +160,8 @@ const Contests = () => {
     );
 
     const clearAll = useCallback(() => {
-        setSearchParams(new URLSearchParams(), { replace: true });
-    }, [setSearchParams]);
+        setSearchParams(series === "beginner" ? { series: "beginner" } : {}, { replace: true });
+    }, [setSearchParams, series]);
 
     const clearFiltersOnly = useCallback(() => {
         setSearchParams(
@@ -182,7 +190,7 @@ const Contests = () => {
             hard: 0,
             legacy: 0,
         };
-        const platforms: Record<string, number> = { kaggle: 0, nitroJudge: 0 };
+        const platforms: Record<string, number> = { kaggle: 0, nitroJudge: 0, sprawdzai: 0 };
 
         for (const task of allTasks) {
             for (const t of task.type.split(" & ")) {
@@ -194,10 +202,11 @@ const Contests = () => {
             }
             if (task.kaggle) platforms.kaggle++;
             if (task.nitroJudge) platforms.nitroJudge++;
+            if (task.sprawdzai) platforms.sprawdzai++;
         }
 
         return { types, difficulties, platforms };
-    }, []);
+    }, [allTasks]);
 
     const typeOptions: FilterOption[] = useMemo(
         () => [
@@ -287,6 +296,15 @@ const Contests = () => {
     const platformOptions: FilterOption[] = useMemo(
         () => [
             {
+                value: "sprawdzai",
+                label: "SprawdzAI",
+                count: filterCounts.platforms.sprawdzai,
+                selectedClass:
+                    "bg-purple-100 border-purple-300 text-purple-900 dark:bg-purple-900/40 dark:border-purple-700 dark:text-purple-100",
+                unselectedClass:
+                    "bg-purple-50/60 border-purple-200/40 text-purple-700 dark:bg-purple-900/10 dark:border-purple-800/30 dark:text-purple-300 hover:bg-purple-100/70 dark:hover:bg-purple-900/25",
+            },
+            {
                 value: "kaggle",
                 label: "Kaggle",
                 count: filterCounts.platforms.kaggle,
@@ -361,7 +379,9 @@ const Contests = () => {
                     const onNitro =
                         selectedPlatforms.includes("nitroJudge") &&
                         task.nitroJudge;
-                    if (!onKaggle && !onNitro) return false;
+                    const onSprawdzai =
+                        selectedPlatforms.includes("sprawdzai") && task.sprawdzai;
+                    if (!onKaggle && !onNitro && !onSprawdzai) return false;
                 }
 
                 if (query) {
@@ -378,6 +398,7 @@ const Contests = () => {
 
         return [...matched].sort(sortFn);
     }, [
+        allContests,
         hasSearchOrFilter,
         searchQuery,
         selectedTypes,
@@ -392,7 +413,7 @@ const Contests = () => {
     );
 
     const popularityTasks = useMemo(() => filteredContests
-        .flatMap(contest => contest.tasks.map(task => ({ contest, task, score: taskPopularity.get(`${contest.id}:${task.name}`) })))
+        .flatMap(contest => contest.tasks.map(task => ({ contest, task, score: contest.format === "beginner" ? undefined : taskPopularity.get(`${contest.id}:${task.name}`) })))
         .sort((a, b) => {
             if (a.score === undefined && b.score === undefined) return a.task.name.localeCompare(b.task.name);
             if (a.score === undefined) return 1;
@@ -459,6 +480,36 @@ const Contests = () => {
                     </h1>
                     <p className="text-md text-gray-600 dark:text-gray-300 font-light">
                         Browse and practice tasks from past rounds.
+                    </p>
+                    <div role="group" aria-label="Round format" className="mt-5 inline-flex max-w-full gap-1 rounded-xl border border-gray-200 bg-gray-100 p-1 dark:border-white/10 dark:bg-white/5">
+                        {(["main", "beginner"] as const).map(value => (
+                            <button
+                                key={value}
+                                type="button"
+                                aria-pressed={series === value}
+                                onClick={() => setSearchParams(prev => {
+                                    const next = new URLSearchParams(prev);
+                                    if (value === "beginner") next.set("series", value);
+                                    else next.delete("series");
+                                    next.delete("platform");
+                                    next.delete("difficulty");
+                                    return next;
+                                })}
+                                className={cn(
+                                    "rounded-lg px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aicc-purple/50",
+                                    series === value
+                                        ? "bg-white text-aicc-purple shadow-sm dark:bg-white/10 dark:text-aicc-purple-light"
+                                        : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                                )}
+                            >
+                                {value === "main" ? "Main rounds" : "Beginner rounds"}
+                            </button>
+                        ))}
+                    </div>
+                    <p className="mb-3 mt-3 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
+                        {series === "beginner"
+                            ? "A separate series for beginners, hosted on SprawdzAI. Everyone is welcome to participate."
+                            : "The main AICC series, hosted on Kaggle and Nitro Judge."}
                     </p>
                 </div>
             </div>
@@ -589,7 +640,7 @@ const Contests = () => {
                 <div className="flex items-center gap-2 flex-wrap text-sm">
                     <span className="text-gray-500 dark:text-gray-400">
                         Showing{" "}
-                        <span className="font-semibold text-gray-900 dark:text-white">
+                        <span aria-live="polite" className="font-semibold text-gray-900 dark:text-white">
                             {resultPrimaryCount}
                         </span>{" "}
                         {resultPrimaryLabel}
@@ -637,12 +688,12 @@ const Contests = () => {
                                     <TaskCard
                                         task={task}
                                         roundId={contest.id}
-                                        contextLabel={`${contest.title} · ${contest.month} ${contest.year}`}
+                                        contextLabel={`${contest.title} · ${contest.format === "beginner" ? "SprawdzAI · " : ""}${contest.dateLabel ?? `${contest.month} ${contest.year}`}`}
                                     />
                                 </li>
                             ))}
                         </ol>
-                    ) : hasSearchOrFilter ? (
+                    ) : hasSearchOrFilter && series !== "beginner" ? (
                         <div className="space-y-8">
                             {filteredContests.map((contest) => (
                                 <section key={contest.id}>
@@ -679,13 +730,10 @@ const Contests = () => {
                             {filteredContests.map((contest) => (
                                 <ContestCard
                                     key={contest.id}
-                                    month={contest.month}
-                                    year={contest.year}
-                                    title={contest.title}
-                                    tasks={contest.tasks}
+                                    {...contest}
                                     roundId={contest.id}
                                     highlightQuery={searchQuery}
-                                    showLeaderboard
+                                    showLeaderboard={contest.format !== "beginner" && !!getContestLeaderboard(contest.id - 1)}
                                 />
                             ))}
                         </div>

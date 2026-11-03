@@ -17,14 +17,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { capturePostHogEvent } from "@/lib/posthogLogs";
-import type { Task, PracticeStatus } from "@/data/types";
+import type { Contest, Task, PracticeStatus } from "@/data/types";
 import LeaderboardButton from "@/components/LeaderboardButton";
 
-interface ContestCardProps {
-    month: string;
-    year: string;
-    title: string;
-    tasks: Task[];
+interface ContestCardProps extends Omit<Contest, "id" | "winner" | "disabled"> {
     roundId: number;
     highlightQuery?: string;
     showLeaderboard?: boolean;
@@ -108,31 +104,69 @@ const ContestCard = ({
     roundId,
     highlightQuery,
     showLeaderboard = false,
+    format,
+    dateLabel,
+    description,
+    contestUrl,
+    leaderboardUrl,
 }: ContestCardProps) => {
     const trimmedQuery = highlightQuery?.trim() ?? "";
+    const isBeginner = format === "beginner";
 
     return (
         <div className="rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm overflow-hidden">
-            <div className="flex items-start justify-between gap-4 border-b border-gray-100 px-6 py-3 dark:border-white/5">
-                <div>
+            <div className="flex flex-wrap items-start justify-between gap-3 border-b border-gray-100 px-6 py-3 dark:border-white/5">
+                <div className="min-w-0">
+                    {isBeginner && (
+                        <p className="mb-1 text-xs font-semibold text-aicc-purple dark:text-aicc-purple-light">
+                            Beginner series · SprawdzAI
+                        </p>
+                    )}
                     <div className="flex items-baseline gap-2">
                         <h3 className="m-0 text-xl font-bold text-gray-900 dark:text-white">
-                            {month}
+                            {isBeginner ? title : month}
                         </h3>
-                        <span className="text-base text-gray-500 dark:text-gray-400">
-                            {year}
-                        </span>
+                        {!isBeginner && (
+                            <span className="text-base text-gray-500 dark:text-gray-400">
+                                {year}
+                            </span>
+                        )}
                     </div>
                     <p className="mb-0 mt-0.5 text-sm text-gray-600 dark:text-gray-400">
-                        {title}
+                        {isBeginner ? dateLabel ?? `${month} ${year}` : title}
                     </p>
                 </div>
-                {showLeaderboard && (
+                {showLeaderboard && !isBeginner && (
                     <div className="mt-1.5 shrink-0">
                         <LeaderboardButton roundNumber={roundId - 1} />
                     </div>
                 )}
+                {leaderboardUrl && (
+                    <a
+                        href={leaderboardUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gray-100 px-3 text-sm font-medium text-gray-600 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aicc-purple/50 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10"
+                    >
+                        Leaderboard <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                )}
             </div>
+            {description && (
+                <div className="border-b border-gray-100 bg-purple-50/50 px-6 py-3 dark:border-white/5 dark:bg-aicc-purple/5">
+                    <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{description}</p>
+                    {contestUrl && (
+                        <a
+                            href={contestUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-aicc-purple hover:underline dark:text-aicc-purple-light"
+                        >
+                            View contest on SprawdzAI <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                    )}
+                </div>
+            )}
 
             <ul className="divide-y divide-gray-100 dark:divide-white/5">
                 {tasks.map((task, idx) => {
@@ -145,10 +179,12 @@ const ContestCard = ({
 
                     const competitionLabel = task.source
                         ? "Solve on Kilonova"
-                        : task.nitroJudge
-                            ? "View on Nitro Judge"
-                            : "View on Kaggle";
-                    const competitionHref = task.source ?? task.nitroJudge ?? task.kaggle!;
+                        : task.sprawdzai
+                            ? "View on SprawdzAI"
+                            : task.nitroJudge
+                                ? "View on Nitro Judge"
+                                : "View on Kaggle";
+                    const competitionHref = task.source ?? task.sprawdzai ?? task.nitroJudge ?? task.kaggle!;
 
                     return (
                         <li
@@ -172,7 +208,7 @@ const ContestCard = ({
 
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between gap-2 min-w-0">
-                                        <h4 className="font-bold text-gray-900 dark:text-white truncate min-w-0">
+                                        <h4 className="font-bold text-gray-900 dark:text-white min-w-0">
                                             {task.name}
                                         </h4>
                                         {statusConfig && (
@@ -218,7 +254,7 @@ const ContestCard = ({
                                     rel="noreferrer"
                                     onClick={() => capturePostHogEvent("task_competition_opened", {
                                         task_type: task.type,
-                                        source: task.source ? "kilonova" : task.nitroJudge ? "nitro_judge" : "kaggle",
+                                        source: task.source ? "kilonova" : task.sprawdzai ? "sprawdzai" : task.nitroJudge ? "nitro_judge" : "kaggle",
                                     })}
                                     className={PRIMARY_BTN}
                                 >
@@ -241,7 +277,7 @@ const ContestCard = ({
                                         <Clock className="w-4 h-4" />
                                         Solution coming soon
                                     </span>
-                                ) : (
+                                ) : task.solution ? (
                                     <a
                                         href={task.solution}
                                         target="_blank"
@@ -252,7 +288,7 @@ const ContestCard = ({
                                         <Github className="w-4 h-4" />
                                         View notebook
                                     </a>
-                                )}
+                                ) : null}
                             </div>
                         </li>
                     );
