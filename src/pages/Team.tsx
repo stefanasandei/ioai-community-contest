@@ -29,7 +29,7 @@ const teamMembers: TeamMember[] = [
   { name: 'Wang Zerui', username: 'iamnumber4', country: 'SG', description: "IOAI '25 Silver, IOAI '24 Gold", teams: [TeamRole.Logistics] },
   { name: 'Dauzhan Beketov', username: 'Megazhan', country: 'KZ', description: 'IOAI \'26 Gold (2nd overall), IOAI \'25 Bronze, IOI \'25 Bronze, EUROAI \'26 Silver', teams: [TeamRole.ProblemSetter] },
   { name: 'Luvidi Pranawa Alghari', username: 'Luvidi', country: 'ID', description: 'IOAI \'26 Gold, IOAI \'25 Silver', teams: [TeamRole.ProblemSetter] },
-  { name: 'Wang Jiayu', username: 'Sabkx', country: 'SG', description: "IOAI '25 Gold (3rd overall), IOAI '24 Gold, Joint 2nd in IOAI Hall of Fame", teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
+  { name: 'Wang Jiayu', username: 'Sabkx', country: 'SG', description: "IOAI '25 Gold (3rd overall), IOAI '24 Gold", teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
   { name: 'Carson Cheng', username: 'carson', country: 'HK', description: "IOAI '26 Gold (9th overall), IOAI '25 Gold, Joint 2nd in IOAI Hall of Fame", teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
   { name: 'Aleksandar Lyubomirov Slavov', username: 'erwin', country: 'BG', description: "IOAI '26 HM, IOAI '25 HM", teams: [TeamRole.ProblemSetter] },
   { name: 'Mobtasim Priom', username: 'sinkhorn_knopp_', country: 'BD', description: "IOAI '26 Bronze", teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
