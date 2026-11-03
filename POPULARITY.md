@@ -14,10 +14,14 @@ The updater currently lives outside this repository at `C:\Users\Antony\aicc_pop
    python refresh.py
    ```
 
-3. After a successful run, review `popularity.json`. From the **website repository root**, copy it into the website data file:
+3. After a successful run, review `popularity.json`. From the **website repository root**, merge the Kaggle output with saved scores from other series. Replacing the whole file would erase beginner ratings:
 
    ```powershell
-   Copy-Item -LiteralPath "$env:USERPROFILE\aicc_popularity\popularity.json" -Destination 'src/data/popularity.json'
+   $existingPopularity = @(Get-Content -LiteralPath 'src/data/popularity.json' -Raw | ConvertFrom-Json)
+   $kagglePopularity = @(Get-Content -LiteralPath "$env:USERPROFILE\aicc_popularity\popularity.json" -Raw | ConvertFrom-Json)
+   $otherSeriesPopularity = @($existingPopularity | Where-Object { $_.series -and $_.series -ne 'main' })
+   $mergedPopularity = ConvertTo-Json -InputObject @($kagglePopularity + $otherSeriesPopularity) -Depth 10
+   [System.IO.File]::WriteAllText((Join-Path (Get-Location) 'src/data/popularity.json'), $mergedPopularity, [System.Text.UTF8Encoding]::new($false))
    ```
 
 4. Check `/contests?sort=popular`: task names/rounds must match, both sort directions must work, and unscored tasks must stay last. Review the diff; commit/push only when requested. The website uses the saved scores; it never contacts Kaggle or recalculates them on its own.

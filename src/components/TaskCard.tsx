@@ -158,7 +158,7 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order, 
                             )}
                         </div>
                         <div className="flex items-center gap-1.5 mt-2.5 min-w-0 overflow-hidden flex-wrap">
-                            {(learnItems ?? task.type.split(" & ").map(t => ({ topic: t }))).map((item, i) => (
+                            {(learnItems ?? task.type.split(" & ").map((t): LearnItem => ({ topic: t }))).map((item, i) => (
                                 <span
                                     key={i}
                                     className={cn(

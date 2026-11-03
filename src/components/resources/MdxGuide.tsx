@@ -1,5 +1,6 @@
 import { useEffect, useState, type ComponentType } from 'react';
 import { MDXProvider } from '@mdx-js/react';
+import type { MDXProps } from 'mdx/types';
 import { mdxComponents } from '@/components/solutions';
 
 const mdxModules = import.meta.glob('@/resources/**/*.mdx');
@@ -21,7 +22,7 @@ const resolveImport = (path: string) => {
 };
 
 export const MdxGuide = ({ path }: MdxGuideProps) => {
-  const [MDXContent, setMDXContent] = useState<ComponentType | null>(null);
+  const [MDXContent, setMDXContent] = useState<ComponentType<MDXProps> | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export const MdxGuide = ({ path }: MdxGuideProps) => {
         return;
       }
       try {
-        const mod = (await importFn()) as { default: ComponentType };
+        const mod = (await importFn()) as { default: ComponentType<MDXProps> };
         if (!cancelled) {
           setMDXContent(() => mod.default);
         }

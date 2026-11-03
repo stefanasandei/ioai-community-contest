@@ -8,7 +8,10 @@ import Footer from '@/components/Footer';
 import ContestCard from '@/components/ContestCard';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import { ChevronRight } from 'lucide-react';
-import { contests } from '@/data/contests.json';
+import contestsData from '@/data/contests.json';
+import type { ContestsData } from '@/data/types';
+
+const { contests } = contestsData as ContestsData;
 
 const latestContest = contests
   .slice()

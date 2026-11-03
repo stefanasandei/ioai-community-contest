@@ -70,13 +70,13 @@ const HeroSection = () => {
         />
         <img src="/assets/aicc_long.png" alt="AICC Logo" className="hidden opacity-100 max-h-24 mb-5 dark:inline-flex" />
 
-        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-4 font-medium">
+        <h1 className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-4 font-medium">
           Contests to prepare for AI Olympiads
-        </p>
+        </h1>
 
         <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
-          Join IOAI alumni and AI enthusiasts in challenging monthly contests on
-          Kaggle. Sharpen your skills, learn from the community, and prepare for
+          Join IOAI alumni and AI enthusiasts in main and beginner contests on
+          Kaggle, Nitro Judge, and SprawdzAI. Sharpen your skills, learn from the community, and prepare for
           the international level.
         </p>
 
@@ -119,11 +119,9 @@ const HeroSection = () => {
             <ExternalLink className="w-4 h-4" />
           </button>
 
-          <a href="/contests">
-            <button className="bg-background text-primary font-medium px-8 py-4 rounded-lg flex items-center gap-3 border-2 border-primary/20 hover:border-primary hover:bg-primary/5 transition-all">
+          <a href="/contests" className="bg-background text-primary font-medium px-8 py-4 rounded-lg flex items-center gap-3 border-2 border-primary/20 hover:border-primary hover:bg-primary/5 transition-all">
               View Past Contests
               <Trophy className="w-4 h-4" />
-            </button>
           </a>
         </div>
       </div>

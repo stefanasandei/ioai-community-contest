@@ -18,7 +18,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { capturePostHogEvent } from "@/lib/posthogLogs";
-import type { Contest, Task, PracticeStatus } from "@/data/types";
+import type { Contest, PracticeStatus } from "@/data/types";
+import { isTaskMatch } from "@/lib/taskUtils";
 import LeaderboardButton from "@/components/LeaderboardButton";
 
 interface ContestCardProps extends Omit<Contest, "id" | "winner" | "disabled"> {
@@ -84,15 +85,6 @@ const getTypePillClass = (type: string) =>
 
 const getTaskSlug = (name: string) =>
     name.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").trim();
-
-const isTaskMatch = (task: Task, query: string) => {
-    const q = query.toLowerCase();
-    return (
-        task.name.toLowerCase().includes(q) ||
-        task.type.toLowerCase().includes(q) ||
-        (task.author?.toLowerCase().includes(q) ?? false)
-    );
-};
 
 const PRIMARY_BTN =
     "flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-purple-600 bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm";

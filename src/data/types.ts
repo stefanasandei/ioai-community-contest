@@ -9,6 +9,7 @@ export interface Task {
     name: string;
     type: string;
     author?: string;
+    authorAliases?: string[];
     kaggle?: string;
     nitroJudge?: string;
     sprawdzai?: string;

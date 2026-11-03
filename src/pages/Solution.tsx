@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { ExternalLink, Github, Calendar, User, CheckCircle2, AlertTriangle, Flame, XCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
+import type { MDXProps } from 'mdx/types';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { mdxComponents } from '@/components/solutions';
@@ -25,7 +26,7 @@ const Solution = () => {
         round: string;
         taskSlug: string;
     }>();
-    const [MDXContent, setMDXContent] = useState<React.ComponentType | null>(
+    const [MDXContent, setMDXContent] = useState<React.ComponentType<MDXProps> | null>(
         null
     );
 
