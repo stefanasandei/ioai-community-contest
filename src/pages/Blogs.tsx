@@ -4,6 +4,7 @@ import BlogLayout from '@/components/BlogLayout';
 import BlogLoading from '@/components/BlogLoading';
 import { ArrowUpRight, ArrowLeft, BookOpen, Download, ChevronDown } from 'lucide-react';
 import BlogAuthor from '@/components/BlogAuthor';
+import BlogDate from '@/components/BlogDate';
 import { loadBlog, downloadBlogFile, notebookText, type BlogPost } from '@/lib/blogs';
 import posts from 'virtual:blog-index';
 
@@ -54,6 +55,7 @@ export default function Blogs() {
       <button onClick={() => downloadBlogFile(`${post.slug}.ipynb`, JSON.stringify(post.notebook, null, 2))} className="inline-flex min-h-11 shrink-0 items-center gap-2 px-5 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4">Download notebook<Download size={16} aria-hidden="true" /></button>
     </div>
     <p className="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300 mb-4">{post.description}</p>
+    <div className="mb-3"><BlogDate date={post.publishedAt} /></div>
     <p className="flex flex-wrap items-center gap-2 text-sm">By <BlogAuthor {...post} /></p>
   </> : undefined;
   return <BlogLayout article={Boolean(slug)} articleHeader={articleHeader}>
@@ -71,7 +73,8 @@ export default function Blogs() {
                   {cover ? <img src={cover} alt={`Plot from ${item.title}`} className="w-full max-h-full object-contain rounded-md bg-white" loading="lazy" /> : <BookOpen className="w-20 h-20 text-purple-400" strokeWidth={1} aria-hidden="true" />}
                 </div>
                 <div className="p-6 sm:p-8 flex flex-col justify-center items-start">
-                  <h2 className="text-3xl font-semibold tracking-tight group-hover:text-purple-600 dark:group-hover:text-purple-400">{item.title}</h2>
+                  <BlogDate date={item.publishedAt} />
+                  <h2 className="mt-2 text-3xl font-semibold tracking-tight group-hover:text-purple-600 dark:group-hover:text-purple-400">{item.title}</h2>
                   <p className="mt-4 text-gray-600 dark:text-gray-300 leading-relaxed">{item.description}</p>
                   <div className="mt-6 text-sm text-gray-700 dark:text-gray-300"><BlogAuthor {...item} /></div>
                   <span className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-purple-600 dark:text-purple-400">Read article <ArrowUpRight size={16} aria-hidden="true" /></span>

@@ -4,7 +4,7 @@ import beginnerData from "../data/beginner-contests.json";
 import type { Contest, ContestsData } from "@/data/types";
 
 const DATA = data as ContestsData;
-const allContests: Contest[] = [...DATA.contests, ...beginnerData.contests];
+const allContests = [...DATA.contests, ...(beginnerData.contests as Contest[])];
 const filteredContests = allContests.filter((contest) => !contest.disabled);
 const totalTasks = filteredContests.reduce(
   (acc, c) => acc + c.tasks.length,

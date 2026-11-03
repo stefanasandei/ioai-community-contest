@@ -23,6 +23,7 @@ export interface BlogPost {
   author: string;
   handle: string;
   flag: string;
+  publishedAt: string;
   notebook: Notebook;
 }
 export type BlogSummary = Omit<BlogPost, 'notebook'> & { file: string; cover: string | null };

@@ -20,6 +20,11 @@ export default function blogIndex(): Plugin {
         const filename = path.join(directory, file);
         if (building) this.addWatchFile(normalizePath(filename));
         const post = JSON.parse(fs.readFileSync(filename, 'utf8')) as BlogPost;
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(post.publishedAt ?? '') ||
+          !Number.isFinite(Date.parse(`${post.publishedAt}T00:00:00Z`)) ||
+          new Date(`${post.publishedAt}T00:00:00Z`).toISOString().slice(0, 10) !== post.publishedAt) {
+          throw new Error(`Set a valid publishedAt date (YYYY-MM-DD) in ${file}`);
+        }
         if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug) || slugs.has(post.slug)) throw new Error(`Invalid or duplicate blog URL name in ${file}`);
         slugs.add(post.slug);
         let cover: string | null = null;
@@ -34,8 +39,8 @@ export default function blogIndex(): Plugin {
           }
           if (cover) break;
         }
-        return { slug: post.slug, title: post.title, description: post.description, author: post.author, handle: post.handle, flag: post.flag, file, cover };
-      });
+        return { slug: post.slug, title: post.title, description: post.description, author: post.author, handle: post.handle, flag: post.flag, publishedAt: post.publishedAt, file, cover };
+      }).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.slug.localeCompare(b.slug));
       return `export default ${JSON.stringify(summaries)};`;
     },
     configureServer(server) {
