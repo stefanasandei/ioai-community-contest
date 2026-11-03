@@ -8,7 +8,7 @@
             "tasks": [
                 {
                     "name": "Put the Sounds Back Together",
-                    "type": "NLP & CV",
+                    "type": "CV & NLP",
                     "kaggle": "https://www.kaggle.com/competitions/put-the-sounds-back-together-aicc-round-12/",
                     "author": "Antony Ingorokva",
                     "practiceStatus": "medium",
@@ -121,7 +121,7 @@
                 },
                 {
                     "name": "Shuffled",
-                    "type": "NLP & CV",
+                    "type": "CV & NLP",
                     "kaggle": "https://www.kaggle.com/competitions/shuffled-aicc-round-9/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-9/shuffled.ipynb",
                     "author": "Antony Ingorokva",
@@ -154,7 +154,7 @@
                 },
                 {
                     "name": "Archivist's Cards",
-                    "type": "NLP & CV",
+                    "type": "CV & NLP",
                     "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/3/view",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-8/archivists-cards.ipynb",
                     "blog": "solutions/round-8/archivists-cards",
