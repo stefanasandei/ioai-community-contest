@@ -129,14 +129,16 @@ const Leaderboard = () => {
                                     ? "Raw private leaderboard scores for each task. Participants remain ordered by their normalized total points."
                                     : "Contest standings, ranked by total points across all tasks."}
                             </p>
-                            {series === "beginner" && (
-                                <a href={beginnerRound0.sourceUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-aicc-purple dark:text-aicc-purple-light hover:underline">
-                                    View on SprawdzAI <ExternalLink className="h-3.5 w-3.5" />
-                                </a>
-                            )}
-                            <span className="mt-5 inline-flex w-fit rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm font-medium text-gray-600 dark:border-white/10 dark:bg-white/5 dark:text-gray-300">
-                                {participantCount} participants
-                            </span>
+                            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3">
+                                {series === "beginner" && (
+                                    <a href={beginnerRound0.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-aicc-purple dark:text-aicc-purple-light hover:underline">
+                                        View on SprawdzAI <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                                    </a>
+                                )}
+                                <span className="inline-flex w-fit shrink-0 rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm font-medium text-gray-600 dark:border-white/10 dark:bg-white/5 dark:text-gray-300">
+                                    {participantCount} participants
+                                </span>
+                            </div>
                         </div>
 
                         <div
