@@ -7,6 +7,7 @@ import BlogAuthor from '@/components/BlogAuthor';
 import BlogDate from '@/components/BlogDate';
 import { loadBlog, notebookText, type BlogPost } from '@/lib/blogs';
 import posts from 'virtual:blog-index';
+import { recoverPageLoad } from '@/lib/recoverPageLoad';
 
 const loadRenderer = () => import('@/components/NotebookArticle');
 const NotebookArticle = lazy(loadRenderer);
@@ -39,7 +40,9 @@ export default function Blogs() {
   useEffect(() => {
     let active = true;
     setError(false);
-    if (summary) Promise.all([loadBlog(summary.file), loadRenderer()]).then(([data]) => { if (active) setLoadedPost(data); }).catch(() => { if (active) setError(true); });
+    if (summary) Promise.all([loadBlog(summary.file), loadRenderer()])
+      .then(([data]) => { if (active) setLoadedPost(data); })
+      .catch(error => { if (active && !recoverPageLoad(error)) setError(true); });
     return () => { active = false; };
   }, [summary]);
   const post = loadedPost?.slug === slug ? loadedPost : null;

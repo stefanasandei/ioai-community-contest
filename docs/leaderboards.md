@@ -21,8 +21,9 @@ to the total, while their cells display a dash. Equal totals share a place.
 | Moonlight At Midday | 0 | 0.9864 | Zero baseline and winning contestant score; no host anchors were published |
 
 The first baseline is published to four decimal places. Moonlight's benchmark is
-the winning score, not an official reference solution. This choice is disclosed
-on the leaderboard page. Source leaderboards:
+the winning score, not an official reference solution. The benchmark is recorded
+here; the extra explanatory paragraph was removed from the page at the user's
+request. Source leaderboards:
 
 - [Put the Sounds Back Together](https://www.kaggle.com/competitions/put-the-sounds-back-together-aicc-round-12/leaderboard)
 - [Alakazam](https://www.kaggle.com/competitions/alakazam-aicc-round-12/leaderboard)

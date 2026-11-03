@@ -22,21 +22,21 @@ const teamMembers: TeamMember[] = [
   { name: 'Georgios Tzovairis', username: 'Gior', country: 'GR', description: 'IOAI \'26 Silver, EUROAI \'26 Bronze, IOAI \'25, HS student class of \'27', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Stefan Asandei', username: 'Stefan', country: 'RO', description: 'Math and CS at Ecole Polytechnique, EUROAI \'26 Silver, IOAI \'25 Bronze', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Yue Heng Wong', username: 'Walnit', country: 'SG', description: "IOAI '25 (Silver), Singapore NOAI '25 (Gold), 6/13 Hackathons Won, NUS CS '32", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
-  { name: 'Antoni Ingorokva', username: 'Cowile', country: 'GE', description: "IOAI '26 Silver, EUROAI '26 Bronze, HM at IOAI '25", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
+  { name: 'Antoni Ingorokva', username: 'Cowile', country: 'GE', description: "IOAI '26 Silver, EUROAI '26 Bronze, IOAI '25 HM", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
   { name: 'Nikoloz Gegenava', username: 'Nikoloz', country: 'GE', description: "IOAI '26 Gold, IOAI '25, EUCYS '25 Special Jury Award, IYNT '25 Bronze Medal", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
   { name: 'Henry Ho', username: 'Convexhulltrick', country: 'AU', description: 'Bronze medal at IOAI \'25', teams: [TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Apostolidis Charalampos', username: 'bl4ck', country: 'GR', description: 'Hellenic NOI Top 12, Hellenic NOAI Top 25', teams: [TeamRole.Logistics] },
   { name: 'Wang Zerui', username: 'iamnumber4', country: 'SG', description: "IOAI '25 Silver, IOAI '24 Gold", teams: [TeamRole.Logistics] },
   { name: 'Dauzhan Beketov', username: 'Megazhan', country: 'KZ', description: 'IOAI \'26 Gold (2nd overall), IOAI \'25 Bronze, IOI \'25 Bronze, EUROAI \'26 Silver', teams: [TeamRole.ProblemSetter] },
   { name: 'Luvidi Pranawa Alghari', username: 'Luvidi', country: 'ID', description: 'IOAI \'26 Gold, IOAI \'25 Silver', teams: [TeamRole.ProblemSetter] },
-  { name: 'Wang Jiayu', username: 'Sabkx', country: 'SG', description: "IOAI '25 Gold (3rd overall), IOAI '24 Gold, Joint 2nd in IOAI Hall of Fame", teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
+  { name: 'Wang Jiayu', username: 'Sabkx', country: 'SG', description: "IOAI '25 Gold (3rd overall), IOAI '24 Gold", teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
   { name: 'Carson Cheng', username: 'carson', country: 'HK', description: "IOAI '26 Gold (9th overall), IOAI '25 Gold, Joint 2nd in IOAI Hall of Fame", teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
-  { name: 'Aleksandar Lyubomirov Slavov', username: 'erwin', country: 'BG', description: "HM at IOAI '26 and IOAI '25", teams: [TeamRole.ProblemSetter] },
+  { name: 'Aleksandar Lyubomirov Slavov', username: 'erwin', country: 'BG', description: "IOAI '26 HM, IOAI '25 HM", teams: [TeamRole.ProblemSetter] },
   { name: 'Mobtasim Priom', username: 'sinkhorn_knopp_', country: 'BD', description: "IOAI '26 Bronze", teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
   { name: 'Malo Tessé', country: 'FR', description: "IOAI '26 Silver", teams: [TeamRole.Contributor] },
   { name: 'Theo Bustamante', country: 'PH', description: "IOAI '26 Silver", teams: [TeamRole.Contributor] },
   { name: 'Ellison Ang', country: 'PH', description: "IOAI '26 Bronze", teams: [TeamRole.Contributor] },
-  { name: 'Chon Feng Qi', country: 'MY', description: "IOAI '26 Bronze", teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
+  { name: 'Chon Feng Qi', username: 'chonfengqi', country: 'MY', description: "IOAI '26 Bronze", teams: [TeamRole.ProblemSetter, TeamRole.Contributor] },
   { name: 'Gheorghică Istrate David', country: 'RO', description: "EUROAI '26 Bronze", teams: [TeamRole.Contributor] },
   { name: 'Jithun Methusahan', username: 'JEXo', country: 'LK', teams: [TeamRole.Contributor] },
   { name: 'Martin Haoxuan Zhang', country: 'SE', description: "IOAI '26 Gold, IOAI '25 Bronze, EUROAI '26 Silver", teams: [TeamRole.Contributor] },
@@ -63,14 +63,14 @@ const TeamCard = ({ member, color }: { member: TeamMember; color: 'purple' | 'or
             }`}>
             {getInitials(member.name)}
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 space-y-1">
             <h3 className="text-base font-semibold text-gray-900 dark:text-white">
               {member.name}{member.country && <CountryFlag country={member.country} />}
             </h3>
-            {member.username && <p className="text-sm text-gray-500 dark:text-gray-400 font-light">
+            {member.username && <p className="m-0 break-words text-sm text-gray-500 dark:text-gray-400 font-light">
               {member.username}
             </p>}
-            {member.description && <p className="text-sm text-gray-600 dark:text-gray-300 font-light">
+            {member.description && <p className="m-0 text-sm text-gray-600 dark:text-gray-300 font-light">
               {member.description}
             </p>}
           </div>
@@ -164,14 +164,14 @@ const Team = () => {
           </div>
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8">
             {contributors.map(member => (
-              <li key={member.name} className="flex items-center gap-3 border-b border-gray-200 py-4 dark:border-gray-800">
+              <li key={member.name} className="flex items-start gap-3 border-b border-gray-200 py-4 dark:border-gray-800">
                 <span aria-hidden="true" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-blue-50 text-xs font-semibold text-blue-600 dark:bg-blue-950 dark:text-blue-300">
                   {getInitials(member.name)}
                 </span>
-                <div className="min-w-0">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">{member.name}{member.country && <CountryFlag country={member.country} />}</p>
-                  {member.username && <p className="break-words text-sm text-gray-500 dark:text-gray-400">{member.username}</p>}
-                  {member.description && <p className="text-sm text-gray-600 dark:text-gray-300">{member.description}</p>}
+                <div className="min-w-0 space-y-1">
+                  <p className="m-0 text-sm leading-5 font-medium text-gray-900 dark:text-white">{member.name}{member.country && <CountryFlag country={member.country} />}</p>
+                  {member.username && <p className="m-0 break-words text-sm leading-5 text-gray-500 dark:text-gray-400">{member.username}</p>}
+                  {member.description && <p className="m-0 text-sm leading-5 text-gray-600 dark:text-gray-300">{member.description}</p>}
                 </div>
               </li>
             ))}

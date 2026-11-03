@@ -64,7 +64,7 @@ const Leaderboard = () => {
     const contest = (series === "beginner" ? beginnerContestsData : contestsData).contests.find(
         (item) => item.id === roundNumber + 1
     );
-    const banner = series === "main" ? leaderboardBanners[roundNumber] : undefined;
+    const banner = series === "main" ? leaderboardBanners[roundNumber] : "/banner.png";
     const isCompactBanner = series === "main" && roundNumber === 8;
     const contestsUrl = series === "beginner" ? "/contests?series=beginner" : "/contests";
     const formatScore = series === "beginner"
@@ -125,25 +125,20 @@ const Leaderboard = () => {
                                 {contest?.title ?? "Round " + roundNumber}
                             </h1>
                             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
-                                {series === "beginner"
-                                    ? "Scores from the six-hour contest windows on SprawdzAI, shown at the platform’s whole-point precision. Practice results are excluded."
-                                    : activeMode === "raw"
-                                        ? "Raw private leaderboard scores for each task. Participants remain ordered by their normalized total points."
-                                        : "Normalized scores show private leaderboard performance, scaled between each task’s baseline and 100-point benchmark."}
+                                {activeMode === "raw"
+                                    ? "Raw private leaderboard scores for each task. Participants remain ordered by their normalized total points."
+                                    : "Contest standings, ranked by total points across all tasks."}
                             </p>
-                            {series === "main" && roundNumber === 12 && (
-                                <p className="mt-2 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
-                                    For Moonlight At Midday, 0 is the baseline and the winning score of 0.9864 is the 100-point benchmark. Round 12 points are capped at 0–100 per task.
-                                </p>
-                            )}
-                            {series === "beginner" && (
-                                <a href={beginnerRound0.sourceUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-aicc-purple dark:text-aicc-purple-light hover:underline">
-                                    View on SprawdzAI <ExternalLink className="h-3.5 w-3.5" />
-                                </a>
-                            )}
-                            <span className="mt-5 inline-flex w-fit rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm font-medium text-gray-600 dark:border-white/10 dark:bg-white/5 dark:text-gray-300">
-                                {participantCount} participants
-                            </span>
+                            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3">
+                                {series === "beginner" && (
+                                    <a href={beginnerRound0.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-aicc-purple dark:text-aicc-purple-light hover:underline">
+                                        View on SprawdzAI <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                                    </a>
+                                )}
+                                <span className="inline-flex w-fit shrink-0 rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm font-medium text-gray-600 dark:border-white/10 dark:bg-white/5 dark:text-gray-300">
+                                    {participantCount} participants
+                                </span>
+                            </div>
                         </div>
 
                         <div
@@ -156,7 +151,7 @@ const Leaderboard = () => {
                             {banner ? (
                                 <img
                                     src={banner}
-                                    alt={`AICC Round ${roundNumber} banner`}
+                                    alt={`AICC ${contest?.title ?? "Round " + roundNumber} banner`}
                                     className="block h-full w-full object-contain"
                                 />
                             ) : (

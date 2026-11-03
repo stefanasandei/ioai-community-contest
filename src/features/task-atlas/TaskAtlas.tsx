@@ -92,7 +92,6 @@ export default function TaskAtlas() {
           closeAtlas(navigate, returnTo, map.current?.getTransitionPoints() ?? []);
       }}><span className="cluster-back"><ArrowLeft size={15} aria-hidden="true" />Problem bank</span>
         <div className="cluster-title-row"><h1>Task <span className="text-gradient">Atlas</span></h1></div>
-        <p>{tasks.length} of {bankTaskCount} problems mapped</p>
       </Link>
       <div className="cluster-search-area" ref={searchBox}>
         <div className="cluster-search">

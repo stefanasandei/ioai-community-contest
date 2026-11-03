@@ -680,7 +680,7 @@ const Tasks = () => {
                                     )}
                                 >
                                     <SlidersHorizontal className="w-4 h-4" />
-                                    <span className="hidden sm:inline">Filters</span>
+                                    <span>Filters</span>
                                     {activeFilterCount > 0 && (
                                         <span className="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-aicc-purple text-white text-[10px] font-semibold">
                                             {activeFilterCount}

@@ -18,6 +18,7 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import './navigation.css';
 import ThemeToggle from './ThemeToggle';
+import { prefetchPage } from '@/lib/prefetchPage';
 
 
 interface NavItem {
@@ -56,7 +57,7 @@ const primaryNavItems: NavItem[] = [
 ];
 
 const moreNavItems: DropdownItem[] = [
-  { label: 'Problem Bank', path: '/tasks', icon: ListChecks, description: 'Browse and practice olympiad problems' },
+  { label: 'Problem Bank', path: '/tasks', icon: ListChecks, description: 'Browse and practice problems from other olympiads' },
   { label: 'Roadmap', path: '/roadmap', icon: Map, description: 'A guided path through machine learning' },
   { label: 'Blogs', path: '/blogs', icon: BookOpen, description: 'Ideas from the AICC community' },
 ];
@@ -174,6 +175,8 @@ const Navigation = () => {
                     return (
                       <button
                         key={item.path}
+                        onPointerEnter={() => prefetchPage(item.path)}
+                        onFocus={() => prefetchPage(item.path)}
                         onClick={() => handleNavigation(item.path, item.sectionId)}
                         data-current={active || undefined}
                         className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
@@ -241,6 +244,8 @@ const Navigation = () => {
                             return (
                               <button
                                 key={item.path}
+                                onPointerEnter={() => prefetchPage(item.path)}
+                                onFocus={() => prefetchPage(item.path)}
                                 onClick={() => {
                                   handleNavigation(item.path);
                                   setMoreOpen(false);
@@ -288,6 +293,8 @@ const Navigation = () => {
                     return (
                       <button
                         key={item.path}
+                        onPointerEnter={() => prefetchPage(item.path)}
+                        onFocus={() => prefetchPage(item.path)}
                         onClick={() => handleNavigation(item.path, item.sectionId)}
                         data-current={active || undefined}
                         className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
@@ -348,8 +355,8 @@ const Navigation = () => {
 
       <div
         className={`fixed inset-0 z-40 bg-white/95 dark:bg-[#0a0a0f]/95 backdrop-blur-xl transition-opacity duration-300 md:hidden ${mobileMenuOpen
-          ? 'opacity-100 pointer-events-auto'
-          : 'opacity-0 pointer-events-none'
+          ? 'visible opacity-100 pointer-events-auto'
+          : 'invisible opacity-0 pointer-events-none'
           }`}
         aria-hidden={!mobileMenuOpen}
       >
@@ -364,6 +371,8 @@ const Navigation = () => {
               return (
                 <button
                   key={item.path}
+                  onPointerEnter={() => prefetchPage(item.path)}
+                  onFocus={() => prefetchPage(item.path)}
                   onClick={() => {
                     handleNavigation(item.path);
                     setMobileMenuOpen(false);
@@ -404,6 +413,8 @@ const Navigation = () => {
               return (
                 <button
                   key={item.path}
+                  onPointerEnter={() => prefetchPage(item.path)}
+                  onFocus={() => prefetchPage(item.path)}
                   onClick={() => {
                     handleNavigation(item.path);
                     setMobileMenuOpen(false);

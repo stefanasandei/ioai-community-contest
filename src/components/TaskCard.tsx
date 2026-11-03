@@ -134,14 +134,14 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order, 
                     </div>
 
                     <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-2 min-w-0">
+                        <div className="flex flex-wrap items-start justify-between gap-2 min-w-0">
                             <div className="flex items-center gap-2 min-w-0 flex-1">
                                 {isReference && order !== undefined && (
                                     <span className="shrink-0 inline-flex items-center justify-center min-w-[1.75rem] h-6 px-2 rounded-md text-sm font-mono font-bold tabular-nums text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/10">
                                         {String(order).padStart(2, '0')}
                                     </span>
                                 )}
-                                <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight truncate min-w-0">
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight break-words min-w-0">
                                     {task.name}
                                 </h3>
                             </div>
@@ -173,7 +173,7 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order, 
                                 </span>
                             ))}
                             {task.author && (
-                                <span className="text-xs text-gray-600 dark:text-gray-400 truncate min-w-0">
+                                <span className="text-xs text-gray-600 dark:text-gray-400 break-words min-w-0">
                                     {isReference ? 'from ' : 'by '}
                                     <span className="font-semibold text-gray-900 dark:text-gray-100">
                                         {task.author}

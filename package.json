@@ -8,6 +8,7 @@
     "build": "npm run typecheck && vite build",
     "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit",
     "test:blog-assets": "node --experimental-strip-types --test tests/blog-assets.test.ts",
+    "test:page-load": "node --experimental-strip-types --test tests/page-load-recovery.test.ts",
     "check:performance": "node scripts/check-performance.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
