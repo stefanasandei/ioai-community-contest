@@ -64,7 +64,7 @@ const Leaderboard = () => {
     const contest = (series === "beginner" ? beginnerContestsData : contestsData).contests.find(
         (item) => item.id === roundNumber + 1
     );
-    const banner = series === "main" ? leaderboardBanners[roundNumber] : undefined;
+    const banner = series === "main" ? leaderboardBanners[roundNumber] : "/banner.png";
     const isCompactBanner = series === "main" && roundNumber === 8;
     const contestsUrl = series === "beginner" ? "/contests?series=beginner" : "/contests";
     const formatScore = series === "beginner"
@@ -149,7 +149,7 @@ const Leaderboard = () => {
                             {banner ? (
                                 <img
                                     src={banner}
-                                    alt={`AICC Round ${roundNumber} banner`}
+                                    alt={`AICC ${contest?.title ?? "Round " + roundNumber} banner`}
                                     className="block h-full w-full object-contain"
                                 />
                             ) : (
