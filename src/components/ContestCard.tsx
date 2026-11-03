@@ -14,6 +14,7 @@ import {
     BookOpen,
     Clock,
     Github,
+    BarChart3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { capturePostHogEvent } from "@/lib/posthogLogs";
@@ -144,11 +145,13 @@ const ContestCard = ({
                 {leaderboardUrl && (
                     <a
                         href={leaderboardUrl}
-                        target="_blank"
+                        target={leaderboardUrl.startsWith("/") ? undefined : "_blank"}
                         rel="noreferrer"
                         className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gray-100 px-3 text-sm font-medium text-gray-600 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aicc-purple/50 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10"
                     >
-                        Leaderboard <ExternalLink className="h-3.5 w-3.5" />
+                        {leaderboardUrl.startsWith("/") && <BarChart3 className="h-3.5 w-3.5" />}
+                        Leaderboard
+                        {!leaderboardUrl.startsWith("/") && <ExternalLink className="h-3.5 w-3.5" />}
                     </a>
                 )}
             </div>

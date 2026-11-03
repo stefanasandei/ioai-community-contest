@@ -9,7 +9,7 @@
             "title": "Beginner Round 0",
             "description": "Choose a 6-hour competition window within the 48-hour round. Tasks are listed in increasing difficulty.",
             "contestUrl": "https://sprawdzai.org/contest/77",
-            "leaderboardUrl": "https://sprawdzai.org/contest/77/ranking",
+            "leaderboardUrl": "/contests/beginner-round-0/leaderboard",
             "tasks": [
                 {
                     "name": "Restoring Image Size",

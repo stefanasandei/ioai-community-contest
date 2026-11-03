@@ -7,3 +7,5 @@ Main rounds live in `src/data/contests.json`. Beginner rounds live separately in
 on `/contests`, or link directly to `/contests?series=beginner`.
 Use `sprawdzai` for SprawdzAI task links. Leave unpublished solution links empty;
 only add authors and difficulty labels when confirmed.
+
+Leaderboard sources and scoring: [Leaderboard snapshots](docs/leaderboards.md).

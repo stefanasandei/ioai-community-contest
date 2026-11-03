@@ -35,7 +35,7 @@ const contestsBySeries: Record<"main" | "beginner", Contest[]> = {
 type SortKey = "newest" | "oldest" | "popular" | "least-popular";
 
 // Supplied ranking snapshot. Missing scores remain unranked in either direction.
-const taskPopularity = new Map(popularityData.map(entry => [`${entry.round + 1}:${entry.task}`, entry.popularity]));
+const taskPopularity = new Map(popularityData.map(entry => [`${"series" in entry ? entry.series : "main"}:${entry.round + 1}:${entry.task}`, entry.popularity]));
 
 const SORT_OPTIONS: { value: SortKey; label: string }[] = [
     { value: "newest", label: "Newest first" },
@@ -413,14 +413,14 @@ const Contests = () => {
     );
 
     const popularityTasks = useMemo(() => filteredContests
-        .flatMap(contest => contest.tasks.map(task => ({ contest, task, score: contest.format === "beginner" ? undefined : taskPopularity.get(`${contest.id}:${task.name}`) })))
+        .flatMap(contest => contest.tasks.map(task => ({ contest, task, score: taskPopularity.get(`${series}:${contest.id}:${task.name}`) })))
         .sort((a, b) => {
             if (a.score === undefined && b.score === undefined) return a.task.name.localeCompare(b.task.name);
             if (a.score === undefined) return 1;
             if (b.score === undefined) return -1;
             return (sort === "least-popular" ? a.score - b.score : b.score - a.score)
                 || a.task.name.localeCompare(b.task.name);
-        }), [filteredContests, sort]);
+        }), [filteredContests, sort, series]);
 
     const activeChips: ActiveChip[] = useMemo(() => {
         const chips: ActiveChip[] = [];
@@ -677,14 +677,17 @@ const Contests = () => {
             <div className="max-w-7xl mx-auto px-4 md:px-6 pb-24">
                 {sortByPopularity && (
                     <p className="mb-5 text-sm text-gray-500 dark:text-gray-400">
-                        Popularity is calculated using a formula that accounts for participation, contest age, notebook upvotes, and other factors. Tasks without scores appear last.
+                        {series === "beginner"
+                            ? "Beginner popularity estimates use SprawdzAI participation, including practice. The most-attempted task scores 100; the others are scaled relative to it. These estimates are provisional."
+                            : "Popularity combines age-adjusted notebook upvotes and participation. New-round scores are provisional. Tasks without scores appear last."}
                     </p>
                 )}
                 {filteredContests.length > 0 ? (
                     sortByPopularity ? (
                         <ol aria-label="Tasks by popularity" className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {popularityTasks.map(({ contest, task }) => (
+                            {popularityTasks.map(({ contest, task, score }) => (
                                 <li key={`${contest.id}-${task.name}`}>
+                                    {score !== undefined && <p className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400">Popularity: {score.toFixed(1)} / 100</p>}
                                     <TaskCard
                                         task={task}
                                         roundId={contest.id}
