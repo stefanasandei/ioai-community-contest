@@ -22,7 +22,7 @@ All 23 people were checked against the official [IOAI 2025 results](https://ioai
 | Georgios Tzovairis | IOAI 2026 Silver, rank 81; IOAI 2025 participation, rank 200 (no award in the official row); EUROAI 2026 Bronze. School graduation year remains member-provided. |
 | Stefan Asandei | Asandei Ștefan-Alexandru: IOAI 2025 Bronze, rank 92; EUROAI 2026 Silver. University description remains member-provided. |
 | Yue Heng Wong | Wong Yue Heng: IOAI 2025 Silver, rank 65. National gold, hackathon total, and university/class-year claims remain member-provided. |
-| Antony Ingorokva | Antoni Ingorokva: IOAI 2025 HM, rank 183; IOAI 2026 Silver, rank 38. Ingorokva Anton: EUROAI 2026 Bronze. |
+| Antoni Ingorokva | Antoni Ingorokva: IOAI 2025 HM, rank 183; IOAI 2026 Silver, rank 38. Ingorokva Anton: EUROAI 2026 Bronze. |
 | Nikoloz Gegenava | IOAI 2025 participation, rank 168 (no award in the official row); IOAI 2026 Gold, rank 26. Existing EUCYS award appears in the organizer's [indexed winners page](https://www.eucys2025.eu/en/participants/eucys-2025-winners/), but the live page was under maintenance during this audit. [IYNT's team page](https://iynt.org/bobek2025/) lists him on Georgia's 2025 team; the existing third-place/bronze description is also in his public profile. |
 | Henry Ho | Henry Minh Ho: IOAI 2025 Bronze, rank 91. No 2026 medal was verified or added. |
 | Apostolidis Charalampos | No confident IOAI match. Existing national top-12/top-25 statements remain member-provided; no additional achievement invented. |

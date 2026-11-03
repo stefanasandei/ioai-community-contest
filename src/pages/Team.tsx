@@ -22,7 +22,7 @@ const teamMembers: TeamMember[] = [
   { name: 'Georgios Tzovairis', username: 'Gior', country: 'GR', description: 'IOAI \'26 Silver, EUROAI \'26 Bronze, IOAI \'25, HS student class of \'27', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Stefan Asandei', username: 'Stefan', country: 'RO', description: 'Math and CS at Ecole Polytechnique, EUROAI \'26 Silver, IOAI \'25 Bronze', teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Yue Heng Wong', username: 'Walnit', country: 'SG', description: "IOAI '25 (Silver), Singapore NOAI '25 (Gold), 6/13 Hackathons Won, NUS CS '32", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
-  { name: 'Antony Ingorokva', username: 'Cowile', country: 'GE', description: "IOAI '26 Silver, EUROAI '26 Bronze, HM at IOAI '25", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
+  { name: 'Antoni Ingorokva', username: 'Cowile', country: 'GE', description: "IOAI '26 Silver, EUROAI '26 Bronze, HM at IOAI '25", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
   { name: 'Nikoloz Gegenava', username: 'Nikoloz', country: 'GE', description: "IOAI '26 Gold, IOAI '25, EUCYS '25 Special Jury Award, IYNT '25 Bronze Medal", teams: [TeamRole.ProblemSetter, TeamRole.ProblemReview] },
   { name: 'Henry Ho', username: 'Convexhulltrick', country: 'AU', description: 'Bronze medal at IOAI \'25', teams: [TeamRole.ProblemReview, TeamRole.Logistics] },
   { name: 'Apostolidis Charalampos', username: 'bl4ck', country: 'GR', description: 'Hellenic NOI Top 12, Hellenic NOAI Top 25', teams: [TeamRole.Logistics] },

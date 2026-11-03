@@ -10,7 +10,7 @@
                     "name": "Put the Sounds Back Together",
                     "type": "CV & NLP",
                     "kaggle": "https://www.kaggle.com/competitions/put-the-sounds-back-together-aicc-round-12/",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium",
                     "solution": "todo"
                 },
@@ -52,7 +52,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/tally-aicc-round-11/",
                     "solution": "todo",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
@@ -85,7 +85,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/overview",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-10/inverse-translation.ipynb",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
@@ -93,7 +93,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/overview",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-10/moment-match.ipynb",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 }
             ]
@@ -119,7 +119,7 @@
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/buried-fault-aicc-round-9/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-9/buried-fault.ipynb",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
@@ -127,7 +127,7 @@
                     "type": "CV & NLP",
                     "kaggle": "https://www.kaggle.com/competitions/shuffled-aicc-round-9/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-9/shuffled.ipynb",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "hard"
                 }
             ]
@@ -144,7 +144,7 @@
                     "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/1/view",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-8/dice-counting.ipynb",
                     "blog": "solutions/round-8/dice-counting",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "hard"
                 },
                 {
@@ -161,7 +161,7 @@
                     "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/3/view",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-8/archivists-cards.ipynb",
                     "blog": "solutions/round-8/archivists-cards",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "hard"
                 }
             ]
@@ -178,7 +178,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/polarity-aicc-round-7",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-7/polarity.ipynb",
                     "blog": "solutions/round-7/polarity",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
@@ -268,7 +268,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/visual-relations-aicc-round-5",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-5/visual-relations.ipynb",
                     "blog": "/solutions/round-5/visual-relations",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "hard"
                 }
             ]
@@ -285,7 +285,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/sticky-note-blindness-aicc-round-4",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-4/sticky-note-blindness.ipynb",
                     "blog": "/solutions/round-4/sticky-note-blindness",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "easy"
                 },
                 {
@@ -293,7 +293,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/alchemy-aicc-round-4",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-4/alchemy.ipynb",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
@@ -337,7 +337,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/mortys-time-paradox-aicc-round-3/overview",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-3/morty-time-paradox.ipynb",
                     "blog": "/solutions/round-3/mortys-time-paradox",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 }
             ]
@@ -390,7 +390,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/the-defected-nuts-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/defected-nuts.ipynb",
                     "blog": "/solutions/round-1/the-defected-nuts",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
