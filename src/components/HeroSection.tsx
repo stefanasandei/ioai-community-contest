@@ -1,11 +1,11 @@
 import { ExternalLink, Trophy, Users } from "lucide-react";
 import data from "../data/contests.json";
-import type { ContestsData } from "@/data/types";
+import beginnerData from "../data/beginner-contests.json";
+import type { Contest, ContestsData } from "@/data/types";
 
 const DATA = data as ContestsData;
-const filteredContests = DATA.contests.sort((a, b) => a.id - b.id).filter((a) =>
-  !a.disabled
-);
+const allContests: Contest[] = [...DATA.contests, ...beginnerData.contests];
+const filteredContests = allContests.filter((contest) => !contest.disabled);
 const totalTasks = filteredContests.reduce(
   (acc, c) => acc + c.tasks.length,
   0
@@ -100,7 +100,7 @@ const HeroSection = () => {
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-aicc-red dark:text-[#f28b78] bg-clip-text">
-              750+
+              850+
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               Discord Members
