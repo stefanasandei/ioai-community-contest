@@ -17,7 +17,7 @@
                     "sprawdzai": "https://sprawdzai.org/task/restoring-image-size-challenge",
                     "author": "Dauzhan Beketov",
                     "practiceStatus": "easy",
-                    "solution": ""
+                    "solution": "todo"
                 },
                 {
                     "name": "Piano Chord Challenge",
@@ -25,7 +25,7 @@
                     "sprawdzai": "https://sprawdzai.org/task/piano-chord-challenge",
                     "author": "Chon Feng Qi",
                     "practiceStatus": "easy",
-                    "solution": ""
+                    "solution": "todo"
                 },
                 {
                     "name": "Who Are the Impostors",
@@ -33,7 +33,7 @@
                     "sprawdzai": "https://sprawdzai.org/task/who-are-the-impostors",
                     "author": "Carson Cheng",
                     "practiceStatus": "easy",
-                    "solution": ""
+                    "solution": "todo"
                 },
                 {
                     "name": "Grid Puzzle Reconstruction",
@@ -41,7 +41,7 @@
                     "sprawdzai": "https://sprawdzai.org/task/grid-puzzle-reconstruction",
                     "author": "Aleksandar Lyubomirov Slavov",
                     "practiceStatus": "medium",
-                    "solution": ""
+                    "solution": "todo"
                 }
             ]
         }

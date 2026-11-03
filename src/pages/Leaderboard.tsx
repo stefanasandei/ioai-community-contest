@@ -125,11 +125,9 @@ const Leaderboard = () => {
                                 {contest?.title ?? "Round " + roundNumber}
                             </h1>
                             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
-                                {series === "beginner"
-                                    ? "Scores from the six-hour contest windows on SprawdzAI, shown at the platform’s whole-point precision. Practice results are excluded."
-                                    : activeMode === "raw"
-                                        ? "Raw private leaderboard scores for each task. Participants remain ordered by their normalized total points."
-                                        : "Normalized scores show private leaderboard performance, scaled between each task’s baseline and 100-point benchmark."}
+                                {activeMode === "raw"
+                                    ? "Raw private leaderboard scores for each task. Participants remain ordered by their normalized total points."
+                                    : "Contest standings, ranked by total points across all tasks."}
                             </p>
                             {series === "beginner" && (
                                 <a href={beginnerRound0.sourceUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-aicc-purple dark:text-aicc-purple-light hover:underline">

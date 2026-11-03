@@ -98,6 +98,7 @@ const ContestCard = ({
     highlightQuery,
     showLeaderboard = false,
     format,
+    contestUrl,
     leaderboardUrl,
 }: ContestCardProps) => {
     const trimmedQuery = highlightQuery?.trim() ?? "";
@@ -119,6 +120,18 @@ const ContestCard = ({
                         {title}
                     </p>
                 </div>
+                <div className="flex flex-wrap items-center gap-2">
+                {isBeginner && contestUrl && (
+                    <a
+                        href={contestUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-1.5 inline-flex h-9 items-center gap-1.5 rounded-lg bg-gray-100 px-3 text-sm font-medium text-gray-600 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aicc-purple/50 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10"
+                    >
+                        View on SprawdzAI
+                        <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                )}
                 {showLeaderboard && !isBeginner && (
                     <div className="mt-1.5 shrink-0">
                         <LeaderboardButton roundNumber={roundId - 1} />
@@ -136,6 +149,7 @@ const ContestCard = ({
                         {!leaderboardUrl.startsWith("/") && <ExternalLink className="h-3.5 w-3.5" />}
                     </a>
                 )}
+                </div>
             </div>
             <ul className="divide-y divide-gray-100 dark:divide-white/5">
                 {tasks.map((task, idx) => {
@@ -216,7 +230,7 @@ const ContestCard = ({
                                 </div>
                             </div>
 
-                            <div className="flex gap-2 mt-3 pl-[46px] sm:pl-0">
+                            <div className="flex flex-col sm:flex-row gap-2 mt-3 pl-[46px] sm:pl-0">
                                 <a
                                     href={competitionHref}
                                     target="_blank"
