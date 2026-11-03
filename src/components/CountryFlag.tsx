@@ -1,7 +1,7 @@
 const countries = {
   GR: 'Greece', RO: 'Romania', SG: 'Singapore', GE: 'Georgia', AU: 'Australia',
   KZ: 'Kazakhstan', ID: 'Indonesia', HK: 'Hong Kong', FR: 'France', PH: 'Philippines',
-  MY: 'Malaysia', LK: 'Sri Lanka', SE: 'Sweden', GB: 'United Kingdom', BD: 'Bangladesh',
+  MY: 'Malaysia', LK: 'Sri Lanka', SE: 'Sweden', GB: 'United Kingdom', BD: 'Bangladesh', BG: 'Bulgaria',
 };
 
 export type CountryCode = keyof typeof countries;

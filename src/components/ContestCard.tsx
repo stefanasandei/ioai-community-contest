@@ -106,9 +106,6 @@ const ContestCard = ({
     highlightQuery,
     showLeaderboard = false,
     format,
-    dateLabel,
-    description,
-    contestUrl,
     leaderboardUrl,
 }: ContestCardProps) => {
     const trimmedQuery = highlightQuery?.trim() ?? "";
@@ -118,23 +115,16 @@ const ContestCard = ({
         <div className="rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm overflow-hidden">
             <div className="flex flex-wrap items-start justify-between gap-3 border-b border-gray-100 px-6 py-3 dark:border-white/5">
                 <div className="min-w-0">
-                    {isBeginner && (
-                        <p className="mb-1 text-xs font-semibold text-aicc-purple dark:text-aicc-purple-light">
-                            Beginner series · SprawdzAI
-                        </p>
-                    )}
                     <div className="flex items-baseline gap-2">
                         <h3 className="m-0 text-xl font-bold text-gray-900 dark:text-white">
-                            {isBeginner ? title : month}
+                            {month}
                         </h3>
-                        {!isBeginner && (
-                            <span className="text-base text-gray-500 dark:text-gray-400">
-                                {year}
-                            </span>
-                        )}
+                        <span className="text-base text-gray-500 dark:text-gray-400">
+                            {year}
+                        </span>
                     </div>
                     <p className="mb-0 mt-0.5 text-sm text-gray-600 dark:text-gray-400">
-                        {isBeginner ? dateLabel ?? `${month} ${year}` : title}
+                        {title}
                     </p>
                 </div>
                 {showLeaderboard && !isBeginner && (
@@ -147,7 +137,7 @@ const ContestCard = ({
                         href={leaderboardUrl}
                         target={leaderboardUrl.startsWith("/") ? undefined : "_blank"}
                         rel="noreferrer"
-                        className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gray-100 px-3 text-sm font-medium text-gray-600 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aicc-purple/50 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10"
+                        className="mt-1.5 inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-gray-100 px-3 text-sm font-medium text-gray-600 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aicc-purple/50 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10"
                     >
                         {leaderboardUrl.startsWith("/") && <BarChart3 className="h-3.5 w-3.5" />}
                         Leaderboard
@@ -155,22 +145,6 @@ const ContestCard = ({
                     </a>
                 )}
             </div>
-            {description && (
-                <div className="border-b border-gray-100 bg-purple-50/50 px-6 py-3 dark:border-white/5 dark:bg-aicc-purple/5">
-                    <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{description}</p>
-                    {contestUrl && (
-                        <a
-                            href={contestUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-aicc-purple hover:underline dark:text-aicc-purple-light"
-                        >
-                            View contest on SprawdzAI <ExternalLink className="h-3.5 w-3.5" />
-                        </a>
-                    )}
-                </div>
-            )}
-
             <ul className="divide-y divide-gray-100 dark:divide-white/5">
                 {tasks.map((task, idx) => {
                     const { icon: TaskIcon, gradient } = getTaskConfig(task.type);

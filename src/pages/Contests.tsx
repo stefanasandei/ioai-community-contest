@@ -508,7 +508,7 @@ const Contests = () => {
                     </div>
                     <p className="mb-3 mt-3 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                         {series === "beginner"
-                            ? "A separate series for beginners, hosted on SprawdzAI. Everyone is welcome to participate."
+                            ? "Beginner rounds are hosted on SprawdzAI. Choose a 6-hour competition window within the 48-hour round."
                             : "The main AICC series, hosted on Kaggle and Nitro Judge."}
                     </p>
                 </div>
