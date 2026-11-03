@@ -24,7 +24,7 @@ This audit covers the 23 team identities and displayed achievement claims, all 1
 ## Remaining limits and claims needing a better source
 
 - **18 problem-bank entries have no supplied atlas coordinates.** They are five Singapore 2026 entries, five China/NOAI entries, and eight Philippines 2026 entries. They remain available in the problem bank and through the atlas fallback search; the map requires a new embedding snapshot to include them.
-- **Not every personal biography is independently sourced.** Apostolidis's national top-12/top-25 claims, Yue Heng's national/hackathon/university details, and existing school/university statements are member-provided. They were not silently replaced or expanded. Chon's reported CEOAI participation and Jithun's official individual IOAI result remain unmatched.
+- **Existing member-provided biographies are preserved.** The user confirmed Apostolidis's, Yue Heng's, Georgios's, and Stefan's existing details are correct; their biographies are unchanged. Chon's CEOAI claim is not included. The user confirmed Jithun did not participate in IOAI; only his JEXo handle was added, with no IOAI claim.
 - **Some Discord handles are unknown.** Known handles render in both author cards and contributor rows; missing handles were not guessed.
 - **Blog dates are site-publication dates from first-added Git commits**, not verified notebook drafting dates. Same-day posts use a stable URL-name tie-breaker; this is documented in [blog-dates.md](blog-dates.md).
 - **Popularity is a dated estimate, not live analytics.** Beginner scores use participation alone; the three Nitro Judge tasks have no comparable popularity metrics. The Kaggle refresh tool still lives outside this repository, which remains a portability limitation.

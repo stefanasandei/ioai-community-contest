@@ -38,9 +38,14 @@ All 23 people were checked against the official [IOAI 2025 results](https://ioai
 | Ellison Ang | Ellison Matthew Siajuat Ang: IOAI 2026 Bronze, rank 197. The user confirmed this is the contributor formerly misspelled “Elison Ang.” |
 | Chon Feng Qi | IOAI 2026 Bronze, rank 201. CEOAI/EUROAI participation still not verified. |
 | Gheorghică Istrate David | EUROAI 2026 Bronze. [Romania's national organizer](https://olimpiada-ai.ro/en/news/comunicat-nationala-2026) confirms this name spelling; replaces “Gheorghiță.” No IOAI medal claimed. |
-| Jithun Methusahan | The site's own authored blog supplies the JEXo handle. His [public announcement](https://www.linkedin.com/posts/jithunmethusahan_hi-everyone-after-a-long-time-away-during-activity-7475419967014842368-T_c7) reports selection for Sri Lanka's 2026 team; an official individual result was not matched, so no medal is claimed. |
+| Jithun Methusahan | The site's own authored blog supplies the JEXo handle. The user confirmed he did not participate in IOAI. No IOAI participation or result is included in his biography. |
 | Martin Haoxuan Zhang | [Statistics profile](https://ioai-statistics.org/contestants/martin-haoxuan-zhang) joins Martin Zhang (IOAI 2025 Bronze, rank 87) with Haoxuan Zhang (IOAI 2026 Gold, rank 29). Zhang Martin: EUROAI 2026 Silver. |
 | Low Yu Xuan | IOAI 2026 Bronze, rank 142. |
 | Zane Kumar | IOAI 2026 Gold, rank 28; Kumar Zane: EUROAI 2026 Silver. |
 
 Discord handles come from the member-supplied credits in this change or existing site data. Missing handles are left unset rather than inferred from an unrelated social account. Contributor rows now show saved handles and biographies instead of silently dropping them.
+
+The user subsequently confirmed that the existing biographies of Apostolidis,
+Yue Heng, Georgios, and Stefan are correct and should be preserved. Their Team
+biographies are unchanged from the pre-PR version. Chon has only the verified
+IOAI 2026 Bronze added, with no CEOAI claim; Jithun has only his JEXo handle added.
