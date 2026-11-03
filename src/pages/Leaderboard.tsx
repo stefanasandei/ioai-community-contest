@@ -128,8 +128,8 @@ const Leaderboard = () => {
                                 {series === "beginner"
                                     ? "Scores from the six-hour contest windows on SprawdzAI, shown at the platform’s whole-point precision. Practice results are excluded."
                                     : activeMode === "raw"
-                                        ? "Raw private-leaderboard scores for each task. Participants remain ordered by their normalized total points."
-                                        : "Normalized scores show private-leaderboard performance, scaled between each task’s baseline and 100-point benchmark."}
+                                        ? "Raw private leaderboard scores for each task. Participants remain ordered by their normalized total points."
+                                        : "Normalized scores show private leaderboard performance, scaled between each task’s baseline and 100-point benchmark."}
                             </p>
                             {series === "main" && roundNumber === 12 && (
                                 <p className="mt-2 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
