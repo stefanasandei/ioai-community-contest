@@ -1,11 +1,11 @@
 import { ExternalLink, Trophy, Users } from "lucide-react";
 import data from "../data/contests.json";
-import type { ContestsData } from "@/data/types";
+import beginnerData from "../data/beginner-contests.json";
+import type { Contest, ContestsData } from "@/data/types";
 
 const DATA = data as ContestsData;
-const filteredContests = DATA.contests.sort((a, b) => a.id - b.id).filter((a) =>
-  !a.disabled
-);
+const allContests = [...DATA.contests, ...(beginnerData.contests as Contest[])];
+const filteredContests = allContests.filter((contest) => !contest.disabled);
 const totalTasks = filteredContests.reduce(
   (acc, c) => acc + c.tasks.length,
   0
@@ -70,13 +70,13 @@ const HeroSection = () => {
         />
         <img src="/assets/aicc_long.png" alt="AICC Logo" className="hidden opacity-100 max-h-24 mb-5 dark:inline-flex" />
 
-        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-4 font-medium">
+        <h1 className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-4 font-medium">
           Contests to prepare for AI Olympiads
-        </p>
+        </h1>
 
         <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
-          Join IOAI alumni and AI enthusiasts in challenging monthly contests on
-          Kaggle. Sharpen your skills, learn from the community, and prepare for
+          Join IOAI alumni and AI enthusiasts in main and beginner contests on
+          Kaggle, Nitro Judge, and SprawdzAI. Sharpen your skills, learn from the community, and prepare for
           the international level.
         </p>
 
@@ -100,7 +100,7 @@ const HeroSection = () => {
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-aicc-red dark:text-[#f28b78] bg-clip-text">
-              750+
+              850+
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               Discord Members
@@ -119,11 +119,9 @@ const HeroSection = () => {
             <ExternalLink className="w-4 h-4" />
           </button>
 
-          <a href="/contests">
-            <button className="bg-background text-primary font-medium px-8 py-4 rounded-lg flex items-center gap-3 border-2 border-primary/20 hover:border-primary hover:bg-primary/5 transition-all">
+          <a href="/contests" className="bg-background text-primary font-medium px-8 py-4 rounded-lg flex items-center gap-3 border-2 border-primary/20 hover:border-primary hover:bg-primary/5 transition-all">
               View Past Contests
               <Trophy className="w-4 h-4" />
-            </button>
           </a>
         </div>
       </div>

@@ -1,0 +1,144 @@
+{
+  "roundNumber": 0,
+  "platform": "SprawdzAI",
+  "mode": "normalized",
+  "sourceUrl": "https://sprawdzai.org/contest/77/ranking",
+  "asOf": "2026-11-03",
+  "sourceView": "Contest",
+  "tasks": [
+    {
+      "name": "Restoring Image Size",
+      "link": "https://sprawdzai.org/task/restoring-image-size-challenge/ranking",
+      "referenceScore": null,
+      "baselineScore": null
+    },
+    {
+      "name": "Piano Chord Challenge",
+      "link": "https://sprawdzai.org/task/piano-chord-challenge/ranking",
+      "referenceScore": null,
+      "baselineScore": null
+    },
+    {
+      "name": "Who Are the Impostors",
+      "link": "https://sprawdzai.org/task/who-are-the-impostors/ranking",
+      "referenceScore": null,
+      "baselineScore": null
+    },
+    {
+      "name": "Grid Puzzle Reconstruction",
+      "link": "https://sprawdzai.org/task/grid-puzzle-reconstruction/ranking",
+      "referenceScore": null,
+      "baselineScore": null
+    }
+  ],
+  "participants": [
+    {
+      "username": "aslavov",
+      "scores": [
+        null,
+        100.0,
+        97.0,
+        null
+      ],
+      "totalPoints": 197.0,
+      "kind": "participant",
+      "rank": 1
+    },
+    {
+      "username": "adilbaidsmlkz",
+      "scores": [
+        null,
+        86.0,
+        null,
+        null
+      ],
+      "totalPoints": 86.0,
+      "kind": "participant",
+      "rank": 2
+    },
+    {
+      "username": "sophuslie",
+      "scores": [
+        null,
+        74.0,
+        null,
+        null
+      ],
+      "totalPoints": 74.0,
+      "kind": "participant",
+      "rank": 3
+    },
+    {
+      "username": "superarbuzek",
+      "scores": [
+        null,
+        69.0,
+        null,
+        null
+      ],
+      "totalPoints": 69.0,
+      "kind": "participant",
+      "rank": 4
+    },
+    {
+      "username": "yichengstesla",
+      "scores": [
+        21.0,
+        null,
+        null,
+        null
+      ],
+      "totalPoints": 21.0,
+      "kind": "participant",
+      "rank": 5
+    },
+    {
+      "username": "boldstudent",
+      "scores": [
+        null,
+        16.0,
+        null,
+        null
+      ],
+      "totalPoints": 16.0,
+      "kind": "participant",
+      "rank": 6
+    },
+    {
+      "username": "522080",
+      "scores": [
+        null,
+        null,
+        null,
+        1.0
+      ],
+      "totalPoints": 1.0,
+      "kind": "participant",
+      "rank": 7
+    },
+    {
+      "username": "afedafed",
+      "scores": [
+        null,
+        null,
+        0.0,
+        null
+      ],
+      "totalPoints": 0.0,
+      "kind": "participant",
+      "rank": 8
+    },
+    {
+      "username": "jalool",
+      "scores": [
+        null,
+        0.0,
+        null,
+        null
+      ],
+      "totalPoints": 0.0,
+      "kind": "participant",
+      "rank": 8
+    }
+  ]
+}

@@ -7,3 +7,5 @@ Open `/tasks/atlas` or select **Explore task atlas** on `/tasks`. The old `/task
 Names and contest labels come from the same `getSheetTasks()` data as `/tasks`, matched by problem URL. Shared contest URLs are disambiguated in `data.ts`. When changing URLs or replacing the snapshot, verify every entry still has a unique problem-bank match. Update the snapshot explicitly when new embeddings are available; do not invent positions.
 
 The map is lazy-loaded, uses no external map service, and stops rendering when idle. The entry animation respects reduced motion. Open the atlas directly and through the button when checking desktop and mobile layouts.
+
+The entry link falls back to a full-page navigation if its lazy import or transition fails, so an open problem-bank page can recover when a deployment replaces its JavaScript chunks. Hover/focus prefetch failures are ignored; clicking the link still attempts navigation. Check this by leaving `/tasks` open across a production rebuild before clicking **Explore Task Atlas**, as well as checking normal entry and returning to a filtered problem bank.

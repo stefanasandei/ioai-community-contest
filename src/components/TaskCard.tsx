@@ -99,7 +99,7 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order, 
     const StatusIcon = statusConfig?.icon;
 
     const isReference = mode === 'reference';
-    const competitionHref = task.source ?? task.nitroJudge ?? task.kaggle;
+    const competitionHref = task.source ?? task.sprawdzai ?? task.nitroJudge ?? task.kaggle;
     const hasCompetition = !!competitionHref;
     const hasSolution =
         (task.blog && roundId !== undefined) ||
@@ -109,11 +109,13 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order, 
 
     const competitionLabel = task.source
         ? "Solve on Kilonova"
-        : task.nitroJudge
-            ? "View on Nitro Judge"
-            : competitionHref?.includes('olimpiada-ai.ro')
-                ? "View on MLCompete"
-                : "View on Kaggle";
+        : task.sprawdzai
+            ? "View on SprawdzAI"
+            : task.nitroJudge
+                ? "View on Nitro Judge"
+                : competitionHref?.includes('olimpiada-ai.ro')
+                    ? "View on MLCompete"
+                    : "View on Kaggle";
 
     return (
         <div
@@ -156,7 +158,7 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order, 
                             )}
                         </div>
                         <div className="flex items-center gap-1.5 mt-2.5 min-w-0 overflow-hidden flex-wrap">
-                            {(learnItems ?? task.type.split(" & ").map(t => ({ topic: t }))).map((item, i) => (
+                            {(learnItems ?? task.type.split(" & ").map((t): LearnItem => ({ topic: t }))).map((item, i) => (
                                 <span
                                     key={i}
                                     className={cn(
@@ -193,7 +195,7 @@ const TaskCard = ({ task, roundId, mode = 'tasks', iconType, learnItems, order, 
                                 rel="noreferrer"
                                 onClick={() => capturePostHogEvent("task_competition_opened", {
                                     task_type: task.type,
-                                    source: task.source ? "kilonova" : task.nitroJudge ? "nitro_judge" : "kaggle",
+                                    source: task.source ? "kilonova" : task.sprawdzai ? "sprawdzai" : task.nitroJudge ? "nitro_judge" : "kaggle",
                                 })}
                                 className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-purple-600 bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
                             >

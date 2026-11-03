@@ -32,6 +32,11 @@ const standaloneTasks: Task[] = DATA.standaloneTasks ?? [];
 const sheetTasks: ParsedSheetTask[] = getSheetTasks();
 const uniqueSheetCategories: string[] = getUniqueSheetCategories();
 
+const preloadAtlas = () => {
+    // Prefetching is optional; a failed download is retried by normal navigation.
+    void import('@/features/task-atlas/TaskAtlas').catch(() => undefined);
+};
+
 interface FilterOption {
     value: string;
     label: string;
@@ -586,8 +591,12 @@ const Tasks = () => {
                             try {
                                 const { openAtlas } = await import('@/features/task-atlas/atlasTransition');
                                 await openAtlas(link, navigate, `/tasks${searchParams.size ? `?${searchParams}` : ''}`);
+                            } catch {
+                                // A newer deployment may have replaced this page's lazy chunks.
+                                // Load the link normally to fetch the current atlas and app bundle.
+                                if (link.isConnected) window.location.assign(link.href);
                             } finally { openingAtlas.current = false; }
-                        }} onMouseEnter={() => { void import('@/features/task-atlas/TaskAtlas'); }} onFocus={() => { void import('@/features/task-atlas/TaskAtlas'); }} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/15 pl-2 pr-4 text-sm font-medium text-gray-800 dark:text-gray-100 hover:border-purple-300 dark:hover:border-purple-600 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4">
+                        }} onMouseEnter={preloadAtlas} onFocus={preloadAtlas} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/15 pl-2 pr-4 text-sm font-medium text-gray-800 dark:text-gray-100 hover:border-purple-300 dark:hover:border-purple-600 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4">
                             <svg width="50" height="32" viewBox="0 0 50 32" fill="none" aria-hidden="true">
                                 {buttonDots.map((dot, cluster) => <circle key={cluster} data-cluster={cluster} cx={dot.x} cy={dot.y} r={dot.radius} fill={atlasColors[cluster]} />)}
                             </svg>

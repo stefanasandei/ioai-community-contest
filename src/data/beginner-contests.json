@@ -1,0 +1,49 @@
+{
+    "contests": [
+        {
+            "id": 1,
+            "format": "beginner",
+            "month": "October",
+            "year": "2026",
+            "dateLabel": "October 23–25, 2026",
+            "title": "Beginner Round 0",
+            "description": "Choose a 6-hour competition window within the 48-hour round. Tasks are listed in increasing difficulty.",
+            "contestUrl": "https://sprawdzai.org/contest/77",
+            "leaderboardUrl": "/contests/beginner-round-0/leaderboard",
+            "tasks": [
+                {
+                    "name": "Restoring Image Size",
+                    "type": "CV",
+                    "sprawdzai": "https://sprawdzai.org/task/restoring-image-size-challenge",
+                    "author": "Dauzhan Beketov",
+                    "practiceStatus": "easy",
+                    "solution": ""
+                },
+                {
+                    "name": "Piano Chord Challenge",
+                    "type": "Audio",
+                    "sprawdzai": "https://sprawdzai.org/task/piano-chord-challenge",
+                    "author": "Chon Feng Qi",
+                    "practiceStatus": "easy",
+                    "solution": ""
+                },
+                {
+                    "name": "Who Are the Impostors",
+                    "type": "ML",
+                    "sprawdzai": "https://sprawdzai.org/task/who-are-the-impostors",
+                    "author": "Carson Cheng",
+                    "practiceStatus": "easy",
+                    "solution": ""
+                },
+                {
+                    "name": "Grid Puzzle Reconstruction",
+                    "type": "CV",
+                    "sprawdzai": "https://sprawdzai.org/task/grid-puzzle-reconstruction",
+                    "author": "Aleksandar Lyubomirov Slavov",
+                    "practiceStatus": "medium",
+                    "solution": ""
+                }
+            ]
+        }
+    ]
+}
