@@ -5,32 +5,34 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
-import BecomeSetter from "./pages/BecomeSetter";
-import Rules from "./pages/Rules";
-import Community from "./pages/Community";
-import Contests from "./pages/Contests";
-import Tasks from "./pages/Tasks";
-import Solution from "./pages/Solution";
-import Team from "./pages/Team";
-import Resources from "./pages/Resources";
-import ResourceCategory from "./pages/ResourceCategory";
-import ResourceSyllabus from "./pages/ResourceSyllabus";
-import Roadmap from "./pages/Roadmap";
-import AdminLogin from "./pages/AdminLogin";
-import AdminLayout from "./components/AdminLayout";
-import AdminRoadmap from "./pages/AdminRoadmap";
-import AdminResources from "./pages/AdminResources";
-import AdminTasks from "./pages/AdminTasks";
-import AdminRounds from "./pages/AdminRounds";
-import Leaderboard from "./pages/Leaderboard";
-import NotFound from "./pages/NotFound";
 import BlogLoading from "./components/BlogLoading";
+import RouteBoundary, { PageLoading } from "./components/RouteBoundary";
+
+const BecomeSetter = lazy(() => import('./pages/BecomeSetter'));
+const Rules = lazy(() => import('./pages/Rules'));
+const Contests = lazy(() => import('./pages/Contests'));
+const Tasks = lazy(() => import('./pages/Tasks'));
+const Solution = lazy(() => import('./pages/Solution'));
+const Team = lazy(() => import('./pages/Team'));
+const Resources = lazy(() => import('./pages/Resources'));
+const ResourceCategory = lazy(() => import('./pages/ResourceCategory'));
+const ResourceSyllabus = lazy(() => import('./pages/ResourceSyllabus'));
+const Roadmap = lazy(() => import('./pages/Roadmap'));
+const AdminLogin = lazy(() => import('./pages/AdminLogin'));
+const AdminLayout = lazy(() => import('./components/AdminLayout'));
+const AdminRoadmap = lazy(() => import('./pages/AdminRoadmap'));
+const AdminResources = lazy(() => import('./pages/AdminResources'));
+const AdminTasks = lazy(() => import('./pages/AdminTasks'));
+const AdminRounds = lazy(() => import('./pages/AdminRounds'));
+const Leaderboard = lazy(() => import('./pages/Leaderboard'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 const queryClient = new QueryClient();
 const Blogs = lazy(() => import('./pages/Blogs'));
 const AdminBlogs = lazy(() => import('./pages/AdminBlogs'));
 const TaskAtlas = lazy(() => import('./features/task-atlas/TaskAtlas'));
 const Theory = lazy(() => import('./pages/Theory'));
+const Ratings = import.meta.env.DEV ? lazy(() => import('./pages/Ratings')) : null;
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -42,18 +44,16 @@ const ScrollToTop = () => {
   return null;
 };
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
+const PageRoutes = () => {
+  const { pathname } = useLocation();
+  return <RouteBoundary resetKey={pathname}>
+    <Suspense fallback={<PageLoading />}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/become-setter" element={<BecomeSetter />} />
           <Route path="/rules" element={<Rules />} />
           <Route path="/contests" element={<Contests />} />
+          {Ratings && <Route path="/ratings" element={<Suspense fallback={<div className="p-20" role="status">Loading ratings…</div>}><Ratings /></Suspense>} />}
           <Route path="/contests/:roundPath/leaderboard" element={<Leaderboard />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/tasks/clusters" element={<Navigate to="/tasks/atlas" replace />} />
@@ -79,10 +79,19 @@ const App = () => (
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
-
-
-          {/*<Route path="/community" element={<Community />} />*/}
         </Routes>
+    </Suspense>
+  </RouteBoundary>;
+};
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <ScrollToTop />
+        <PageRoutes />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   ArrowUp,
   Menu,
@@ -18,6 +18,7 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import './navigation.css';
 import ThemeToggle from './ThemeToggle';
+import { prefetchPage } from '@/lib/prefetchPage';
 
 
 interface NavItem {
@@ -33,13 +34,6 @@ interface DropdownItem {
   icon: LucideIcon;
   external?: boolean;
   description?: string;
-}
-
-interface PillRect {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
 }
 
 const primaryNavItems: NavItem[] = [
@@ -63,13 +57,11 @@ const primaryNavItems: NavItem[] = [
 ];
 
 const moreNavItems: DropdownItem[] = [
-  { label: 'Problem Bank', path: '/tasks', icon: ListChecks, description: 'Browse and practice olympiad problems' },
+  { label: 'Problem Bank', path: '/tasks', icon: ListChecks, description: 'Browse and practice problems from other olympiads' },
   { label: 'Roadmap', path: '/roadmap', icon: Map, description: 'A guided path through machine learning' },
   { label: 'Theory', path: '/theory', icon: BookOpen, description: 'Study the official IOAI 2027 syllabus alongside the roadmap' },
   { label: 'Blogs', path: '/blogs', icon: BookOpen, description: 'Ideas from the AICC community' },
 ];
-
-const MORE_INDEX = primaryNavItems.length;
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -77,16 +69,9 @@ const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
+  const moreButtonRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
-
-  const navRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const [activeIndex, setActiveIndex] = useState<number>(-1);
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const [activePill, setActivePill] = useState<PillRect | null>(null);
-  const [hoverPill, setHoverPill] = useState<PillRect | null>(null);
-  const [pillsAnimated, setPillsAnimated] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -122,64 +107,6 @@ const Navigation = () => {
     };
   }, [mobileMenuOpen]);
 
-  const measureRect = (idx: number): PillRect | null => {
-    const el = itemRefs.current[idx];
-    if (!el || !navRef.current) return null;
-    const ir = el.getBoundingClientRect();
-    const nr = navRef.current.getBoundingClientRect();
-    return {
-      left: ir.left - nr.left,
-      top: ir.top - nr.top,
-      width: ir.width,
-      height: ir.height,
-    };
-  };
-
-  useLayoutEffect(() => {
-    const t = window.setTimeout(() => setPillsAnimated(false), 60);
-    return () => window.clearTimeout(t);
-  }, []);
-
-  useLayoutEffect(() => {
-    const pathname = location.pathname;
-    const isPathActive = (path: string) =>
-      path === '/'
-        ? pathname === '/'
-        : pathname === path || pathname.startsWith(`${path}/`);
-    let idx = primaryNavItems.findIndex((item) => isPathActive(item.path));
-    if (idx === -1 && moreNavItems.some((item) => isPathActive(item.path))) {
-      idx = MORE_INDEX;
-    }
-    setActiveIndex(idx);
-  }, [location.pathname]);
-
-  useLayoutEffect(() => {
-    if (activeIndex < 0) {
-      setActivePill(null);
-      return;
-    }
-    setActivePill(measureRect(activeIndex));
-  }, [activeIndex, pillsAnimated]);
-
-  useLayoutEffect(() => {
-    if (hoverIndex === null || hoverIndex === activeIndex) {
-      setHoverPill(null);
-      return;
-    }
-    setHoverPill(measureRect(hoverIndex));
-  }, [hoverIndex, activeIndex, pillsAnimated]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (activeIndex >= 0) setActivePill(measureRect(activeIndex));
-      if (hoverIndex !== null && hoverIndex !== activeIndex) {
-        setHoverPill(measureRect(hoverIndex));
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [activeIndex, hoverIndex]);
-
   const handleNavigation = (path: string, sectionId?: string) => {
     setMoreOpen(false);
     if (path === '/' && sectionId) {
@@ -208,16 +135,11 @@ const Navigation = () => {
     if (path === '/') return location.pathname === '/';
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
   };
+  const moreActive = moreNavItems.some(item => isActive(item.path));
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  const pillStyle = (rect: PillRect): React.CSSProperties => ({
-    transform: `translate3d(${rect.left}px, ${rect.top}px, 0)`,
-    width: rect.width,
-    height: rect.height,
-  });
 
   return (
     <>
@@ -247,44 +169,20 @@ const Navigation = () => {
               </button>
 
               <div className="navigation-center hidden md:flex items-center">
-                <div ref={navRef} className="relative flex items-center gap-3">
-                  {hoverPill && (
-                    <span
-                      aria-hidden
-                      className={`absolute rounded-lg pointer-events-none bg-aicc-purple/10 dark:bg-aicc-purple/20 ${pillsAnimated
-                        ? 'transition-all duration-200 ease-out'
-                        : ''
-                        }`}
-                      style={pillStyle(hoverPill)}
-                    />
-                  )}
-                  {activePill && (
-                    <span
-                      aria-hidden
-                      className={`absolute rounded-lg pointer-events-none bg-aicc-purple ${pillsAnimated
-                        ? 'transition-all duration-300 ease-out'
-                        : ''
-                        }`}
-                      style={pillStyle(activePill)}
-                    />
-                  )}
-
-                  {primaryNavItems.slice(0, 2).map((item, i) => {
+                <div className="relative flex items-center gap-3">
+                  {primaryNavItems.slice(0, 2).map((item) => {
                     const active = isActive(item.path);
                     const Icon = item.icon;
                     return (
                       <button
                         key={item.path}
-                        ref={(el) => {
-                          itemRefs.current[i] = el;
-                        }}
+                        onPointerEnter={() => prefetchPage(item.path)}
+                        onFocus={() => prefetchPage(item.path)}
                         onClick={() => handleNavigation(item.path, item.sectionId)}
-                        onMouseEnter={() => setHoverIndex(i)}
-                        onMouseLeave={() => setHoverIndex(null)}
                         data-current={active || undefined}
                         className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
-                          ? 'text-white'
-                          : 'text-gray-700 dark:text-gray-300 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
+                          ? 'bg-aicc-purple text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-aicc-purple/10 dark:hover:bg-aicc-purple/20 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
                           }`}
                       >
                         <Icon className="w-4 h-4" />
@@ -294,7 +192,7 @@ const Navigation = () => {
                   })}
 
                   <div ref={moreRef} className="relative" onKeyDown={event => {
-                    if (event.key === 'Escape' && moreOpen) { event.preventDefault(); setMoreOpen(false); itemRefs.current[MORE_INDEX]?.focus(); }
+                    if (event.key === 'Escape' && moreOpen) { event.preventDefault(); setMoreOpen(false); moreButtonRef.current?.focus(); }
                     if (moreOpen && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
                       event.preventDefault();
                       const options = Array.from(moreRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? []);
@@ -303,9 +201,7 @@ const Navigation = () => {
                     }
                   }}>
                     <button
-                      ref={(el) => {
-                        itemRefs.current[MORE_INDEX] = el;
-                      }}
+                      ref={moreButtonRef}
                       onClick={() => setMoreOpen((open) => !open)}
                       onKeyDown={event => {
                         if (!moreOpen && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
@@ -316,12 +212,10 @@ const Navigation = () => {
                           });
                         }
                       }}
-                      onMouseEnter={() => setHoverIndex(MORE_INDEX)}
-                      onMouseLeave={() => setHoverIndex(null)}
-                      data-current={activeIndex === MORE_INDEX || undefined}
-                      className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${activeIndex === MORE_INDEX
-                          ? 'text-white'
-                          : 'text-gray-700 dark:text-gray-300 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
+                      data-current={moreActive || undefined}
+                      className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${moreActive
+                          ? 'bg-aicc-purple text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-aicc-purple/10 dark:hover:bg-aicc-purple/20 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
                         }`}
                       aria-expanded={moreOpen}
                       aria-haspopup="menu" aria-controls="learn-menu"
@@ -351,6 +245,8 @@ const Navigation = () => {
                             return (
                               <button
                                 key={item.path}
+                                onPointerEnter={() => prefetchPage(item.path)}
+                                onFocus={() => prefetchPage(item.path)}
                                 onClick={() => {
                                   handleNavigation(item.path);
                                   setMoreOpen(false);
@@ -392,23 +288,19 @@ const Navigation = () => {
                       </div>
                     }
                   </div>
-                  {primaryNavItems.slice(2).map((item, index) => {
-                    const i = index + 2;
+                  {primaryNavItems.slice(2).map((item) => {
                     const active = isActive(item.path);
                     const Icon = item.icon;
                     return (
                       <button
                         key={item.path}
-                        ref={(el) => {
-                          itemRefs.current[i] = el;
-                        }}
+                        onPointerEnter={() => prefetchPage(item.path)}
+                        onFocus={() => prefetchPage(item.path)}
                         onClick={() => handleNavigation(item.path, item.sectionId)}
-                        onMouseEnter={() => setHoverIndex(i)}
-                        onMouseLeave={() => setHoverIndex(null)}
                         data-current={active || undefined}
                         className={`relative z-10 flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${active
-                          ? 'text-white'
-                          : 'text-gray-700 dark:text-gray-300 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
+                          ? 'bg-aicc-purple text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-aicc-purple/10 dark:hover:bg-aicc-purple/20 hover:text-aicc-purple dark:hover:text-aicc-purple-light'
                           }`}
                       >
                         <Icon className="w-4 h-4" />
@@ -464,8 +356,8 @@ const Navigation = () => {
 
       <div
         className={`fixed inset-0 z-40 bg-white/95 dark:bg-[#0a0a0f]/95 backdrop-blur-xl transition-opacity duration-300 md:hidden ${mobileMenuOpen
-          ? 'opacity-100 pointer-events-auto'
-          : 'opacity-0 pointer-events-none'
+          ? 'visible opacity-100 pointer-events-auto'
+          : 'invisible opacity-0 pointer-events-none'
           }`}
         aria-hidden={!mobileMenuOpen}
       >
@@ -480,6 +372,8 @@ const Navigation = () => {
               return (
                 <button
                   key={item.path}
+                  onPointerEnter={() => prefetchPage(item.path)}
+                  onFocus={() => prefetchPage(item.path)}
                   onClick={() => {
                     handleNavigation(item.path);
                     setMobileMenuOpen(false);
@@ -520,6 +414,8 @@ const Navigation = () => {
               return (
                 <button
                   key={item.path}
+                  onPointerEnter={() => prefetchPage(item.path)}
+                  onFocus={() => prefetchPage(item.path)}
                   onClick={() => {
                     handleNavigation(item.path);
                     setMobileMenuOpen(false);

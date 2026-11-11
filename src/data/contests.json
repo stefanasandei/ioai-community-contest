@@ -1,6 +1,71 @@
 {
     "contests": [
         {
+            "id": 13,
+            "month": "October",
+            "year": "2026",
+            "title": "Round 12",
+            "tasks": [
+                {
+                    "name": "Put the Sounds Back Together",
+                    "type": "CV & NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/put-the-sounds-back-together-aicc-round-12/",
+                    "author": "Antoni Ingorokva",
+                    "practiceStatus": "medium",
+                    "solution": "todo"
+                },
+                {
+                    "name": "Alakazam",
+                    "type": "CV & NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/alakazam-aicc-round-12",
+                    "author": "Mobtasim Priom",
+                    "practiceStatus": "medium",
+                    "solution": "todo"
+                },
+                {
+                    "name": "Moonlight At Midday",
+                    "type": "ML",
+                    "kaggle": "https://www.kaggle.com/competitions/moonlight-at-midday-aicc-round-12/",
+                    "author": "Wang Jiayu",
+                    "practiceStatus": "medium",
+                    "solution": "todo"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "month": "September",
+            "year": "2026",
+            "title": "Round 11",
+            "tasks": [
+                {
+                    "name": "Guessing Animals Again",
+                    "type": "CV",
+                    "kaggle": "https://www.kaggle.com/competitions/guess-animals-again-aicc-round-11",
+                    "solution": "todo",
+                    "author": "Dauzhan Beketov",
+                    "authorAliases": ["Daujohn"],
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Tally",
+                    "type": "NLP",
+                    "kaggle": "https://www.kaggle.com/competitions/tally-aicc-round-11/",
+                    "solution": "todo",
+                    "author": "Antoni Ingorokva",
+                    "practiceStatus": "medium"
+                },
+                {
+                    "name": "Cosmos Cosmic Run",
+                    "type": "ML",
+                    "kaggle": "https://www.kaggle.com/competitions/cosmos-cosmic-run-aicc-round-11/",
+                    "solution": "todo",
+                    "author": "Henry Ho",
+                    "practiceStatus": "easy"
+                }
+            ]
+        },
+        {
             "id": 11,
             "month": "August",
             "year": "2026",
@@ -11,7 +76,8 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/what-i-want-and-what-i-dont-aicc-round-10",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-10/what-i-want-and-what-i-dont.ipynb",
-                    "author": "Beketov Dauzhan",
+                    "author": "Dauzhan Beketov",
+                    "authorAliases": ["Beketov Dauzhan"],
                     "practiceStatus": "medium"
                 },
                 {
@@ -19,7 +85,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/overview",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-10/inverse-translation.ipynb",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
@@ -27,7 +93,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/overview",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-10/moment-match.ipynb",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 }
             ]
@@ -43,7 +109,9 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/aicc-round-9-word-lookups",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-9/word-lookups.ipynb",
-                    "author": "Gior",
+                    "blog": "solutions/round-9/word-lookups",
+                    "author": "Georgios Tzovairis",
+                    "authorAliases": ["Gior"],
                     "practiceStatus": "medium"
                 },
                 {
@@ -51,15 +119,15 @@
                     "type": "ML",
                     "kaggle": "https://www.kaggle.com/competitions/buried-fault-aicc-round-9/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-9/buried-fault.ipynb",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
                     "name": "Shuffled",
-                    "type": "NLP & CV",
+                    "type": "CV & NLP",
                     "kaggle": "https://www.kaggle.com/competitions/shuffled-aicc-round-9/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-9/shuffled.ipynb",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "hard"
                 }
             ]
@@ -76,7 +144,7 @@
                     "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/1/view",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-8/dice-counting.ipynb",
                     "blog": "solutions/round-8/dice-counting",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "hard"
                 },
                 {
@@ -89,11 +157,11 @@
                 },
                 {
                     "name": "Archivist's Cards",
-                    "type": "NLP & CV",
+                    "type": "CV & NLP",
                     "nitroJudge": "https://judge.nitro-ai.org/competitions/aicc/aicc-round-8/3/view",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-8/archivists-cards.ipynb",
                     "blog": "solutions/round-8/archivists-cards",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "hard"
                 }
             ]
@@ -110,7 +178,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/polarity-aicc-round-7",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-7/polarity.ipynb",
                     "blog": "solutions/round-7/polarity",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
@@ -145,7 +213,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/classifier-classifier-aicc-round-6",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-6/classifier-classifier.ipynb",
                     "blog": "/solutions/round-6/classifier-classifier",
-                    "author": "Luvidi Alghari",
+                    "author": "Luvidi Pranawa Alghari",
+                    "authorAliases": ["Luvidi Alghari"],
                     "practiceStatus": "medium"
                 },
                 {
@@ -189,7 +258,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-5/lost-interpreter.ipynb",
                     "blog": "/solutions/round-5/lost-interpreter",
-                    "author": "Gior",
+                    "author": "Georgios Tzovairis",
+                    "authorAliases": ["Gior"],
                     "practiceStatus": "easy"
                 },
                 {
@@ -198,7 +268,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/visual-relations-aicc-round-5",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-5/visual-relations.ipynb",
                     "blog": "/solutions/round-5/visual-relations",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "hard"
                 }
             ]
@@ -215,7 +285,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/sticky-note-blindness-aicc-round-4",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-4/sticky-note-blindness.ipynb",
                     "blog": "/solutions/round-4/sticky-note-blindness",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "easy"
                 },
                 {
@@ -223,7 +293,7 @@
                     "type": "NLP",
                     "kaggle": "https://www.kaggle.com/competitions/alchemy-aicc-round-4",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-4/alchemy.ipynb",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
@@ -248,7 +318,8 @@
                     "type": "CV",
                     "kaggle": "https://www.kaggle.com/competitions/drawn-apart-aicc-round-3/overview",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-3/drawn-apart.ipynb",
-                    "author": "Walnit",
+                    "author": "Yue Heng Wong",
+                    "authorAliases": ["Walnit"],
                     "practiceStatus": "hard"
                 },
                 {
@@ -266,7 +337,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/mortys-time-paradox-aicc-round-3/overview",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-3/morty-time-paradox.ipynb",
                     "blog": "/solutions/round-3/mortys-time-paradox",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 }
             ]
@@ -292,7 +363,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/audio-demixing-aicc-round-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-2/audio-demixing.ipynb",
                     "blog": "/solutions/round-2/audio-demixing",
-                    "author": "Gior",
+                    "author": "Georgios Tzovairis",
+                    "authorAliases": ["Gior"],
                     "practiceStatus": "medium"
                 },
                 {
@@ -318,7 +390,7 @@
                     "kaggle": "https://www.kaggle.com/competitions/the-defected-nuts-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/defected-nuts.ipynb",
                     "blog": "/solutions/round-1/the-defected-nuts",
-                    "author": "Antony Ingorokva",
+                    "author": "Antoni Ingorokva",
                     "practiceStatus": "medium"
                 },
                 {
@@ -327,7 +399,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/autocorrect-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/autocorrect.ipynb",
                     "blog": "/solutions/round-1/autocorrect",
-                    "author": "Walnit",
+                    "author": "Yue Heng Wong",
+                    "authorAliases": ["Walnit"],
                     "practiceStatus": "medium"
                 },
                 {
@@ -335,7 +408,8 @@
                     "type": "Audio",
                     "kaggle": "https://www.kaggle.com/competitions/is-that-audio-aicc-round-1-2",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-1/is-that-audio.ipynb",
-                    "author": "Gior",
+                    "author": "Georgios Tzovairis",
+                    "authorAliases": ["Gior"],
                     "practiceStatus": "legacy"
                 }
             ]
@@ -352,7 +426,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/deceptive-points-aicc-round-0",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/deceptive-points.ipynb",
                     "blog": "/solutions/round-0/deceptive-points",
-                    "author": "Gior",
+                    "author": "Georgios Tzovairis",
+                    "authorAliases": ["Gior"],
                     "practiceStatus": "easy"
                 },
                 {
@@ -370,7 +445,8 @@
                     "kaggle": "https://www.kaggle.com/competitions/latent-model-classification-aicc-round-0/",
                     "solution": "https://github.com/AI-Community-Contest/solutions/blob/main/round-0/latent-model-classification.ipynb",
                     "blog": "/solutions/round-0/latent-model-classification",
-                    "author": "Gior",
+                    "author": "Georgios Tzovairis",
+                    "authorAliases": ["Gior"],
                     "practiceStatus": "medium"
                 }
             ]

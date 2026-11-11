@@ -2,13 +2,14 @@ import { useRef, useState } from 'react';
 import NotebookArticle from '@/components/NotebookArticle';
 import BlogAuthor from '@/components/BlogAuthor';
 import { parseNotebook, downloadBlogFile, type Notebook, type BlogPost } from '@/lib/blogs';
+import { capturePostHogEvent, posthogLogs } from '@/lib/posthogLogs';
 
 export default function AdminBlogs() {
   const [notebook, setNotebook] = useState<Notebook | null>(null);
   const [error, setError] = useState('');
   const uploadVersion = useRef(0);
-  const [fields, setFields] = useState({ title: '', slug: '', description: '', author: '', handle: '', flag: '' });
-  const valid = notebook && fields.title.trim() && fields.author.trim() && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(fields.slug);
+  const [fields, setFields] = useState({ title: '', slug: '', description: '', author: '', handle: '', flag: '', publishedAt: new Date().toLocaleDateString('en-CA') });
+  const valid = notebook && fields.title.trim() && fields.author.trim() && /^\d{4}-\d{2}-\d{2}$/.test(fields.publishedAt) && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(fields.slug);
   async function upload(file?: File) {
     if (!file) return;
     const version = ++uploadVersion.current;
@@ -27,6 +28,8 @@ export default function AdminBlogs() {
     if (!valid) return;
     const post: BlogPost = { ...fields, title: fields.title.trim(), author: fields.author.trim(), notebook };
     downloadBlogFile(`${fields.slug}.json`, JSON.stringify(post, null, 2));
+    capturePostHogEvent('blog_exported');
+    posthogLogs.info('blog_json_export_completed', { export_format: 'blog_json' });
   }
   return <div className="p-6 sm:p-10 text-gray-900 dark:text-gray-100">
     <h1 className="text-3xl font-bold">Blogs editor</h1>
@@ -35,6 +38,7 @@ export default function AdminBlogs() {
       <label className="grid gap-2 text-sm font-medium">Upload notebook (.ipynb)<input type="file" accept=".ipynb" onChange={e => { void upload(e.target.files?.[0]); e.target.value = ''; }} className="block w-full text-sm file:mr-4 file:rounded file:border-0 file:bg-purple-100 file:px-4 file:py-2 file:text-purple-900" /></label>
       {error && <p role="alert" className="text-red-600 dark:text-red-400">{error}</p>}
       <div className="grid sm:grid-cols-2 gap-4">
+        <label className="grid gap-2 text-sm font-medium">Publication date *<input type="date" required value={fields.publishedAt} onChange={e => setFields({ ...fields, publishedAt: e.target.value })} className="w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-2 font-normal" /></label>
         {([['title', 'Title *'], ['slug', 'URL name * (lowercase words with hyphens)'], ['author', 'Author name *'], ['handle', 'Handle'], ['flag', 'Country flag (optional)'], ['description', 'Short description']] as const).map(([key, label]) => <label key={key} className="grid gap-2 text-sm font-medium">{label}<input value={fields[key]} onChange={e => setFields({ ...fields, [key]: e.target.value })} className="w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-2 font-normal" /></label>)}
       </div>
       <p className="text-sm text-gray-500">{fields.slug ? `Page address: /blogs/${fields.slug}` : 'Fill in a title, URL name, and author to export.'}</p>

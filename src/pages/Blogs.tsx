@@ -4,8 +4,10 @@ import BlogLayout from '@/components/BlogLayout';
 import BlogLoading from '@/components/BlogLoading';
 import { ArrowUpRight, ArrowLeft, BookOpen, Download, ChevronDown } from 'lucide-react';
 import BlogAuthor from '@/components/BlogAuthor';
-import { loadBlog, downloadBlogFile, notebookText, type BlogPost } from '@/lib/blogs';
+import BlogDate from '@/components/BlogDate';
+import { loadBlog, notebookText, type BlogPost } from '@/lib/blogs';
 import posts from 'virtual:blog-index';
+import { recoverPageLoad } from '@/lib/recoverPageLoad';
 
 const loadRenderer = () => import('@/components/NotebookArticle');
 const NotebookArticle = lazy(loadRenderer);
@@ -38,7 +40,9 @@ export default function Blogs() {
   useEffect(() => {
     let active = true;
     setError(false);
-    if (summary) Promise.all([loadBlog(summary.file), loadRenderer()]).then(([data]) => { if (active) setLoadedPost(data); }).catch(() => { if (active) setError(true); });
+    if (summary) Promise.all([loadBlog(summary.file), loadRenderer()])
+      .then(([data]) => { if (active) setLoadedPost(data); })
+      .catch(error => { if (active && !recoverPageLoad(error)) setError(true); });
     return () => { active = false; };
   }, [summary]);
   const post = loadedPost?.slug === slug ? loadedPost : null;
@@ -51,9 +55,10 @@ export default function Blogs() {
     <BackToBlogs />
     <div className="flex flex-col sm:flex-row items-start justify-between gap-5 mt-3 mb-4">
       <h1 className="text-4xl font-bold text-gray-900 dark:text-white flex-1 tracking-tight leading-tight">{post.title}</h1>
-      <button onClick={() => downloadBlogFile(`${post.slug}.ipynb`, JSON.stringify(post.notebook, null, 2))} className="inline-flex min-h-11 shrink-0 items-center gap-2 px-5 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4">Download notebook<Download size={16} aria-hidden="true" /></button>
+      <a href={post.downloadUrl} download={`${post.slug}.ipynb`} className="inline-flex min-h-11 shrink-0 items-center gap-2 px-5 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-purple-600 focus-visible:outline-offset-4">Download notebook<Download size={16} aria-hidden="true" /></a>
     </div>
     <p className="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300 mb-4">{post.description}</p>
+    <div className="mb-3"><BlogDate date={post.publishedAt} /></div>
     <p className="flex flex-wrap items-center gap-2 text-sm">By <BlogAuthor {...post} /></p>
   </> : undefined;
   return <BlogLayout article={Boolean(slug)} articleHeader={articleHeader}>
@@ -71,7 +76,8 @@ export default function Blogs() {
                   {cover ? <img src={cover} alt={`Plot from ${item.title}`} className="w-full max-h-full object-contain rounded-md bg-white" loading="lazy" /> : <BookOpen className="w-20 h-20 text-purple-400" strokeWidth={1} aria-hidden="true" />}
                 </div>
                 <div className="p-6 sm:p-8 flex flex-col justify-center items-start">
-                  <h2 className="text-3xl font-semibold tracking-tight group-hover:text-purple-600 dark:group-hover:text-purple-400">{item.title}</h2>
+                  <BlogDate date={item.publishedAt} />
+                  <h2 className="mt-2 text-3xl font-semibold tracking-tight group-hover:text-purple-600 dark:group-hover:text-purple-400">{item.title}</h2>
                   <p className="mt-4 text-gray-600 dark:text-gray-300 leading-relaxed">{item.description}</p>
                   <div className="mt-6 text-sm text-gray-700 dark:text-gray-300"><BlogAuthor {...item} /></div>
                   <span className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-purple-600 dark:text-purple-400">Read article <ArrowUpRight size={16} aria-hidden="true" /></span>

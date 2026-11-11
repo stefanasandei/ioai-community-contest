@@ -4,6 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import contestsData from "@/data/contests.json";
+import beginnerContestsData from "@/data/beginner-contests.json";
+import beginnerRound0 from "@/leaderboard/beginner-round-0.json";
 import round0Banner from "@/leaderboard/banners/round-0.png";
 import round1Banner from "@/leaderboard/banners/round-1.png";
 import round2Banner from "@/leaderboard/banners/round-2.png";
@@ -15,6 +17,8 @@ import round7Banner from "@/leaderboard/banners/round-7.png";
 import round8Banner from "@/leaderboard/banners/round-8.png";
 import round9Banner from "@/leaderboard/banners/round-9.png";
 import round10Banner from "@/leaderboard/banners/round-10.jpg";
+import round11Banner from "@/leaderboard/banners/round-11.png";
+import round12Banner from "@/leaderboard/banners/round-12.png";
 import {
     formatLeaderboardScore,
     getContestLeaderboard,
@@ -33,17 +37,21 @@ const leaderboardBanners: Record<number, string> = {
     8: round8Banner,
     9: round9Banner,
     10: round10Banner,
+    11: round11Banner,
+    12: round12Banner,
 };
 
 const Leaderboard = () => {
     const { roundPath } = useParams<{ roundPath: string }>();
-    const roundParam = roundPath?.match(/^round-(\d+)$/)?.[1];
+    const roundMatch = roundPath?.match(/^(beginner-)?round-(\d+)$/);
+    const series = roundMatch?.[1] ? "beginner" : "main";
+    const roundParam = roundMatch?.[2];
     const roundNumber = Number(roundParam);
     const normalizedLeaderboard = Number.isInteger(roundNumber)
-        ? getContestLeaderboard(roundNumber)
+        ? getContestLeaderboard(roundNumber, "normalized", series)
         : undefined;
     const rawLeaderboard = Number.isInteger(roundNumber)
-        ? getContestLeaderboard(roundNumber, "raw")
+        ? getContestLeaderboard(roundNumber, "raw", series)
         : undefined;
     const [viewMode, setViewMode] = useState<LeaderboardMode>("normalized");
     const activeMode = viewMode === "raw" && rawLeaderboard ? "raw" : "normalized";
@@ -53,11 +61,19 @@ const Leaderboard = () => {
         leaderboard?.participants.filter(
             (participant) => participant.kind === "participant"
         ).length ?? 0;
-    const contest = contestsData.contests.find(
+    const contest = (series === "beginner" ? beginnerContestsData : contestsData).contests.find(
         (item) => item.id === roundNumber + 1
     );
-    const banner = leaderboardBanners[roundNumber];
-    const isCompactBanner = roundNumber === 8;
+    const banner = series === "main" ? leaderboardBanners[roundNumber] : "/banner.png";
+    const isCompactBanner = series === "main" && roundNumber === 8;
+    const contestsUrl = series === "beginner" ? "/contests?series=beginner" : "/contests";
+    const formatScore = series === "beginner"
+        ? (score: number | null) => score === null ? "—" : score.toFixed(0)
+        : formatLeaderboardScore;
+    const rankings = new Map(normalizedLeaderboard?.participants.map(participant => [
+        participant.username,
+        participant.rank ?? 1 + normalizedLeaderboard.participants.filter(other => other.kind === "participant" && other.totalPoints > participant.totalPoints).length,
+    ]));
 
     if (!normalizedLeaderboard || !leaderboard) {
         return (
@@ -74,7 +90,7 @@ const Leaderboard = () => {
                         We could not find leaderboard data for this contest.
                     </p>
                     <Link
-                        to="/contests"
+                        to={contestsUrl}
                         className="inline-flex items-center gap-2 rounded-lg bg-aicc-purple px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-aicc-purple-light"
                     >
                         <ArrowLeft className="h-4 w-4" />
@@ -92,7 +108,7 @@ const Leaderboard = () => {
 
             <main className="mx-auto max-w-7xl px-3 pb-16 pt-20 sm:px-4 sm:pt-24 md:px-6 md:pb-24">
                 <Link
-                    to="/contests"
+                    to={contestsUrl}
                     className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-aicc-purple dark:text-gray-400 dark:hover:text-aicc-purple-light"
                 >
                     <ArrowLeft className="h-4 w-4" />
@@ -109,11 +125,20 @@ const Leaderboard = () => {
                                 {contest?.title ?? "Round " + roundNumber}
                             </h1>
                             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
-                                Normalized scores represent performance on the private leaderboard, linearly scaled between the baseline and reference solution scores.
+                                {activeMode === "raw"
+                                    ? "Raw private leaderboard scores for each task. Participants remain ordered by their normalized total points."
+                                    : "Contest standings, ranked by total points across all tasks."}
                             </p>
-                            <span className="mt-5 inline-flex w-fit rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm font-medium text-gray-600 dark:border-white/10 dark:bg-white/5 dark:text-gray-300">
-                                {participantCount} participants
-                            </span>
+                            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3">
+                                {series === "beginner" && (
+                                    <a href={beginnerRound0.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-aicc-purple dark:text-aicc-purple-light hover:underline">
+                                        View on SprawdzAI <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                                    </a>
+                                )}
+                                <span className="inline-flex w-fit shrink-0 rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm font-medium text-gray-600 dark:border-white/10 dark:bg-white/5 dark:text-gray-300">
+                                    {participantCount} participants
+                                </span>
+                            </div>
                         </div>
 
                         <div
@@ -126,7 +151,7 @@ const Leaderboard = () => {
                             {banner ? (
                                 <img
                                     src={banner}
-                                    alt={`AICC Round ${roundNumber} banner`}
+                                    alt={`AICC ${contest?.title ?? "Round " + roundNumber} banner`}
                                     className="block h-full w-full object-contain"
                                 />
                             ) : (
@@ -176,11 +201,11 @@ const Leaderboard = () => {
                             className={`${activeMode === "raw" ? "min-w-[900px]" : "min-w-[1100px]"} w-full table-fixed border-collapse text-left`}
                         >
                             <colgroup>
-                                <col className={activeMode === "raw" ? "w-[25%]" : "w-[22%]"} />
+                                <col style={{ width: activeMode === "raw" ? `${100 / (leaderboard.tasks.length + 1)}%` : "22%" }} />
                                 {leaderboard.tasks.map((task) => (
                                     <col
                                         key={task.name}
-                                        className={activeMode === "raw" ? "w-[25%]" : "w-[18%]"}
+                                        style={{ width: activeMode === "raw" ? `${100 / (leaderboard.tasks.length + 1)}%` : `${54 / leaderboard.tasks.length}%` }}
                                     />
                                 ))}
                                 {activeMode === "normalized" && <col className="w-[24%]" />}
@@ -217,7 +242,7 @@ const Leaderboard = () => {
                             </thead>
                             <tbody className="divide-y divide-gray-100 dark:divide-white/5">
                                 {leaderboard.participants.map((participant, index) => {
-                                    const participantRank =
+                                    const participantRank = rankings.get(participant.username) ??
                                         leaderboard.participants
                                             .slice(0, index)
                                             .filter(({ kind }) => kind === "participant")
@@ -251,7 +276,7 @@ const Leaderboard = () => {
                                                     {isReference ? "R" : isBaseline ? "B" : participantRank}
                                                 </span>
                                                 <span className={`truncate text-sm font-semibold ${isReference ? "text-pink-800 dark:text-pink-100" : "text-gray-900 dark:text-white"}`}>
-                                                    {participant.username}
+                                                    {isReference && series === "main" && roundNumber === 12 ? "100-point benchmark" : participant.username}
                                                 </span>
                                             </div>
                                         </td>
@@ -265,7 +290,7 @@ const Leaderboard = () => {
                                                     {score === null ? (
                                                         <span className="font-semibold text-gray-500 dark:text-gray-400">—</span>
                                                     ) : (
-                                                        formatLeaderboardScore(score)
+                                                        formatScore(score)
                                                     )}
                                                 </td>
                                             );
@@ -278,7 +303,7 @@ const Leaderboard = () => {
                                                         ? "border-gray-200 bg-gray-100/70 text-gray-600 dark:border-white/10 dark:bg-white/[0.08] dark:text-gray-300"
                                                         : "border-aicc-purple/10 bg-aicc-purple/[0.03] text-aicc-purple dark:border-aicc-purple/20 dark:bg-aicc-purple/[0.08] dark:text-aicc-purple-light"
                                             }`}>
-                                                {formatLeaderboardScore(participant.totalPoints)}
+                                                {formatScore(participant.totalPoints)}
                                             </td>
                                         )}
                                     </tr>
@@ -291,7 +316,7 @@ const Leaderboard = () => {
 
                 <div className="space-y-3 md:hidden">
                     {leaderboard.participants.map((participant, index) => {
-                        const participantRank =
+                        const participantRank = rankings.get(participant.username) ??
                             leaderboard.participants
                                 .slice(0, index)
                                 .filter(({ kind }) => kind === "participant")
@@ -320,7 +345,7 @@ const Leaderboard = () => {
                                             {isReference ? "R" : isBaseline ? "B" : participantRank}
                                         </span>
                                         <span className={`truncate text-sm font-bold ${isReference ? "text-pink-800 dark:text-pink-100" : "text-gray-900 dark:text-white"}`}>
-                                            {participant.username}
+                                            {isReference && series === "main" && roundNumber === 12 ? "100-point benchmark" : participant.username}
                                         </span>
                                     </div>
                                     {activeMode === "normalized" && (
@@ -329,7 +354,7 @@ const Leaderboard = () => {
                                                 Total
                                             </p>
                                             <p className="text-sm font-bold tabular-nums text-aicc-purple dark:text-aicc-purple-light">
-                                                {formatLeaderboardScore(participant.totalPoints)}
+                                                {formatScore(participant.totalPoints)}
                                             </p>
                                         </div>
                                     )}
@@ -356,7 +381,7 @@ const Leaderboard = () => {
                                                     {score === null ? (
                                                         <span className="font-bold text-gray-500 dark:text-gray-400">—</span>
                                                     ) : (
-                                                        formatLeaderboardScore(score)
+                                                        formatScore(score)
                                                     )}
                                                 </span>
                                             </div>

@@ -13,6 +13,7 @@ import {
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { capturePostHogEvent } from '@/lib/posthogLogs';
 import type { Resource, ResourceType, Difficulty } from '@/data/resources';
 
 const typeConfig: Record<
@@ -59,6 +60,11 @@ export const ResourceCard = ({ resource, className }: ResourceCardProps) => {
               href={resource.url}
               target="_blank"
               rel="noreferrer"
+              onClick={() => capturePostHogEvent('resource_opened', {
+                resource_type: resource.type,
+                difficulty: resource.difficulty ?? 'unspecified',
+                is_featured: resource.featured === true,
+              })}
               className="group/link inline-flex items-start gap-2 "
             >
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover/link:text-aicc-purple dark:group-hover/link:text-aicc-purple-light transition-colors max-w-[14rem]">

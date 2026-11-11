@@ -47,7 +47,7 @@ const ResourceSyllabus = () => {
       window.scrollTo({ top: saved, left: 0, behavior: 'auto' });
       window.history.replaceState(null, '');
     }
-  }, [sectionId, subsectionId]);
+  }, [sectionId, subsectionId, location.state]);
 
   // Hash-based scroll from sidebar links
   useLayoutEffect(() => {

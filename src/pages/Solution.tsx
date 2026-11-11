@@ -2,10 +2,13 @@ import { useParams } from 'react-router-dom';
 import { ExternalLink, Github, Calendar, User, CheckCircle2, AlertTriangle, Flame, XCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
+import type { MDXProps } from 'mdx/types';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { mdxComponents } from '@/components/solutions';
 import contestsData from '@/data/contests.json';
+import { capturePostHogEvent } from '@/lib/posthogLogs';
+import { recoverPageLoad } from '@/lib/recoverPageLoad';
 import type { PracticeStatus, ContestsData, Task } from '@/data/types';
 
 const DATA = contestsData as ContestsData;
@@ -24,9 +27,10 @@ const Solution = () => {
         round: string;
         taskSlug: string;
     }>();
-    const [MDXContent, setMDXContent] = useState<React.ComponentType | null>(
+    const [MDXContent, setMDXContent] = useState<React.ComponentType<MDXProps> | null>(
         null
     );
+    const [articleStatus, setArticleStatus] = useState<'loading' | 'ready' | 'unavailable' | 'error'>('loading');
 
     const getSlug = (name: string) =>
         name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').trim();
@@ -57,21 +61,32 @@ const Solution = () => {
     };
 
     const result = findTask();
+    const blogPath = result?.task.blog;
 
     useEffect(() => {
+        let active = true;
+        setMDXContent(null);
+        if (!blogPath || !round || !taskSlug) {
+            setArticleStatus('unavailable');
+            return;
+        }
+        setArticleStatus('loading');
         const loadMDX = async () => {
-            if (!round || !taskSlug) return;
             try {
                 const mdxModule = await import(
                     `@/solutions/${round}/${taskSlug}.mdx`
                 );
-                setMDXContent(() => mdxModule.default);
-            } catch (err) {
-                // Silently fail if MDX doesn't exist
+                if (active) {
+                    setMDXContent(() => mdxModule.default);
+                    setArticleStatus('ready');
+                }
+            } catch (error) {
+                if (active && !recoverPageLoad(error)) setArticleStatus('error');
             }
         };
-        loadMDX();
-    }, [round, taskSlug]);
+        void loadMDX();
+        return () => { active = false; };
+    }, [round, taskSlug, blogPath]);
 
     if (!result) {
         return (
@@ -91,6 +106,7 @@ const Solution = () => {
     }
 
     const { task, contest } = result;
+    const hasNotebook = Boolean(task.solution && task.solution !== 'todo');
     const competitionHref = task.source ?? task.nitroJudge ?? task.kaggle!;
     const competitionLabel = task.source
         ? "Kilonova"
@@ -113,16 +129,21 @@ const Solution = () => {
                                 href={competitionHref}
                                 target="_blank"
                                 rel="noreferrer"
+                                onClick={() => capturePostHogEvent('task_competition_opened', {
+                                    task_type: task.type,
+                                    source: task.source ? 'kilonova' : task.nitroJudge ? 'nitro_judge' : 'kaggle',
+                                })}
                                 className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-colors"
                             >
                                 {competitionLabel}
                                 <ExternalLink className="w-4 h-4" />
                             </a>
-                            {task.solution !== "todo" && (
+                            {hasNotebook && (
                                 <a
                                     href={task.solution}
                                     target="_blank"
                                     rel="noreferrer"
+                                    onClick={() => capturePostHogEvent('task_solution_opened', { solution_type: 'notebook' })}
                                     className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                                 >
                                     <Github className="w-4 h-4" />
@@ -172,23 +193,27 @@ const Solution = () => {
                             </MDXProvider>
                         </div>
                     </article>
+                ) : articleStatus === 'loading' ? (
+                    <p role="status" className="py-12 text-center text-gray-600 dark:text-gray-400">Loading solution…</p>
                 ) : (
                     <div className="text-center py-12">
                         <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                            Solution explanation not available, but
+                            {articleStatus === 'error' ? 'This solution could not load' : task.solution === 'todo' ? 'Solution coming soon' : 'Solution explanation not available'}
                         </h3>
                         <p className="text-gray-600 dark:text-gray-400 mb-6">
-                            We have the solution notebook on GitHub
+                            {articleStatus === 'error' ? 'Check your connection and reload to try again.' : hasNotebook ? 'You can read the solution in the notebook.' : 'A solution has not been published yet.'}
                         </p>
-                        <a
+                        {articleStatus === 'error' && <button onClick={() => window.location.reload()} className="mr-3 rounded-lg bg-purple-600 px-5 py-2 font-medium text-white hover:bg-purple-700">Reload page</button>}
+                        {hasNotebook && <a
                             href={task.solution}
                             target="_blank"
                             rel="noreferrer"
+                            onClick={() => capturePostHogEvent('task_solution_opened', { solution_type: 'notebook' })}
                             className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                         >
                             <Github className="w-4 h-4" />
                             View notebook
-                        </a>
+                        </a>}
                     </div>
                 )}
             </div>

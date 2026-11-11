@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { capturePostHogEvent } from "@/lib/posthogLogs";
 import type { ParsedSheetTask } from "@/data/sheet/sheetUtils";
 import {
   Popover,
@@ -263,6 +264,7 @@ export const SheetTaskCard = ({ task, expanded = false }: SheetTaskCardProps) =>
               href={link}
               target="_blank"
               rel="noreferrer"
+              onClick={() => capturePostHogEvent("sheet_task_problem_opened", { has_solution: solutions.length > 0 })}
               className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-purple-600 bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
             >
               View Problem
@@ -286,6 +288,7 @@ export const SheetTaskCard = ({ task, expanded = false }: SheetTaskCardProps) =>
               href={solutions[0].url}
               target="_blank"
               rel="noreferrer"
+              onClick={() => capturePostHogEvent("sheet_task_solution_opened", { solution_count: 1 })}
               className={SOLUTION_BTN_CLASS}
             >
               <Github className="w-4 h-4" />
@@ -311,6 +314,7 @@ export const SheetTaskCard = ({ task, expanded = false }: SheetTaskCardProps) =>
                       href={sol.url}
                       target="_blank"
                       rel="noreferrer"
+                      onClick={() => capturePostHogEvent("sheet_task_solution_opened", { solution_count: solutions.length })}
                       className="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
                     >
                       <Github className="w-3.5 h-3.5 text-gray-700 dark:text-gray-300 shrink-0" />
