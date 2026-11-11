@@ -1,0 +1,30 @@
+# Python basics
+
+Python is the working language for most IOAI tasks. You should be comfortable reading unfamiliar code, writing small functions, and transforming data without getting lost in syntax.
+
+## What to know
+
+- **Values and types:** numbers, strings, booleans, lists, tuples, dictionaries, and sets.
+- **Control flow:** `if`, `for`, `while`, and comprehensions.
+- **Functions:** parameters, return values, default arguments, and local scope.
+- **Data handling:** indexing, slicing, iteration, and handling missing or invalid input.
+
+## A small example
+
+```python
+def accuracy(predictions, labels):
+    if len(predictions) != len(labels) or not labels:
+        raise ValueError("Expected equally sized, non-empty inputs")
+    correct = sum(prediction == label for prediction, label in zip(predictions, labels))
+    return correct / len(labels)
+```
+
+This function checks the input, compares each prediction with its label, and returns the fraction that match. Try rewriting it with an explicit loop, then explain why the length check matters.
+
+## Check yourself
+
+1. Can you write a function that counts each class label in a list?
+2. Can you distinguish a copy of a list from another reference to the same list?
+3. Can you explain what `zip` does when its inputs have different lengths?
+
+Once these feel natural, continue with NumPy and Pandas for data handling.

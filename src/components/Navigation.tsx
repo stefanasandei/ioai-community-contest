@@ -59,6 +59,7 @@ const primaryNavItems: NavItem[] = [
 const moreNavItems: DropdownItem[] = [
   { label: 'Problem Bank', path: '/tasks', icon: ListChecks, description: 'Browse and practice problems from other olympiads' },
   { label: 'Roadmap', path: '/roadmap', icon: Map, description: 'A guided path through machine learning' },
+  { label: 'Theory', path: '/theory', icon: BookOpen, description: 'Study the official IOAI 2027 syllabus alongside the roadmap' },
   { label: 'Blogs', path: '/blogs', icon: BookOpen, description: 'Ideas from the AICC community' },
 ];
 
