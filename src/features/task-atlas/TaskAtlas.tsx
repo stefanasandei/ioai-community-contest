@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight, ChevronDown, Crosshair, Minus, Plus, Search, X } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import SheetTaskCard from '@/components/SheetTaskCard';
-import { tasks, colors, clusters, fineClusters, type MapTask } from './data';
+import { tasks, colors, clusters, fineClusters, bankTaskCount, type MapTask } from './data';
 import { MapCanvas } from './MapCanvas';
 import { animateAtlasEntry, closeAtlas } from './atlasTransition';
 import './task-atlas.css';
@@ -124,7 +124,7 @@ export default function TaskAtlas() {
             const next = Math.max(0, Math.min(buttons.length - 1, current + (event.key === 'ArrowDown' ? 1 : -1)));
             buttons[next]?.focus();
           }}>
-            {normalized && !results.length && <div className="cluster-empty"><p>No matching tasks. Try another name or contest.</p>{active !== null && <button type="button" onClick={() => { setActive(null); setFocusedFine(null); setSelected(null); }}>Search all clusters</button>}</div>}
+            {normalized && !results.length && <div className="cluster-empty"><p>No matching tasks in this map.</p><Link to={`/tasks?q=${encodeURIComponent(query)}`} className="mt-3 inline-block text-purple-600 dark:text-purple-400 underline">Search all {bankTaskCount} problems</Link>{active !== null && <button type="button" onClick={() => { setActive(null); setFocusedFine(null); setSelected(null); }}>Search all clusters</button>}</div>}
             {!normalized ? clusters.map((topic, index) => <div key={topic.id}>
               <button type="button" className="cluster-result" aria-expanded={expandedTopic === topic.id} aria-controls={`topic-sections-${topic.id}`} onFocus={() => setResultIndex(index)} onClick={() => chooseTopic(topic.id)}><span className="cluster-dot" style={{ backgroundColor: colors[topic.id] }} /><span><strong>{topic.name}</strong><small>{topic.tasks.length} problems</small></span><ChevronDown size={14} aria-hidden="true" style={{ transform: expandedTopic === topic.id ? 'rotate(180deg)' : undefined }} /></button>
               {expandedTopic === topic.id && <div id={`topic-sections-${topic.id}`} className="cluster-topic-sections">

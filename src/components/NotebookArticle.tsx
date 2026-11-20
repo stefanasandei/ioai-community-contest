@@ -20,6 +20,8 @@ function Markdown({ text, cell }: { text: string; cell?: NotebookCell }) {
   return <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath, remarkMathDisplayDollars]} rehypePlugins={[rehypeRaw, [rehypeSanitize, schema], rehypeKatex]}
     urlTransform={(url, key) => {
       if (key === 'src' && url.startsWith('attachment:')) {
+        const asset = cell?.attachmentUrls?.[url.slice(11)];
+        if (asset) return asset;
         const bundle = cell?.attachments?.[url.slice(11)];
         const mime = imageTypes.find(type => bundle?.[type]);
         return mime ? `data:${mime};base64,${notebookText(bundle[mime])}` : '';
@@ -30,6 +32,8 @@ function Markdown({ text, cell }: { text: string; cell?: NotebookCell }) {
   >{text}</ReactMarkdown>;
 }
 function Output({ output }: { output: NotebookOutput }) {
+  const imageUrl = imageTypes.map(type => output.imageUrls?.[type]).find(Boolean);
+  if (imageUrl) return <figure><img src={imageUrl} alt="Saved notebook plot" loading="lazy" decoding="async" /></figure>;
   const data = output.data;
   const mime = imageTypes.find(type => data?.[type]);
   if (mime) return <figure><img src={`data:${mime};base64,${notebookText(data[mime])}`} alt="Saved notebook plot" loading="lazy" /></figure>;

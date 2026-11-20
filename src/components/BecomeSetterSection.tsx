@@ -10,6 +10,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { capturePostHogEvent } from '@/lib/posthogLogs';
 
 const BecomeSetterSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -224,6 +225,7 @@ const BecomeSetterSection = () => {
                   href="https://discord.gg/7GfxrqRreY"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => capturePostHogEvent('setter_discord_opened')}
                   className="btn-gradient w-full inline-flex items-center justify-center gap-2 px-5 py-3 font-medium rounded-lg mb-4"
                 >
                   <MessageCircle className="w-5 h-5" />

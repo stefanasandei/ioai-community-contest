@@ -22,7 +22,7 @@ VAE is a type of neural network used for learning compressed representations of 
 
 Instead of mappign an input directly to a single encoded latent (like standard AE), VAE learns a distribution ($\mu$ and $\sigma$) over the latent space. It then samples from this distribution to generate new data.
 
-![VAE](vae.png)
+![VAE](/assets/vae.jpg)
 
 The reparameterization trick is used so we can backpropagate through sampling. Instead of directly sampling:
 
@@ -40,7 +40,7 @@ scVI (Single-cell Variational Inference) and its semi-supervised counterpart scA
 
 scANVI models the distribution of gene counts using a Variational Autoencoder. By explicitly passing the `batch_key` into the model, scANVI learns to disentangle the biological cell type signal from the technical batch noise in its latent space. When you visualize latents produced by scANVI, the batch effects disappear, the clusters map correctly to the 12 cell types. 
 
-![scANVI](scanvi.png)
+![scANVI](/assets/scanvi.png)
 
 This scores roughly 0.39 on the leaderboard. More about [scANVI](https://link.springer.com/article/10.15252/msb.20209620)
 

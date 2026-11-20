@@ -5,6 +5,7 @@ const normalizeUrl = (url: string) => url.trim()
   .replace(/[?#].*$/, '').replace(/\/overview\/?$/, '').replace(/\/$/, '')
   .replace('www.kaggle.com', 'kaggle.com');
 const bankTasks = getSheetTasks();
+export const bankTaskCount = bankTasks.length;
 const bankByUrl = new Map<string, typeof bankTasks>();
 for (const task of bankTasks) {
   for (const url of task.link?.match(/https?:\/\/\S+/g) ?? []) {

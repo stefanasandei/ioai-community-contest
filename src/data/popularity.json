@@ -2,163 +2,325 @@
   {
     "task": "Nuclei Reconstruction",
     "round": 6,
-    "popularity": 100,
-    "confidence": "high"
-  },
-  {
-    "task": "Polarity",
-    "round": 7,
-    "popularity": 94.1,
-    "confidence": "med"
-  },
-  {
-    "task": "Find Brain Tumors",
-    "round": 0,
-    "popularity": 93.3,
-    "confidence": "high"
-  },
-  {
-    "task": "Classifier Classifier",
-    "round": 6,
-    "popularity": 93.2,
-    "confidence": "high"
+    "slug": "nuclei-reconstruction-aicc-round-6",
+    "popularity": 100.0,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Deceptive Points",
     "round": 0,
-    "popularity": 91.4,
-    "confidence": "high"
+    "slug": "deceptive-points-aicc-round-0",
+    "popularity": 97.2,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
-    "task": "Oriented Ship",
+    "task": "Classifier Classifier",
+    "round": 6,
+    "slug": "classifier-classifier-aicc-round-6",
+    "popularity": 94.3,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Find Brain Tumors",
+    "round": 0,
+    "slug": "aicc-round-0-brain-tumor",
+    "popularity": 93.1,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Polarity",
     "round": 7,
-    "popularity": 78,
-    "confidence": "med"
+    "slug": "polarity-aicc-round-7",
+    "popularity": 90.8,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Alakazam",
+    "round": 12,
+    "slug": "alakazam-aicc-round-12",
+    "popularity": 82.3,
+    "confidence": "provisional",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Sticky Note Blindness",
     "round": 4,
-    "popularity": 74.2,
-    "confidence": "high"
-  },
-  {
-    "task": "Alchemy",
-    "round": 4,
-    "popularity": 71.6,
-    "confidence": "high"
-  },
-  {
-    "task": "Scientific Facts",
-    "round": 7,
-    "popularity": 68.4,
-    "confidence": "med"
+    "slug": "sticky-note-blindness-aicc-round-4",
+    "popularity": 78.6,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Latent Model Classification",
     "round": 0,
-    "popularity": 65.2,
-    "confidence": "high"
+    "slug": "latent-model-classification-aicc-round-0",
+    "popularity": 74.4,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Oriented Ship",
+    "round": 7,
+    "slug": "oriented-ship-aicc-round-7",
+    "popularity": 73.9,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Moonlight At Midday",
+    "round": 12,
+    "slug": "moonlight-at-midday-aicc-round-12",
+    "popularity": 72.0,
+    "confidence": "provisional",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Alchemy",
+    "round": 4,
+    "slug": "alchemy-aicc-round-4",
+    "popularity": 70.0,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Put the Sounds Back Together",
+    "round": 12,
+    "slug": "put-the-sounds-back-together-aicc-round-12",
+    "popularity": 67.8,
+    "confidence": "provisional",
+    "asOf": "2026-11-03"
   },
   {
     "task": "The Defected Nuts",
     "round": 1,
-    "popularity": 63.5,
-    "confidence": "high"
-  },
-  {
-    "task": "What I Want and What I Don't",
-    "round": 10,
-    "popularity": 62,
-    "confidence": "provisional"
-  },
-  {
-    "task": "Moment Match",
-    "round": 10,
-    "popularity": 56.8,
-    "confidence": "provisional"
+    "slug": "the-defected-nuts-aicc-round-1-2",
+    "popularity": 61.5,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Lost Interpreter",
     "round": 5,
-    "popularity": 56.3,
-    "confidence": "high"
+    "slug": "lost-interpreter-aicc-round-5",
+    "popularity": 56.7,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
-    "task": "Buried Fault",
-    "round": 9,
-    "popularity": 51.9,
-    "confidence": "med"
+    "task": "Face Matching",
+    "round": 2,
+    "slug": "face-matching-aicc-round-2",
+    "popularity": 55.5,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Watermark Removal",
     "round": 5,
-    "popularity": 51.5,
-    "confidence": "high"
+    "slug": "watermark-removal-aicc-round-5",
+    "popularity": 54.8,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
-    "task": "Autocorrect",
-    "round": 1,
-    "popularity": 50,
-    "confidence": "high"
+    "task": "Scientific Facts",
+    "round": 7,
+    "slug": "scientific-facts-aicc-round-7",
+    "popularity": 53.8,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
-    "task": "Word Lookups",
+    "task": "Guessing Animals Again",
+    "round": 11,
+    "slug": "guess-animals-again-aicc-round-11",
+    "popularity": 53.1,
+    "confidence": "medium",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Morty's Time Paradox",
+    "round": 3,
+    "slug": "mortys-time-paradox-aicc-round-3",
+    "popularity": 53.0,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Buried Fault",
     "round": 9,
-    "popularity": 45.9,
-    "confidence": "med"
-  },
-  {
-    "task": "Inverse Translation",
-    "round": 10,
-    "popularity": 44.5,
-    "confidence": "provisional"
+    "slug": "buried-fault-aicc-round-9",
+    "popularity": 47.2,
+    "confidence": "medium",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Essay Gap",
     "round": 2,
-    "popularity": 32.6,
-    "confidence": "high"
+    "slug": "essay-gap-aicc-round-2",
+    "popularity": 47.0,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Autocorrect",
+    "round": 1,
+    "slug": "autocorrect-aicc-round-1-2",
+    "popularity": 45.7,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Sound of Nature",
     "round": 3,
-    "popularity": 30.7,
-    "confidence": "high"
+    "slug": "sound-of-nature-aicc-round-3",
+    "popularity": 41.1,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Extreme Condensation",
     "round": 4,
-    "popularity": 29.9,
-    "confidence": "high"
+    "slug": "extreme-condensation-aicc-round-4",
+    "popularity": 39.1,
+    "confidence": "high",
+    "asOf": "2026-11-03"
   },
   {
-    "task": "Shuffled",
+    "task": "Word Lookups",
     "round": 9,
-    "popularity": 27.1,
-    "confidence": "med"
+    "slug": "aicc-round-9-word-lookups",
+    "popularity": 35.8,
+    "confidence": "medium",
+    "asOf": "2026-11-03"
   },
   {
-    "task": "Massive Problem",
-    "round": 6,
-    "popularity": 25.1,
-    "confidence": "high"
+    "task": "Cosmos Cosmic Run",
+    "round": 11,
+    "slug": "cosmos-cosmic-run-aicc-round-11",
+    "popularity": 32.3,
+    "confidence": "medium",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "What I Want and What I Don't",
+    "round": 10,
+    "slug": "what-i-want-and-what-i-dont-aicc-round-10",
+    "popularity": 32.3,
+    "confidence": "medium",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Visual Relations",
     "round": 5,
-    "popularity": 20.6,
-    "confidence": "high"
+    "slug": "visual-relations-aicc-round-5",
+    "popularity": 29.9,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Moment Match",
+    "round": 10,
+    "slug": "moment-match-aicc-round-10",
+    "popularity": 25.8,
+    "confidence": "medium",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Massive Problem",
+    "round": 6,
+    "slug": "massive-problem-aicc-round-6",
+    "popularity": 25.1,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Tally",
+    "round": 11,
+    "slug": "tally-aicc-round-11",
+    "popularity": 24.9,
+    "confidence": "medium",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Shuffled",
+    "round": 9,
+    "slug": "shuffled-aicc-round-9",
+    "popularity": 23.2,
+    "confidence": "medium",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Audio Demixing",
     "round": 2,
-    "popularity": 12,
-    "confidence": "high"
+    "slug": "audio-demixing-aicc-round-2",
+    "popularity": 20.7,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Inverse Translation",
+    "round": 10,
+    "slug": "inverse-translation-aicc-round-10",
+    "popularity": 16.3,
+    "confidence": "medium",
+    "asOf": "2026-11-03"
   },
   {
     "task": "Is that audio?",
     "round": 1,
-    "popularity": 11.1,
-    "confidence": "high"
+    "slug": "is-that-audio-aicc-round-1-2",
+    "popularity": 9.2,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Drawn Apart",
+    "round": 3,
+    "slug": "drawn-apart-aicc-round-3",
+    "popularity": 9.1,
+    "confidence": "high",
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Restoring Image Size",
+    "round": 0,
+    "series": "beginner",
+    "popularity": 64.3,
+    "confidence": "provisional",
+    "participants": 9,
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Piano Chord Challenge",
+    "round": 0,
+    "series": "beginner",
+    "popularity": 100.0,
+    "confidence": "provisional",
+    "participants": 14,
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Who Are the Impostors",
+    "round": 0,
+    "series": "beginner",
+    "popularity": 78.6,
+    "confidence": "provisional",
+    "participants": 11,
+    "asOf": "2026-11-03"
+  },
+  {
+    "task": "Grid Puzzle Reconstruction",
+    "round": 0,
+    "series": "beginner",
+    "popularity": 28.6,
+    "confidence": "provisional",
+    "participants": 4,
+    "asOf": "2026-11-03"
   }
 ]

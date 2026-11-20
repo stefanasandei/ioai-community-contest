@@ -578,7 +578,7 @@ const AdminResources = () => {
                     <div className="space-y-2">
                       <Label className="text-gray-700 dark:text-gray-300">Icon</Label>
                       <Select
-                        value={selectedItem.icon ?? 'BookOpen'}
+                        value={typeof selectedItem.icon === 'string' ? selectedItem.icon : 'BookOpen'}
                         onValueChange={(value) => updateField('icon', value)}
                       >
                         <SelectTrigger className={inputCls}>
@@ -598,7 +598,7 @@ const AdminResources = () => {
                     <div className="space-y-2">
                       <Label className="text-gray-700 dark:text-gray-300">Accent</Label>
                       <Select
-                        value={selectedItem.accent ?? 'purple'}
+                        value={typeof selectedItem.accent === 'string' ? selectedItem.accent : 'purple'}
                         onValueChange={(value) => updateField('accent', value)}
                       >
                         <SelectTrigger className={inputCls}>

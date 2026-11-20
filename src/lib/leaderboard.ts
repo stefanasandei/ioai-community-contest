@@ -1,8 +1,9 @@
 import kaggleCsv from "@/leaderboard/leaderboard_kaggle.csv?raw";
 import nitroCsv from "@/leaderboard/leaderboard_nitro.csv?raw";
 import rawCsv from "@/leaderboard/leaderboard_raw.csv?raw";
+import beginnerRound0 from "@/leaderboard/beginner-round-0.json";
 
-export type LeaderboardPlatform = "Kaggle" | "Nitro Judge";
+export type LeaderboardPlatform = "Kaggle" | "Nitro Judge" | "SprawdzAI";
 export type LeaderboardMode = "normalized" | "raw";
 export type LeaderboardParticipantKind =
     | "participant"
@@ -17,6 +18,7 @@ export interface LeaderboardTask {
 }
 
 export interface LeaderboardParticipant {
+    rank?: number;
     username: string;
     scores: (number | null)[];
     totalPoints: number;
@@ -225,11 +227,17 @@ export const rawContestLeaderboards: ContestLeaderboard[] = parseLeaderboardCsv(
 
 export const getContestLeaderboard = (
     roundNumber: number,
-    mode: LeaderboardMode = "normalized"
-) =>
-    (mode === "raw" ? rawContestLeaderboards : contestLeaderboards).find(
-        (leaderboard) => leaderboard.roundNumber === roundNumber
-    );
+    mode: LeaderboardMode = "normalized",
+    series: "main" | "beginner" = "main"
+) => {
+    if (series === "beginner") {
+        return mode === "normalized" && beginnerRound0.roundNumber === roundNumber
+            ? beginnerRound0 as ContestLeaderboard
+            : undefined;
+    }
+    const leaderboards = mode === "raw" ? rawContestLeaderboards : contestLeaderboards;
+    return leaderboards.find(leaderboard => leaderboard.roundNumber === roundNumber);
+};
 
 export const formatLeaderboardScore = (score: number | null) =>
     score === null ? "—" : score.toFixed(4);

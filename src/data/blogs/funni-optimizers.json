@@ -1,5 +1,6 @@
 {
   "slug": "funni-optimizers",
+  "publishedAt": "2026-09-07",
   "title": "Funni Optimizers",
   "description": "An exploration of L-BFGS, Adam, weight decay, and the mathematics behind optimizers.",
   "author": "Wang Jiayu",

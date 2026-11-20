@@ -20,7 +20,7 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    name: "Beketov Dauzhan",
+    name: "Dauzhan Beketov",
     quote:
       "Great platform with high-quality problems. Thank you AICC for those problems; they used several topics.",
     achievement: "Gold Medal",

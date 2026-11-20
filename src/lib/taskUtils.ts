@@ -5,6 +5,7 @@ export const isTaskMatch = (task: Task, query: string) => {
     return (
         task.name.toLowerCase().includes(q) ||
         task.type.toLowerCase().includes(q) ||
-        (task.author?.toLowerCase().includes(q) ?? false)
+        (task.author?.toLowerCase().includes(q) ?? false) ||
+        (task.authorAliases?.some(alias => alias.toLowerCase().includes(q)) ?? false)
     );
 };
