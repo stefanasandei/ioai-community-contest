@@ -32,6 +32,7 @@ const Blogs = lazy(() => import('./pages/Blogs'));
 const AdminBlogs = lazy(() => import('./pages/AdminBlogs'));
 const TaskAtlas = lazy(() => import('./features/task-atlas/TaskAtlas'));
 const Theory = lazy(() => import('./pages/Theory'));
+const TheoryVideo = lazy(() => import('./pages/TheoryVideo'));
 const Ratings = import.meta.env.DEV ? lazy(() => import('./pages/Ratings')) : null;
 
 const ScrollToTop = () => {
@@ -67,6 +68,7 @@ const PageRoutes = () => {
           <Route path="/resources/syllabus/:sectionId" element={<ResourceSyllabus />} />
           <Route path="/resources/syllabus/:sectionId/:subsectionId" element={<ResourceSyllabus />} />
           <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/theory/video" element={<Suspense fallback={<BlogLoading page />}><TheoryVideo /></Suspense>} />
           <Route path="/theory" element={<Suspense fallback={<BlogLoading page />}><Theory /></Suspense>} />
           <Route path="/theory/:sectionId/:topicId" element={<Suspense fallback={<BlogLoading page />}><Theory /></Suspense>} />
           <Route path="/admin" element={<AdminLogin />} />

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ComponentType, type CSSProperties } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { MDXProvider } from '@mdx-js/react';
-import { ArrowLeft, ArrowRight, BookOpen, Check, CheckCircle2, ChevronDown, ExternalLink, FileText, ListChecks } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Check, CheckCircle2, ChevronDown, ExternalLink, FileText, ListChecks, Youtube } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { mdxComponents } from '@/components/solutions';
@@ -118,8 +118,28 @@ function Index({ done, toggle }: ReturnType<typeof useProgress>) {
   </>;
 }
 
+function getYouTubeVideoId(value: string): string | null {
+  try {
+    const url = new URL(value);
+    const host = url.hostname.replace(/^www\\./, '').replace(/^m\\./, '');
+    if (host === 'youtu.be') return url.pathname.split('/').filter(Boolean)[0] ?? null;
+    if (host !== 'youtube.com' && host !== 'youtube-nocookie.com') return null;
+    if (url.pathname === '/watch') return url.searchParams.get('v');
+    const match = url.pathname.match(/^\\/(?:embed|shorts|live)\\/([^/]+)/);
+    return match?.[1] ?? null;
+  } catch {
+    return null;
+  }
+}
+
 function LessonTools({ topic, finished, toggle, mobile = false }: { topic: TheoryTopic; finished: boolean; toggle: (topic: TheoryTopic) => void; mobile?: boolean }) {
-  const resourceLinks = topic.resources?.length ? topic.resources.map(resource => <a key={resource.url} href={resource.url} target="_blank" rel="noreferrer" className="flex items-center justify-between gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-purple-300 hover:text-aicc-purple dark:border-white/10 dark:text-gray-200">{resource.label}<ExternalLink className="h-3.5 w-3.5 shrink-0" /></a>) : <p className="text-sm text-gray-500 dark:text-gray-400">Curated links will appear here.</p>;
+  const resourceLinks = topic.resources?.length ? topic.resources.map(resource => {
+    const videoId = getYouTubeVideoId(resource.url);
+    const href = videoId
+      ? `/theory/video?video=${encodeURIComponent(videoId)}&title=${encodeURIComponent(resource.label)}&source=${encodeURIComponent(resource.url)}`
+      : resource.url;
+    return <a key={resource.url} href={href} target="_blank" rel="noreferrer" className="flex items-center justify-between gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-purple-300 hover:text-aicc-purple dark:border-white/10 dark:text-gray-200">{resource.label}{videoId ? <Youtube className="h-4 w-4 shrink-0 text-red-500" aria-label="Watch YouTube video" /> : <ExternalLink className="h-3.5 w-3.5 shrink-0" />}</a>;
+  }) : <p className="text-sm text-gray-500 dark:text-gray-400">Curated links will appear here.</p>;
   const taskLink = topic.task ? <a href={topic.task.url} className="flex items-center justify-between gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-aicc-purple dark:border-white/10">{topic.task.label}<ArrowRight className="h-4 w-4" /></a> : <p className="text-sm text-gray-500 dark:text-gray-400">A recommended problem will appear here.</p>;
   const markButton = <button type="button" onClick={() => toggle(topic)} aria-pressed={finished} className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aicc-purple ${finished ? 'border border-purple-300 bg-purple-50 text-aicc-purple hover:bg-purple-100 dark:border-purple-700 dark:bg-purple-900/20 dark:text-purple-200' : 'bg-aicc-purple text-white shadow-sm hover:bg-purple-700 hover:shadow-md'}`}><Check className="h-4 w-4" />{finished ? 'Completed · Undo' : 'Mark as completed'}</button>;
   if (mobile) return <div className="theory-mobile-tools mt-5 space-y-2 lg:hidden">
